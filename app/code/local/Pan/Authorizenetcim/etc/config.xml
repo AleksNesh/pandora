@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Extend/Override TinyBrick_Authorizenetcim module
+ *
+ * @category    Pan
+ * @package     Pan_Authorizenetcim
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Pan_Authorizenetcim>
+            <version>0.1.0</version>
+        </Pan_Authorizenetcim>
+    </modules>
+
+    <!-- Extend/override TinyBrick_Authorizenetcim frontend layout xml files -->
+    <frontend>
+        <layout>
+            <updates>
+                <pan_authorizenetcim>
+                    <file>pan_authorizenetcim.xml</file>
+                </pan_authorizenetcim>
+            </updates>
+        </layout>
+    </frontend>
+
+    <!-- Extend/override Mage_Adminhtml_Sales_Order_InvoiceController -->
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <pan_authorizenetcim before="Mage_Adminhtml">Pan_Authorizenetcim</pan_authorizenetcim>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <!-- Extend/override TinyBrick_Authorizenetcim adminhtml layout xml files -->
+    <adminhtml>
+        <layout>
+            <updates>
+                <pan_authorizenetcim>
+                    <file>pan_authorizenetcim_overrides.xml</file>
+                </pan_authorizenetcim>
+            </updates>
+        </layout>
+    </adminhtml>
+
+    <global>
+        <helpers>
+            <pan_authorizenetcim>
+                <class>Pan_Authorizenetcim_Helper</class>
+            </pan_authorizenetcim>
+
+            <!-- Extend/override TinyBrick_Authorizenetcim Helpers -->
+            <authorizenetcim>
+                <rewrite>
+                    <data>Pan_Authorizenetcim_Helper_Data</data>
+                </rewrite>
+            </authorizenetcim>
+        </helpers>
+
+        <models>
+            <pan_authorizenetcim>
+                <class>Pan_Authorizenetcim_Model</class>
+            </pan_authorizenetcim>
+
+            <!-- Extend/override TinyBrick_Authorizenetcim models -->
+            <authorizenetcim>
+                <rewrite>
+                    <authorizenetcimsoap>Pan_Authorizenetcim_Model_Authorizenetcimsoap</authorizenetcimsoap>
+                    <authorizenetcim_authnetxml>Pan_Authorizenetcim_Model_Authorizenetcim_Authnetxml</authorizenetcim_authnetxml>
+                </rewrite>
+            </authorizenetcim>
+        </models>
+
+        <blocks>
+            <pan_authorizenetcim>
+                <class>Pan_Authorizenetcim_Block</class>
+            </pan_authorizenetcim>
+        </blocks>
+
+        <!-- This defines the mysql read/write/setup -->
+        <resources>
+            <pan_authorizenetcim_setup>
+                <setup>
+                    <module>Pan_Authorizenetcim</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </pan_authorizenetcim_setup>
+        </resources>
+    </global>
+
+    <!-- default values for system config -->
+    <default>
+        <payment>
+            <authorizenetcim>
+                <payment_action>authorize</payment_action>
+                <allow_partial_auth_capture>1</allow_partial_auth_capture>
+            </authorizenetcim>
+        </payment>
+    </default>
+</config>

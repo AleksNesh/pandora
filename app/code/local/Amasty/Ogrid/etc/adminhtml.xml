@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config>
+    <translate>
+        <modules>
+            <Amasty_Ogrid>
+                <files>
+                    <default>Amasty_Ogrid.csv</default>
+                </files>
+            </Amasty_Ogrid>
+        </modules>
+    </translate>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <amogrid translate="title" module="amogrid">
+                                        <title>Extended Order Grid</title>
+                                    </amogrid>
+                                </children>
+                            </config>
+                            <ogrid_adminsetting translate="title" module="amogrid">
+                                <title>Amasty Extended Order Grid</title>
+                            </ogrid_adminsetting>
+                        </children>
+                    </system> 
+                 </children>
+            </admin> 
+        </resources>
+    </acl>
+</config>

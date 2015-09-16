@@ -1,0 +1,75 @@
+# Magento runtime directories and files
+var/*
+!var/.htaccess
+!var/package/
+var/package/tmp/
+
+# Modman/Modgit Installed modules
+.modman
+.modgit
+
+# Magento Connect 2 cache directories and files
+downloader/pearlib/cache/
+downloader/*.cfg
+downloader/.cache/
+
+# Magento uploaded/generated media files
+media/catalog/
+media/tmp/
+media/js/
+media/css/
+media/import/
+media/downloadable/
+media/.thumbs/
+media/**
+
+# WordPress uploaded/generated media files and cache directories
+wp/wp-content/uploads
+wp/wp-content/cache
+
+# Keep the directories
+!media/.gitkeep
+!var/.gitkeep
+!wp/wp-content/**/.gitkeep
+
+# Development IDE settings
+nbproject/
+.buildpath
+.project
+.settings
+*.sublime-workspace
+*.sublime-project
+
+# SCSS files
+.sass-cache
+skin/frontend/pan/**/css/styles.css
+skin/frontend/pan/**/stylesheets/styles.css
+app/code/local/Pan/**/app/css/*styles.css*
+
+
+
+# JewelryDesigner Module files
+app/code/**/node_modules
+
+
+# URAPID FLOW
+#app/code/community/Unirgy/RapidFlow*
+#app/design/**/urapidflow*
+#app/etc/modules/Unirgy_RapidFlow*.xml
+#app/locale/en_US/Unirgy_RapidFlow*.csv
+#skin/adminhtml/**/urapidflow.css
+#skin/adminhtml/**/urapidflow.js
+
+# Sitemap XML
+sitemap/sitemap.xml
+
+app/etc/local.xml
+
+wp/wp-config.php
+
+
+# Cart2Cart Backups
+bridge2cart/**/*.sql*
+
+# Local PHP error logs
+php_errors.log

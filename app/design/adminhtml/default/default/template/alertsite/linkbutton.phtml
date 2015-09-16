@@ -1,0 +1,12 @@
+<?php
+/**
+ * @package     Smartbear_Alertsite
+ */
+/** @var $this Smartbear_Alertsite_Block_Adminhtml_System_Form_Renderer_LinkButton */
+?>
+<button style="margin:0 0 4px 1px;" onclick="window.location='<?php echo Mage::getModel('adminhtml/url')->getUrl('*/alertsite/create'); ?>'; return false;" class="scalable add" type="button" id="<?php echo $this->getHtmlId() ?>">
+    <span><?php echo $this->escapeHtml($this->getButtonLabel()); ?></span>
+    <img style="position:relative; top:3px;" class="smartbear-icon" src="<?php echo $this->getSkinUrl($this->__('smartbear/alertsite/images/alertsite_15_icon.png')); ?>" alt="AlertSite" />
+</button>
+<br />
+<a style="margin-top:4px;" href="<?php echo Mage::getModel('adminhtml/url')->getUrl('*/alertsite/advance'); ?>">(I already have an AlertSite account)</a>

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<config>
+	<menu>
+		<report>
+			<children>
+				<alertsite translate="title" module="alertsite">
+					<title>AlertSite</title>
+                    <children>
+                        <benchmark translate="title" module="review">
+                            <title>Benchmark Report</title>
+                            <action>adminhtml/alertsite/benchmark/</action>
+                        </benchmark>
+                        <scatterplot translate="title" module="review">
+                            <title>Scatter Plot Report</title>
+                            <action>adminhtml/alertsite/scatterplot/</action>
+                        </scatterplot>
+                    </children>
+                    <sort_order>50</sort_order>
+				</alertsite>
+			</children>
+		</report>
+	</menu>
+
+	<layout>
+		<updates>
+			<alertsite>
+				<file>alertsite.xml</file>
+			</alertsite>
+		</updates>
+	</layout>
+
+    <acl>
+        <resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+            <admin>
+                <children>
+					<system>
+						<children>
+							<alertsite module="alertsite">
+								<title>AlertSite Report</title>
+								<sort_order>10</sort_order>
+							</alertsite>
+						</children>
+					</system>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <alertsite module="alertsite">
+                                        <title>AlertSite Configuration</title>
+                                    </alertsite>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

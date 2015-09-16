@@ -1,0 +1,39 @@
+<?xml version="1.0"?> 
+<!--
+/**
+ * @copyright   Copyright (c) 2010 Amasty
+ */
+-->
+<config>
+        <translate>
+            <modules>
+                <Amasty_Sorting>
+                    <files>
+                        <default>Amasty_Sorting.csv</default>
+                    </files>
+                </Amasty_Sorting>
+            </modules>
+        </translate>
+        <acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <amsorting>
+                                            <title>Improved Sorting</title>
+                                        </amsorting>
+                                    </children>
+                                </config>
+                            </children>
+                        </system> 
+                     </children>
+                </admin> 
+			</resources>
+		</acl>         
+</config>

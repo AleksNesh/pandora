@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   Mage
+ * @package    Mage_Core
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <global>
+        <install>
+            <date><![CDATA[Tue, 25 Feb 2014 22:16:58 +0000]]></date>
+        </install>
+        <crypt>
+            <key><![CDATA[c8626369232f1b231385d8c9a77dcd5e]]></key>
+        </crypt>
+        <disable_local_modules>false</disable_local_modules>
+        <resources>
+            <db>
+                <table_prefix><![CDATA[]]></table_prefix>
+            </db>
+            <default_setup>
+                <connection>
+                    <host><![CDATA[192.168.0.3]]></host>
+                    <username><![CDATA[production_user]]></username>
+                    <password><![CDATA[Sk)7Z#2K3XKT{CY]]></password>
+                    <dbname><![CDATA[magento_production]]></dbname>
+                    <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
+                    <model><![CDATA[mysql4]]></model>
+                    <type><![CDATA[pdo_mysql]]></type>
+                    <pdoType><![CDATA[]]></pdoType>
+                    <active>1</active>
+                </connection>
+            </default_setup>
+        </resources>
+        <session_save><![CDATA[db]]></session_save>
+        <!--
+        All options seen here are the defaults.
+        See: https://github.com/colinmollenhour/Cm_RedisSession/blob/master/README.md
+        -->
+        <redis_session>
+            <!-- Specify an absolute path if using a unix socket -->
+            <host><![CDATA[192.168.0.3]]></host>
+            <port><![CDATA[6379]]></port>
+            <!-- Specify if your Redis server requires authentication -->
+            <password><![CDATA[]]></password>
+            <!-- This is the Redis connection timeout, not the locking timeout -->
+            <timeout><![CDATA[2.5]]></timeout>
+            <!--
+            Specify unique string to enable persistent connections.
+            E.g.: sess-db0; bugs with phpredis and php-fpm are known:
+            https://github.com/nicolasff/phpredis/issues/70
+            -->
+            <persistent><![CDATA[]]></persistent>
+            <!--
+            Redis database number; protection from accidental loss
+            is improved by using a unique DB number for sessions
+            -->
+            <db><![CDATA[0]]></db>
+            <!--
+            Set to 0 to disable compression (recommended when
+            suhosin.session.encrypt=on); known bug with strings over 64k:
+            https://github.com/colinmollenhour/Cm_Cache_Backend_Redis/issues/18
+            -->
+            <compression_threshold><![CDATA[2048]]></compression_threshold>
+            <!-- gzip, lzf or snappy -->
+            <compression_lib><![CDATA[gzip]]></compression_lib>
+            <!--
+            0 (emergency: system is unusable), 4 (warning; additional
+            information, recommended), 5 (notice: normal but significant
+            condition), 6 (info: informational messages), 7 (debug: the most
+            information for development/testing)
+            -->
+            <log_level><![CDATA[1]]></log_level>
+            <!--
+            maximum number of processes that can wait for a lock
+            on one session; for large production clusters, set this
+            to at least 10% of the number of PHP processes
+            -->
+            <max_concurrency><![CDATA[6]]></max_concurrency>
+            <!--
+            seconds to wait for a session lock in the frontend;
+            not as critical as admin
+            -->
+            <break_after_frontend><![CDATA[5]]></break_after_frontend>
+            <break_after_adminhtml><![CDATA[30]]></break_after_adminhtml>
+            <!-- Bots get shorter session lifetimes. 0 to disable -->
+            <bot_lifetime><![CDATA[7200]]></bot_lifetime>
+            <!-- Disable session locking entirely. -->
+            <disable_locking><![CDATA[0]]></disable_locking>
+        </redis_session>
+
+        <!-- example of redis cache -->
+        <cache>
+            <backend><![CDATA[Cm_Cache_Backend_Redis]]></backend>
+            <backend_options>
+                <!-- or absolute path to unix socket for better performance -->
+                <server><![CDATA[192.168.0.3]]></server>
+                <port><![CDATA[6379]]></port>
+                <database><![CDATA[1]]></database>
+                <password><![CDATA[]]></password>
+                <!-- 0 for phpredis, 1 for standalone PHP -->
+                <force_standalone><![CDATA[0]]></force_standalone>
+                <!-- Reduces errors due to random connection failures -->
+                <connect_retries><![CDATA[1]]></connect_retries>
+                <!-- Disabled by default -->
+                <automatic_cleaning_factor><![CDATA[0]]></automatic_cleaning_factor>
+                <!-- 0-9 for compression level, recommended: 0 or 1 -->
+                <compress_data><![CDATA[1]]></compress_data>
+                <!-- 0-9 for compression level, recommended: 0 or 1 -->
+                <compress_tags><![CDATA[1]]></compress_tags>
+                <!-- Strings below this size will not be compressed -->
+                <compress_threshold><![CDATA[20480]]></compress_threshold>
+                <!-- Supports gzip, lzf and snappy -->
+                <compression_lib><![CDATA[gzip]]></compression_lib>
+                <!-- persistence value, 0: not in use, > 0 used as persistence ID -->
+                <persistent><![CDATA[1]]></persistent>
+            </backend_options>
+        </cache>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <frontName><![CDATA[manage]]></frontName>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>

@@ -1,0 +1,15 @@
+<div class='steps-navigation'>
+    <nav>
+        <ul class='nav'>
+            <li ui-sref-active="active" ng-repeat='step in steps'>
+                <a ui-sref="ui.{{step.name}}({ designId: step.designId })">
+                    <span class='design-step'>{{$index + 1}}</span>
+                    <span class='design-step-name' ng-bind-html="step.htmlstr"></span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+

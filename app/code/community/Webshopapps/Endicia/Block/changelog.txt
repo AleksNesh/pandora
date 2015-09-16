@@ -1,0 +1,20 @@
+1.0 - Initial release
+1.1 - EN2/EN3 - Improved integration with Dropship
+1.1  - EN2/EN3 - Improved integration with Dropship
+1.2 - Modified error messages returned to config screen
+1.3 - Updated container type mapping
+
+1.2.1  - Resolved issue with multiple numbers in label requests
+1.3  - EN-5. Updated container types mappping and added documentation
+1.3.1  - EN6 - Resolved issue when creating shipments
+1.3.3  -  Resolved Issue #15 - Explicit class name when using consts
+1.3.4   - EN-8: Resolved packaging code error for other carriers
+1.3.4  - EN-8 : carrier codes striped from selected packaging in request
+1.4  - EN-9 - Added order # to the label
+1.4.1  - EN-15 - Fixed label size issue
+1.6  - EN-16 Implemented default settings in packaging dialog
+1.7  - EN-15 PDF label format is configurable
+1.8  - EN-18 - work around if mailpiece shape entered is not valid, supply default
+1.9  - EN-20 - trim postcodes for domestic shipments
+1.10  - EN-22 Compatibility with Infomodus_Upslabel
+1.10.1  - EN-22 Compatibility with Infomodus_Upslabel - Removed option to hide infomodus when not UPS and vice verse.

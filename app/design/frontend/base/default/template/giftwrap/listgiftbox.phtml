@@ -1,0 +1,84 @@
+<?php
+	$order=$this->getLayout()->getBlock('items')->getOrder();
+	$gifboxcollection=$this->getGiftboxInOrder($order); 
+?>
+
+<div class="block-title">
+    <h3>
+        <?php echo $this->__('Giftwrap infomation') ?>
+    </h3>
+</div>
+<div id="giftwrap-giftbox-additional">
+<?php 
+if(count($gifboxcollection)):
+?>
+<table class="data-table" id="giftwrap-giftbox">
+	<thead>
+		<tr>
+			<th class="a-center"><?php echo $this->__('No');?></th>
+			<th class="a-center"><?php echo $this->__('Paper');?></th>
+			<th class="a-center"><?php echo $this->__('Card');?></th>
+			<th class="a-center"><?php echo $this->__('Items');?></th>
+			<th class="a-center"><?php echo $this->__('Price');?></th>
+			<th class="a-center"><?php echo $this->__('Quantity');?></th>
+			<th class="a-center"><?php echo $this->__('Message');?></th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php
+		$i=1;
+		foreach ($gifboxcollection as $giftbox): 
+			if($giftbox['id']){
+			$style=Mage::getModel('giftwrap/giftwrap')->load($giftbox['styleId']);
+			$giftcard=Mage::getModel('giftwrap/giftcard')->load($giftbox['giftcardId']);
+		?>
+		<tr>
+			<td style="text-align:center">
+				#<?php echo $i;?>
+			</td>
+			<td style="text-align:center">
+			<li class="giftbox-li">
+			<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/' . $style->getImage() ?>" width="75" height="75" />
+			</li>
+			<li >
+			<?php echo $style->getTitle();?>
+			</li>
+			</td>
+			<td  style="text-align:center">
+			<?php if($giftcard->getId()){ ?>
+			<li>
+			<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/giftcard/' . $giftcard->getImage() ?>" width="75" height="75" />
+			</li>
+			<li >
+			<?php echo $giftcard->getName();?>
+			</li>
+			<?php }?>
+			</td>
+			<td style="width:300px;">
+			<ul>
+			<?php 
+			$its=explode(',', $giftbox['itemId']);
+			foreach ($its as $it){
+				
+				$item=Mage::getModel('sales/quote_item')->load($it);
+				$product=Mage::getModel('catalog/product')->load($item->getProductId());
+				?>
+				<li><a href='<?php echo $product->getProductUrl(); ?>' ><?php echo  $item->getName(); ?> </a> </li>
+				<?php 
+			}
+			?>
+			</ul>
+			</td>
+			<td style="width:70px;"><?php echo Mage::helper('core')->currency(floatval($style->getPrice())+floatval($giftcard->getPrice())) ; ?></td>
+			<td><?php echo $giftbox['quantity'];?></td>
+			<td><?php echo $giftbox['giftwrap_message'];?></td>
+		</tr>
+		<?php } ?>
+		<?php $i++;?>
+		<?php endforeach;?>
+		
+	</tbody>
+</table>
+<script type="text/javascript"> decorateTable('giftwrap-giftbox');</script>
+<?php endif; ?>
+</div>

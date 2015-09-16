@@ -1,0 +1,43 @@
+<?php $oGiftCardSession = Mage::getSingleton('giftcards/session'); ?>
+<?php if($this->getCustomerId()):?>
+    <div class="clear"></div>
+    <div class="entry-edit box-left" style="float:inherit;display:block;margin-top: 5px;">
+        <div class="entry-edit-head">
+            <h4 class="icon-head"><?php echo $this->__('Customer Gift Cards') ?></h4>
+        </div>
+
+        <fieldset class="np">
+            <div class="content">
+                <table border="0" cellpadding="1" cellspacing="1" id="wtsGiftCardTable">
+                    <tr>
+                        <td><?php echo $this->__('Enter the Gift Card code') ?>:</td>
+                        <td><input class="input-text" id="giftcard_code" name="giftcard_code" value="" /></td>
+                        <td><button style="margin-left: 3%" type="button" title="<?php echo $this->__('Redeem') ?>" class="button" onclick="updateBalance('<?php echo $this->getUrl('giftcards/adminhtml_giftcards/activategiftcard') ?>',<?php echo $this->getCustomerId()?>)" value="<?php echo $this->__('Redeem') ?>"><span><span><?php echo $this->__('Redeem') ?></span></span></button></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <?php $currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); $temp = 0; ?>
+                            <?php if($oGiftCardSession->getActive())
+                                foreach($oGiftCardSession->getFrontOptions() as $k => $v)
+                                {
+                                    if($temp) {
+                                        echo '<br/><br/>';
+                                    }
+                                    echo '<b>'.$currencySymbol.$v['applied'].' '.$this->__('applied from Gift Card').' **********'.$v['code'].'.</b><br/>';
+                                    echo $this->__('Remaining card balance').': '.$currencySymbol.$v['remaining'].'. (<a href="'.$this->getUrl("giftcards/adminhtml_giftcards/deActivateGiftCard/").'" onclick="deActivate(this,'.$k.');return false;">'.$this->__('Remove').'</a>)';
+                                    $temp = 1;
+                                }
+                            ?>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </fieldset>
+
+    </div>
+    <script type="text/javascript">
+        var wtsUpdateGiftCardsBlock = '<?php echo $this->getUrl('giftcards/adminhtml_giftcards/ajaxUpdateGiftCardBlock'); ?>';
+        var appendMessage = '<?php $this->__('Remove');?>';
+    </script>
+<?php endif ?>

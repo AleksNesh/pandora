@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Ash_HideEmptyAttributes
+ *
+ * Skip listing of attributes if they have a 'NA' value
+ *
+ * @category    Ash
+ * @package     Ash_HideEmptyAttributes
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Ash_HideEmptyAttributes>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Ash_Core/>
+                <Mage_Catalog/>
+            </depends>
+        </Ash_HideEmptyAttributes>
+    </modules>
+</config>

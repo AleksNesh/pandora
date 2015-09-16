@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Ash Up Extension
+ *
+ * Management interface for keeping Ash core extensions updated.
+ *
+ * @category    Ash
+ * @package     Ash_Up
+ * @copyright   Copyright (c) 2012 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <sections>
+        <ash_up translate="label" module="ash_up">
+            <label>Ash Installer</label>
+            <tab>ash</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <general translate="label" module="ash_up">
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <repo_uri translate="label">
+                            <label>Extension Repository URI</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Please do not change the default unless you know what you're doing.]]></comment>
+                        </repo_uri>
+                        <cache_lifetime translate="label">
+                            <label>Cache Lifetime</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[How long, in seconds, a remote API request's results will be cached.]]></comment>
+                        </cache_lifetime>
+                    </fields>
+                </general>
+                <ftp translate="label comment" module="ash_up">
+                    <label>FTP Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enabled translate="label comment" module="ash_up">
+                            <label>Use FTP To Install Files</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[If you have issues with file permissions during extensions installation, enable this and configure a local FTP user.]]></comment>
+                        </enabled>
+                        <host translate="label" module="ash_up">
+                            <label>FTP Host</label>
+                            <frontend_type>text</frontend_type>
+                            <depends><enabled>1</enabled></depends>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Usually "localhost" or "127.0.0.1"]]></comment>
+                        </host>
+                        <port translate="label" module="ash_up">
+                            <label>FTP Port</label>
+                            <frontend_type>text</frontend_type>
+                            <depends><enabled>1</enabled></depends>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Usually "21"]]></comment>
+                        </port>
+                        <user translate="label" module="ash_up">
+                            <label>FTP Username</label>
+                            <frontend_type>text</frontend_type>
+                            <depends><enabled>1</enabled></depends>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[FTP information will be used only locally,<br/>to work around file write permissions.]]></comment>
+                        </user>
+                        <password translate="label" module="ash_up">
+                            <label>FTP Password</label>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <depends><enabled>1</enabled></depends>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[FTP password is stored locally and encrypted,<br/>the same way as your payment gateway credentials.]]></comment>
+                        </password>
+                        <path translate="label" module="ash_up">
+                            <label>FTP Path to Magento</label>
+                            <frontend_type>text</frontend_type>
+                            <depends><enabled>1</enabled></depends>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Path relative to FTP user's root folder.]]></comment>
+                        </path>
+                    </fields>
+                </ftp>
+            </groups>
+        </ash_up>
+    </sections>
+</config>

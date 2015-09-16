@@ -1,0 +1,48 @@
+body[class*='cms'][class*='cms'] .main.row{
+    width : auto;
+    max-width : none;
+}
+body[class*='cms'][class*='cms'] .col-main{
+    padding-left : 0;
+    padding-right : 0;
+    padding-top : 0;
+    width : auto;
+    margin : auto;
+}
+body[class*='cms'][class*='cms'] .container img{
+    width : auto;
+    height : auto;
+    max-width : 100%;
+    max-height : 100%;
+    display : block;
+    margin : auto;
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 960px){
+
+    body[class*='cms'][class*='cms'] .row{
+        width : auto;
+        max-width : 960px;
+    }
+}
+@media only screen and (max-width: 959px) and (min-width: 768px){
+    body[class*='cms'][class*='cms'] .col1-layout .col-main{
+        width : auto;
+        margin : auto;
+    }
+    body[class*='cms'][class*='cms'] .row{
+        width : auto;
+        max-width : 768px;
+    }
+}
+@media (min-width : 768px){
+
+}/* media (min-width : 768px) */
+
+@media (min-width : 960px){
+
+}/* media (min-width : 960px) */
+
+@media (min-width : 1200px){
+
+}/* media (min-width : 1200px) */

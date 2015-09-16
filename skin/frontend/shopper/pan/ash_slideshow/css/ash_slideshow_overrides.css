@@ -1,0 +1,182 @@
+/**
+ * THEME SPECIFIC OVERRIDES FOR ASH_SLIDESHOW (bxSlider) SLIDESHOWS
+ */
+
+/* BX SLIDER OVERRIDES */
+.bx-wrapper .bx-viewport {
+    background: transparent;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.bx-wrapper .bx-controls-direction a {
+    z-index: 400;
+}
+.bx-wrapper .bx-prev {
+    left: -50px;
+}
+.bx-wrapper .bx-next {
+    right: -40px;
+}
+
+/* FOUNDATION MODAL */
+.reveal-modal-bg {
+    z-index: 12000;
+}
+.reveal-modal {
+    z-index: 12010;
+}
+
+/* CUSTOM SLIDESHOW STYLING */
+.slider-no-bg {
+    background: transparent;
+}
+
+.cms-home .slider {
+    padding-top: 40px;
+}
+
+.slide {
+    border: 4px solid #fff;
+    -webkit-box-shadow: 0 0 5px #ccc;
+    -moz-box-shadow: 0 0 5px #ccc;
+    box-shadow: 0 0 5px #ccc;
+
+    position: relative;
+}
+
+.slide a:hover {
+    cursor: pointer;
+}
+
+.promo-details {
+    position: relative;
+}
+
+.slide-title-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    background: #fff;
+    width: 100%;
+    height: 46px;
+}
+
+/*
+//////////////////////////////// RESPONSIVE TRIANGLE ///////////////////////////
+// TODO: Carl take a look at this. Supposedly this is responsive but it doesn't
+// look the greatest when at or below tablet screen sizes.
+//
+// @link http://codeitdown.com/css-triangles-responsive/
+////////////////////////////////////////////////////////////////////////////////
+*/
+.triangle-up {
+    width: 50%;
+    height: 0;
+    padding-left: 50%;
+    padding-bottom: 25%;
+    overflow: hidden;
+}
+.triangle-up:after {
+    position: absolute;
+    bottom: 46px;
+    left: 50%;
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-left: -165px;
+    border-left: 165px solid transparent;
+    border-right: 165px solid transparent;
+    border-bottom: 40px solid #fff;
+}
+
+.slide-title-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 94%;
+    padding: 0 3% 0.5em;
+    text-align: center;
+}
+
+.slide-title {
+    color: #669;
+    font-size: 18px;
+	font-family: 'Cinzel', serif;
+    font-weight: 300;
+}
+.slide-title.subheader {
+    font-size: 16px;
+	font-family: 'Cinzel', serif;
+    font-weight: 300;
+}
+
+
+.slide-desc {
+    text-align: left;
+}
+
+.slide-desc .left {
+    width: 55%;
+    clear: left;
+}
+
+.slide-desc .right {
+    width: 40%;
+}
+
+.slide-desc .left img,
+.slide-desc .right img {
+    width: 100%;
+    height: auto;
+}
+
+@media only screen and (max-width: 767px) {
+    .slide-desc .left {
+        width: 100%;
+        clear: both;
+    }
+
+    .slide-desc .right {
+        width: 100%;
+        clear: both;
+    }
+}
+
+.slide-desc h2 {
+    color: #669;
+    margin-bottom: 1em;
+    font-size: 56px;
+}
+.slide-desc .lead {
+    font-style: italic;
+    line-height: 1.4em;
+    font-weight: 400;
+    color: #444;
+    margin-bottom: 2em;
+}
+.slide-desc ul {
+    list-style: disc;
+}
+.slide-desc li {
+    margin-bottom: 0.5em;
+    font-style: italic;
+}
+
+.slide-desc a {
+    color: #669;
+}
+.slide-desc a:hover {
+    color: #E69CB5;
+}
+
+
+.slide-desc .image-callout {
+    background: url('/media/catalog/product/cache/1/small_image/252x252/9df78eab33525d08d6e5fb8d27136e95/s/p/space_in_my_heart_charm_pink_791252czs__02912.png') transparent 0 0;
+    width: 252px;
+    height: 252px;
+}

@@ -1,0 +1,11 @@
+button, .btn {
+  @include pan-button-primary(flat);
+
+  &.secondary {
+    @include pan-button-secondary(flat);
+  }
+
+  &.small {
+    font-size: 0.8em;
+  }
+}

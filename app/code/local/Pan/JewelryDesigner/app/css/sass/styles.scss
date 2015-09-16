@@ -1,0 +1,64 @@
+/////////////////////////////////////
+// Bourbon/Neat/Bitters
+/////////////////////////////////////
+
+// // disable border box-sizing so it won't conflict with frontend styles
+// $border-box-sizing: false !default; // Makes all elements have a border-box layout
+
+// // Load Bourbon and Neat
+// @import 'bourbon/bourbon';
+// @import "neat/neat";
+
+// @import '_josh/base/base';
+
+// // Functions (overrides Bourbon)
+// @import "_josh/functions/color-lightness";
+
+// // Mixins (overrides for Bourbon and various addons)
+// @import "_josh/mixins/button";
+// @import "_josh/mixins/milemarker";
+
+// // Layouts
+// @import "_josh/layouts/layouts";
+
+// // Components
+// @import "_josh/components/magento_navigation_fixes";
+// @import "_josh/components/buttons";
+// @import "_josh/components/navigation";
+// @import "_josh/components/workspace";
+// @import "_josh/components/product_grid";
+// @import "_josh/components/search_tools";
+// @import "_josh/components/milemarkers";
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Disable border box-sizing so it won't conflict with frontend styles
+$border-box-sizing: false !default; // Makes all elements have a border-box layout
+
+// Load Bourbon and Neat
+@import 'bourbon';
+@import "neat";
+
+// Base
+@import "base/variables";
+@import "base/placeholders";
+@import "base/layout";
+@import "base/forms";
+@import "base/typograpy";
+
+// Components
+@import "components/app-nav";
+@import "components/steps-nav";
+@import "components/items-grid";
+@import "components/modals";
+@import "components/workspace";
+@import "components/bottom-actions";
+@import "components/designs-grid";
+@import "components/ajax-loader";
+@import "components/ancient-browsers";
+
+// Sections
+@import "section/build-bracelet";
+@import "section/hero-page";
+@import "section/inspiration-bracelets";
+@import "section/share-design";

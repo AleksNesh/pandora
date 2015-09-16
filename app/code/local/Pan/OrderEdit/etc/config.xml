@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Extend/Override TinyBrick_OrderEdit module
+ *
+ * @category    Pan
+ * @package     Pan_OrderEdit
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Pan_OrderEdit>
+            <version>0.1.0</version>
+        </Pan_OrderEdit>
+    </modules>
+
+    <!-- Extend/override Mage_Adminhtml_Sales_Order_InvoiceController -->
+    <admin>
+        <routers>
+            <tinybrick_orderedit>
+                <args>
+                    <modules>
+                        <pan_orderedit before="TinyBrick_OrderEdit">Pan_OrderEdit</pan_orderedit>
+                    </modules>
+                </args>
+            </tinybrick_orderedit>
+        </routers>
+    </admin>
+
+    <!-- Extend/override TinyBrick_OrderEdit adminhtml layout xml files -->
+    <adminhtml>
+        <layout>
+            <updates>
+                <pan_orderedit>
+                    <file>pan_orderedit_overrides.xml</file>
+                </pan_orderedit>
+            </updates>
+        </layout>
+    </adminhtml>
+
+    <global>
+        <helpers>
+            <pan_orderedit>
+                <class>Pan_OrderEdit_Helper</class>
+            </pan_orderedit>
+
+            <!--
+            ====================================================================
+            REWRITE TinyBrick_OrderEdit_Helper_Data
+            ====================================================================
+            -->
+            <orderedit>
+                <rewrite>
+                    <data>Pan_OrderEdit_Helper_Data</data>
+                </rewrite>
+            </orderedit>
+        </helpers>
+        <models>
+            <pan_orderedit>
+                <class>Pan_OrderEdit_Model</class>
+            </pan_orderedit>
+        </models>
+        <blocks>
+            <pan_orderedit>
+                <class>Pan_OrderEdit_Block</class>
+            </pan_orderedit>
+            <!--
+            ====================================================================
+            REWRITES
+                + TinyBrick_OrderEdit_Block_Adminhtml_Sales_Order_View_Items
+                + TinyBrick_OrderEdit_Block_Adminhtml_Sales_Order_View_Items_renderer_default
+                + Mage_Adminhtml_Block_Sales_Order_Invoice_Create_Items
+                + Mage_Adminhtml_Block_Sales_Items_Renderer_Default
+                + Mage_Adminhtml_Block_Sales_Order_Invoice_View_Items
+
+            + Adds 'Stock Status' column to order view and invoice pages
+            ====================================================================
+            -->
+            <orderedit>
+                <rewrite>
+                    <adminhtml_sales_order_view_items>Pan_OrderEdit_Block_Adminhtml_Sales_Order_View_Items</adminhtml_sales_order_view_items>
+                    <adminhtml_sales_order_view_items_renderer_default>Pan_OrderEdit_Block_Adminhtml_Sales_Order_View_Items_Renderer_Default</adminhtml_sales_order_view_items_renderer_default>
+                </rewrite>
+            </orderedit>
+
+            <adminhtml>
+                <rewrite>
+                    <sales_order_invoice_create_items>Pan_OrderEdit_Block_Adminhtml_Sales_Order_Invoice_Create_Items</sales_order_invoice_create_items>
+                    <sales_order_invoice_view_items>Pan_OrderEdit_Block_Adminhtml_Sales_Order_Invoice_View_Items</sales_order_invoice_view_items>
+                    <sales_items_renderer_default>Pan_OrderEdit_Block_Adminhtml_Sales_Items_Renderer_Default</sales_items_renderer_default>
+                </rewrite>
+            </adminhtml>
+
+            <!--
+            ====================================================================
+            REWRITE Mage_Adminhtml_Block_Sales_Order_View
+
+            + removes the 'Edit' button on order view page
+            ====================================================================
+            -->
+            <adminhtml>
+                <rewrite>
+                    <sales_order_view>Pan_OrderEdit_Block_Adminhtml_Sales_Order_View</sales_order_view>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+    </global>
+</config>

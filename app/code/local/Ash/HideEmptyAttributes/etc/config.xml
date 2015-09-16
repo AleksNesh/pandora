@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Ash_HideEmptyAttributes
+ *
+ * Skip listing of attributes if they have a 'NA' value
+ *
+ * @category    Ash
+ * @package     Ash_HideEmptyAttributes
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Ash_HideEmptyAttributes>
+            <version>1.0.0</version>
+            <ashup
+                remote="https://s3.amazonaws.com/augustash/mage/ash_hideemptyattributes-latest.zip" />
+        </Ash_HideEmptyAttributes>
+    </modules>
+
+    <global>
+        <models>
+            <ash_hideemptyattributes>
+                <class>Ash_HideEmptyAttributes_Model</class>
+            </ash_hideemptyattributes>
+        </models>
+
+        <blocks>
+            <ash_hideemptyattributes>
+                <class>Ash_HideEmptyAttributes_Block</class>
+            </ash_hideemptyattributes>
+
+            <!--
+            ====================================================================
+            REWRITE Mage_Catalog_Block_Product_View_Attributes
+            ====================================================================
+            -->
+            <catalog>
+                <rewrite>
+                    <product_view_attributes>Ash_HideEmptyAttributes_Block_Product_View_Attributes</product_view_attributes>
+                </rewrite>
+            </catalog>
+
+        </blocks>
+
+        <helpers>
+            <ash_hideemptyattributes>
+                <class>Ash_HideEmptyAttributes_Helper</class>
+            </ash_hideemptyattributes>
+
+            <!--
+            ====================================================================
+            REWRITE Mage_Catalog_Block_Product_View_Attributes
+            ====================================================================
+            -->
+            <catalog>
+                <rewrite>
+                    <output>Ash_HideEmptyAttributes_Helper_Output</output>
+                </rewrite>
+            </catalog>
+        </helpers>
+    </global>
+
+    <default>
+        <ash_hideemptyattributes>
+            <general>
+                <enabled>1</enabled>
+            </general>
+        </ash_hideemptyattributes>
+    </default>
+</config>

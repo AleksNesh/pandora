@@ -1,0 +1,256 @@
+<?php 
+	
+	$res = $this->getFraudResult();
+	$customer = $this->getCustomer();
+	
+?>
+<h1>Detailed Maxmind Results</h1>
+<p>For detailed instructions about each field, please visit <a href="http://www.maxmind.com/app/ccv?rId=directshop" target="_blank">Maxmind's integration page</a>.</p>
+<div class="box-left">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account">Geographical IP address location checking</h4>
+		</div>
+		<div class="fieldset">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<tr>
+						<td class="label"><label>Country Match</label></td>
+						<td><?php echo (isset($res['countryMatch']) && !empty($res['countryMatch'])) ? ("<strong>" . $res['countryMatch'] . "</strong>") : "&ndash;"; ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>Country Code</label></td>
+						<td><?php echo (isset($res['countryCode']) && !empty($res['countryCode'])) ? ("<strong>" . $res['countryCode'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>High Risk Country</label></td>
+						<td><?php echo (isset($res['highRiskCountry']) && !empty($res['highRiskCountry'])) ? ("<strong>" . $res['highRiskCountry'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>Country Code</label></td>
+						<td><?php echo (isset($res['countryCode']) && !empty($res['countryCode'])) ? ("<strong>" . $res['countryCode'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>Distance</label></td>
+						<td><?php echo (isset($res['distance']) && !empty($res['distance'])) ? ("<strong>" . $res['distance'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>IP Region</label></td>
+						<td><?php echo (isset($res['ip_region']) && !empty($res['ip_region'])) ? ("<strong>" . $res['ip_region'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>IP City</label></td>
+						<td><?php echo (isset($res['ip_city']) && !empty($res['ip_city'])) ? ("<strong>" . $res['ip_city'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>IP Latitude</label></td>
+						<td><?php echo (isset($res['ip_latitude']) && !empty($res['ip_latitude'])) ? ("<strong>" . $res['ip_latitude'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>IP Longitude</label></td>
+						<td><?php echo (isset($res['ip_longitude']) && !empty($res['ip_longitude'])) ? ("<strong>" . $res['ip_longitude'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>IP ISP</label></td>
+						<td><?php echo (isset($res['ip_isp']) && !empty($res['ip_isp'])) ? ("<strong>" . $res['ip_isp'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>IP Organization</label></td>
+						<td><?php echo (isset($res['ip_org']) && !empty($res['ip_org'])) ? ("<strong>" . $res['ip_org'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="box-right">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account">Proxy Detection</h4>
+		</div>
+		<div class="fieldset">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<tr>
+						<td class="label"><label>Anonymous Proxy</label></td>
+						<td><?php echo (isset($res['anonymousProxy']) && !empty($res['anonymousProxy'])) ? ("<strong>" . $res['anonymousProxy'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>Proxy Score</label></td>
+						<td><?php echo (isset($res['proxyScore']) && !empty($res['proxyScore'])) ? ("<strong>" . $res['proxyScore'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>Transparent Proxy</label></td>
+						<td><?php echo (isset($res['isTransProxy']) && !empty($res['isTransProxy'])) ? ("<strong>" . $res['isTransProxy'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+	 
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account">E-mail and Login Checks</h4>
+		</div>
+		<div class="fieldset">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<tr>
+						<td class="label"><label>Free Email Address</label></td>
+						<td><?php echo (isset($res['freeMail']) && !empty($res['freeMail'])) ? ("<strong>" . $res['freeMail'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>High Risk Email</label></td>
+						<td><?php echo (isset($res['carderEmail']) && !empty($res['carderEmail'])) ? ("<strong>" . $res['carderEmail'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>High Risk Username</label></td>
+						<td><?php echo (isset($res['highRiskUsername']) && !empty($res['highRiskUsername'])) ? ("<strong>" . $res['highRiskUsername'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>High Risk Password</label></td>
+						<td><?php echo (isset($res['highRiskPassword']) && !empty($res['highRiskPassword'])) ? ("<strong>" . $res['highRiskPassword'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+	 
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="clear"></div>
+
+<div class="box-left">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account">Address and Phone Number Checks</h4>
+		</div>
+		<div class="fieldset">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<tr>
+						<td class="label"><label>Customer Phone in Billing Location</label></td>
+						<td><?php echo (isset($res['custPhoneInBillingLoc']) && !empty($res['custPhoneInBillingLoc'])) ? ("<strong>" . $res['custPhoneInBillingLoc'] . "</strong>") : "&ndash;"; ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>Shipping Address is known mail drop</label></td>
+						<td><?php echo (isset($res['shipForward']) && !empty($res['shipForward'])) ? ("<strong>" . $res['shipForward'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>City and Postcode Match</label></td>
+						<td><?php echo (isset($res['cityPostalMatch']) && !empty($res['cityPostalMatch'])) ? ("<strong>" . $res['cityPostalMatch'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>Shipping City and Postcode Match</label></td>
+						<td><?php echo (isset($res['shipCityPostalMatch']) && !empty($res['shipCityPostalMatch'])) ? ("<strong>" . $res['shipCityPostalMatch'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="box-right">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account">Issuing Bank BIN Number Checks</h4>
+		</div>
+		<div class="fieldset">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<!--<tr>
+						<td class="label"><label>BIN Match</label></td>
+						<td><?php echo (isset($res['binMatch']) && !empty($res['binMatch'])) ? ("<strong>" . $res['binMatch'] . "</strong>") : "&ndash;"; ?></td>
+					</tr>-->
+					<tr>
+						<td class="label"><label>BIN Country Code</label></td>
+						<td><?php echo (isset($res['binCountry']) && !empty($res['binCountry'])) ? ("<strong>" . $res['binCountry'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<!--<tr>
+						<td class="label"><label>BIN Name Match</label></td>
+						<td><?php echo (isset($res['binNameMatch']) && !empty($res['binNameMatch'])) ? ("<strong>" . $res['binNameMatch'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>-->
+					<tr>
+						<td class="label"><label>BIN Name</label></td>
+						<td><?php echo (isset($res['binName']) && !empty($res['binName'])) ? ("<strong>" . $res['binName'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<!--<tr>
+						<td class="label"><label>BIN Phone Match</label></td>
+						<td><?php echo (isset($res['binPhoneMatch']) && !empty($res['binPhoneMatch'])) ? ("<strong>" . $res['binPhoneMatch'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>-->
+					<tr>
+						<td class="label"><label>BIN Phone</label></td>
+						<td><?php echo (isset($res['binPhone']) && !empty($res['binPhone'])) ? ("<strong>" . $res['binPhone'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="clear"></div>
+
+<div class="box-left">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account">Risk Score</h4>
+		</div>
+		<div class="fieldset">
+			<table cellspacing="0" class="form-list">
+				<tbody>					
+					<tr>
+						<td class="label" style='width: 135px;'><label style='width: 135px;'>Risk Score Estimate (%)</label></td>
+						<td style="display: block;margin-top: 5px;"><?php
+						
+						   if(isset($res['riskScore']) && !empty($res['riskScore'])){						       
+							     $riskScore = number_format($res['riskScore'], 2);								 
+								 if($riskScore >= 0.1 && $riskScore <=4.99 ) {
+										$per = "90%";
+									} else if($riskScore >= 5 && $riskScore <=9.99 ) {
+										$per =  "5%";
+									} else if($riskScore >= 10 && $riskScore <=29.99 ) {
+										$per =  "3%";
+									} else if($riskScore >= 30 && $riskScore <=99.99 ) {
+										$per =  "2%";
+									}						   
+						   }						
+						
+						 echo (isset($res['riskScore']) && !empty($res['riskScore'])) ? ("<strong>" . $res['riskScore'] ."( Approximately ".$per." of all orders fall in this range )". "</strong>") : "&ndash;";  ?></td>
+					</tr> 
+					<tr><td colspan="2"> 
+					The riskScore is given as a percentage, and as such it ranges from 0.01 to 100.00. For example, an order with a riskScore of 20.00 has a 20% chance of being fraudulent, while an order with a riskScore of 0.10 has a 0.1% chance of being fraudulent.<br />Approximately 10% of orders receive a Risk Score Estimate of 5% of higher. For suggested threshold, and to change threshold estimate <a href="<?php echo Mage::helper("adminhtml")->getUrl("adminhtml/system_config/edit/section/frauddetection"); ?>">click here</a>
+					</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="box-right">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account">Account Information</h4>
+		</div>
+		<div class="fieldset">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<tr>
+						<td class="label"><label>Queries Remaining (as of this order)</label></td>
+						<td><?php echo (isset($res['queriesRemaining']) && !empty($res['queriesRemaining'])) ? ("<strong>" . $res['queriesRemaining'] . "</strong>") : "&ndash;"; ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>Maxmind ID</label></td>
+						<td><?php echo (isset($res['maxmindID']) && !empty($res['maxmindID'])) ? ("<strong>" . $res['maxmindID'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+					<tr>
+						<td class="label"><label>Error Message</label></td>
+						<td><?php echo (isset($res['err']) && !empty($res['err'])) ? ("<strong>" . $res['err'] . "</strong>") : "&ndash;";  ?></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

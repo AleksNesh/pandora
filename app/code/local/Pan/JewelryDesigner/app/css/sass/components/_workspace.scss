@@ -1,0 +1,193 @@
+/////////////////////////////////////
+// Workspace
+/////////////////////////////////////
+
+.design-canvas, #workspace-wrapper {
+    position: relative;
+}
+
+.edit-design-name-wrapper {
+
+    // #designNameForm {
+    //     input[type='text'] {
+    //         padding: 0.5em;
+    //         font-size: 1.5em;
+    //     }
+    // }
+
+    button.tiny {
+        padding: 0.75em;
+
+        &.edit-name {
+            background: #fff;
+            color: $purple;
+            border: 1px solid $gray-light;
+            position: relative;
+            top: -7px;
+            margin: 0 0 0 1em;
+
+            &:hover {
+                background: $purple;
+                color: #fff;
+                border-color: $purple;
+            }
+        }
+    }
+
+}
+
+
+
+.design-instructions {
+    position: absolute;
+    left: 15%;
+    top: 0;
+    padding: 4em;
+    width: 85%;
+    background: #fff;
+    border: 1px solid lighten($gray-light, 5%);
+    z-index: 900;
+
+
+    .designer-app-wrapper.hide-instructions & {
+        display: none;
+    }
+
+    .instructions-title {
+        margin-bottom: 1em;
+        text-align: center;
+    }
+
+    ol {
+        padding-left: 2em;
+        li {
+            list-style: decimal;
+            font-size: 1.2em;
+            margin-bottom: 1em;
+        }
+    }
+
+    .notice {
+        color: $gray;
+        font-size: 1.2em;
+        font-style: italic;
+        margin: 1.5em 0;
+    }
+
+    a.close {
+        padding: 0.5em 1em;
+        color: #fff;
+        border: 1px solid #fff;
+
+        &:hover {
+            background-color: #fff;
+            color: $purple;
+            border-color: $purple;
+        }
+    }
+}
+
+#design-price {
+    @extend %cinzel;
+    color: $gray;
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 5em;
+
+    .price {
+        color: $gray-dark;
+        font-size: 1.5em;
+        margin-bottom: 5em;
+    }
+}
+
+#bracelet-workspace {
+    // min-height: 450px;
+    width: 574px;
+    // height: 602px;
+    height: 450px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    left: 0;
+    top: 0;
+
+    & > img {
+        position: absolute;
+        left: 118px;
+        top: 0;
+    }
+
+    & > .circle {
+        display: block;
+        position: absolute;
+        left: 118px;
+        top: 60px;
+        opacity: 0.15;
+        // border: 12px solid #c30;
+        // border-radius: 50%;
+        width: 336px;
+        height: 336px;
+    }
+
+    @include media($large-up) {
+        & > img {
+            left: 115px;
+            top:2px;
+        }
+
+        & > .circle {
+            left: 115px;
+            top: 21px;
+        }
+    }
+
+    @include media($xlarge-up) {
+        & > img {
+            left: 115px;
+            top: 2px;
+        }
+
+        & > .circle {
+            left: 115px;
+            top: 21px;
+        }
+
+    }
+}
+
+#charms-workspace {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    width: 100%;
+    height: 100%;
+
+    @include media($large-up) {
+        left: 160px;
+    }
+
+    @include media($xlarge-up) {
+        left: 0;
+    }
+}
+
+#workspace-controls {
+    margin: 3em 0 1em;
+}
+
+#trash {
+    position: absolute;
+    right: 0;
+    bottom: 45px;
+
+    #closedTrashCan {
+        background: image-url('layout/trashcan.png') no-repeat left bottom;
+        padding: 45px 27px 0 0;
+    }
+
+    #openedTrashCan {
+        background: image-url('layout/trashcan.png') no-repeat left bottom;
+        padding: 45px 27px 0 0;
+    }
+}

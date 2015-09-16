@@ -1,0 +1,14 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: Owner
+ * Date: 09.02.12
+ * Time: 14:24
+ * To change this template use File | Settings | File Templates.
+ */
+if(Mage::getVersion()>='1.6.0' || is_dir(Mage::getBaseDir('app').'/code/core/Enterprise') || is_dir(Mage::getBaseDir('app').'/code/core/Professional')){
+    include('items_from_16.phtml');
+}
+else {
+    include('items_from_13.phtml');
+}

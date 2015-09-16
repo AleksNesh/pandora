@@ -1,0 +1,47 @@
+<?php /* @var $this Fooman_PdfCustomiser_Block_Pdf_Items*/?>
+<?php $columnHeadings = $this->getColumnHeaders() ?>
+<?php $pdfItems = $this->getItems() ?>
+<?php $pdfBundleItems = $this->getBundleItems() ?>
+<?php $maxColumns = sizeof($columnHeadings) ?>
+<?php $position = 1 ?>
+<?php $vertSpacing =
+    '<tcpdf method="addHTMLVertSpace" params="'.$this->getPdf()->serializeTCPDFtagParameters(array(1, 3)).'"/>'
+?>
+
+<?php $lineStyleOverride = array(
+    'style_first'=> 'border-top:1px solid red;',
+    'style_last'=> 'border-bottom:1px solid red;',
+    'horiz_whitespace'=>5
+) ?>
+<?php $lineStyleOverride = false ?>
+<?php if($columnHeadings): ?>
+    <table width="100%" border="0" cellpadding="2" cellspacing="0">
+        <thead>
+            <tr nobr="true">
+                <?php foreach ($columnHeadings as $columnHeading) :?>
+                    <th style="<?php echo $columnHeading['style_last'] ?>"
+                        align="<?php echo $columnHeading['align'] ?>"
+                        width="<?php echo $columnHeading['width'] ?>%"><strong><?php echo $columnHeading['title'] ?></strong><?php echo $vertSpacing ?></th>
+                <?php endforeach;?>
+            </tr>
+        </thead>
+        <?php foreach ($pdfItems as $pdfItem) :?>
+            <!-- we generally do not want to display subitems of configurable products etc -->
+            <?php if($pdfItem['parentItemId']) continue; ?>
+            <!-- Output line items -->
+            <?php if (($pdfItem['parentType'] != 'bundle' && $pdfItem['type'] != 'bundle')
+                || ($pdfItem['type'] == 'bundle' && !isset($pdfBundleItems[$pdfItem['itemId']]))) :
+            ?>
+                <tr nobr="true">
+                    <?php echo $this->getItemRow($pdfItem, $vertSpacing, $lineStyleOverride, $position++) ?>
+                </tr>
+            <!-- Deal with bundles -->
+            <?php else: ?>
+                <?php $currentParentId = $pdfItem['itemId'] ?>
+                <tr nobr="true">
+                    <?php echo $this->getBundleItemRow($pdfItem, $pdfBundleItems[$currentParentId], $vertSpacing, $lineStyleOverride, $position++) ?>
+                </tr>
+            <?php endif; ?>
+        <?php endforeach;?>
+    </table>
+<?php endif; ?>

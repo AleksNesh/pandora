@@ -1,0 +1,4 @@
+<?php $switched_template = Mage::helper('giftwrap')->getSwitchedTemplate(__FILE__) ?>
+<?php include ($switched_template) ?>
+<?php $cssfile=$this->getSkinUrl(Mage::helper('giftwrap')->getSwitchedSkinFile());?>
+<link rel="stylesheet" type="text/css" href='<?php echo $cssfile;?>' media="all" />

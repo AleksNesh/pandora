@@ -1,0 +1,52 @@
+<?php /** @var $this Smartbear_Alertsite_Block_Adminhtml_Dashboard */
+     /** @var $_helper Smartbear_Alertsite_Helper_Data */
+    $_helper = Mage::helper('alertsite');
+?>
+</fieldset></div>
+
+<div class="entry-edit">
+    <div class="entry-edit-head"><h4><img style="position:relative; top:3px;" class="smartbear-icon" src="<?php echo $this->getSkinUrl($this->__('smartbear/alertsite/images/alertsite_15_icon.png')); ?>" alt="AlertSite" />&nbsp;AlertSite Status</h4></div>
+    <fieldset class="np">
+        <?php echo $this->getChildHtml('alertsite.subheader'); ?>
+        <div class="alertsite-dashboard-box">
+
+
+            <?php if($this->getStatusCode() === "0"){ ?>
+                <img style="position:relative; top:3px;" class="smartbear-status-icon" src="<?php echo $this->getSkinUrl($this->__('smartbear/alertsite/images/smartbear_great.png')); ?>" alt="AlertSite" />
+            <?php }else if($this->getStatusCode() === "1" || $this->getStatusCode() === "2" || $this->getStatusCode() === "3" ||$this->getStatusCode() === "6"){ ?>
+                <img style="position:relative; top:3px;" class="smartbear-status-icon" src="<?php echo $this->getSkinUrl($this->__('smartbear/alertsite/images/smartbear_warning.png')); ?>" alt="AlertSite" />
+            <?php }else{ ?>
+            <img style="position:relative; top:3px;" class="smartbear-status-icon" src="<?php echo $this->getSkinUrl($this->__('smartbear/alertsite/images/smartbear_notice.png')); ?>" alt="AlertSite" />
+            <?php } ?>
+
+            <div class="alertsite-friendly-status">
+                <span class="device-description"><?php echo $this->getStatusDescription(); ?></span>
+                <h4>Status code:
+                    <span style="font-size:120%;">
+                        <?php echo $this->getStatusCode(); ?>
+                        <?php if($this->getStatusCode() === NULL){ ?>
+                            Unable to communicate with AlertSite. Please try again later or check the <a href="http://help.alertsite.com/MagentoHelp">help</a>.
+                        <?php } ?>
+                    </span>
+                </h4>
+                <p><?php  echo $this->getFriendlyStatus(); ?></p>
+                <?php if($this->getStatusCode() !== NULL){ ?>
+                <em style="font-size:95%;"> (<?php echo $this->__('Last status change: '); ?><?php echo $this->getStatusTime(); ?>)</em>
+                <?php } ?>
+                <br />
+            </div>
+            <div class="clear"></div>
+            <div class="smartbear-status-links">
+                <span>View reports:&nbsp;</span>
+                <ul class="">
+                    <li>
+                        <a href="<?php echo $_helper->getBenchmarkUrl(); ?>">Benchmark</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $_helper->getScatterPlotUrl(); ?>">Scatter Plot</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </fieldset>
+</div>

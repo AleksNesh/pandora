@@ -1,0 +1,10 @@
+<?php $card = $this->getCard();?>
+<li id="gift-card-item-<?php echo $card->getR;?>">
+    <?php echo $card->getPropCode();?> (<span id="gc_amount_<?php echo $card->getPropCode();?>" class="gift-card-amount">
+        <input type="text" style="display: none" class="gift-card-amount-text" name="gift-card-amount-text-<?php echo $card->getPropCode();?>" id="gc_amount_text_<?php echo $card->getPropCode();?>" size="10">
+        <span id="gc_amount_value_<?php echo $card->getPropCode();?>"><?php echo $this->helper('core')->formatPrice($card->getPropAmount(), false);?></span>
+    </span>
+    <img width="14" height="14" id="btn_edit_gc_<?php echo $card->getPropCode();?>" onclick="editQuoteGiftCard(<?php echo $card->getPropCode();?>)" title="Edit" alt="Edit" class="gift-card-edit" src="<?php echo $this->getSkinUrl('images/snap/icon_btn_edit.gif')?>">
+    )<img width="14" height="14" style="display: none" id="btn_save_gc_<?php echo $card->getPropCode();?>" onclick="updateGiftCardQuoteAmount(<?php echo $card->getPropCode();?>)" title="Save" alt="Save" class="gift-card-save" src="<?php echo $this->getSkinUrl('images/snap/icon_btn_save.gif');?>">
+    <img width="12" height="12" id="btn_delete_gc_<?php echo $card->getPropCode();?>" onclick="removeGiftCardFromQuote(<?php echo $card->getPropCode();?>,<?php echo $card->getPropCode();?>)" title="Delete" alt="Delete" class="gift-card-delete" src="<?php echo $this->getSkinUrl('images/snap/icon_btn_delete.gif');?>">
+</li>

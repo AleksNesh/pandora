@@ -1,0 +1,83 @@
+// Inner content styles
+.reveal-modal {
+  @include clearfix;
+
+  .product-image {
+    width: 100%;
+    text-align: center;
+
+    @include media($large-up) {
+      float: left;
+      width: 45%;
+    }
+
+    img {
+      display: inline-block;
+      max-width: 200px;
+      opacity: 1.0;
+
+      @include media($large-up) {
+        max-width: 280px;
+      }
+    }
+  }
+
+  .product-details {
+    width: 100%;
+    padding: 0.25em 1em 1em;
+    max-height: 75%;
+    overflow-y: scroll;
+
+    @include media($large-up) {
+      float: right;
+      width: 50%;
+    }
+
+    .product-title, .product-price {
+      @extend %cinzel;
+      color: $gray;
+      font-size: 1.5em;
+      text-align: left;
+      margin: 1em 0;
+    }
+
+    .product-option-heading {
+      font-size: 1em;
+      font-weight: bold;
+      text-transform: uppercase;
+      line-height: 1em;
+      padding-bottom: 0;
+      margin-top: 1em;
+    }
+
+    .product-options {
+      li {
+        text-align: left;
+        line-height: 1.75em;
+        position: relative;
+
+        input[type='radio'] {
+          position: relative;
+          top: 2px;
+
+          display: inline-block;
+          margin-right: 0.5em;
+        }
+      }
+
+      .price-markup {
+        font-weight: bold;
+        display: inline-block;
+        margin: 0 0.5em;
+      }
+    }
+
+    .bottom-actions {
+      margin: 2em 0 1em;
+    }
+  }
+
+  button.button {
+    @extend %button;
+  }
+}

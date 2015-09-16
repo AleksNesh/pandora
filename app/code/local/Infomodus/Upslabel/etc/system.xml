@@ -1,0 +1,2875 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <upslabel translate="label comment" module="upslabel">
+            <tab>sales</tab>
+            <label>UPS Shipping Labels</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>330</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <credentials translate="label comment" module="upslabel">
+                    <label>Your UPS Account Credentials</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <accesslicensenumber translate="label comment">
+                            <label>Access License Number</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </accesslicensenumber>
+                        <userid translate="label comment">
+                            <label>User Id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </userid>
+                        <password translate="label comment">
+                            <label>Password</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </password>
+                        <shippernumber translate="label comment">
+                            <label>Shipper Number</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </shippernumber>
+                    </fields>
+                </credentials>
+                <testmode translate="label comment" module="upslabel">
+                    <label>Test Mode</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <testing translate="label">
+                            <label>Test mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </testing>
+                    </fields>
+                </testmode>
+                <packaging translate="label comment" module="upslabel">
+                    <label>Default Packaging Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <packagingtypecode translate="label comment">
+                            <label>Packaging Type Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_upspackagecode</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </packagingtypecode>
+                        <packagingdescription translate="label comment">
+                            <label>Packaging Description</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </packagingdescription>
+                        <packagingreferencenumbercode translate="label">
+                            <label>Packaging Reference Number Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </packagingreferencenumbercode>
+                        <packagingreferencenumbervalue translate="label">
+                            <label>Packaging Reference Number Value</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </packagingreferencenumbervalue>
+                        <packagingreferencebarcode translate="label">
+                            <label>Bar Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>45</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </packagingreferencebarcode>
+                        <packagingreferencenumbercode2 translate="label">
+                            <label>Packaging Reference Number Code 2</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </packagingreferencenumbercode2>
+                        <packagingreferencenumbervalue2 translate="label">
+                            <label>Packaging Reference Number Value 2</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </packagingreferencenumbervalue2>
+                        <packagingreferencebarcode2 translate="label">
+                            <label>Bar Code 2</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>65</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </packagingreferencebarcode2>
+                    </fields>
+                </packaging>
+                <shipping translate="label comment" module="upslabel">
+                    <label>Default Shipping Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <defaultshipmentmethod translate="label">
+                            <label>Default Shipping Method for Domestic</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_upsmethod</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </defaultshipmentmethod>
+                        <defaultshipmentmethodworld translate="label">
+                            <label>Default Shipping Method for International</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_upsmethod</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </defaultshipmentmethodworld>
+                        <shipping_method_native translate="label">
+                            <label>Use the compliance of methods</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>
+                                <model>upslabel/config_shippingSettingsLink</model>
+                            </comment>
+                        </shipping_method_native>
+                        <shipmentdescription translate="label">
+                            <label>Shipping description</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_shipdesc</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </shipmentdescription>
+                        <defaultshipper translate="label">
+                            <label>Default Shipper address</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_defaultaddress</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </defaultshipper>
+                        <defaultshipfrom translate="label">
+                            <label>Default Ship from address</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_defaultaddress</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </defaultshipfrom>
+                        <addtrack translate="label">
+                            <label>Add tracking number automatically ?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </addtrack>
+                        <saturday_delivery translate="label">
+                            <label>Saturday Delivery</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </saturday_delivery>
+                    </fields>
+                </shipping>
+                <return translate="label comment" module="upslabel">
+                    <label>Return Labels</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <frontend_customer_return translate="label">
+                            <label>Printing "Return label" by customer?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </frontend_customer_return>
+                        <refundaccess translate="label">
+                            <label>Refund</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </refundaccess>
+                        <default_return translate="label">
+                            <label>Create return label by default</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default_return>
+                        <default_return_amount translate="label">
+                            <label>Order amount for default return label, from</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default_return_amount>
+                        <default_return_method translate="label">
+                            <label>Default shipping method for return labels</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_upsmethod</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default_return_method>
+                    </fields>
+                </return>
+                <weightdimension translate="label comment" module="upslabel">
+                    <label>Weight and Dimensions</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <weightunits translate="label">
+                            <label>Weight units</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_weight</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </weightunits>
+                        <defweigth translate="label">
+                            <label>Default weight</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </defweigth>
+                        <packweight translate="label">
+                            <label>Pack weight</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </packweight>
+                        <includedimensions translate="label">
+                            <label>Include dimensions</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </includedimensions>
+                        <unitofmeasurement translate="label">
+                            <label>Default unit of dimensions</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_unitofmeasurement</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </unitofmeasurement>
+                        <defaultdimensionsset translate="label">
+                            <label>Default Package Dimensions</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_defaultdimensionsset</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </defaultdimensionsset>
+                    </fields>
+                </weightdimension>
+                <ratepayment translate="label comment" module="upslabel">
+                    <label>Rates and Payments</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>70</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <currencycode translate="label">
+                            <label>Default Currency code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_currency</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </currencycode>
+                        <shipmentcharge translate="label">
+                            <label>Duty and Tax charges</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </shipmentcharge>
+                        <negotiatedratesindicator translate="label">
+                            <label>Negotiated Rates</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </negotiatedratesindicator>
+                        <cod translate="label">
+                            <label>COD (default)</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cod>
+                        <cod_shipping_cost translate="label">
+                            <label>Add shipping cost to COD</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cod_shipping_cost>
+                        <cod_discount translate="label">
+                            <label>Apply discount for COD</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cod_discount>
+                        <additionalhandling translate="label">
+                            <label>Additional Handling</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </additionalhandling>
+                        <insured_automaticaly translate="label">
+                            <label>Adding Insured Value automatically</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </insured_automaticaly>
+                        <invoicelinetotal translate="label">
+                            <label>Send InvoiceLineTotal (for shipments from US to Canada and PR only)</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </invoicelinetotal>
+                        <carbon_neutral translate="label">
+                            <label>Carbon neutral</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </carbon_neutral>
+                    </fields>
+                </ratepayment>
+                <quantum translate="label comment" module="upslabel">
+                    <label>Quantum View Notification</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>80</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <qvn translate="label">
+                            <label>Quantum View Notification Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </qvn>
+                        <qvn_code translate="label">
+                            <label>Notification Code</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>upslabel/config_notificationcode</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </qvn_code>
+                        <qvn_email_shipper translate="label">
+                            <label>Shipper Email</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </qvn_email_shipper>
+                        <adult translate="label">
+                            <label>Delivery Confirmation</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_deliveryConfirmation</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </adult>
+                    </fields>
+                </quantum>
+                <printing translate="label comment" module="upslabel">
+                    <label>Printing Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>90</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <printer translate="label">
+                            <label>Print type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_printType</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </printer>
+                        <automatic_printing translate="label">
+                            <label>Automatic printing</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <printer separator="|">
+                                    <value>EPL|SPL|ZPL|STARPL</value>
+                                </printer>
+                            </depends>
+                        </automatic_printing>
+                        <automatic_printing_ip translate="label">
+                            <label>IP</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <printer separator="|">
+                                    <value>EPL|SPL|ZPL|STARPL</value>
+                                </printer>
+                            </depends>
+                        </automatic_printing_ip>
+                        <automatic_printing_port translate="label">
+                            <label>Port</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <printer separator="|">
+                                    <value>EPL|SPL|ZPL|STARPL</value>
+                                </printer>
+                            </depends>
+                        </automatic_printing_port>
+
+                        <termal_width translate="label">
+                            <label>Width</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_termalWidth</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <printer separator="|">
+                                    <value>EPL|SPL|ZPL|STARPL</value>
+                                </printer>
+                            </depends>
+                        </termal_width>
+                        <bulk_printing_all translate="label">
+                            <label>Bulk printing</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_bulkPrinting</source_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </bulk_printing_all>
+                        <papersize translate="label">
+                            <label>Paper size</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_paperSize</source_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <printer>
+                                    <value>GIF</value>
+                                </printer>
+                            </depends>
+                        </papersize>
+                        <custom_width translate="label">
+                            <label>Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>600</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <papersize>
+                                    <value>AC</value>
+                                </papersize>
+                            </depends>
+                        </custom_width>
+                    </fields>
+                </printing>
+                <pickup translate="label" module="upslabel">
+                    <label>Pickup options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <CloseTime translate="label comment">
+                            <label>Close Time</label>
+                            <frontend_type>time</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </CloseTime>
+                        <ReadyTime translate="label comment">
+                            <label>Ready Time</label>
+                            <frontend_type>time</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </ReadyTime>
+                        <PickupDateYear translate="label comment">
+                            <label>Pickup Date Year</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_year</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </PickupDateYear>
+                        <PickupDateMonth translate="label comment">
+                            <label>Pickup Date Month</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_month</source_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </PickupDateMonth>
+                        <PickupDateDay translate="label comment">
+                            <label>Pickup Date Day</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_day</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </PickupDateDay>
+                        <AlternateAddressIndicator translate="label comment">
+                            <label>Alternate Address Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_alternateindicator</source_model>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </AlternateAddressIndicator>
+                        <ServiceCode translate="label comment">
+                            <label>Service Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_servicecode</source_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </ServiceCode>
+                        <Quantity translate="label comment">
+                            <label>Quantity</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>450</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </Quantity>
+                        <DestinationCountryCode translate="label comment">
+                            <label>Destination Country</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </DestinationCountryCode>
+                        <ContainerCode translate="label comment">
+                            <label>Container Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_containercode</source_model>
+                            <sort_order>550</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                            <validate>required-entry</validate>
+                        </ContainerCode>
+                        <Weight translate="label comment">
+                            <label>Weight</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>600</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </Weight>
+                        <UnitOfMeasurement translate="label comment">
+                            <label>Unit Of Measurement</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_weight</source_model>
+                            <sort_order>700</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </UnitOfMeasurement>
+                        <OverweightIndicator translate="label comment">
+                            <label>Overweight Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_overweightindicator</source_model>
+                            <sort_order>800</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Indicates whether or not at least one package is over 70 lbs or 32 kgs</comment>
+                        </OverweightIndicator>
+                        <PaymentMethod translate="label comment">
+                            <label>Payment Method</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_paymentmethod</source_model>
+                            <sort_order>900</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field. For countries and (or) zip codes where pickup is free of charge,
+                                please submit 00, means no payment needed as payment method. If 01 is the payment
+                                method, then ShipperAccountNumber and ShipperAccount CountryCode must be provided. If 03
+                                is selected, then CreditCard information should be provided. If 04 is selected, then the
+                                shipper agreed to pay for the pickup packages. If 05 is selected, then the shipper will
+                                pay for the pickup with a check or money order.
+                            </comment>
+                            <validate>required-entry</validate>
+                        </PaymentMethod>
+                        <SpecialInstruction translate="label comment">
+                            <label>Special Instruction</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Special handling instruction from the customer (1...57 length)</comment>
+                        </SpecialInstruction>
+                        <ReferenceNumber translate="label comment">
+                            <label>Reference Number</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>1100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Information entered by a customer for internal reference (1...35 length)</comment>
+                        </ReferenceNumber>
+                        <Notification translate="label">
+                            <label>Notification Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </Notification>
+                        <ConfirmationEmailAddress translate="label comment">
+                            <label>Confirmation Email Address</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>1300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Email addresses to confirm the pickup. No more than five email addresses are
+                                allowed. Enter separated by commas.
+                            </comment>
+                        </ConfirmationEmailAddress>
+                        <UndeliverableEmailAddress translate="label comment">
+                            <label>Undeliverable Email Address</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>The email address to use when the Confirmation Email Address is not reachable
+                            </comment>
+                        </UndeliverableEmailAddress>
+                    </fields>
+                </pickup>
+                <address_1 translate="label comment" module="upslabel">
+                    <label>Address 1</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>110</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <addressname translate="label comment">
+                            <label>Address Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressname>
+                        <companyname translate="label comment">
+                            <label>Company Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </companyname>
+                        <attentionname translate="label comment">
+                            <label>Attention Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </attentionname>
+                        <phonenumber translate="label comment">
+                            <label>Phone Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </phonenumber>
+                        <addressline1 translate="label comment">
+                            <label>Address Line 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressline1>
+                        <room translate="label">
+                            <label>Room</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </room>
+                        <floor translate="label">
+                            <label>Floor</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </floor>
+                        <city translate="label">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </city>
+                        <stateprovincecode translate="label">
+                            <label>State Province Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </stateprovincecode>
+                        <urbanization translate="label">
+                            <label>Urbanization</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </urbanization>
+                        <postalcode translate="label">
+                            <label>Postal Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </postalcode>
+                        <countrycode translate="label">
+                            <label>Country Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </countrycode>
+                        <residential translate="label">
+                            <label>Residential Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_residential</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </residential>
+                        <pickup_point translate="label">
+                            <label>Pickup Point</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </pickup_point>
+                    </fields>
+                </address_1>
+                <address_2 translate="label comment" module="upslabel">
+                    <label>Address 2</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>120</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <addressname translate="label comment">
+                            <label>Address Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressname>
+                        <companyname translate="label">
+                            <label>Company Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </companyname>
+                        <attentionname translate="label">
+                            <label>Attention Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </attentionname>
+                        <phonenumber translate="label">
+                            <label>Phone Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </phonenumber>
+                        <addressline1 translate="label">
+                            <label>Address Line 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressline1>
+                        <room translate="label">
+                            <label>Room</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </room>
+                        <floor translate="label">
+                            <label>Floor</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </floor>
+                        <city translate="label">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </city>
+                        <stateprovincecode translate="label">
+                            <label>State Province Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </stateprovincecode>
+                        <urbanization translate="label">
+                            <label>Urbanization</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </urbanization>
+                        <postalcode translate="label">
+                            <label>Postal Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </postalcode>
+                        <countrycode translate="label">
+                            <label>Country Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </countrycode>
+                        <residential translate="label">
+                            <label>Residential Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_residential</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </residential>
+                        <pickup_point translate="label">
+                            <label>Pickup Point</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </pickup_point>
+                    </fields>
+                </address_2>
+                <address_3 translate="label comment" module="upslabel">
+                    <label>Address 3</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>130</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <addressname translate="label comment">
+                            <label>Address Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressname>
+                        <companyname translate="label">
+                            <label>Company Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </companyname>
+                        <attentionname translate="label">
+                            <label>Attention Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </attentionname>
+                        <phonenumber translate="label">
+                            <label>Phone Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </phonenumber>
+                        <addressline1 translate="label">
+                            <label>Address Line 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressline1>
+                        <room translate="label">
+                            <label>Room</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </room>
+                        <floor translate="label">
+                            <label>Floor</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </floor>
+                        <city translate="label">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </city>
+                        <stateprovincecode translate="label">
+                            <label>State Province Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </stateprovincecode>
+                        <urbanization translate="label">
+                            <label>Urbanization</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </urbanization>
+                        <postalcode translate="label">
+                            <label>Postal Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </postalcode>
+                        <countrycode translate="label">
+                            <label>Country Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </countrycode>
+                        <residential translate="label">
+                            <label>Residential Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_residential</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </residential>
+                        <pickup_point translate="label">
+                            <label>Pickup Point</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </pickup_point>
+                    </fields>
+                </address_3>
+                <address_4 translate="label comment" module="upslabel">
+                    <label>Address 4</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>140</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <addressname translate="label comment">
+                            <label>Address Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressname>
+                        <companyname translate="label">
+                            <label>Company Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </companyname>
+                        <attentionname translate="label">
+                            <label>Attention Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </attentionname>
+                        <phonenumber translate="label">
+                            <label>Phone Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </phonenumber>
+                        <addressline1 translate="label">
+                            <label>Address Line 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressline1>
+                        <room translate="label">
+                            <label>Room</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </room>
+                        <floor translate="label">
+                            <label>Floor</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </floor>
+                        <city translate="label">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </city>
+                        <stateprovincecode translate="label">
+                            <label>State Province Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </stateprovincecode>
+                        <urbanization translate="label">
+                            <label>Urbanization</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </urbanization>
+                        <postalcode translate="label">
+                            <label>Postal Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </postalcode>
+                        <countrycode translate="label">
+                            <label>Country Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </countrycode>
+                        <residential translate="label">
+                            <label>Residential Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_residential</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </residential>
+                        <pickup_point translate="label">
+                            <label>Pickup Point</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </pickup_point>
+                    </fields>
+                </address_4>
+                <address_5 translate="label comment" module="upslabel">
+                    <label>Address 5</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>150</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <addressname translate="label comment">
+                            <label>Address Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressname>
+                        <companyname translate="label">
+                            <label>Company Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </companyname>
+                        <attentionname translate="label">
+                            <label>Attention Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </attentionname>
+                        <phonenumber translate="label">
+                            <label>Phone Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </phonenumber>
+                        <addressline1 translate="label">
+                            <label>Address Line 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressline1>
+                        <room translate="label">
+                            <label>Room</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </room>
+                        <floor translate="label">
+                            <label>Floor</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </floor>
+                        <city translate="label">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </city>
+                        <stateprovincecode translate="label">
+                            <label>State Province Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </stateprovincecode>
+                        <urbanization translate="label">
+                            <label>Urbanization</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </urbanization>
+                        <postalcode translate="label">
+                            <label>Postal Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </postalcode>
+                        <countrycode translate="label">
+                            <label>Country Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </countrycode>
+                        <residential translate="label">
+                            <label>Residential Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_residential</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </residential>
+                        <pickup_point translate="label">
+                            <label>Pickup Point</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </pickup_point>
+                    </fields>
+                </address_5>
+                <address_6 translate="label comment" module="upslabel">
+                    <label>Address 6</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>160</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <addressname translate="label comment">
+                            <label>Address Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressname>
+                        <companyname translate="label">
+                            <label>Company Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </companyname>
+                        <attentionname translate="label">
+                            <label>Attention Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </attentionname>
+                        <phonenumber translate="label">
+                            <label>Phone Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </phonenumber>
+                        <addressline1 translate="label">
+                            <label>Address Line 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressline1>
+                        <room translate="label">
+                            <label>Room</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </room>
+                        <floor translate="label">
+                            <label>Floor</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </floor>
+                        <city translate="label">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </city>
+                        <stateprovincecode translate="label">
+                            <label>State Province Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </stateprovincecode>
+                        <urbanization translate="label">
+                            <label>Urbanization</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </urbanization>
+                        <postalcode translate="label">
+                            <label>Postal Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </postalcode>
+                        <countrycode translate="label">
+                            <label>Country Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </countrycode>
+                        <residential translate="label">
+                            <label>Residential Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_residential</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </residential>
+                        <pickup_point translate="label">
+                            <label>Pickup Point</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </pickup_point>
+                    </fields>
+                </address_6>
+                <address_7 translate="label comment" module="upslabel">
+                    <label>Address 7</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>170</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <addressname translate="label comment">
+                            <label>Address Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressname>
+                        <companyname translate="label">
+                            <label>Company Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </companyname>
+                        <attentionname translate="label">
+                            <label>Attention Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </attentionname>
+                        <phonenumber translate="label">
+                            <label>Phone Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </phonenumber>
+                        <addressline1 translate="label">
+                            <label>Address Line 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressline1>
+                        <room translate="label">
+                            <label>Room</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </room>
+                        <floor translate="label">
+                            <label>Floor</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </floor>
+                        <city translate="label">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </city>
+                        <stateprovincecode translate="label">
+                            <label>State Province Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </stateprovincecode>
+                        <urbanization translate="label">
+                            <label>Urbanization</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </urbanization>
+                        <postalcode translate="label">
+                            <label>Postal Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </postalcode>
+                        <countrycode translate="label">
+                            <label>Country Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </countrycode>
+                        <residential translate="label">
+                            <label>Residential Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_residential</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </residential>
+                        <pickup_point translate="label">
+                            <label>Pickup Point</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </pickup_point>
+                    </fields>
+                </address_7>
+                <address_8 translate="label comment" module="upslabel">
+                    <label>Address 8</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>180</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <addressname translate="label comment">
+                            <label>Address Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressname>
+                        <companyname translate="label">
+                            <label>Company Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </companyname>
+                        <attentionname translate="label">
+                            <label>Attention Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </attentionname>
+                        <phonenumber translate="label">
+                            <label>Phone Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </phonenumber>
+                        <addressline1 translate="label">
+                            <label>Address Line 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressline1>
+                        <room translate="label">
+                            <label>Room</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </room>
+                        <floor translate="label">
+                            <label>Floor</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </floor>
+                        <city translate="label">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </city>
+                        <stateprovincecode translate="label">
+                            <label>State Province Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </stateprovincecode>
+                        <urbanization translate="label">
+                            <label>Urbanization</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </urbanization>
+                        <postalcode translate="label">
+                            <label>Postal Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </postalcode>
+                        <countrycode translate="label">
+                            <label>Country Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </countrycode>
+                        <residential translate="label">
+                            <label>Residential Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_residential</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </residential>
+                        <pickup_point translate="label">
+                            <label>Pickup Point</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </pickup_point>
+                    </fields>
+                </address_8>
+                <address_9 translate="label comment" module="upslabel">
+                    <label>Address 9</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>190</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <addressname translate="label comment">
+                            <label>Address Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressname>
+                        <companyname translate="label">
+                            <label>Company Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </companyname>
+                        <attentionname translate="label">
+                            <label>Attention Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </attentionname>
+                        <phonenumber translate="label">
+                            <label>Phone Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </phonenumber>
+                        <addressline1 translate="label">
+                            <label>Address Line 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressline1>
+                        <room translate="label">
+                            <label>Room</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </room>
+                        <floor translate="label">
+                            <label>Floor</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </floor>
+                        <city translate="label">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </city>
+                        <stateprovincecode translate="label">
+                            <label>State Province Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </stateprovincecode>
+                        <urbanization translate="label">
+                            <label>Urbanization</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </urbanization>
+                        <postalcode translate="label">
+                            <label>Postal Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </postalcode>
+                        <countrycode translate="label">
+                            <label>Country Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </countrycode>
+                        <residential translate="label">
+                            <label>Residential Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_residential</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </residential>
+                        <pickup_point translate="label">
+                            <label>Pickup Point</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </pickup_point>
+                    </fields>
+                </address_9>
+                <address_10 translate="label comment" module="upslabel">
+                    <label>Address 10</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>200</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <addressname translate="label comment">
+                            <label>Address Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressname>
+                        <companyname translate="label">
+                            <label>Company Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </companyname>
+                        <attentionname translate="label">
+                            <label>Attention Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </attentionname>
+                        <phonenumber translate="label">
+                            <label>Phone Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </phonenumber>
+                        <addressline1 translate="label">
+                            <label>Address Line 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </addressline1>
+                        <room translate="label">
+                            <label>Room</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </room>
+                        <floor translate="label">
+                            <label>Floor</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </floor>
+                        <city translate="label">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </city>
+                        <stateprovincecode translate="label">
+                            <label>State Province Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </stateprovincecode>
+                        <urbanization translate="label">
+                            <label>Urbanization</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </urbanization>
+                        <postalcode translate="label">
+                            <label>Postal Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </postalcode>
+                        <countrycode translate="label">
+                            <label>Country Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </countrycode>
+                        <residential translate="label">
+                            <label>Residential Indicator</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>upslabel/config_pickup_residential</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Required field</comment>
+                        </residential>
+                        <pickup_point translate="label">
+                            <label>Pickup Point</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </pickup_point>
+                    </fields>
+                </address_10>
+                <dimansion_1 translate="label comment" module="upslabel">
+                    <label>Dimensions 1</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>210</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <dimansionname translate="label comment">
+                            <label>Dimension Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dimansionname>
+                        <width translate="label comment">
+                            <label>Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </width>
+                        <height translate="label comment">
+                            <label>Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </height>
+                        <length translate="label comment">
+                            <label>Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </length>
+                    </fields>
+                </dimansion_1>
+                <dimansion_2 translate="label comment" module="upslabel">
+                    <label>Dimensions 2</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>220</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <dimansionname translate="label comment">
+                            <label>Dimension Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dimansionname>
+                        <width translate="label comment">
+                            <label>Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </width>
+                        <height translate="label comment">
+                            <label>Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </height>
+                        <length translate="label comment">
+                            <label>Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </length>
+                    </fields>
+                </dimansion_2>
+                <dimansion_3 translate="label comment" module="upslabel">
+                    <label>Dimensions 3</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>230</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <dimansionname translate="label comment">
+                            <label>Dimension Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dimansionname>
+                        <width translate="label comment">
+                            <label>Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </width>
+                        <height translate="label comment">
+                            <label>Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </height>
+                        <length translate="label comment">
+                            <label>Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </length>
+                    </fields>
+                </dimansion_3>
+                <dimansion_4 translate="label comment" module="upslabel">
+                    <label>Dimensions 4</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>240</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <dimansionname translate="label comment">
+                            <label>Dimension Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dimansionname>
+                        <width translate="label comment">
+                            <label>Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </width>
+                        <height translate="label comment">
+                            <label>Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </height>
+                        <length translate="label comment">
+                            <label>Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </length>
+                    </fields>
+                </dimansion_4>
+                <dimansion_5 translate="label comment" module="upslabel">
+                    <label>Dimensions 5</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>250</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <dimansionname translate="label comment">
+                            <label>Dimension Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dimansionname>
+                        <width translate="label comment">
+                            <label>Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </width>
+                        <height translate="label comment">
+                            <label>Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </height>
+                        <length translate="label comment">
+                            <label>Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </length>
+                    </fields>
+                </dimansion_5>
+                <dimansion_6 translate="label comment" module="upslabel">
+                    <label>Dimensions 6</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>260</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <dimansionname translate="label comment">
+                            <label>Dimension Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dimansionname>
+                        <width translate="label comment">
+                            <label>Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </width>
+                        <height translate="label comment">
+                            <label>Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </height>
+                        <length translate="label comment">
+                            <label>Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </length>
+                    </fields>
+                </dimansion_6>
+                <dimansion_7 translate="label comment" module="upslabel">
+                    <label>Dimensions 7</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>270</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <dimansionname translate="label comment">
+                            <label>Dimension Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dimansionname>
+                        <width translate="label comment">
+                            <label>Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </width>
+                        <height translate="label comment">
+                            <label>Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </height>
+                        <length translate="label comment">
+                            <label>Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </length>
+                    </fields>
+                </dimansion_7>
+                <dimansion_8 translate="label comment" module="upslabel">
+                    <label>Dimensions 8</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>280</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <dimansionname translate="label comment">
+                            <label>Dimension Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dimansionname>
+                        <width translate="label comment">
+                            <label>Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </width>
+                        <height translate="label comment">
+                            <label>Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </height>
+                        <length translate="label comment">
+                            <label>Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </length>
+                    </fields>
+                </dimansion_8>
+                <dimansion_9 translate="label comment" module="upslabel">
+                    <label>Dimensions 9</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>290</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <dimansionname translate="label comment">
+                            <label>Dimension Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dimansionname>
+                        <width translate="label comment">
+                            <label>Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </width>
+                        <height translate="label comment">
+                            <label>Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </height>
+                        <length translate="label comment">
+                            <label>Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </length>
+                    </fields>
+                </dimansion_9>
+                <dimansion_10 translate="label comment" module="upslabel">
+                    <label>Dimensions 10</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>300</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enable>
+                        <dimansionname translate="label comment">
+                            <label>Dimension Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dimansionname>
+                        <width translate="label comment">
+                            <label>Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </width>
+                        <height translate="label comment">
+                            <label>Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </height>
+                        <length translate="label comment">
+                            <label>Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </length>
+                    </fields>
+                </dimansion_10>
+                <frontend_autocreate_label translate="label comment" module="upslabel">
+                    <label>Automatic labels creation</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>4000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <frontend_order_autocreate_label_enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </frontend_order_autocreate_label_enable>
+                        <apply_to translate="label">
+                            <label>Create labels for Shipping Methods</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>upslabel/config_frontShippingMethod</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </apply_to>
+                        <orderstatus translate="label">
+                            <label>Create labels for Orders Statuses</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>upslabel/config_orderStatuses</source_model>
+                            <sort_order>230</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </orderstatus>
+                        <frontend_multipackes_enable translate="label">
+                            <label>Create packages for each Product in an Order?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </frontend_multipackes_enable>
+                        <packages_by_attribute_enable translate="label">
+                            <label>Create packages by product attribute?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </packages_by_attribute_enable>
+                        <packages_by_attribute_code translate="label">
+                            <label>Attribute code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <packages_by_attribute_enable>
+                                    <value>1</value>
+                                </packages_by_attribute_enable>
+                            </depends>
+                        </packages_by_attribute_code>
+                        <track_send translate="label">
+                            <label>Send tracking number on customer email</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>600</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </track_send>
+                    </fields>
+                </frontend_autocreate_label>
+                <additional_settings translate="label comment" module="upslabel">
+                    <label>Additional settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>5000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <order_grid_column_enable translate="label">
+                            <label>Add column "Status" in order grid?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0<!--no_collector--></show_in_website>
+                            <show_in_store>0<!--no_collector--></show_in_store>
+                        </order_grid_column_enable>
+                        <shipment_grid_column_enable translate="label">
+                            <label>Add column "Price" in shipment grid?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0<!--no_collector--></show_in_website>
+                            <show_in_store>0<!--no_collector--></show_in_store>
+                        </shipment_grid_column_enable>
+                        <credit_grid_column_enable translate="label">
+                            <label>Add column "Price" in credit memos grid?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0<!--no_collector--></show_in_website>
+                            <show_in_store>0<!--no_collector--></show_in_store>
+                        </credit_grid_column_enable>
+                        <create_ship_checked translate="label">
+                            <label>Flagged "Create UPS label" by default</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <comment>during Shipment creation</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0<!--no_collector--></show_in_website>
+                            <show_in_store>0<!--no_collector--></show_in_store>
+                        </create_ship_checked>
+                    </fields>
+                </additional_settings>
+            </groups>
+        </upslabel>
+    </sections>
+</config>

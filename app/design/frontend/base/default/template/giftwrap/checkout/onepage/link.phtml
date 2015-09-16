@@ -1,0 +1,5 @@
+<?php if ($this->isPossibleOnepageCheckout()):?>
+<li>
+    <button type="button" title="<?php echo $this->__('Proceed to Checkout') ?>" class="button btn-checkout<?php if ($this->isDisabled()):?> no-checkout<?php endif; ?>"<?php if ($this->isDisabled()):?> disabled="disabled"<?php endif; ?> onclick="check_giftwrap('<?php echo $this->getUrl('giftwrap/index/savemessagesubmit'); ?>','<?php echo $this->getCheckoutUrl() ?>');"><span><span><?php echo $this->__('Proceed to Checkout') ?></span></span></button>
+</li>
+<?php endif?>

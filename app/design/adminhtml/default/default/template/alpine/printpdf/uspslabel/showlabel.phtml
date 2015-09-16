@@ -1,0 +1,85 @@
+<?php
+/**
+ * Showlabel template
+ *
+ * @category    Alpine
+ * @package     Alpine_PrintPdf
+ * @theme       default
+ * @copyright   Copyright (c) 2014 Alpine Consulting, Inc
+ * @author      dmitry.ilin@alpineinc.com
+ */
+?>
+
+<?php
+$orderId    = Mage::registry('order_id');
+$shipmentId = Mage::registry('shipment_id');
+$upsl       = Mage::registry('upsl');
+$upsl2      = Mage::registry('upsl2');
+$backLink   = Mage::registry('backLink');
+$type       = Mage::registry('type');
+$error      = Mage::registry('error');
+?>
+
+<?php if (count($error) == 0): ?>
+    <?php $shipidnumber = array_key_exists('shipidnumber', $upsl) ? $upsl['shipidnumber'] : $upsl[0]['shipmentidentificationnumber']; ?>
+    <h1><?php echo $this->__('Order ID %s Shipment ID %s', $orderId, $shipmentId); ?></h1>
+    <br />
+    <a href="<?php echo $backLink; ?>"><?php echo $this->__('Back'); ?></a>
+
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+    <a href="<?php echo $this->getUrl('upslabel/adminhtml_upslabel/deletelabel/order_id/' . $orderId . '/shipment_id/' . $shipmentId . '/type/' . $type); ?>"><?php echo $this->__('Delete Label'); ?></a>
+
+    <?php if (file_exists(Mage::getBaseDir('media') . '/upslabel/label/' . "HVR" . $shipidnumber . ".html")): ?>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <a href="<?php echo Mage::getBaseUrl('media') . 'upslabel/label/HVR' . $shipidnumber; ?>.html" target="_blank"><?php echo $this->__('Print High Value report'); ?></a>;
+    <?php endif; ?>
+
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+    <a href="<?php echo $this->getUrl('printpdf/print/label', array('order_id' => $orderId, 'shipment_id' => $shipmentId, 'type' => 'shipment')); ?>" target="_blank"><?php echo $this->__('Print PDF'); ?></a>
+
+    <?php $upsData = array_key_exists('arrResponsXML', $upsl) ? $upsl['arrResponsXML'] : $upsl; ?>
+    <?php foreach ($upsData as $upslOne): ?>
+        <br />
+        <br />
+        <a href="<?php echo $this->getUrl('upslabel/adminhtml_upslabel/print/imname/' . 'label' . $upslOne['trackingnumber'] . '.gif') ?>" target="_blank"><?php echo $this->__('Print Label Gif'); ?></a>
+
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+        <a href="<?php echo Mage::getBaseUrl('media') . 'upslabel/label/' . $upslOne['trackingnumber']; ?>.html" target="_blank"><?php echo $this->__('Print Html image'); ?></a>
+
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+        <a href="<?php echo $this->getUrl('printpdf/pdflabels/onepdf', array('order_id' => $orderId, 'shipment_id' => $shipmentId, 'type' => 'shipment')); ?>" target="_blank"><?php echo $this->__('Download PDF'); ?></a>
+
+        <br />
+        <br />
+        <span><?php echo $this->__('Tracking Number', $upslOne['trackingnumber']); ?></span>
+        <br />
+        <br />
+        <br />
+        <a href="<?php echo Mage::getBaseUrl('media') . 'upslabel/label/' . 'label' . $upslOne['trackingnumber'] . '.gif'; ?>" target="_blank"><img src="<?php echo Mage::getBaseUrl('media') . 'upslabel/label/' . 'label' . $upslOne['trackingnumber'] . '.gif'; ?>" /></a>
+    <?php endforeach; ?>
+    <?php if (isset($upsl2)): ?>
+        <?php $upsData = array_key_exists('arrResponsXML', $upsl2) ? $upsl2['arrResponsXML'] : $upsl2; ?>
+        <?php foreach ($upsData as $upslOne): ?>
+            <br />
+            <br />
+            <a href="<?php echo $this->getUrl('upslabel/adminhtml_upslabel/print/imname/' . 'label' . $upslOne['trackingnumber'] . '.gif'); ?>" target="_blank"><?php echo $this->__('Print Label Gif'); ?></a>
+
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+            <a href="<?php echo Mage::getBaseUrl('media') . 'upslabel/label/' . $upslOne['trackingnumber']; ?>.html" target="_blank"><?php echo $this->__('Print Html image'); ?></a>
+            <br />
+            <br />
+            <span>Tracking Number <?php $upslOne['trackingnumber']; ?></span>
+            <br />
+            <br />
+            <br />
+            <a href="<?php echo Mage::getBaseUrl('media') . 'upslabel/label/' . 'label' . $upslOne['trackingnumber'] . '.gif'; ?>" target="_blank"><img src="<?php echo Mage::getBaseUrl('media') . 'upslabel/label/' . 'label' . $upslOne['trackingnumber'] . '.gif'; ?>" /></a>
+    <?php endforeach; ?>
+<?php endif; ?>
+<?php else: ?>
+    <?php echo $error['error']; ?>
+<?php endif; ?>

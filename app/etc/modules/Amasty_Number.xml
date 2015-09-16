@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Amasty_Number>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Amasty_Number>
+    </modules>
+</config>

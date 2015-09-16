@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Alpine_Giftwrap>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Magestore_Giftwrap />
+            </depends>
+        </Alpine_Giftwrap>
+        <Magestore_Giftwrap>
+            <depends>
+                <Pan_OrderEdit />
+            </depends>
+        </Magestore_Giftwrap>
+    </modules>
+</config>

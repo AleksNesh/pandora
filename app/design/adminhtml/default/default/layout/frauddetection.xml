@@ -1,0 +1,10 @@
+<layout>
+	<adminhtml_sales_order_view>
+		<reference name="sales_order_tabs">
+			<action method="addTab">
+				<name>tab_fraud</name>
+				<block>frauddetection/adminhtml_sales_order_view_tab_fraud</block>
+			</action>
+		</reference>
+	</adminhtml_sales_order_view>
+</layout>

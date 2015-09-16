@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Magento Developer's Toolbar
+ *
+ * @category    Ash
+ * @package     Ash_Devbar
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <sections>
+        <ash_devbar translate="label" module="ash_devbar">
+            <label>Developer's Toolbar</label>
+            <tab>ash</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label" module="ash_devbar">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label" module="ash_devbar">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </enabled>
+                        <use_included_zurb translate="label,comment" module="ash_devbar">
+                            <label>Use Included Zurb</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment><![CDATA[If your theme already includes Zurb Foundation, disable this option.]]></comment>
+                        </use_included_zurb>
+                    </fields>
+                </general>
+                <options>
+                    <label>Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <suppressed_classes translate="label,comment" module="ash_devbar">
+                            <label>Suppressed Classes</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Classes you list here will be suppressed in toolbar output.]]></comment>
+                        </suppressed_classes>
+                    </fields>
+                </options>
+            </groups>
+        </ash_devbar>
+    </sections>
+</config>

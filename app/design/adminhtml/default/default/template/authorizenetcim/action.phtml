@@ -1,0 +1,118 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<br />
+<div class="entry-edit">
+    <div class="entry-edit-head"><h4 class="icon-head head-customer-sales-statistics"><?php echo Mage::helper('customer')->__('Authorize.net Profiles') ?></h4></div>
+    <div class="grid">
+        <table cellspacing="0" class="data">
+            <thead>
+                <tr class="headings">
+                    <th><span id="newCcLast4Header"><?php echo Mage::helper('customer')->__('New Credit Card Number'); ?></span><span id="ccLast4Header"><?php echo Mage::helper('customer')->__('Last 4 of CC') ?></span></th>
+                    <th><?php echo Mage::helper('customer')->__('CC type') ?></th>
+                    <th><?php echo Mage::helper('customer')->__('Exp Date') ?></th>
+                    <th><?php echo Mage::helper('customer')->__('Action') ?></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td colspan="5" class="label"><strong><big><?php echo Mage::helper('customer')->__('All Credit Cards on File') ?></big></strong></td>
+                </tr>
+            </tfoot>
+			<tbody>
+				<?php foreach($payments = $this->getCustomerPaymentProfiles() as $payment){ ?>
+				<tr><?php //Zend_Debug::dump($payment);?>
+					<td><span id="ccLast4"><?php echo $payment['cc_last4']; ?></span></td>
+					<td>
+						<span id="ccType">
+							<?php echo $payment['cc_type']; ?>
+						</span>
+					</td>
+					<td><span id="ccExpDate"><?php echo $payment['cc_exp_month'] . '/' . $payment['cc_exp_year']; ?></span></td>
+					<td><!--<button name="edit" onclick="editCard(<?php //echo $payment['token_payment_profile_id'] ?>, <?php //echo $payment['token_profile_id']; ?>)" type="button"><span><span id="edit">Edit</span></span></button> --><button name="delete" type="button" onclick="deleteCard(<?php echo $payment['token_payment_profile_id'] ?>, <?php echo $payment['token_profile_id']; ?>)"><span><span>Delete</span></span></button></td>
+				</tr>
+				<?php } ?>
+			</tbody>
+        </table>
+    </div>
+</div>
+<div class="clear"></div>
+<br/>
+<script>
+
+	window.onload = function(){
+		$('ccTypeSelect').hide();
+		$('ccExpDateInput').hide();
+		$('newCcLast4Header').hide();
+	}
+
+	function deleteCard(paymentId, profileId)
+	{
+		var params = {};
+		params['paymentId'] = paymentId;
+		params['profileId'] = profileId;
+		
+		new Ajax.Request('<?php echo Mage::getBaseUrl('web') . 'authorizenetcim/adminhtml_admin/delete' ?>', {
+			method: 'get',
+			parameters: params,
+			onSuccess: function(transport) {
+				window.location.reload();		
+			}
+		});	
+	}
+
+	function editCard(paymentId, profileId)
+	{
+		if($('edit').innerHTML == 'Edit') {
+			$('newCcLast4Header').show();
+			$('ccLast4Header').hide();
+			$('edit').innerHTML = 'Save Changes';
+			$('ccType').hide();
+			$('ccTypeSelect').show();
+			$('ccExpDate').hide();
+			$('ccExpDateInput').show();
+
+		}else{
+			var params = {};
+			params['paymentId'] = paymentId;
+			params['profileId'] = profileId;
+			params['expMonth'] = $('ccExpMonth').value;
+			params['expYear'] = $('ccExpYear').value;
+			params['ccType'] = $('cc_type').value;
+			params['cc'] = 'XXXXXXXXXXXX'+$('ccLast4').innerHTML; 
+
+			new Ajax.Request('<?php echo Mage::getBaseUrl('web') . 'authorizenetcim/adminhtml_admin/update' ?>', {
+				method: 'get',
+				parameters: params,
+				onSuccess: function(transport) {
+					window.location.reload();		
+				}
+			});
+			
+		}
+	}
+	
+</script>

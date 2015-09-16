@@ -1,0 +1,58 @@
+/**
+ * Brim LLC Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Brim LLC Commercial Extension License
+ * that is bundled with this package in the file license.pdf.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.brimllc.com/license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to support@brimllc.com so we can send you a copy immediately.
+ *
+ * @category   Brim
+ * @package    Brim_Groupedoptions
+ * @copyright  Copyright (c) 2011-2012 Brim LLC
+ * @license    http://ecommerce.brimllc.com/license
+ */
+.grouped-option-title {
+    font-weight: bold;
+    display: block;
+}
+.grouped-option {
+    padding-top: 10px;
+}
+.grouped-option.first {
+    padding-top: 0px;
+}
+.required-key{
+    margin-top: 5px;
+}
+.grouped-options-wrapper {
+    margin: 0px;
+}
+.grouped-options-wrapper input[type=text],
+.grouped-options-wrapper textarea,
+.grouped-options-wrapper select {
+    width: 98%;
+    margin-top: 5px;
+    display: block;
+}
+.grouped-options-wrapper input[type=radio],
+.grouped-options-wrapper input[type=checkbox] {
+    margin-right: 2px;
+}
+
+.grouped-options-wrapper .datetime-picker {
+    float: left;
+    margin-right: 5px;
+}
+
+.grouped-options-wrapper input.datetime-picker {
+    width: 40%;
+}
+
+.clear{
+    clear:both;
+}

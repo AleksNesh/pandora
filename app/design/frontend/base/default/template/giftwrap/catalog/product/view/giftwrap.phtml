@@ -1,0 +1,191 @@
+<?php
+$_helper = Mage::helper('giftwrap');
+$icon_image = $_helper->getGiftwrapIcon();
+$product = $this->getProduct();
+$productId = $product->getId();
+$wrappable = Mage::helper('giftwrap')->isGiftwrap($product);
+$session = Mage::getSingleton('checkout/session');
+$giftWrapDataSession = $session->getData('giftwrap');
+$giftWrapData = $giftWrapDataSession[$productId];
+$maxlenght = Mage::getModel('giftwrap/giftcard')->load($giftWrapData['giftbox_card'])->getCharacter();
+$active = Mage::getStoreConfig('giftwrap/general/active');
+$moduleName = $this->getRequest()->getModuleName();
+$use_card = $_helper->checkUseCard();
+$giftwrap_color = Mage::getStoreConfig('giftwrap/style/giftwrap_color');
+?>
+
+<?php if ($product->getTypeId() != 'grouped' && $product->getTypeId() != 'virtual' && $product->getTypeId() != 'downloadable'): ?>
+    <?php if ($moduleName == 'checkout'): ?>
+
+    <?php elseif ($moduleName == 'catalog'): ?>
+        <?php if ($wrappable && $active): ?>
+            <?php if (Mage::getStoreConfig('giftwrap/style/giftwrap_view_type') == 'checkbox'): ?>
+            <?php else: ?>
+                <script type="text/javascript">
+                    Event.observe(window, 'load', function() {
+                        $('giftwrap_add_existing').disabled = false;
+                        $('giftwrap_add_new').disabled = false;
+                <?php if (Mage::getStoreConfig('giftwrap/style/giftwrap_view_type') == 'radio'): ?>
+                            $('giftwrap-paper-table').style.display = 'none';
+                            $('giftwrap-container').style.width = '60%';
+                    <?php if ($use_card): ?>
+                                $('giftwrap-giftcard-table').style.display = 'none';
+                                $('giftcard-container').style.width = '60%';
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php if (count($giftWrapData) > 0): ?>
+                    <?php if ($giftWrapData['giftwrap_add'] == 'new'): ?>
+                                $('existing_giftbox_container').style.display = 'none';
+                                var giftbox_paper = $('giftbox_paper_' + '<?php echo $giftWrapData['giftbox_paper'] ?>');
+                                if (giftbox_paper) {
+                                    giftbox_paper.checked = true;
+                                }
+                                $('giftwrap_add_<?php echo $giftWrapData['giftwrap_add'] ?>').checked = true;
+                                $('giftwrap-container').style.display = 'block';
+                        <?php if ($use_card): ?>
+                            <?php if ($giftWrapData['giftbox_card']) { ?>
+                                        var giftbox_card = $('giftwrap_giftcard_' + '<?php echo $giftWrapData['giftbox_card'] ?>');
+                                        if (giftbox_card) {
+                                            $('giftcard-message-maxlen').innerHTML = <?php echo $maxlenght ?>;
+                                            giftbox_card.checked = true;
+                                        }
+                                        $('giftcard-container').style.display = 'block';
+                            <?php } ?>
+                            <?php if ($giftWrapData['giftbox_cardmessage']) { ?>
+                                        var giftbox_cardmessage = <?php echo $giftWrapData['giftbox_cardmessage'] ?>;
+                                        $('giftcart-message-textarea').innerHTML = giftbox_cardmessage;
+                            <?php } ?>
+
+                        <?php endif; ?>
+                        <?php if (Mage::getStoreConfig('giftwrap/style/giftwrap_view_type') == 'radio'): ?>
+                                    $('giftwrap-paper-table').style.display = 'block';
+                                    $('giftwrap-container').style.width = '100%';
+                            <?php if ($use_card): ?>
+                                        $('giftwrap-giftcard-table').style.display = 'block';
+                                        $('giftcard-container').style.width = '100%';
+                            <?php endif ?>
+                        <?php endif; ?>
+                        <?php if ($use_card): ?>
+                                    $('text_message').style.display = 'block';
+                        <?php endif; ?>
+                    <?php elseif ($giftWrapData['giftwrap_add'] == 'exist'): ?>
+                                $('giftwrap_add_existing').checked = true;
+                                if (document.getElementById('existing_giftbox_<?php echo $giftWrapData['giftbox_id']; ?>')) {
+                                    if ($('existing_giftbox_<?php echo $giftWrapData['giftbox_id']; ?>').disabled == false) {
+                                        $('existing_giftbox_<?php echo $giftWrapData['giftbox_id']; ?>').checked = true;
+                                    }
+                                }
+                                $('existing_giftbox_container').style.display = 'block';
+                                $('giftwrap-container').style.display = 'none';
+                                $('giftcard-container').style.display = 'none';
+                                $('text_message').style.display = 'none';
+                    <?php endif; ?>
+                <?php else: ?>
+                            $('giftwrap-container').style.display = 'none';
+                    <?php if ($use_card): ?>
+                                $('giftcard-container').style.display = 'none';
+                    <?php endif; ?>
+                            $('existing_giftbox_container').style.display = 'none';
+                <?php endif; ?>
+                    });
+                </script>
+            <?php endif; ?>
+            <div class="giftwrap_productview_title" style="background-color:<?php echo '#' . $giftwrap_color ?>">
+                <h5>
+                    <img heigth="20" width="20" style="float:left" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/icon/' . $icon_image ?>" />
+                    &nbsp;&nbsp;&nbsp;
+                    <span>
+                        <?php echo $this->__('WRAP THIS PRODUCT'); ?>
+                    </span>
+                </h5>
+            </div>
+            <div class="giftwrap_productview_content">
+                <div id="giftwrap_existing_box" class="giftwrap_box">
+                    <div style="width:100%">
+                        <input disabled="true" id="giftwrap_add_existing" name="giftwrap_add" type="checkbox" value="exist" onclick="showGiftwrapBlock(this);" />
+                        <label style="cursor:pointer" for="giftwrap_add_existing" style="font-size:15px"><?php echo $this->__('Add to an existing gift box') ?></label>
+                    </div>
+                    <?php echo $this->getChildHtml('giftwrap.productview.existing'); ?>
+                </div>
+                <div id="giftwrap_new_box" class="giftwrap_box">
+                    <div style="width:100%">
+                        <input disabled="true" id="giftwrap_add_new" name="giftwrap_add" type="checkbox" value="new" onclick="showGiftwrapBlock(this);" />
+                        <label style="cursor:pointer" for="giftwrap_add_new" style="font-size:15px"><?php echo $this->__('Create a new gift box') ?></label>
+                    </div>
+                    <?php echo $this->getChildHtml('giftwrap.productview.new'); ?>
+                </div>
+            </div>
+            <script type="text/javascript">
+
+                function showGiftwrapBlock(element) {
+                    var exist_chk = $('giftwrap_add_existing');
+                    var new_chk = $('giftwrap_add_new');
+                    if (element.value == 'exist') {
+                        if (new_chk.checked) {
+                            new_chk.checked = false;
+                        }
+                        if ($('giftwrap-container').style.display == 'block') {
+                            $('giftwrap-container').style.display = 'none';
+                        }
+            <?php if ($use_card): ?>
+                            if ($('giftcard-container').style.display == 'block') {
+                                $('giftcard-container').style.display = 'none';
+                            }
+
+                            if ($('text_message').style.display == 'block') {
+                                $('text_message').style.display = 'none';
+                            }
+            <?php endif; ?>
+                        if (element.checked) {
+                            $('existing_giftbox_container').style.display = 'block';
+                        } else {
+                            $('existing_giftbox_container').style.display = 'none';
+                        }
+                    } else if (element.value == 'new') {
+                        if (exist_chk.checked) {
+                            exist_chk.checked = false;
+                        }
+                        if ($('existing_giftbox_container').style.display == 'block') {
+                            $('existing_giftbox_container').style.display = 'none';
+                        }
+                        if (element.checked) {
+                            $('giftwrap-container').style.display = 'block';
+                            var allpapers = document.getElementsByName('giftbox_paper');
+                            for (var i = 0; i < allpapers.length; i++) {
+                                if (allpapers[i].checked && allpapers[i].value !== 0) {
+                                    $('giftwrap-container').style.display = 'block';
+                                }
+                            }
+                            var allcards = document.getElementsByName('giftwrap_giftcard');
+                            for (var i = 0; i < allcards.length; i++) {
+                                if (allcards[i].checked && allcards[i].value !== 0) {
+                                    $('giftcard-container').style.display = 'block';
+                                    $('text_message').style.display = 'block';
+                                }
+                            }
+                        } else {
+                            var allpapers = document.getElementsByName('giftbox_paper');
+                            for (var i = 0; i < allpapers.length; i++) {
+                                if (allpapers[i].checked && allpapers[i].value !== 0) {
+                                    allpapers[i].checked = false;
+                                }
+                            }
+                            $('giftwrap-container').style.display = 'none';
+
+            <?php if ($use_card): ?>
+                                $('giftcard-container').style.display = 'none';
+                                $('text_message').style.display = 'none';
+            <?php endif; ?>
+                        }
+
+                    }
+                }
+            </script>
+        <?php else: ?>
+            <?php $toolTipText = $this->getNoGiftWrapToolTip(); ?>
+            <div class="content">
+                <?php $this->htmlEscape($toolTipText); ?>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

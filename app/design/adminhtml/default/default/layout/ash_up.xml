@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Ash Up Extension
+ *
+ * Management interface for keeping Ash core extensions updated.
+ *
+ * @category    Ash
+ * @package     Ash_Up
+ * @copyright   Copyright (c) 2012 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<layout>
+    <!--
+    Index Grid
+    -->
+    <adminhtml_ashinstaller_index>
+        <reference name="content">
+            <block type="ash_up/adminhtml_extension" name="extension_list" />
+        </reference>
+    </adminhtml_ashinstaller_index>
+</layout>

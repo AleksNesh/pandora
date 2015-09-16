@@ -1,0 +1,8 @@
+
+.milemarker {
+    @include milemarker;
+
+    &.mile1 {
+        @include milemarker($mile: 1);
+    }
+}

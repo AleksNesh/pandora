@@ -1,0 +1,35 @@
+/////////////////////////////////////
+// Buttons
+/////////////////////////////////////
+
+.designer_app_wrapper {
+
+    button::-moz-focus-inner {
+        padding: 0;
+        border: 0;
+    } /* FF Fix */
+
+    button {
+        -webkit-border-fit: lines;
+    } /* <- Safari & Google Chrome Fix */
+
+    // button {
+    //     background: $purple;
+    //     border: 0;
+    //     border-radius: 3px;
+    //     height: 34px;
+    //     width: auto;
+    //     font: normal 12px/34px Helvetica, Arial, sans-serif;
+    //     color: #fff;
+    //     text-align: center;
+    //     white-space: nowrap;
+    //     cursor: pointer;
+    //     overflow: visible;
+    //     padding: 0 1em 0;
+    //     margin: 0;
+    // }
+
+    button {
+        @extend %button;
+    }
+}

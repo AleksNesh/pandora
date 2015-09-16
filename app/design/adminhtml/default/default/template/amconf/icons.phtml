@@ -1,0 +1,624 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Conf
+ */
+?>
+<?php echo $this->getBlockHtml('formkey')?> 
+
+<div class="entity-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('amconf')->__('Swatches Size Settings') ?></h4>
+        
+    </div>
+    <div class="box">
+        <?php
+        $path = Mage::getBaseDir('media') . DS . 'amconf';
+        if (!is_writable($path)){
+            echo '<ul class="messages"><li class="error-msg">' . $this->__('Please make sure the folder %s is writable(0777).', $path) . '</li></ul>';
+        }
+        ?>
+        <div class="notice-msg" style="padding-left: 50px; height: 30px; padding-top: 8px; margin-bottom: 14px;">
+            <div>
+                <input type="checkbox" value="1" name="amconf_useimages" <?php if ($this->getConfAttr()->getUseImage()): ?>checked="checked" <?php endif; ?>/>
+                <input type="hidden" value="<?php echo Mage::registry('entity_attribute')->getId()?>>" name="entity_attribute"/>
+                <?php echo $this->__('Use images for selection of configurable product options'); ?>
+            </div>
+        </div>
+        <table width="100%">
+        <tr>
+        <td>
+            <div>
+                <span style="font-size: 16px; font-weight: bold; color: black;"><?php echo $this->__('Product View Page'); ?></span>
+                <div style="border: 0; padding: 10px;">
+                 <table class="form-list">
+                 <tr>
+                    <td class="label"> <?php echo $this->__('Width, (px)'); ?></td>
+                    <td class="value"><input style="width: 94px;" class="input-text" type="text" <?php if ($this->getConfAttr()->getSmallWidth()): ?>value="<?php echo $this->getConfAttr()->getSmallWidth(); ?>" <?php endif; ?>  name="small_width" />
+                </td>
+                 </tr>  
+                 <tr>
+                    <td class="label"> <?php echo $this->__('Height, (px)'); ?></td>
+                    <td class="value"><input style="width: 94px;" class="input-text" type="text" <?php if ($this->getConfAttr()->getSmallHeight()): ?>value="<?php echo $this->getConfAttr()->getSmallHeight(); ?>" <?php endif; ?>  name="small_height"/></td>
+                 </tr>  
+                 <tr>
+                    <td class="label"> <?php echo $this->__('Use tooltip'); ?></td>
+                    <td class="value">
+                    <?php $_selectedOption = $this->getConfAttr()->getUseTooltip(); ?>
+                    <select name="amconf_usetooltip" id="am-tooltip-select" style="width: 100px;">
+                        <option value="0">No tooltip</option>
+                        <option value="1" <?php if ("1" === $_selectedOption): ?> selected="selected"<?php endif; ?>>Only Title</option>
+                        <option value="2" <?php if ("2" === $_selectedOption): ?> selected="selected"<?php endif; ?>>Only Image</option>
+                        <option value="3" <?php if ("3" === $_selectedOption): ?> selected="selected"<?php endif; ?>>Title & Image</option>
+                    </select>   
+                    </td>
+                 </tr>
+                </table>
+                <div id="am-big-image-container">
+                <span style="font-size: 14px; font-weight: bold; color: black;"><?php echo $this->__('Tooltip image'); ?></span>
+                <br/>  
+                <table class="form-list">
+                  <tr>
+                    <td class="label"> <?php echo $this->__('Width, (px)'); ?></td>
+                    <td class="value"><input style="width: 94px;" class="input-text" type="text" <?php if ($this->getConfAttr()->getBigWidth()): ?>value="<?php echo $this->getConfAttr()->getBigWidth(); ?>" <?php endif; ?>  name="big_width" />
+                 </td>
+                 </tr>
+                  <tr>
+                    <td class="label"> <?php echo $this->__('Height, (px)'); ?></td>
+                    <td class="value"><input style="width: 94px;" class="input-text" type="text" <?php if ($this->getConfAttr()->getBigHeight()): ?>value="<?php echo $this->getConfAttr()->getBigHeight(); ?>" <?php endif; ?>  name="big_height"/> 
+                </td>
+                 </tr>  
+                 </table>         
+                 </div>
+                 <span style="font-size: 14px; font-weight: bold; color: black;"><?php echo $this->__('Title'); ?></span> 
+                  <table class="form-list">
+                 <tr>
+                    <td class="label"> <?php echo $this->__('Display Attribute Titles Under Swatch Images'); ?></td>
+                    <td class="value">
+                     <?php $_selectedOptionTitle = $this->getConfAttr()->getUseTitle(); ?>
+                 <select name="amconf_show_title" style="width: 100px;">
+                        <option value="0">No</option>
+                        <option value="1" <?php if ("1" === $_selectedOptionTitle): ?> selected="selected"<?php endif; ?>>Yes</option>
+                    </select>  
+                </td>
+                 </tr>
+                      <tr>
+                          <td class="label"> <?php echo $this->__('Swatches placeholder'); ?></td>
+                          <td class="value" style="vertical-align: middle">
+                              <div>
+                                  <input style="margin: 0 auto;" accept="image/*" class="am-upload-input" type="file" name="amconf_placeholder[<?php echo Mage::registry('entity_attribute')->getId();?>]">
+                                </div>
+                              <?php
+                              $placeholderWidth = $this->getConfAttr()->getSmallWidth()? $this->getConfAttr()->getSmallWidth(): 50;
+                              $placeholderHeight =$this->getConfAttr()->getSmallHeight()? $this->getConfAttr()->getSmallHeight(): 50;
+                              $placeholderUrl = Mage::helper('amconf')->getPlaceholderUrl(Mage::registry('entity_attribute')->getId(), $placeholderWidth, $placeholderHeight);
+                              if($placeholderUrl): ?>
+                                  <img name="" src="<?php echo $placeholderUrl; ?>" alt="">
+                              <?php else : ?>
+                                  <span class="am-none"><?php echo Mage::helper('amconf')->__('[none]') ?></span>
+                              <?php endif; ?>
+
+                          </td>
+                      </tr>
+                  </table>
+                </div>                               
+            </div>
+            </td>
+            
+            
+                <td>
+                    <div>
+                <span style="font-size: 16px; font-weight: bold; color: black;"><?php echo $this->__('Category View Page'); ?></span>
+                <div style="border: 0; padding: 10px;">
+                 <table class="form-list">
+                 <tr>
+                    <td class="label"> <?php echo $this->__('Width, (px)'); ?></td>
+                    <td class="value"><input style="width: 94px;" class="input-text" type="text" 
+                    <?php if ($this->getConfAttr()->getCatSmallWidth()): ?>value="<?php echo $this->getConfAttr()->getCatSmallWidth(); ?>" <?php endif; ?>  name="cat_small_width" />
+                </td>
+                 </tr>  
+                 <tr>
+                    <td class="label"> <?php echo $this->__('Height, (px)'); ?></td>
+                    <td class="value"><input style="width: 94px;" class="input-text" type="text" 
+                    <?php if ($this->getConfAttr()->getCatSmallHeight()): ?>value="<?php echo $this->getConfAttr()->getCatSmallHeight(); ?>" <?php endif; ?>  name="cat_small_height"/></td>
+                 </tr>  
+                 <tr>
+                    <td class="label"> <?php echo $this->__('Use tooltip'); ?></td>
+                    <td class="value">
+                    <?php $_selectedOptionCat = $this->getConfAttr()->getCatUseTooltip(); ?>
+                    <select name="amconf_use_cat_tooltip" id="am-cat-tooltip-select" style="width: 100px;">
+                        <option value="0">No tooltip</option>
+                        <option value="1" <?php if ("1" === $_selectedOptionCat): ?> selected="selected"<?php endif; ?>>Only Title</option>
+                        <option value="2" <?php if ("2" === $_selectedOptionCat): ?> selected="selected"<?php endif; ?>>Only Image</option>
+                        <option value="3" <?php if ("3" === $_selectedOptionCat): ?> selected="selected"<?php endif; ?>>Title & Image</option>
+                    </select>   
+                    </td>
+                 </tr>
+                </table>
+                <div id="am-cat-big-image-container">
+                <span style="font-size: 14px; font-weight: bold; color: black;"><?php echo $this->__('Tooltip image'); ?></span>
+                <br/>  
+                <table class="form-list">
+                  <tr>
+                    <td class="label"> <?php echo $this->__('Width, (px)'); ?></td>
+                    <td class="value"><input style="width: 94px;" class="input-text" type="text" <?php if ($this->getConfAttr()->getCatBigWidth()): ?>value="<?php echo $this->getConfAttr()->getCatBigWidth(); ?>" <?php endif; ?>  name="cat_big_width" />
+                 </td>
+                 </tr>
+                  <tr>
+                    <td class="label"> <?php echo $this->__('Height, (px)'); ?></td>
+                    <td class="value"><input style="width: 94px;" class="input-text" type="text" <?php if ($this->getConfAttr()->getCatBigHeight()): ?>value="<?php echo $this->getConfAttr()->getCatBigHeight(); ?>" <?php endif; ?>  name="cat_big_height"/>
+                </td>
+                 </tr>  
+                 </table>         
+                 </div>
+                </div>                               
+            </div>
+                </td>
+            </tr>
+        </table>
+        
+        <br><br>
+        
+</div></div>        
+ <div class="entity-edit" id="amfile-uploads">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('amconf')->__('Attribute Images') ?></h4>
+        
+    </div>
+    <div class="box">       
+        <div class="hor-scroll grid">
+            <table>
+                <tr class="headings">
+                    <th width="200"><?php echo Mage::helper('amconf')->__('Status Label') ?></th>
+                    <th width="350"><?php echo Mage::helper('amconf')->__('Upload image') ?></th>
+                    <th><?php echo Mage::helper('amconf')->__('Preview') ?></th>
+                    <th><?php echo Mage::helper('amconf')->__('Delete') ?></th>
+                </tr>
+                <?php $addBackground = 0;?>
+                <?php foreach ($this->getOptionsCollection() as $option): $addBackground++;?>
+                <tr class="<?php echo $addBackground % 2 ? 'am_first_row' : 'am_second_row';?>">
+                    <?php $swatchModel = Mage::getModel('amconf/swatch')->load($option->getId()); $color = $swatchModel->getColor();?>
+                    <?php $addActiveClass = $color ? true : false;?>
+                    <td style="vertical-align: middle; text-align: center;"><?php echo $option->getData('value'); ?></td>
+                    <?php
+                        $iconUrl = $this->getIcon($option);
+                        $iconBigUrl = $this->getBigIcon($option);
+                    ?>
+                    <td style="vertical-align: middle;">
+                        <div class="amconf-radio-box">
+                            <label class="amconf-image-radio">
+                                <input type="radio" title="Upload Image" <?php echo !$addActiveClass ? 'checked="checked"' : ''; ?> style="display: none">
+                                <span class="am_radio"></span>
+                                <?php echo Mage::helper('amconf')->__('Upload image') ?>
+                            </label>
+                            <label class="amconf-color-radio" style="float: right;">
+                                <input type="radio" title="Color Picker" <?php echo $addActiveClass ? 'checked="checked"' : ''; ?> style="display: none">
+                                <span class="am_radio"></span>
+                                <?php echo Mage::helper('amconf')->__('Color Picker') ?>
+                            </label>
+                        </div>
+                        <div class="am-button-box">
+                            <div class="upload_box" style="display: <?php echo !$addActiveClass ? 'block' : 'none'; ?>; width: <?php echo !$addActiveClass ? '330px' : '0'; ?>">
+                                <div class="drop"><span><?php echo $this->__('Click or drop files here') ;?></span></div>
+                                <input type="file" name="amconf_icon[<?php echo $option->getData('option_id'); ?>]" accept="image/*" class="am-upload-img-input" multiple="false">
+                            </div>
+                            <input value="<?php echo $swatchModel->getColor(); ?>" type="hidden" class="color_text color_text_<?php echo $option->getId();?>" id="color-text_<?php echo $option->getId(); ?>" name="amconf_swatch[<?php echo $option->getId();?>]">
+                            <div style="display: <?php echo $addActiveClass ? 'block' : 'none'; ?>; width: <?php echo $addActiveClass ? '86px' : '0'; ?>" class="am-color-picker-img" onclick="openColorpicker('color-text_<?php echo $option->getId()?>', this);"></div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle;" align="center">
+                        <?php
+                        if ($color):
+                        ?>
+                            <div style="background-color: #<?php echo $color; ?>" name="<?php echo $option->getData('value'); ?>" color="<?php echo $color; ?>"class="tooltipster color-preview color-preview_<?php echo $option->getId();?>" id="color-preview_<?php echo $option->getId(); ?>"></div>
+
+                        <?php elseif($iconUrl): ?>
+                            <img class="tooltipster" name="<?php echo $option->getData('value'); ?>" src="<?php echo $iconUrl; ?>" bigicon="<?php echo $iconBigUrl; ?>" alt="">
+                            <div style="display: none;" class="color-preview color-preview_<?php echo $option->getId();?>" id="color-preview_<?php echo $option->getId(); ?>"></div>
+                        <?php else : ?>
+                            <div style="display: none;" class="color-preview color-preview_<?php echo $option->getId();?>" id="color-preview_<?php echo $option->getId(); ?>"></div>
+                            <span class="am-none"><?php echo Mage::helper('amconf')->__('[none]') ?></span>
+                        <?php endif; ?>
+                    </td>
+                    <td style="vertical-align: middle;" align="center"><input type="checkbox" value="1" name="amconf_icon_delete[<?php echo $option->getData('option_id'); ?>]"></td>
+                </tr>
+                <?php endforeach; ?>
+                
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="colorpicker" id="colorpicker" style="display: none;">
+    <div class="window-mask"></div>
+    <table class="colors">
+        <tr>
+            <td valign="top">
+                <div id="cp1_ColorMap"></div>
+            </td>
+            <td valign="top">
+                <div id="cp1_ColorBar"></div>
+            </td>
+
+            <td valign="top">
+
+                <table>
+                    <tr>
+                        <td colspan="3">
+                            <div id="cp1_Preview" style="background-color: #fff; width: 60px; height: 60px; padding: 0; margin: 0; border: solid 1px #000;">
+                                <br />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="cp1_HueRadio" name="cp1_Mode" value="0" />
+                        </td>
+                        <td>
+                            <label for="cp1_HueRadio">H:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="cp1_Hue" value="0" style="width: 40px;" /> &deg;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="radio" id="cp1_SaturationRadio" name="cp1_Mode" value="1" />
+                        </td>
+                        <td>
+                            <label for="cp1_SaturationRadio">S:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="cp1_Saturation" value="100" style="width: 40px;" /> %
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="radio" id="cp1_BrightnessRadio" name="cp1_Mode" value="2" />
+                        </td>
+                        <td>
+                            <label for="cp1_BrightnessRadio">B:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="cp1_Brightness" value="100" style="width: 40px;" /> %
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" height="5">
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="radio" id="cp1_RedRadio" name="cp1_Mode" value="r" />
+                        </td>
+                        <td>
+                            <label for="cp1_RedRadio">R:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="cp1_Red" value="255" style="width: 40px;" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="radio" id="cp1_GreenRadio" name="cp1_Mode" value="g" />
+                        </td>
+                        <td>
+                            <label for="cp1_GreenRadio">G:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="cp1_Green" value="0" style="width: 40px;" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="radio" id="cp1_BlueRadio" name="cp1_Mode" value="b" />
+                        </td>
+                        <td>
+                            <label for="cp1_BlueRadio">B:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="cp1_Blue" value="0" style="width: 40px;" />
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            #:
+                        </td>
+                        <td colspan="2">
+                            <input type="text" id="cp1_Hex" value="FF0000" style="width: 60px;" />
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button id="colorpicker_apply" class="scalable save" type="button" value="Apply">
+                    <span><?php echo $this->__('Apply'); ?></span>
+                </button>
+                <button id="colorpicker_cancel" class="scalable delete" type="button" value="Cancel">
+                    <span><?php echo $this->__('Cancel'); ?></span>
+                </button>
+            </td>
+        </tr>
+    </table>
+    <div style="display:none;">
+        <?php
+        $colorPickerImagesDir = Mage::getDesign()->getSkinUrl('amasty/amconf/colorpicker/images/');
+        ?>
+        <img class="<?php echo $colorPickerImagesDir ?>rangearrows.gif" />
+        <img src="<?php echo $colorPickerImagesDir ?>mappoint.gif" />
+
+        <img src="<?php echo $colorPickerImagesDir ?>bar-saturation.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-brightness.png" />
+
+        <img src="<?php echo $colorPickerImagesDir ?>bar-blue-tl.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-blue-tr.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-blue-bl.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-blue-br.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-red-tl.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-red-tr.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-red-bl.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-red-br.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-green-tl.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-green-tr.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-green-bl.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>bar-green-br.png" />
+
+        <img src="<?php echo $colorPickerImagesDir ?>map-red-max.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>map-red-min.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>map-green-max.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>map-green-min.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>map-blue-max.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>map-blue-min.png" />
+
+        <img src="<?php echo $colorPickerImagesDir ?>map-saturation.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>map-saturation-overlay.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>map-brightness.png" />
+        <img src="<?php echo $colorPickerImagesDir ?>map-hue.png" />
+    </div>
+</div>
+
+<script type="text/javascript">
+$("am-tooltip-select").observe('change', function(me){
+    element = Event.element(me);
+    if(element.value == "0" || element.value == "1"){
+        $('am-big-image-container').hide();
+    }
+    else{
+        $('am-big-image-container').show();
+    }
+});
+
+$("am-cat-tooltip-select").observe('change', function(me){
+    element = Event.element(me);
+    if(element.value == "0" || element.value == "1"){
+        $('am-cat-big-image-container').hide();
+    }
+    else{
+        $('am-cat-big-image-container').show();
+    }
+});
+
+varienForm.prototype._submit = function(){
+    var $form = $(this.formId);
+    //Amasty code fix max_var_upload
+    $form.select("input:file").each(function(element){
+        if("" == element.value){
+            element.disabled = true;
+        }
+    }.bind(this));
+
+    if(this.submitUrl){
+        $form.action = this.submitUrl;
+    }
+    $form.submit();
+}
+
+document.observe("dom:loaded", function() {
+    document.getElementById("edit_form").enctype="multipart/form-data";
+    element = $("am-tooltip-select");
+    if(element.value == "0" || element.value == "1"){
+        $('am-big-image-container').hide();
+    }
+    else{
+        $('am-big-image-container').show();
+    }  
+    
+    element = $("am-cat-tooltip-select");
+    if(element.value == "0" || element.value == "1"){
+        $('am-cat-big-image-container').hide();
+    }
+    else{
+        $('am-cat-big-image-container').show();
+    } 
+    
+    $$(".tooltipster").each(function(elm){
+        if($('am-tooltip-select').selectedIndex != 0 && 'undefined' != typeof(jQuery)){
+            var amcontent = "";
+            if (elm.tagName == 'IMG') {
+                switch ($('am-tooltip-select').selectedIndex) {
+                    case 1:
+                        amcontent = '<div class="amtooltip-label">' + elm.readAttribute('name') + '</div>';
+                        break;
+                    case 2:
+                        amcontent = '<div class="amtooltip-img"><img src="' + elm.readAttribute('bigicon') + '"/></div>';
+                        break;
+                    case 3:
+                        amcontent = '<div class="amtooltip-img"><img src="' + elm.readAttribute('bigicon') + '"/></div><div class="amtooltip-label">' + elm.readAttribute('name') + '</div>';
+                        break;
+                }
+            } else if(elm.tagName == 'DIV') {
+                var width = <?php echo $this->getConfAttr()->getBigWidth()? $this->getConfAttr()->getBigWidth(): 100;?>;
+                var height = <?php echo $this->getConfAttr()->getBigHeight()? $this->getConfAttr()->getBigHeight(): 100;?>;
+                switch ($('am-tooltip-select').selectedIndex) {
+                    case 1:
+                        amcontent = '<div class="amtooltip-label">' + elm.readAttribute('name') + '</div>';
+                        break;
+                    case 2:
+                        amcontent = '<div class="amtooltip-img"><div style="width: ' + width + 'px; height:' + height + 'px; background: #' + elm.readAttribute('color') + '"></div></div>';
+                        break;
+                    case 3:
+                        amcontent = '<div class="amtooltip-img"><div style="width: ' + width + 'px; height:' + height + 'px; background: #' + elm.readAttribute('color') + '"></div><div class="amtooltip-label">' + elm.readAttribute('name') +  '</div>';
+                        break;
+                }
+            }
+
+            jQuery(elm).tooltipster({
+                content: jQuery(amcontent),
+                theme: 'tooltipster-light',
+                animation: 'grow',
+                touchDevices: false,
+                position: "top"
+            });      
+        }
+    });
+});
+// action radio button
+$$('.amconf-color-radio').each(function(elm) {
+    Event.observe(elm,'click',function() {
+        if (!elm.checked) {
+            var tr = elm.up('tr');
+            if (tr) {
+                tr.select('.am-color-picker-img')[0].show();
+                new Effect.Morph(tr.select('.am-color-picker-img')[0], {
+                    style: 'width: 86px',
+                    duration: 0.4
+                });
+                tr.select('.upload_box')[0].hide();
+                tr.select('.upload_box')[0].style.width = '0px';
+                tr.select('.amconf-image-radio')[0].down('input').checked = false;
+            }
+        }
+    });
+});
+$$('.amconf-image-radio').each(function(elm) {
+    Event.observe(elm,'click',function() {
+        if (!elm.checked) {
+            var tr = elm.up('tr');
+            if (tr) {
+                tr.select('.upload_box')[0].show();
+                new Effect.Morph(tr.select('.upload_box')[0], {
+                    style: 'width: 330px',
+                    duration: 0.4
+                });
+                tr.select('.am-color-picker-img')[0].style.width = '0px';
+                tr.select('.am-color-picker-img')[0].hide();
+                tr.select('.amconf-color-radio')[0].down('input').checked = false;
+            }
+        }
+    });
+});
+
+// color picker
+Event.observe(window,'load',function() {
+    Refresh.Web.DefaultColorPickerSettings.clientFilesPath = '<?php echo $colorPickerImagesDir ?>';
+    colorPicker = new Refresh.Web.ColorPicker('cp1', {});
+    $$('.colorpicker-arrow').each(function(elm) {
+        elm.hide();
+    });
+});
+Event.observe($('colorpicker_apply'), 'click', function() {
+    useColorPicker();
+});
+Event.observe($$('#colorpicker .window-mask')[0], 'click', function(ev) {
+    useColorPicker();
+});
+Event.observe($('colorpicker_cancel'), 'click', function() {
+    useColorPicker($('colorpicker_cancel'));
+});
+useColorPicker = function(button) {
+    $('colorpicker').hide();
+    $$('.colorpicker-arrow').each(function(elm) {elm.hide();});
+    if (button && button.id == 'colorpicker_cancel') {
+        return;
+    }
+    colorPicker.hexElm.value = colorPicker._cvp._hexInput.value;
+    if ($(colorPicker.hexElm.id).up() && $(colorPicker.hexElm.id).up('tr').select('.color-preview')[0]) {
+        if (colorPicker.hexElm.value) {
+            if ($(colorPicker.hexElm.id).up('tr').down('img')) {
+                $(colorPicker.hexElm.id).up('tr').down('img').remove();
+            }
+            $(colorPicker.hexElm.id).up('tr').select('.color-preview')[0].setStyle({backgroundColor: '#' + colorPicker.hexElm.value, display: 'block'});
+            if ($(colorPicker.hexElm.id).up('tr').select('.am-none')[0]) {
+                $(colorPicker.hexElm.id).up('tr').select('.am-none')[0].hide();
+            }
+        } else {
+            $(colorPicker.hexElm.id).up('tr').select('.color-preview')[0].setStyle({backgroundColor: ''});
+        }
+    }
+};
+openColorpicker = function(inputId, button) {
+    var colorpicker = $('colorpicker');
+    Element.extend(button);
+    var viewOffset = button.positionedOffset();
+    colorpicker.setStyle({left : (viewOffset.left + 20) + 'px'});
+    colorpicker.setStyle({top : viewOffset.top + 'px'});
+    colorpicker.show();
+    $$('.colorpicker-arrow').each(function(elm) {
+        elm.show();
+    });
+    colorPicker.setBG(colorPicker._mapL1, $(inputId).value);
+    colorPicker.show($(inputId));
+};
+
+$('amfile-uploads').select('.am-upload-img-input').each(function(elm) {
+    elm.observe('drop', function(e){
+        updateDrag(e);
+        var file = e.dataTransfer.files[0];
+        addPreview(elm, file);
+    });
+    elm.observe('change', function(e){
+        var file = elm.files[0];
+        addPreview(elm, file);
+    });
+    elm.observe('dragover', updateDrag);
+    elm.observe('dragenter', updateDrag);
+    elm.observe('dragleave', updateDrag);
+});
+addPreview = function(elm, file) {
+    var reader = new FileReader();
+    reader.onload = (function() {
+        return function(e) {
+            var img = document.createElement('img');
+            img.src = e.target.result;
+            img.width = '50';
+            img.height = '50';
+            var insertBox = elm.up('tr').down('.color-preview').up('td');
+            if (insertBox.down('img')) {
+                insertBox.down('img').remove();
+            }
+            if (insertBox.down('.am-none')) {
+                insertBox.down('.am-none').hide();
+            }
+            if (insertBox.down('.color-preview')) {
+                insertBox.down('.color-preview').hide();
+            }
+            insertBox.insertBefore(img, null);
+        };
+    })(file);
+    reader.readAsDataURL(file);
+};
+function updateDrag(e)
+{
+    var divDrop = e.target.up('div').down('.drop');
+    if (divDrop.tagName == 'DIV')
+    {
+        if (e.type == 'dragover')
+            divDrop.addClassName('hover');
+        else
+            divDrop.removeClassName('hover');
+    }
+}
+</script>

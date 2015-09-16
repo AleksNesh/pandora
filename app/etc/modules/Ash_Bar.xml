@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Magento Developer's Toolbar
+ *
+ * @category    Ash
+ * @package     Ash_Bar
+ * @copyright   Copyright (c) 2012 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Ash_Bar>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Ash_Core/>
+                <Ash_Jquery/>
+            </depends>
+        </Ash_Bar>
+    </modules>
+</config>

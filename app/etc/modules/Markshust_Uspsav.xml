@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+ * @category    Markshust
+ * @package     Markshust_Uspsav
+ * @author      Mark Shust <mark@shust.com>
+ * @license     http://markshust.com/eula/
+-->
+<config>
+    <modules>
+        <Markshust_Uspsav>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Markshust_Uspsav>
+    </modules>
+</config>

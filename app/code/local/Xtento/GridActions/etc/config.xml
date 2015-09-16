@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Xtento_GridActions>
+            <version>1.7.7</version>
+        </Xtento_GridActions>
+    </modules>
+    <global>
+        <blocks>
+            <gridactions>
+                <class>Xtento_GridActions_Block</class>
+            </gridactions>
+            <adminhtml>
+                <rewrite>
+                    <widget_grid_massaction>Xtento_GridActions_Block_Adminhtml_Sales_Order_Grid_Widget_Massaction</widget_grid_massaction>
+                </rewrite>
+            </adminhtml>
+            <!-- Rewrite for EE -->
+            <enterprise_salesarchive>
+                <rewrite>
+                    <adminhtml_sales_order_grid_massaction>Xtento_GridActions_Block_Adminhtml_Sales_Order_Grid_Widget_MassactionEE</adminhtml_sales_order_grid_massaction>
+                </rewrite>
+            </enterprise_salesarchive>
+            <!-- /Rewrite for EE -->
+        </blocks>
+        <helpers>
+            <gridactions>
+                <class>Xtento_GridActions_Helper</class>
+            </gridactions>
+        </helpers>
+        <models>
+            <gridactions>
+                <class>Xtento_GridActions_Model</class>
+            </gridactions>
+            <shipping>
+                <rewrite>
+                    <config>Xtento_GridActions_Model_Rewrite_Shipping_Config</config>
+                </rewrite>
+            </shipping>
+        </models>
+        <resources>
+            <gridactions_setup>
+                <setup>
+                    <module>Xtento_GridActions</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </gridactions_setup>
+            <gridactions_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </gridactions_write>
+            <gridactions_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </gridactions_read>
+        </resources>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Xtento_GridActions before="Mage_Adminhtml">Xtento_GridActions_Adminhtml</Xtento_GridActions>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Xtento_GridActions>
+                    <files>
+                        <default>Xtento_GridActions.csv</default>
+                    </files>
+                </Xtento_GridActions>
+            </modules>
+        </translate>
+        <events>
+            <!-- If you wanted to output the carrier/tracking number columns as the last columns of the grid, use this event instead: adminhtml_block_html_before -->
+            <core_block_abstract_prepare_layout_after>
+                <observers>
+                    <addMassactionsToGrid>
+                        <type>model</type>
+                        <class>Xtento_GridActions_Model_Observer</class>
+                        <method>core_block_abstract_prepare_layout_after</method>
+                    </addMassactionsToGrid>
+                </observers>
+            </core_block_abstract_prepare_layout_after>
+            <!-- Do not modify the below event, just the above event must be modified to move the columns to the last columns of the grid. -->
+            <core_block_abstract_prepare_layout_after>
+                <observers>
+                    <addMassactionsToGridJs>
+                        <type>model</type>
+                        <class>Xtento_GridActions_Model_Observer</class>
+                        <method>core_block_abstract_prepare_layout_after_javascript_init</method>
+                    </addMassactionsToGridJs>
+                </observers>
+            </core_block_abstract_prepare_layout_after>
+            <core_config_data_save_after>
+                <observers>
+                    <has_value_for_gridactions_configuration_changed>
+                        <type>model</type>
+                        <class>Xtento_GridActions_Model_System_Config_Backend_Import_Enabled</class>
+                        <method>has_value_for_configuration_changed</method>
+                    </has_value_for_gridactions_configuration_changed>
+                </observers>
+            </core_config_data_save_after>
+            <controller_action_predispatch_adminhtml>
+                <observers>
+                    <controller_action_predispatch_adminhtml_gridactions>
+                        <type>model</type>
+                        <class>Xtento_GridActions_Model_Observer</class>
+                        <method>controller_action_predispatch_adminhtml</method>
+                    </controller_action_predispatch_adminhtml_gridactions>
+                </observers>
+            </controller_action_predispatch_adminhtml>
+        </events>
+        <!-- Following: Compatibility fix for Magento version 1.3 -->
+        <menu>
+            <system>
+                <children>
+                    <xtento_extensions translate="title">
+                        <title>XTENTO Extensions</title>
+                        <sort_order>1</sort_order>
+                        <children>
+                            <gridactions translate="title">
+                                <title>Simplify Bulk Order Processing</title>
+                                <sort_order>250</sort_order>
+                                <action>adminhtml/system_config/edit/section/gridactions</action>
+                            </gridactions>
+                        </children>
+                    </xtento_extensions>
+                </children>
+            </system>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <gridactions translate="title">
+                                            <title>XTENTO Simplify Bulk Order Processing</title>
+                                            <sort_order>1</sort_order>
+                                        </gridactions>
+                                    </children>
+                                </config>
+                                <xtento_extensions translate="title">
+                                    <title>XTENTO Extensions</title>
+                                    <sort_order>1</sort_order>
+                                    <children>
+                                        <gridactions translate="title">
+                                            <title>Simplify Bulk Order Processing</title>
+                                            <sort_order>250</sort_order>
+                                            <action>adminhtml/system_config/edit/section/gridactions</action>
+                                        </gridactions>
+                                    </children>
+                                </xtento_extensions>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <default>
+        <gridactions>
+            <general>
+                <actions>all</actions>
+                <do_capture>1</do_capture>
+                <set_paid>1</set_paid>
+                <add_trackingnumber_from_grid>1</add_trackingnumber_from_grid>
+                <add_trackingnumber_from_grid_shipped>0</add_trackingnumber_from_grid_shipped>
+            </general>
+        </gridactions>
+    </default>
+</config>
+<!--
+/**
+ * Product:       Xtento_GridActions (1.7.7)
+ * ID:            o5J5Fxf1uEhWScFFa24PUq6DVEzgtn6EKR9tAUroEmE=
+ * Packaged:      2014-08-04T20:41:36+00:00
+ * Last Modified: 2014-07-27T14:51:06+02:00
+ * File:          app/code/local/Xtento/GridActions/etc/config.xml
+ * Copyright:     Copyright (c) 2014 XTENTO GmbH & Co. KG <info@xtento.com> / All rights reserved.
+ */
+-->

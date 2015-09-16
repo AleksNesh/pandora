@@ -1,0 +1,111 @@
+<script type="text/javascript">
+<?php 
+//-------------------------------------------
+// START ADWORDS CONVERSION VALUE TRACKING CODE
+//-------------------------------------------
+$order_details = Mage::getModel('sales/order')->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
+$adwords_saleamt = $order_details->subtotal; 
+?>
+<!-- Google Code for Sale - Magento Conversion Page -->
+/* <![CDATA[ */
+var google_conversion_id = 1072690308;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "jsbuCNHsq1YQhOm__wM";
+var google_conversion_value = <?php echo $adwords_saleamt; ?>;
+var google_conversion_currency = "USD";
+var google_remarketing_only = false;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1072690308/?value=<?php echo $adwords_saleamt; ?>&amp;currency_code=USD&amp;label=jsbuCNHsq1YQhOm__wM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+<!-- Universal Google Analytics - E-commerce Tracking -->
+<?php
+$order = Mage::getModel('sales/order')->loadByIncrementId($this->getOrderId());
+$total = $order->getGrandTotal();
+$shipping = $order->getShippingAmount();
+$tax = $order->getTaxAmount();
+$store = Mage::app()->getStore();
+$name = $store->getName();
+
+$items = $order->getAllItems();
+$item_details = array() ;
+foreach($items as $item) {
+	$det = array() ;
+	$det['sku'] = $item->getSku() ;
+	$det['name'] = $item->getName() ;
+	$det['category'] = get_category_name($item->getProductId()) ;
+	$det['price'] = $item->getPrice() ;
+	$det['quantity'] = number_format($item->getQtyOrdered(), 0) ; 
+	array_push($item_details, $det) ; 
+}
+
+function get_category_name($productId) { 
+	$product = Mage::getModel('catalog/product')->load($productId);
+	$category_name = "" ;
+	$cats = $product->getCategoryIds();
+
+	$cnt = 0 ;
+	foreach ($cats as $category_id) {
+		$_cat = Mage::getModel('catalog/category')->load($category_id) ;
+		$cnt++ ;
+		if($cnt == count($cats)) 
+			$category_name.=$_cat->getName() ;
+		else 
+			$category_name.=$_cat->getName()."," ; 
+		} 
+	return $category_name ; 
+}
+
+function getItemJs(&$transId, &$item) {
+	return <<<HTML
+	ga('ecommerce:addItem', {
+		'id': '$transId',
+		'name': '{$item['name']}',
+		'sku': '{$item['sku']}',
+		'category': '{$item['category']}',
+		'price': '{$item['price']}',
+		'quantity': '{$item['quantity']}'
+	});
+HTML;
+}
+
+?>
+<script type="text/javascript">
+
+ga('require', 'ecommerce', 'ecommerce.js'); // Load GA ecommerce plug-in.
+ga('ecommerce:addTransaction', {
+'id': '<?php echo $this->getOrderId(); ?>', // Transaction ID. Required
+'affiliation': '<?php echo $name ?>', // Affiliation or store name
+'revenue': '<?php echo $total; ?>', // Grand Total
+'shipping': '<?php echo $shipping; ?>', // Shipping
+'tax': '<?php echo $tax; ?>' // Tax
+});
+// to get items
+<?php
+foreach ($item_details as &$item) {
+	echo getItemJs($this->getOrderId(), $item);
+}
+?>
+ga('ecommerce:send');
+</script>
+
+<!-- New Bing Tracking Code -->
+
+<script>
+ var amount = <?php echo $total; ?>; // Assign the total value to amount
+ window.uetq = window.uetq || [];
+ window.uetq.push({ 'gv': amount }); // Pass the value 
+</script>
+
+<script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"4038138"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
+
+<!-- OLD BING TRACKING CODE
+<script type="text/javascript"> if (!window.mstag) mstag = {loadTag : function(){},time : (new Date()).getTime()};</script> <script id="mstag_tops" type="text/javascript" src="//flex.msn.com/mstag/site/c5bb071a-33e2-4702-bae0-1507c5120664/mstag.js"></script> <script type="text/javascript"> mstag.loadTag("analytics", {dedup:"1",domainId:"1614380",type:"1",revenue:"",actionid:"54051"})</script> <noscript> <iframe src="//flex.msn.com/mstag/tag/c5bb071a-33e2-4702-bae0-1507c5120664/analytics.html?dedup=1&domainId=1614380&type=1&revenue=&actionid=54051" frameborder="0" scrolling="no" width="1" height="1" style="visibility:hidden;display:none"> </iframe> </noscript> -->

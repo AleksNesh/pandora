@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Directshop_FraudDetection>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Directshop_FraudDetection>
+    </modules>
+</config>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Ash Slideshow Extension
+ *
+ * @category  Ash
+ * @package   Ash_Slideshow
+ * @copyright Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @author    August Ash Team <core@augustash.com>
+ */
+-->
+<layout>
+    <adminhtml_slideshows_edit>
+        <reference name="head">
+            <action method="addJs"><script>ash_slideshow/individual_slides_sortable.js</script></action>
+        </reference>
+    </adminhtml_slideshows_edit>
+</layout>

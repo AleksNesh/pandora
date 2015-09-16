@@ -1,0 +1,136 @@
+<?php
+$is_last = true;
+$order_id = Mage::app()->getRequest()->getParam('order_id');
+$order = Mage::getModel('sales/order')->load($order_id);
+$itemcollection = $order->getItemsCollection();
+$lastItem = $itemcollection->getLastItem();
+$lastId = Mage::getSingleton("adminhtml/session")->getInvoiceLastId();
+if ($lastId != $this->getParentBlock()->getItem()->getId()) {
+    $is_last = false;
+}
+$giftwrapItems = array();
+$giftboxIds = Mage::getSingleton("adminhtml/session")->getGiftbox();
+$hasGiftwrap = false;
+if (count($giftboxIds) && $is_last) {
+    $hasGiftwrap = true;
+}
+foreach ($giftboxIds as $giftboxId) {
+    $selection = Mage::getModel('giftwrap/selection')->load($giftboxId);
+    $giftwrapItems[] = array(
+        'id' => $selection->getId(),
+        'quantity' => $selection->getQty(),
+        'itemId' => $selection->getItemId(),
+        'styleId' => $selection->getStyleId(),
+        'giftcardId' => $selection->getGiftcardId(),
+        'quoteId' => $selection->getQuoteId(),
+        'character' => $selection->getCharacter(),
+        'giftwrap_message' => $selection->getMessage(),
+        'calculate_by_item' => $selection->getCalculateByItem()
+    );
+}
+?>
+<?php if (count($giftwrapItems) && $hasGiftwrap) { ?>
+    </table>
+    <style>
+        <!--
+        #giftwrap-additional li{
+            list-style: none;
+        }
+        -->
+    </style>
+    <div class="entry-edit">
+        <fieldset>
+            <div class="gift-wrap">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-products">
+                        <?php echo Mage::helper('giftwrap')->__('Gift Wrap Information') ?>
+                    </h4>								
+                </div>
+            </div>
+            <div class="grid">
+                <div class="hor-scroll">
+                    <table width="60%" cellspacing="0" class="data" id="giftwrap-additional">
+                        <thead>
+                            <tr class="headings">
+                                <th class="a-center"><?php echo Mage::helper('giftwrap')->__('Wrapped Items') ?></th>
+                                <th class="a-center"><?php echo Mage::helper('giftwrap')->__('Gift Wrap') ?></th>
+                                <th class="a-center"><?php echo Mage::helper('giftwrap')->__('Gift Card') ?></th>
+                                <th class="a-center"><?php echo Mage::helper('giftwrap')->__('Gift Message') ?></th>
+                                <th class="a-center"><?php echo Mage::helper('giftwrap')->__('Subtotal') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $i = 0;
+                            foreach ($giftwrapItems as $giftwrapItem):
+                                $items = Mage::getModel('giftwrap/selectionitem')->getCollection()
+                                        ->addFieldToFilter('selection_id', $giftwrapItem['id'])
+                                ;
+                                $style = Mage::getModel('giftwrap/giftwrap')->load($giftwrapItem['styleId']);
+                                $giftcard = Mage::getModel('giftwrap/giftcard')->load($giftwrapItem['giftcardId']);
+                                ?>
+                                <?php $i++; ?>
+                                <tr <?php if ($i % 2 == 0): ?>class="odd"<?php else: ?> class="even"<?php endif; ?>>
+                                    <td>
+                                        <?php
+                                        $numberitems = 0;
+                                        foreach ($items as $item) {
+                                            $product = Mage::getModel('catalog/product')->load(Mage::getModel('sales/quote_item')->load($item->getItemId())->getProductId());
+                                            $numberitems += $item->getQty();
+                                            ?>
+                                <li style="list-style:none"><?php echo $this->htmlEscape($product->getName()) . ' - ' . $item->getQty() . ' item(s)'; ?></li>
+                                <?php
+                            }
+                            ?>
+                            </td>
+                            <td class="a-center">
+
+                                <?php
+                                $image = $this->getGiftwrapStyleImage($giftwrapItem['styleId']);
+                                ?>
+                            <li><img id="giftwrap_style_image_<?php echo $giftwrapItem['itemId'] ?>" name="giftwrap_style_image_<?php echo $giftwrapItem['itemId'] ?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/' . $image ?>" width="70px" height="70px"/>
+                            </li>
+                            <li><?php
+                                echo $this->htmlEscape($this->getGiftwrapStyleName($giftwrapItem['styleId']));
+                                ?></li>
+                            </td>
+                            <td class="a-center">
+                                <?php if ($giftcard->getId()) { ?>
+                                    <?php
+                                    $image = $this->getGiftcardImage($giftwrapItem['giftcardId']);
+                                    ?>
+                                <li>
+                                    <img id="giftwrap_style_image_<?php echo $giftwrapItem['itemId'] ?>" name="giftwrap_style_image_<?php echo $giftwrapItem['itemId'] ?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/giftcard/' . $image ?>" width="70px" height="70px"/>
+                                </li>
+                                <li><?php
+                                    echo $this->htmlEscape($this->getGiftcardName($giftwrapItem['giftcardId']));
+                                    ?></li>
+                            <?php } ?>
+                            </td>
+                            <td class="a-center">
+                                <?php echo $this->htmlEscape($giftwrapItem['giftwrap_message']); ?>
+                            </td>
+
+                            <td class="a-center">
+                                <?php
+                                if ($giftwrapItem['calculate_by_item'] == '1') {
+                                    $giftwrapAmount = floatval($numberitems) * (floatval($style->getPrice()) + floatval($giftcard->getPrice()));
+                                } else {
+                                    $giftwrapAmount = floatval($style->getPrice()) + floatval($giftcard->getPrice());
+                                }
+                                echo Mage::helper('core')->currency($giftwrapAmount);
+                                ?>
+                            </td>
+                            </tr>
+                            <?php
+                        endforeach;
+                        ?>
+                        </tbody>
+                    </table>
+                    <script type="text/javascript">decorateTable('giftwrap-additional');</script>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+<?php
+}?>

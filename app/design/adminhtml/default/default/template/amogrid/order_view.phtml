@@ -1,0 +1,60 @@
+<?php
+/**
+* @author Amasty Team
+* @copyright Amasty
+* @package Amasty_Ogrid
+*/
+     $mappedColumns = $this->getMappedColumns();
+     $attributes = $this->getAttributes()->getItems();
+     $viewData = $this->getViewData();
+     
+     $showImages = Mage::getStoreConfig('amogrid/general/images');
+?>
+    <table class="amOrderView">
+<?php
+     foreach($attributes as $attribute){
+         $code = $attribute->getAttributeCode();
+         if (in_array($code, $mappedColumns)){
+?>
+        <tr >
+            <th>
+                <?php
+                    print $this->htmlEscape($attribute->getFrontendLabel());
+                ?>
+            </th>
+            <td id="col_<?php print $code;?>">
+                <?php
+                    foreach($viewData as $viewItem){
+                        if (isset($viewItem[$code]) && !empty($viewItem[$code]))
+                            print $this->htmlEscape($viewItem[$code])."<br/>";
+                    }
+                ?>
+            </td>
+        </tr>
+<?php        
+         }
+     }
+     
+     if (intval($showImages) > 0) {
+?>
+        <tr>
+            <th>
+                Products Thumbnail
+            </th>
+            <td>
+                <?php
+                    foreach($viewData as $viewItem){
+                        if (isset($viewItem['thumbnail_url'])){
+                ?>
+                    <img src="<?php print $viewItem['thumbnail_url'];?>"/>&nbsp;
+                <?php
+                        }
+
+                    }
+                ?>
+            </td>
+        </tr>
+<?php
+         }
+?>
+    </table>

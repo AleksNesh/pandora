@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <Snap translate="label">
+            <label>SNAP Settings</label>
+            <tab>general</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <settings translate="label">
+                    <label>SNAP API Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <testmode_select translate="label">
+                            <label>Use Production Environment: </label>
+                            <comment>Choose yes to use Production environment no to use Stage environment</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </testmode_select>
+                        <system_input translate="label">
+                            <label>System ID: </label>
+                            <comment>External System ID</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </system_input>
+                        <client_input translate="label">
+                            <label>Client ID: </label>
+                            <comment>External Client ID</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </client_input>
+                        <location_input translate="label">
+                            <label>Location ID: </label>
+                            <comment>External Location ID</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </location_input>
+                        <terminal_input translate="label">
+                            <label>Terminal ID: </label>
+                            <comment>External Terminal ID</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </terminal_input>
+                        <initiator_input translate="label">
+                            <label>Initiator ID: </label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </initiator_input>
+                        <initiatorpass_input translate="label">
+                            <label>Initiator Password: </label>
+                            <comment>Initiator Password</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </initiatorpass_input>
+                        <integrationuser_input translate="label">
+                            <label>Integration User: </label>
+                            <comment>Integration user for location</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </integrationuser_input>
+                        <integrationpass_input translate="label">
+                            <label>Integration Password: </label>
+                            <comment>Integration password for location</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </integrationpass_input>
+                    </fields>
+                </settings>
+            </groups>
+        </Snap>
+    </sections>
+</config>

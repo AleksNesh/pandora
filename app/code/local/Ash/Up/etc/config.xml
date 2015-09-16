@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Ash Up Extension
+ *
+ * Management interface for keeping Ash core extensions updated.
+ *
+ * @category    Ash
+ * @package     Ash_Up
+ * @copyright   Copyright (c) 2012 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Ash_Up>
+            <version>1.2.0</version>
+            <ashup
+                remote="https://s3.amazonaws.com/augustash/mage/ash_up-latest.zip" />
+        </Ash_Up>
+    </modules>
+
+    <global>
+        <helpers>
+            <ash_up>
+                <class>Ash_Up_Helper</class>
+            </ash_up>
+        </helpers>
+        <blocks>
+            <ash_up>
+                <class>Ash_Up_Block</class>
+            </ash_up>
+        </blocks>
+        <models>
+            <ash_up>
+                <class>Ash_Up_Model</class>
+                <resourceModel>ash_up_resource</resourceModel>
+            </ash_up>
+            <ash_up_resource>
+                <class>Ash_Up_Model_Resource</class>
+                <entities>
+                    <extension>
+                        <table>ash_extension</table>
+                    </extension>
+                </entities>
+            </ash_up_resource>
+        </models>
+        <resources>
+            <ash_up_setup>
+                <setup>
+                    <module>Ash_Up</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </ash_up_setup>
+        </resources>
+    </global>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Ash_Up before="Mage_Adminhtml">Ash_Up_Adminhtml</Ash_Up>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <ash_up>
+                    <file>ash_up.xml</file>
+                </ash_up>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Ash_Up>
+                    <files>
+                        <default>Ash_Up.csv</default>
+                    </files>
+                </Ash_Up>
+            </modules>
+        </translate>
+    </adminhtml>
+
+    <default>
+        <ash_up>
+            <general>
+                <repo_uri>http://garrison.herokuapp.com/extensions</repo_uri>
+                <cache_lifetime>180</cache_lifetime>
+            </general>
+            <ftp>
+                <enabled>0</enabled>
+            </ftp>
+        </ash_up>
+    </default>
+</config>

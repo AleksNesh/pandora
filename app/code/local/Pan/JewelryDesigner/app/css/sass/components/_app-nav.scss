@@ -1,0 +1,94 @@
+/////////////////////////////////////
+// App Nav
+/////////////////////////////////////
+
+#topnav-wrapper {
+    border-bottom: 1px solid $gray-light;
+    padding-bottom: 1em;
+    margin-bottom: 4em;
+}
+
+#designName {
+    display: inline-block;
+    text-align: center;
+
+    @include media($large-up) {
+        text-align: left;
+    }
+}
+
+#designNameForm {
+
+    input[type="text"] {
+        color: #999;
+        @extend %cinzel;
+        font-weight: 300;
+        font-size: 36px;
+        line-height: 1.15;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.page-header {
+    position: relative;
+}
+
+.app-navigation {
+    text-align: center;
+    margin-bottom: 2em;
+
+    @include media($large-up) {
+        position: absolute;
+        bottom: 5px;
+        right: 0;
+        margin-bottom: 0;
+    }
+
+    ul.nav {
+
+        li {
+            display: inline-block;
+            margin-left: 1em;
+
+            &.active {
+
+                a {
+                    color: darken($purple, 10%);
+
+                    @include media($large-up) {
+                        position: relative;
+                        border-bottom: 1px solid $purple;
+                        padding-bottom: 17px;
+
+                        &:after {
+                            bottom: 0;
+                            left: 50%;
+                            border: solid transparent;
+                            content: "";
+                            height: 0;
+                            width: 0;
+                            position: absolute;
+                            pointer-events: none;
+                            margin-left: -3px;
+                            border-color: rgba($purple, 0) rgba($purple, 0) $purple;
+                            border-width: 3px;
+                        }
+                    }
+                }
+            }
+        }
+
+        a {
+            color: $gray-dark;
+            text-transform: uppercase;
+
+            &:hover {
+                color: $purple;
+                text-decoration: none;
+            }
+        }
+    }
+}

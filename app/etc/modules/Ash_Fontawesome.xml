@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Font Awesome icon support
+ *
+ * @category    Ash
+ * @package     Ash_Fontawesome
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Ash_Fontawesome>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Ash_Core/>
+            </depends>
+        </Ash_Fontawesome>
+    </modules>
+</config>

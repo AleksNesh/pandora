@@ -1,0 +1,72 @@
+.buttons-set button.button-giftcard {
+    float: left;
+    margin-bottom: 5px;
+}
+
+button.button-giftcard {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none;
+    cursor: pointer;
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+    width: auto;
+}
+
+button.button-giftcard span {
+    background: none repeat scroll 0 0 #F18200;
+    color: #FFFFFF;
+    display: block;
+    font: bold 12px/19px Arial,Helvetica,sans-serif;
+    height: 19px;
+    padding: 0 8px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+
+button-giftcard.button span span {
+    border: 0 none;
+    padding: 0;
+}
+button.button-giftcard span {
+    background: none repeat scroll 0 0 #F18200;
+    color: #FFFFFF;
+    display: block;
+    font: bold 12px/19px Arial,Helvetica,sans-serif;
+    height: 19px;
+    padding: 0 8px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.giftcard-set {
+    border-top: medium none;
+    border-bottom: 1px solid #E4E4E4;
+}
+
+.gift-cards-list {
+    margin-top: 10px;
+}
+.gift-card li {
+    font-weight: bold;
+    color: #00CC00;
+}
+
+.gift-card-delete {
+    padding: 2px 0 0 5px;
+    cursor: pointer;
+}
+.gift-card-edit {
+    padding: 2px 2px 0 5px;
+    cursor: pointer;
+}
+.gift-card-save {
+    padding: 2px 2px 0 5px;
+    cursor: pointer;
+}
+
+.gift-card-amount {
+    color: #1E7EC8;
+    /*text-decoration: underline;*/
+}

@@ -1,0 +1,63 @@
+<?php
+/**
+ * Magento Developer's Toolbar
+ *
+ * @category    Ash
+ * @package     Ash_Bar
+ * @copyright   Copyright (c) 2012 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<table id="ashbar-request-table" class="table table-striped">
+    <thead>
+        <tr>
+            <th><?php echo $this->__('Label'); ?></th>
+            <th><?php echo $this->__('Value'); ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><?php echo $this->__('Controller Class Name'); ?></td>
+            <td class="text-info">
+                <span id="ashbar-request-classname"></span><br />
+                <span id="ashbar-request-filename" class="muted"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->__('Full Action Name'); ?></td>
+            <td class="text-info">
+                <span id="ashbar-request-fullactionname"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->__('Module Name'); ?></td>
+            <td class="text-info">
+                <span id="ashbar-request-modulename"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->__('Controller Name'); ?></td>
+            <td class="text-info">
+                <span id="ashbar-request-controllername"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->__('Action Name'); ?></td>
+            <td class="text-info">
+                <span id="ashbar-request-actionname"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->__('Path Info'); ?></td>
+            <td class="text-info">
+                <span id="ashbar-request-pathinfo"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->__('CMS Page ID'); ?></td>
+            <td class="text-info">
+                <span id="ashbar-request-pageid"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

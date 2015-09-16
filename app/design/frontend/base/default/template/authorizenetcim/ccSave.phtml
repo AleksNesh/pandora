@@ -1,0 +1,60 @@
+<?php
+$customerId = 0;
+if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+	$customerId = Mage::getSingleton('customer/session')->getCustomerId();
+}
+?>
+
+<div class="dashboard">
+    <div class="page-title">
+        <h1><?php echo $this->__('Saved Credit Cards') ?></h1>
+    </div>
+	<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+		
+<div class="box-account box-recent">
+<?php $_creditcards = $this->getCreditcards($customerId); ?>
+    <div class="box-head">
+        <h2><?php echo $this->__('Saved Credit Cards') ?></h2>
+    </div>
+	<?php if( !empty($_creditcards) ): ?>
+	    <table class="data-table" id="my-orders-table">
+	    <col width="1" />
+	    <col width="1" />
+	    <col width="1" />
+	    <col width="1" />
+	    <col width="1" />
+	        <thead>
+	            <tr>
+	                <th><?php echo $this->__('Type') ?></th>
+	                <th><?php echo $this->__('Last 4') ?></th>
+	                <th><?php echo $this->__('Exp Month') ?></th>
+	                <th><?php echo $this->__('Exp Year') ?></th>
+	                <th>&nbsp;</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <?php foreach ($_creditcards as $_creditcard): ?>
+	                <tr>
+	                    <td><?php echo $_creditcard['type'] ?></td>
+	                    <td><?php echo $_creditcard['last4'] ?></td>
+	                    <td><?php echo $_creditcard['expmonth'] ?></td>
+	                    <td><?php echo $_creditcard['expyear'] ?></td>
+	                    <td class="a-center">
+		                    <span class="nobr">
+	                        	<a href="<?php echo $this->getCreditcardEditUrl($_creditcard['id']) ?>"><?php echo $this->__('Update Card') ?></a>
+	                        	<span class="separator">|</span> 
+	                        	<a href="<?php echo $this->getCreditcardDeleteUrl($_creditcard['id']) ?>" class="link-reorder"><?php echo $this->__('Delete Card') ?></a>
+	                        </span>	
+	                    </td>
+	                </tr>
+	            <?php endforeach; ?>
+	        </tbody>
+	    </table>
+	    <script type="text/javascript">decorateTable('my-orders-table')</script>
+	<?php else: ?>
+	    <p><?php echo $this->__('No Saved Credit Cards on file.'); ?></p>
+	<?php endif; ?>
+	</div>		
+	<div align="right"><button class="button" onclick="setLocation('<?php echo $this->getCreditCardNewUrl(); ?>')" title="New Card"><span><span><?php echo $this->__('New Card') ?></span></span></button></a></div>
+
+</div>

@@ -1,0 +1,371 @@
+19 December 2013
+============
+version 1.5.4 release
+
+fixed: options.css.php
+fixed: swipe brands also swipe featured products
+fixed: swipe for related and upsell products
+fixed: brands url to pass w3c validation
+fixed: ajax ssl 
+fixed: swipe lib
+fixed: priceslider category filter bug
+fixed: addtocart message was not translated
+fixed: map price support
+fixed: product category additional check
+fixed: ajax cart link behavior in quick view ( open link in parent window )
+
+updated: translation file
+
+added: magento 1.8.1 support
+added: more default flags
+added: default brands images
+added: new cms block for shopping cart page
+added: link to cart and checkout to ajax success message
+added: sample cms pages
+added: css classes to support theme options
+added: option to enable/disable fax field in checkout
+added: link target for revolution slide link
+added: custom block to sidebar
+added: option to autoclose the QuickView window (after someone clicks add to cart)
+added: error handler function for ajax queries
+
+
+
+
+30 September 2013
+=================
+version 1.5.3 release
+
+added: brands slider
+added: magento 1.8 support
+
+fixed: product grid height bug due to out of stock products
+fixed: php warning in layout files
+fixed: thumbnails image size to avoid blurry images
+fixed: checkout responsive bug
+fixed: navigation dropdown bug in firefox
+fixed: bestsellers block product url
+fixed: quick view popup do not support category color scheme
+fixed: bug in top links with external custom link
+fixed: sticky footer
+fixed: product label z-index bug ( list view )
+fixed: slideshow sideblock bug in iphone
+fixed: remove ajax cart animation for products with options
+fixed: referrer url was not passed to cart dropdown
+fixed: set correct lang variable in html tag
+fixed: crosssell slider items lineup
+
+
+
+
+12 June 2013
+============
+version 1.5.2 release
+
+fixed: IE7 js bug
+fixed: Back Image Error in price slider
+fixed: cms page layouts
+fixed: google font https error
+fixed: search field bug - if a long phrase is typed, the text then goes under the magnifying glass/search icon
+fixed: priceslider back button issue
+fixed: sitemap page css issue
+fixed: show the "Sale" Label when using a Catalogue Price Rule
+fixed: mobile view cloud zoom - click on image open it in window
+fixed: product page image galler arrows position
+fixed: quick view thumbs aspect ratio bug
+fixed: android bugs
+fixed: priceslider touch events for iphone
+fixed: navigation shadow issue in chrome
+fixed: mobile nav bug
+fixed: optimize labels code
+fixed: update bestsellers query
+fixed: responsive images in cms pages
+fixed: update twitter
+added: option to disable prev / next buttons on product page
+
+
+
+
+24 May 2013
+============
+version 1.5.1 release
+
+fix category image for responsive mode
+fix facebook border
+fixed: quick view wrong product variable
+fixed: product tab switch doesnt scroll to tab heading
+fixed: duplicated tabs content
+fixed: checkout review page - grand total / shipping titles and their values show up on two lines instead of one
+fixed: typo in config
+fixed: duplicate navigation content
+fixed: hide compare link in list view
+
+
+
+
+9 April 2013
+============
+version 1.5 release
+
+* fix layout xml
+* fix layered navigation more/less text
+* fix links for bestsellers and prev/next links
+* fix top right links block
+* fix product page when options are set to be shown after the column
+* fix account orders page - responsive mode bug
+* fix typing error in image name
+* fix wishlist comments issue
+* fix left column blocks issues
+* fix sales and return page
+* move prev/next layout to shopper dir
+* remove default template files to avoid collisions with other themes
+* fix remember me popup
+* fix merge error
+* fix breadcrumbs for cms pages
+* fix header for android devices
+* fix left nav block - hide if main category is not active or not included in menu
+* fix paypal express checkout page
+* fix rss link on category page
+
+* update revolution slider to 2.2.2
+* update quick view - product name link to product page, add image gallery
+* update override.css name and add option in theme settings to include it
+* update checkout - select checkout as guest and ship to this address by default
+* update checkout - scroll to top when change step in checkout
+* update facebook like box
+
+* add option to hide all compare functionality ( links, icon in header, sideblocks )
+* add an iPhone/iPad Icons for website
+* add shuffle option to revolution slider
+* add animation to top compare and search blocks
+* add Click to Zoom (lightbox) feature for CloudZoom
+* add featured / new / sale products slider for home page
+* add default robots.txt
+* add separate package version
+
+
+
+
+11 January 2013
+============
+version 1.4.1 release
+
+fix bug - revolution slider table do not use database prefix
+fix priceslider bug
+
+
+
+10 January 2013
+============
+version 1.4 release
+
+fix price underline in safari
+fix js regexp for retina images
+fix custom navigation block - wrong title loaded
+fix cloudzoom issue in IE
+fix breadcrumbs on cms pages
+fix lightbox issue for products with single image
+fix address select in mobile view
+fix login/forgotpassword slides bug in FF
+fix contact page success message bug
+fix home page with banners when there is no slideshow
+fix - navigation block on  mouse hover goes out of the right side of browser
+fix - bug with the header compare button on the mobile version
+fix - add ajax actions to tag filter result page
+fix mobile navigation to show subcategories
+fix compare icon bug ( do not respect hide compare icon option on mobile devices )
+fix "enable google font" option for category schemes
+fix - redirect to product page instead of showing quick view popup on mobile devices
+fix lists in footer blocks
+fix responsive bugs
+fix js  bugs
+fix priceslider
+
+add option to change slideshow timeline color
+add option to show search field in header
+add option to display navigation below logo
+add wide navigation
+add revolution slider
+
+
+
+
+28 November 2012
+============
+version 1.3.3 release
+
+fix grid image behavior in IE8
+fix slideshow on sign up page ( in "All pages" mode )
+fix ajax cart for ssl mode
+add onepage checkout login template for non persistent mode
+fixes for iphone / ipad
+fix cloudzoom 404 error
+fixes for firefox
+fix top navigation and logo vertical align
+
+update translation file
+update google fonts list
+
+add new products template
+add "on sale" products block
+
+
+
+
+14 November 2012
+============
+version 1.3.2 release
+
+fix listing items height calculation bug
+fix facebook css for firefox
+fix non responsive category image
+
+
+
+
+13 November 2012
+============
+version 1.3.1 release
+
+fix related / upsell height bug 
+fix ajax priceslider loading
+
+
+
+
+13 November 2012
+============
+version 1.3.0 release
+
+fix ajax cart - remove product link lead to wrong page
+fix related block in layout
+fix compare popup
+fix cloudzoom ( gives 404 error on product page )
+fix bug with search and cart in mobile view
+fix small css bugs
+fix "update cart" issue on product page
+fix additional block margin
+fix cart icon alignment in FF
+
+update register page design
+update mobile menu
+update tabs changed to accordion on mobile view
+
+add  product labels x2 psd
+add cloudzoom option to show zoomed image inside image frame
+add left column home page
+add lighbox to product page
+add conteng bg image option
+add content bg image to categories color schemes
+add option to switch number of products in a row
+add limit of shown options to layered navigation for large amount of options
+add top compare block 
+
+
+
+
+29 October 2012
+============
+version 1.2.3 release
+
+fix priceslider bug - layered navigation box
+fix quick view on search pages
+move price circle option to design section
+fix login page for mobile devices
+update cart dropdown checkout url
+fix new/sale labels
+
+add option to enable/disable quick view button
+add option to enable/disable fixed header
+add psd for labels
+
+
+
+19 October 2012
+============
+version 1.2.2 release
+
+fix bestsellers block view on iphone
+fix search icon on ipad
+fix options bug on some servers
+change align to left for cart icon in header on iphone
+fix patch files
+
+
+
+17 October 2012
+============
+version 1.2.1 release
+
+fix ajax loading image appear
+fix ajax features for featured products block
+fix login page for iphone
+fix bug with blocks order on account pages
+fixes for non-responsive mode
+fix bug with using merged css / js
+
+add option to turn on/off price circle on product listings
+add option to turn on/off scroll to top button
+
+
+
+15 October 2012
+============
+version 1.2 release
+
+fix bug with header links when there are no currencies and languages
+fix backgroud color bug for fixed header.
+hide wishlist and compare in list view on small screens.
+fix getLabel function - check function parameter to be product object
+add note about image for iphone and image for pc in slideshow form
+fix twitter bug with https
+fix bug with toolbar switch bg on iphone.
+fix slideshow image bug - change imagesize parameter from image url to file system path
+fix - rename slides with same name
+fix slideshow slide title in admin
+fix toolbar css
+fix priceslider bug - empty shop by box when we have only price filter
+fix cart page - missing edit icon on mobile views
+fix 404 error page (nothing happens when clicking on buttons)
+fix - update twitter api url
+fix top/footer links bug with separator
+fix - add store name to options css url
+
+add override.css
+add menu_text_color option to overide navigation main links color
+add email to a fried link on product details page
+add number of items in cart in header
+add option to hide second price after product options on configurable product page
+add option to turn on/off responsive
+add ajax wishlist and compare feature + option to turn on/off
+add ajax add to cart module + option to turn on/off
+
+
+
+6 October 2012
+============
+version 1.1 release
+
+fix twitter javascript error when account has only one tweet
+fixes for IE8
+fix not visible old price on product page
+fix global message bug on product page
+add message about currencies update on theme activation
+fix priceslider price condition - check by type not name
+fix priceslider - filters were not applied 
+fix related title bug on product page
+fix cache related bugs
+
+add ability to set custom title for featured block
+adjust default cloud zoom options
+add option to enable/disable price slider in theme options
+add back view image
+update default images
+update documentation
+clean up code
+
+
+
+3 October 2012
+============
+version 1.0 release

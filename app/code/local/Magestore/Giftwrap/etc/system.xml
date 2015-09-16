@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <magestore translate="label">
+            <label>Magestore Extension</label>
+            <sort_order>400</sort_order>
+        </magestore>
+    </tabs>
+    <sections>
+        <giftwrap translate="label" module="giftwrap">
+            <class>separator-top</class>
+            <label>Gift Wrap</label>
+            <tab>magestore</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>300</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>General Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enable Gift Wrap module</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <use_card translate="label">
+                            <label>Enable Step 2</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[If Yes, customers can choose gift card & write gift message ]]></comment>
+                        </use_card>
+                        <!--End HoaNTT-->
+                        <enable_note translate="label">
+                            <label>Enable Step 3</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                            <comment><![CDATA[If Yes, customers can edit Qty. of wrapped items or add other unwrapped items in cart to the gift wrap]]></comment>
+                        </enable_note>
+                        <confirm_delete translate="label">
+                            <label>Enable confirmation when customers delete gift wrap</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </confirm_delete>
+                    </fields> 
+                </general>		
+                <calculation translate="label">
+                    <label>Calculation Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <amount_on_number_items translate="label">
+                            <label>Calculate Giftwrap fee based on number of items</label>										
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[If Yes, multiply gift box & gift card fee according to the number of items wrapped in one wrapping]]></comment>
+                        </amount_on_number_items>
+                        <maximum_items_wrapall translate="label comment">
+                            <label>Maximum items per gift wrap</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </maximum_items_wrapall>
+                        <tax translate="label">
+                            <label>Enable tax for gift wrap fee</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tax>
+                    </fields>
+                </calculation>			
+                <style translate="label">
+                    <label>Gift Wrap Block/ Pop-up Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>5</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <giftwrap_color>
+                            <label>Color of Gift Wrap option</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>color</validate>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Select style color of Gift Wrap block (on product pages) & popup (on shopping cart page)]]></comment>
+                        </giftwrap_color>
+                        <icon_image translate="label comment">
+                            <label>Gift Wrap Icon </label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image_pdf</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">giftwrap/icon</upload_dir>
+                            <base_url type="media" scope_info="1">giftwrap/icon</base_url>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Gift wrap icon, will be used in product page (jpeg, tiff, png formats supported)]]></comment>
+                        </icon_image>
+                        <giftwrap_view_type translate="label">
+                            <label>Gift Wrap selector style</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>giftwrap/system_config_source_product_view_type</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Style used when customers select gift wrap options on product pages. *Note: Dropdown selector will not show images of options.]]></comment>
+                        </giftwrap_view_type>
+                    </fields> 
+                </style>
+            </groups>
+        </giftwrap>
+        <sales>
+            <groups>
+                <totals_sort>
+                    <fields>
+                        <giftwrap translate="label">
+                            <label>Giftwrap</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </giftwrap>
+                    </fields>
+                </totals_sort>
+            </groups>
+        </sales>
+    </sections>
+</config>

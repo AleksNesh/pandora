@@ -1,0 +1,47 @@
+<?php
+/**
+ * Iframe template
+ *
+ * @category    Alpine
+ * @package     Alpine_PrintPdf
+ * @theme       default
+ * @copyright   Copyright (c) 2014 Alpine Consulting, Inc
+ * @author      dmitry.ilin@alpineinc.com
+ */
+?>
+
+<?php
+    $_passedParameters = is_array($this->getPassedParameters()) ? $this->getPassedParameters() : array();
+?>
+
+<script type="text/javascript">
+    alpineQz = new AlpineQZ(
+        "<?php echo $this->getJsUrl('qz'); ?>",
+        {
+            printer: "<?php echo $this->getPrinter(); ?>",
+            pdfUrl: "<?php echo $this->getPdfUrl(); ?>",
+            paperSizeX: "<?php echo $this->getPaperSizeX(); ?>",
+            paperSizeY: "<?php echo $this->getPaperSizeY(); ?>",
+            closeWindow: <?php echo $this->getCloseWindow(); ?>
+        }
+    );
+    alpineQz.deploy();
+</script>
+
+<form id="pdf-form" target="pdf" action="<?php echo $this->getPdfUrl(); ?>" method="<?php echo $this->getMethod(); ?>">
+    <?php foreach ($_passedParameters as $name => $value): ?>
+        <?php if (is_array($value)): ?>
+            <?php foreach ($value as $item): ?>
+                <input type="hidden" name="<?php echo $name; ?>[]" value="<?php echo $item; ?>">
+            <?php endforeach; ?>
+        <?php else: ?>
+            <input type="hidden" name="<?php echo $name; ?>" value="<?php echo $value; ?>">
+        <?php endif; ?>
+    <?php endforeach; ?>
+</form>
+
+<iframe id="pdf" name="pdf" src="" onload="printPdf(this)"></iframe>
+
+<script type="text/javascript">
+    $('pdf-form').submit();
+</script>

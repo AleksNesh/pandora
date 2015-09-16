@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Fooman_PdfCustomiser>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Fooman_EmailAttachments/>
+            </depends>
+        </Fooman_PdfCustomiser>
+    </modules>
+</config>

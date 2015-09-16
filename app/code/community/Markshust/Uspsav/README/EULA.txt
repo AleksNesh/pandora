@@ -1,0 +1,33 @@
+THIS LICENSE AGREEMENT (HEREINAFTER AGREEMENT) IS AN AGREEMENT BETWEEN YOU (THE PERSON OR COMPANY WHO IS BEING LICENSED TO USE THE SOFTWARE OR DOCUMENTATION) AND Mark Shust (HEREINAFTER Mark Shust). THE AGREEMENT APPLIES TO ALL PRODUCTS/SOFTWARE/SCRIPTS/SERVICES YOU PURCHASE FROM Mark Shust.
+
+1. By purchasing the Software you acknowledge that you have read and agree to the terms of this Agreement, and that you agree to use the Software in compliance with this Agreement.
+
+2. The Agreement is considered in effect when you download the Software or receive it through any other means.
+
+3. The Software or a portion of it is to be considered copyright material owned by Mark Shust. As such, it is protected by current law. Any activity that infringes terms of this Agreement violates copyright law and will be prosecuted according to the current law. Mark Shust reserves the right to revoke the license of any user who is holding an invalid license.
+
+4. In some cases, the delivered Software may include source code, either in whole or in part. In these cases, you may alter the source code for use within the limitations of the Agreement. However, the source code (altered or otherwise) may not be included in any other Software with the intent to distribute or sell the derived work.
+
+5. Altering the source code is done at your discretion. Mark Shust is under no obligation to support any source code that differs from the originally delivered Software.
+
+6. You may not, under any circumstances, distribute, sub-license, rent, lease, lend or sell the delivered Software, any modified version if source code is provided, or any Software that contains, in whole or in part, source code from the delivered Software. You may not place the Software on a server so that it is accessible via a public network such as the Internet for distribution purposes.
+
+7. The purchase of this Software entitles you to one install for a single Magento instance, subject to all other terms of this Agreement. For Magento modules, this means that you may install the module on a single Magento instance on a single server, even if that Magento instance contains more than one domain, subdomain, or storeview. Multiple licenses may be purchased.
+
+8. Mark Shust WILL NOT BE LIABLE FOR ANY DAMAGES THAT RESULT FROM THE USE (OR MIS-USE) OF THE SOFTWARE. THIS INCLUDES PERCEIVED DAMAGES TO PROFITS/SAVING, REPUTATION, INFORMATION, OR ANY OTHER ASPECT OF YOUR BUSINESS, INCIDENTAL OR CONSEQUENTIAL.
+
+9. Mark Shust reserves the right to revoke your right to use the Software at his discretion.
+
+10. If you fail to use the Software in accordance with the terms and conditions of this License Agreement, it constitutes a breach of the agreement, and your license to use the Software is revoked.
+
+11. Mark Shust reserves the right to alter this agreement at anytime and without notification.
+
+12. Mark Shust is not liable for the cost of any prosecution or damages that result from your illegal and/or unlawful use of the Software.
+
+13. You are bound to preserve the copyright information intact. This includes the text/link at bottom.
+
+14. Mark Shust reserves the right to publish a selected list of users of the Software.
+
+15. This agreement remains effective until terminated. Mark Shust may terminate your license at any time if it is determined that you are breaking the terms of the Agreement. You may terminate the agreement by destroying all copies of the Software. Terminating the agreement does not place Mark Shust under obligation to return to you the amount spent for purchase of the Software.
+
+16. If Mark Shust terminates your license and you continue to use the Software after receiving notice of your license being terminated, you agree to pay any and all costs (including but not limited to reasonable attorney fees) associated with the efforts of Mark Shust to revoke your license and any damages suffered by Mark Shust because of your misuse of the Software.

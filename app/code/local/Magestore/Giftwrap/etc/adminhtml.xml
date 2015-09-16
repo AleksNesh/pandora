@@ -1,0 +1,87 @@
+<config>
+	<menu>
+		<catalog>
+			<children>
+				<giftwrap module="giftwrap" translate="title">
+					<title>Gift Wrap</title>
+					<sort_order>5</sort_order>
+					<children>
+						<giftbox module="giftwrap" translate="title">
+							<title>Manage Gift Boxes</title>
+							<sort_order>1</sort_order>
+							<action>admingiftwrap/adminhtml_giftwrap</action>
+						</giftbox>
+						<giftcard module="giftwrap" translate="title">
+							<title>Manage Gift Cards</title>
+							<sort_order>2</sort_order>
+							<action>admingiftwrap/adminhtml_giftcard</action>
+						</giftcard>
+						<product module="giftwrap" translate="title">
+							<title>Manage Wrappable Products</title>
+							<sort_order>3</sort_order>
+							<action>admingiftwrap/adminhtml_product</action>
+						</product>
+						<setting module="giftwrap" translate="title">
+							<title>Settings</title>
+							<sort_order>4</sort_order>
+							<action>adminhtml/system_config/edit/section/giftwrap</action>
+						</setting>
+					</children>
+				</giftwrap>
+			</children>
+		</catalog>
+	</menu>
+	<acl>
+		<resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<giftwrap translate="title">
+										<title>Magestore</title>
+										<sort_order>50</sort_order>
+									</giftwrap>
+								</children>
+							</config>
+						</children>
+					</system>
+					<catalog>
+						<children>
+							<giftwrap module="giftwrap" translate="title">
+								<title>Gift Wrap</title>
+								<sort_order>105</sort_order>
+								<children>
+									<giftbox module="giftwrap" translate="title">
+										<title>Manage Gift Boxes</title>
+										<sort_order>1</sort_order>
+										<action>admingiftwrap/adminhtml_giftwrap</action>
+									</giftbox>
+									<giftcard module="giftwrap" translate="title">
+										<title>Manage Gift Cards</title>
+										<sort_order>2</sort_order>
+										<action>admingiftwrap/adminhtml_giftcard</action>
+									</giftcard>
+									<product module="giftwrap" translate="title">
+										<title>Manage Wrappable Products</title>
+										<sort_order>3</sort_order>
+										<action>admingiftwrap/adminhtml_product</action>
+									</product>
+									<setting module="giftwrap" translate="title">
+										<title>Settings</title>
+										<sort_order>4</sort_order>
+										<action>adminhtml/system_config/edit/section/giftwrap</action>
+									</setting>
+								</children>
+							</giftwrap>
+						</children>
+					</catalog>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

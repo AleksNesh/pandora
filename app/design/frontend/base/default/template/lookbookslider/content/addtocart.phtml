@@ -1,0 +1,24 @@
+<?php $_product = $this->getProduct(); ?>
+<?php $buttonTitle = $this->__('Add to Cart'); ?>
+<?php $form_key_placeholder = '<!-- form_key_placeholder -->';?>
+<?php $formKey = Mage::getSingleton('core/session')->getFormKey();?>
+<?php $submit_url = $this->getSubmitUrl($_product);?>
+<?php $block_form_key = $this->getBlockHtml('formkey');?>
+<?php $submit_url = str_replace($formKey, $form_key_placeholder, $submit_url);?>
+<?php $block_form_key = str_replace($formKey, $form_key_placeholder, $block_form_key);?>
+<div class="shop-block">
+    <?php //echo $this->getNameInLayout() ?>
+    <form action="<?php echo $submit_url ?>" method="post">
+    <?php echo $block_form_key ?>
+         <div class="no-display">
+              <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+         </div>
+         <div class="add-to-cart">
+              <?php if(!$_product->isGrouped()): ?>
+              <label for="qty"><?php echo $this->__('Qty:') ?></label>
+              <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+              <?php endif; ?>
+              <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" onclick="LookbookAddToCart(this);"><span><span><?php echo $buttonTitle ?></span></span></button>
+         </div>
+    </form>
+</div>

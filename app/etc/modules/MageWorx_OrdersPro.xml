@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MageWorx_OrdersPro>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Sales />
+                <MageWorx_All />
+            </depends>
+            <extension_name>MageWorx Extended Orders</extension_name>
+        </MageWorx_OrdersPro>
+    </modules>
+</config> 

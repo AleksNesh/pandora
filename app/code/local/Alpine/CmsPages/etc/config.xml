@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Alpine_CmsPages>
+            <version>0.1.0</version>
+        </Alpine_CmsPages>
+    </modules>
+    <global>
+        <resources>
+            <alpine_cmspages_setup>
+                <setup>
+                    <module>Alpine_CmsPages</module>
+                </setup>
+            </alpine_cmspages_setup>
+        </resources>
+    </global>
+</config>

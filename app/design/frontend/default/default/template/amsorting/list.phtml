@@ -1,0 +1,43 @@
+<?php $products = $this->getCollection(); ?>
+<?php if ($products && $products->count() > 0) { ?>
+
+<div class="block block-list block-viewed">
+    <div class="block-title">
+        <strong><span><?php echo $this->__($this->getHeader()) ?></span></strong>
+    </div>
+    <div class="block-content">
+
+    <table class="amsorting-table">
+        <tr>
+        <?php foreach ($products as $p) { ?>
+            <td style="padding: 15px 15px 0px 15px;">
+                <a href="<?php echo $p->getProductUrl() ?>" title="<?php echo $this->htmlEscape($p->getName()) ?>" class="product-image"><img 
+src="<?php echo $this->helper('catalog/image')->init($p, 'small_image')->resize(125) ?>" width="125" height="125" alt="<?php echo 
+$this->htmlEscape($p->getName()) ?>" /></a>
+                <h3 class="product-name"><a href="<?php echo $p->getProductUrl() ?>" title="<?php echo $this->htmlEscape($p->getName()) 
+?>"><?php echo $this->htmlEscape($p->getName()) ?></a></h3>
+                <?php echo $this->getPriceHtml($p, true) ?>
+               
+            </td>
+        <?php } ?>
+        </tr>
+        <tr>
+            <?php foreach ($products as $p) { ?>
+               <td style="padding: 0px 15px 15px;">
+                <?php if($p->isSaleable()): ?>
+                        <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart"
+onclick="setLocation('<?php echo $this->getAddToCartUrl($p) ?>')"><span><span><?php echo $this->__('Add to Cart')
+?></span></span></button>
+                    <?php else: ?>
+                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                    <?php endif; ?>
+
+            <?php } ?>
+              </td>
+        </tr>
+    </table>
+	
+	</div>
+</div>
+
+<?php } ?>

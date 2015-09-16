@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Brim LLC Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Brim LLC Commercial Extension License
+ * that is bundled with this package in the file license.pdf.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.brimllc.com/license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to support@brimllc.com so we can send you a copy immediately.
+ *
+ * @category   Brim
+ * @package    Brim_Groupedoptions
+ * @copyright  Copyright (c) 2011-2012 Brim LLC
+ * @license    http://ecommerce.brimllc.com/license
+ */
+-->
+<config>
+	<modules>
+		<Brim_Groupedoptions>
+			<version>2.1.1</version>
+		</Brim_Groupedoptions>
+	</modules>
+	<global>
+		<models>
+			<groupedoptions>
+				<class>Brim_Groupedoptions_Model</class>
+			</groupedoptions>
+			<catalog>
+				<rewrite>
+					<product_type_grouped>Brim_Groupedoptions_Model_Product_Type_Grouped</product_type_grouped>
+				</rewrite>
+			</catalog>
+            <catalog_resource>
+                <rewrite>
+                    <product_indexer_eav_source>Brim_Groupedoptions_Model_Resource_Product_Indexer_Eav_Source</product_indexer_eav_source>
+                    <product_indexer_price_grouped>Brim_Groupedoptions_Model_Resource_Product_Indexer_Price_Grouped</product_indexer_price_grouped>
+                </rewrite>
+            </catalog_resource>
+            <cataloginventory_resource>
+                <rewrite>
+                    <indexer_stock_grouped>Brim_Groupedoptions_Model_Resource_Indexer_Stock_Grouped</indexer_stock_grouped>
+                </rewrite>
+            </cataloginventory_resource>
+
+            <!-- deprecated indexers, 1.4-1.5 compat -->
+			<cataloginventory_mysql4>
+				<rewrite>
+					<indexer_stock_grouped>Brim_Groupedoptions_Model_Resource_Indexer_Stock_Grouped</indexer_stock_grouped>
+				</rewrite>
+			</cataloginventory_mysql4>
+            <catalog_resource_eav_mysql4>
+                <rewrite>
+                    <product_indexer_price_grouped>Brim_Groupedoptions_Model_Resource_Product_Indexer_Price_Grouped</product_indexer_price_grouped>
+                </rewrite>
+            </catalog_resource_eav_mysql4>
+		</models>
+		<blocks>
+			<groupedoptions>
+				<class>Brim_Groupedoptions_Block</class>
+			</groupedoptions>
+			<adminhtml>
+				<rewrite>
+					<catalog_product_edit_tab_super_group>Brim_Groupedoptions_Block_Adminhtml_Product_Edit_Tab_Super_Group</catalog_product_edit_tab_super_group>
+				</rewrite>
+			</adminhtml>
+		</blocks>
+		<helpers>
+			<groupedoptions>
+				<class>Brim_Groupedoptions_Helper</class>
+			</groupedoptions>
+		</helpers>
+        <catalog>
+            <product>
+                <type>
+                    <grouped>
+                        <allow_product_types>
+                            <configurable />
+                            <virtual />
+                        </allow_product_types>
+                    </grouped>
+                </type>
+            </product>
+        </catalog>
+	</global>
+    <frontend>
+        <layout>
+            <updates>
+                <groupedoptions>
+                    <file>grouped-options.xml</file>
+                </groupedoptions>
+            </updates>
+        </layout>
+        <events>
+            <sales_quote_product_add_after>
+                <observers>
+                    <groupedoptions>
+                        <type>singleton</type>
+                        <class>groupedoptions/observer</class>
+                        <method>fixConfigurableParentProductIds</method>
+                    </groupedoptions>
+                </observers>
+            </sales_quote_product_add_after>
+        </events>
+    </frontend>
+    <default>
+        <groupedoptions>
+            <frontend>
+                <enable_template_override>1</enable_template_override>
+                <enable_expanded_layerednav>0</enable_expanded_layerednav>
+            </frontend>
+        </groupedoptions>
+    </default>
+</config> 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Add Jquery/Jquery UI support
+ *
+ * @category    Ash
+ * @package     Ash_Jquery
+ * @copyright   Copyright (c) 2013 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<layout>
+<!--
+Default layout, loads most of the pages
+-->
+    <default>
+        <reference name="head">
+            <action method="setTemplate" ifconfig="ash_jquery/cdn/enabled"><template>ash_jquery/head.phtml</template></action>
+            <action method="addItem" ifconfig="ash_jquery/jquery/enabled"><type>js</type><name helper="ash_jquery/getJqueryUrl" /></action>
+            <action method="addItem" ifconfig="ash_jquery/jquery/enabled"><type>js</type><name>jquery/jquery-noconflict.js</name></action>
+            <action method="addItem" ifconfig="ash_jquery/jquery/migrate_enabled"><type>js</type><name helper="ash_jquery/getJqueryMigrateUrl" /></action>
+            <action method="addItem" ifconfig="ash_jquery/jquery/ui_enabled"><type>js</type><name helper="ash_jquery/getJqueryUiUrl" /></action>
+        </reference>
+    </default>
+</layout>

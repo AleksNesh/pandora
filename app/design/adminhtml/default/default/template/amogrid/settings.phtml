@@ -1,0 +1,24 @@
+<?php
+/**
+* @author Amasty Team
+* @copyright Amasty
+* @package Amasty_Ogrid
+*/
+?>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td style="width:50%;"><h3 class="icon-head"><?php echo $this->getHeader() ?></h3></td>
+            <td class="form-buttons">
+                <?php echo $this->getSaveButtonHtml() ?>
+            </td>
+        </tr>
+    </table>
+</div>
+<form id="attributesForm" name="attributesForm" action="<?php echo $this->getSaveFormAction() ?>" method="post">
+    <input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>" />
+    <input type="hidden" name="backurl" value="<?php echo $this->getBackUrl(); ?>" />
+</form>
+<script type="text/javascript">
+    varienAttributesForm = new varienForm('attributesForm');
+</script>

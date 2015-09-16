@@ -1,0 +1,71 @@
+/////////////////////////////////////
+// Steps Nav
+/////////////////////////////////////
+
+.steps-navigation {
+    clear: both;
+    margin-bottom: 2em;
+
+    .design-step {
+        display: inline-block;
+        background: #fff;
+        border: 1px solid $gray-light;
+        border-radius: 50%;
+        width: 1.5em;
+        text-align: center;
+        margin-right: 0.25em;
+    }
+
+    .choose {
+        display: none;
+
+        @include media($large-up) {
+            display: inline;
+        }
+    }
+
+    ul.nav {
+        text-align: center;
+    }
+
+    li {
+        display: inline-block;
+
+        &.active {
+            a {
+                color: darken($purple, 10%);
+                background: image-url('layout/step-enabled.png') no-repeat bottom center;
+
+                .design-step {
+                    background: darken($purple, 10%);
+                    border-color: $purple;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    a {
+        @extend %cinzel;
+        white-space: nowrap;
+        display: block;
+        font-size: 1.2em;
+        color: $gray-dark;
+        padding: 0 0.8em 1.6em;
+
+        &:hover,
+        &.enabled {
+            color: $purple-dark;
+            text-decoration: none;
+        }
+
+        @include media($large-up) {
+            padding: 0 0.85em 1.2em;
+        }
+
+        @include media($xlarge-up) {
+            font-size: 1.4em;
+            padding: 0 1.6em 1.2em;
+        }
+    }
+}

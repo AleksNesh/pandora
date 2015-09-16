@@ -1,0 +1,207 @@
+<?php //gift wrap product view section - Marko                                  ?>
+<?php
+$_product = $this->getProduct();
+$productId = $this->getRequest()->getParam('id');
+$session = Mage::getSingleton('checkout/session');
+$giftWrapDataSession = $session->getData('giftwrap');
+$giftWrapData = $giftWrapDataSession[$productId];
+$_helper = Mage::helper('giftwrap');
+$icon_image = $_helper->getGiftwrapIcon();
+$papers = $this->getGiftWrapCollection();
+$giftcards = $this->getAllGiftCards();
+$helpIcon = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . '/giftwrap/fam_help.png';
+$use_card = $_helper->checkUseCard();
+$giftwrap_color = Mage::getStoreConfig('giftwrap/style/giftwrap_color');
+?>
+<script type="text/javascript">
+    function showhidepaper() {
+        var showDivId = 'giftwrap-paper-table';
+        if ($(showDivId).style.display == 'none') {
+            $('giftwrap-container').style.width = '100%';
+            $(showDivId).style.display = 'block';
+        } else {
+            $('giftwrap-container').style.width = '60%';
+            $(showDivId).style.display = 'none';
+        }
+    }
+
+    function choosepaper(element) {
+        if (element.checked) {
+            var allpapers = document.getElementsByName('giftbox_paper');
+            for (var i = 0; i < allpapers.length; i++) {
+                if (allpapers[i].id !== element.id) {
+                    allpapers[i].checked = false;
+                }
+            }
+<?php if ($use_card): ?>
+                $('giftcard-container').style.display = 'block';
+<?php endif; ?>
+        } else {
+            var allcards = document.getElementsByName('giftwrap_giftcard');
+            for (var i = 0; i < allcards.length; i++) {
+                if (allcards[i].checked && allcards[i].value !== 0) {
+                    allcards[i].checked = false;
+                }
+            }
+<?php if ($use_card): ?>
+                $('giftcard-container').style.display = 'none';
+                $('text_message').style.display = 'none';
+<?php endif; ?>
+        }
+    }
+
+    function selectGiftCard(element) {
+        var textmessage = $('text_message');
+        $('giftcart-message-textarea').value = '';
+        if (element.checked) {
+            if (element.value == 0) {
+                $('giftcart-message-textarea').value = '';
+                textmessage.style.display = 'none';
+            } else {
+                textmessage.style.display = 'block';
+            }
+            var allcards = document.getElementsByName('giftwrap_giftcard');
+            for (var i = 0; i < allcards.length; i++) {
+                if (allcards[i].id != element.id) {
+                    allcards[i].checked = false;
+                }
+            }
+        } else {
+            $('giftcart-message-textarea').value = '';
+            $('text_message').style.display = 'none';
+        }
+    }
+
+    function viewMaxLen(len) {
+        $('giftcard-message-maxlen').innerHTML = len;
+    }
+
+    function checkMaxLen() {
+        var elements = $$('input[name="giftwrap_giftcard"][type="checkbox"]');
+        var max = 0;
+        elements.each(function(el) {
+            if (el.checked) {
+                max = $('max_len_' + el.value).value;
+            }
+        });
+        var element = $('giftcart-message-textarea');
+        if (max > 0) {
+            if (element.value.length > max) {
+                element.value = element.value.substring(0, max);
+            } else {
+
+            }
+        }
+    }
+
+    function showhidegiftcard() {
+        var showDivId = 'giftwrap-giftcard-table';
+        if ($(showDivId).style.display == 'none') {
+            $('giftcard-container').style.width = '100%';
+            $(showDivId).style.display = 'block';
+        } else {
+            $('giftcard-container').style.width = '60%';
+            $(showDivId).style.display = 'none';
+        }
+    }
+</script>
+
+<div id="giftwrap-container" class="giftwrap-container" style="border:none;">
+    <?php if ($papers->getSize()): ?>
+        <div class="giftwrap_radio_icon" id="giftwrap_radio_icon" style="background-color:<?php echo '#' . $giftwrap_color ?>">
+            <h5>
+                <img heigth="16" width="16" style="float:left" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/icon/' . $icon_image ?>" />
+                &nbsp;&nbsp;&nbsp;
+                <span style="cursor:pointer;float:left;padding-left:5px" onclick="showhidepaper()">
+                    <?php echo $this->__('Choose gift paper'); ?>
+                </span>
+            </h5>
+        </div>
+        <div id="giftwrap-paper-table" class="giftwrap-productview-table">
+            <div id="giftwrap-paper-list" class="jcarousel-skin-tango">
+                <ul id="giftwrap-papers-images" class="giftwrap-paper-list-radio">
+                    <?php foreach ($papers as $paper): ?>
+
+                        <li class="giftwrap-paper">
+                            <div class="item">
+                                <div id="giftwrap-paper-image-<?php echo $paper->getId() ?>" class="paper-image"> 
+                                    <a href="#" class="product-img">
+                                        <label for="giftbox_paper_<?php echo $paper->getId(); ?>"><img src='<?php echo Mage::getBaseUrl('media') . 'giftwrap/' . $paper->getImage(); ?>' width="120" height="100" /></label>
+                                    </a>
+                                </div>
+                                <div class="paper-radio">
+                                    <div class="price-box">
+                                        <span class="regular-price">
+                                            <span class="price"><?php echo Mage::helper('core')->currency($paper->getPrice()); ?></span>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <input onclick="choosepaper(this);"  type="checkbox" value="<?php echo $paper->getId(); ?>" name="giftbox_paper" id="giftbox_paper_<?php echo $paper->getId(); ?>" />
+                                    </div>											
+                                </div>
+                            </div>
+                        </li>
+
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+<?php if (!$papers->getSize()): ?>
+    <p class="note-msg" style="margin-left:10px;"><?php echo $this->__('There is no gift box or paper to use.') ?></p>
+<?php endif; ?>
+
+<?php if ($papers->getSize() && $giftcards->getSize() && Mage::getStoreConfig('giftwrap/general/use_card')): ?>
+    <div id="giftcard-container" class="giftwrap-container">
+        <div class="giftwrap_radio_icon" id="giftwrap_radio_title" style="background-color:<?php echo '#' . $giftwrap_color ?>">
+            <h5>
+                <img style="float:left" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/icon/' . $icon_image ?>" />
+                &nbsp;&nbsp;&nbsp;
+                <span heigth="16" width="16" style="cursor:pointer;float:left;padding-left:5px" onclick="showhidegiftcard()">
+                    <?php echo $this->__('Choose Gift Card'); ?>
+                </span>
+            </h5>
+        </div>
+        <div id="giftwrap-giftcard-table" class="giftwrap-productview-table">
+            <div id="giftwrap-giftcard-list" class="jcarousel-skin-tango">
+                <ul id="giftwrap-giftcard-images" class="giftwrap-paper-list-radio">
+                    <?php foreach ($giftcards as $giftcard): ?>
+                        <li class="giftwrap-paper">
+                            <div class="item">
+                                <div class="paper-image"> 
+                                    <a href="#" class="product-img">
+                                        <label for="giftwrap_giftcard_<?php echo $giftcard->getId(); ?>"><img src='<?php echo Mage::getBaseUrl('media') . 'giftwrap/giftcard/' . $giftcard->getImage(); ?>' width="120" height="100" /></label>
+                                    </a>
+                                    <input type="hidden" id="max_len_<?php echo $giftcard->getId(); ?>" value="<?php echo $giftcard->getCharacter(); ?>"/>
+                                </div>
+                                <div class="paper-radio">
+                                    <div class="price-box">
+                                        <span class="regular-price">
+                                            <span class="price"><?php echo Mage::helper('core')->currency($giftcard->getPrice()); ?></span>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <input onclick="selectGiftCard(this);
+                viewMaxLen(<?php echo $giftcard->getCharacter() ?>);" type="checkbox" value="<?php echo $giftcard->getId(); ?>" name="giftwrap_giftcard" id="giftwrap_giftcard_<?php echo $giftcard->getId(); ?>" />
+                                    </div>											
+                                </div>
+                            </div>
+                        </li>
+
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="text_message" style="display:none">
+        <h5 class="giftbox-title-message-product-view">
+            <span style="float:left">
+                <?php echo $this->__('Your message ('); ?>
+                <strong id="giftcard-message-maxlen"></strong>
+                <?php echo $this->__(' characters max)'); ?></span>
+        </h5>
+        <textarea name="giftbox_message" id="giftcart-message-textarea" onkeydown="checkMaxLen();" onkeyup="checkMaxLen();"  >
+        </textarea>
+    </div>
+<?php endif; ?>

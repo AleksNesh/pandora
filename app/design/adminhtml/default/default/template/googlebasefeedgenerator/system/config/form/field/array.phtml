@@ -1,0 +1,289 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php
+$_htmlId = $this->getHtmlId() ? $this->getHtmlId() : '_' . uniqid();
+
+$_colspan = 2;
+if (!$this->_addAfter) {
+    $_colspan -= 1;
+}
+$_colspan = $_colspan > 1 ? 'colspan="' . $_colspan . '"' : '';
+?>
+
+<div class="grid" id="grid<?php echo $_htmlId ?>">
+    <table cellpadding="0" cellspacing="0" class="border">
+        <tbody>
+
+        <tr class="headings" id="headings<?php echo $_htmlId ?>">
+            <?php foreach ($this->_columns as $columnName => $column): ?>
+                <th><?php echo $column['label'] ?></th>
+            <?php endforeach; ?>
+            <th <?php echo $_colspan ?>></th>
+        </tr>
+
+        <tr id="addRow<?php echo $_htmlId ?>">
+            <td colspan="<?php echo count($this->_columns) ?>">
+                <?php if ($this->_fillButtonLabel): ?>
+                    <span>&nbsp;</span>
+                    <button style="" onclick="" class="scalable fill" type="button" id="fillBtn<?php echo $_htmlId ?>">
+                        <span><?php echo $this->_fillButtonLabel ?></span></button>
+                <?php endif; ?>
+                <?php if ($this->_copyButtonLabel): ?>
+                    <button style="" onclick="" class="scalable fill" type="button" id="copyBtn<?php echo $_htmlId ?>">
+                        <span><?php echo $this->_copyButtonLabel ?></span></button>
+                <?php endif; ?>
+            </td>
+            <td <?php echo $_colspan ?>>
+                <button style="" onclick="" class="scalable add" type="button" id="addToEndBtn<?php echo $_htmlId ?>">
+                    <span><?php echo $this->_addButtonLabel ?></span>
+                </button>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    <input type="hidden" name="<?php echo $this->getElement()->getName() ?>[__empty]" value=""/>
+</div>
+<div id="empty<?php echo $_htmlId ?>">
+    <button style="" onclick="" class="scalable add" type="button" id="emptyAddBtn<?php echo $_htmlId ?>">
+        <span><?php echo $this->_addButtonLabel ?></span>
+    </button>
+    <?php if ($this->_copyButtonLabel): ?>
+        <button style="" onclick="" class="scalable fill" type="button" id="fullCopyBtn<?php echo $_htmlId ?>">
+            <span><?php echo $this->_copyButtonLabel ?></span></button>
+    <?php endif; ?>
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    var arrayRow<?php echo $_htmlId ?> = {
+
+        rowsCount: 0,
+        config: <?php echo $this->configToJson();?>,
+        template: new Template(
+            '<tr id="#{_id}">'
+                <?php foreach ($this->_columns as $columnName => $column):?>
+                + '<td class="#{_id}<?php echo $columnName?>" >'
+                + '<?php echo addslashes($this->_renderCellTemplate($columnName))?>'
+                + '<\/td>'
+                <?php endforeach;?>
+                <?php if ($this->_addAfter):?>
+                + '<td><button onclick="" class="scalable add" type="button" id="addAfterBtn#{_id}"><span><?php echo Mage::helper('adminhtml')->__('Add after') ?><\/span><\/button><\/td>'
+                <?php endif;?>
+                + '<td><button onclick="arrayRow<?php echo $_htmlId ?>.del(\'#{_id}\')" class="scalable delete" type="button"><span><?php echo Mage::helper('adminhtml')->__('Delete') ?><\/span><\/button><\/td>'
+                + '<\/tr>'
+        ),
+
+        add: function (templateData, insertAfterId) {
+            objarr = this;
+            // Generate default template data
+            if ('' == templateData) {
+                var d = new Date();
+                var templateData = {
+                <?php foreach ($this->_columns as $columnName => $column):?>
+                <?php echo $columnName ?> : <?php echo ($columnName == 'order') ? "this.nextOrder()" : "''" ?>,
+                <?php endforeach;?>
+                'field_name' : '<?php echo $this->getFieldName(); ?>',
+                'group_name' : '<?php echo $this->getGroupName(); ?>',
+                _id : '_' + d.getTime() + '_' + d.getMilliseconds()};
+            }
+
+        if ('' == insertAfterId)
+    {
+        // Insert before last row
+        Element.insert($('addRow<?php echo $_htmlId ?>'), {before: this.template.evaluate(templateData)});
+    }
+    else
+    {
+        // Insert after specified row
+        Element.insert($(insertAfterId), {after: this.template.evaluate(templateData)});
+    }
+
+
+    <?php foreach ($this->_columns as $columnName => $column):?>
+    <?php if ($this->allowFillParams($columnName)):?>
+    $$('td.' + templateData._id + '<?php echo $columnName; ?>' + ' select').each(function (el) {
+        Event.observe(el, 'change', objarr.eventListenerRowChanges.bindAsEventListener(objarr, objarr, templateData));
+    });
+    <?php endif;?>
+    <?php endforeach;?>
+
+
+    <?php foreach ($this->_columns as $columnName => $column):?>
+
+    var options = $$('td.' + templateData._id + '<?php echo $columnName; ?>' + ' option');
+
+    // split multivalues
+    var values = [];
+    if (templateData.hasOwnProperty('<?php echo $columnName?>')) {
+        values = templateData.<?php echo $columnName?>.toString().split(',');
+        if (!(values instanceof Array)) {
+            values = [values];
+        }
+    }
+    if (options != undefined && options != "") {
+        for (var index = 0; index < options.length; ++index) {
+            var option = options[index];
+            if (values.include(option.getAttribute('value')) || templateData.<?php echo $columnName?> == "") {
+                option.selected = true;
+                <?php if ($this->allowFillParams($columnName)):?>
+                objarr.fillParamsColumn(objarr, option.value, templateData);
+                <?php endif;?>
+            }
+
+            if (templateData.<?php echo $columnName?> == "") {
+                break;
+            }
+        }
+    }
+    <?php endforeach;?>
+
+    <?php if ($this->_addAfter):?>
+    Event.observe('addAfterBtn' + templateData._id, 'click', this.add.bind(this, '', templateData._id));
+    <?php endif;?>
+
+    this.rowsCount += 1;
+    },
+
+    del : function (rowId) {
+        $(rowId).remove();
+        this.rowsCount -= 1;
+        if (0 == this.rowsCount) {
+            this.showButtonOnly();
+        }
+    }
+    ,
+
+    // Listen for add/change events on map destination column
+    eventListenerRowChanges: function (e, objarr, templateData) {
+        var el = Event.element(e);
+        objarr.fillParamsColumn(objarr, el.value, templateData);
+    }
+    ,
+
+    fillParamsColumn : function (objarr, toValue, templateData) {
+        var html, is = false;
+
+        // fill default param in templateData
+        if (templateData.hasOwnProperty('param') && 0 === templateData.param.length) {
+            if (objarr.config.directives.hasOwnProperty(toValue) && objarr.config.directives[toValue].hasOwnProperty('param')) {
+                templateData.param = objarr.config.directives[toValue]['param'];
+            }
+        }
+
+        // evaluate template
+        for (var key in objarr.config.directives) {
+            if (toValue == key) {
+                if (objarr.config.source[key] != undefined) {
+                    is = true;
+                    html = new Template(objarr.config.source[key]);
+                    $$('td.' + templateData._id + 'param')[0].innerHTML = html.evaluate(templateData);
+                }
+            }
+            }
+        if (!is) {
+            $$('td.' + templateData._id + 'param')[0].innerHTML = '';
+        }
+    }
+    ,
+
+    nextOrder : function () {
+        var v, max = 0;
+        $('grid<?php echo $_htmlId ?>').select('input.grid-order').each(function (elm) {
+            v = parseInt(elm.value)
+            if (v > max) {
+                max = v;
+            }
+        });
+        return max + 10;
+    }
+    ,
+
+    showButtonOnly : function () {
+        $('grid<?php echo $_htmlId ?>').hide();
+        $('empty<?php echo $_htmlId ?>').show();
+    }
+    }
+
+    // Bind add action to "Add" button in last row
+    Event.observe('addToEndBtn<?php echo $_htmlId ?>', 'click', arrayRow<?php echo $_htmlId ?>.add.bind(arrayRow<?php echo $_htmlId ?>, '', ''));
+
+    Event.observe(window, 'load', function () {
+
+        byCategory.initialize('<?php echo $_htmlId ?>');
+
+        <?php if ($this->_fillButtonLabel): ?>
+        // bind fill action
+        Event.observe('fillBtn<?php echo $_htmlId ?>', 'click', function () {
+            byCategory.observeFillBtn('<?php echo $_htmlId; ?>');
+        });
+        <?php endif; ?>
+
+
+        <?php if ($this->_copyButtonLabel): ?>
+        // bind copy action to copy values from another section
+        Event.observe('copyBtn<?php echo $_htmlId ?>', 'click', function () {
+            byCategory.observeCopyBtn('<?php echo $_htmlId; ?>', '#row_rocketweb_googlebasefeedgenerator_columns_google_product_category_by_category', '<?php echo $this->getElement()->getName(); ?>', arrayRow<?php echo $_htmlId ?>);
+        });
+        Event.observe('fullCopyBtn<?php echo $_htmlId ?>', 'click', function () {
+            $('grid<?php echo $_htmlId ?>').show();
+            $('empty<?php echo $_htmlId ?>').hide();
+            byCategory.observeCopyBtn('<?php echo $_htmlId; ?>', '#row_rocketweb_googlebasefeedgenerator_columns_google_product_category_by_category', '<?php echo $this->getElement()->getName(); ?>', arrayRow<?php echo $_htmlId ?>);
+        });
+        <?php endif; ?>
+    });
+
+
+    // add existing rows
+    <?php
+    $_addAfterId = "headings{$_htmlId}";
+    foreach ($this->getArrayRows() as $_rowId => $_row) {
+        echo "arrayRow{$_htmlId}.add(JSON.parse('" . addslashes($_row->toJson()) . "'), '{$_addAfterId}');\n";
+        $_addAfterId = $_rowId;
+    }
+    ?>
+
+    // Initialize standalone button
+    $('empty<?php echo $_htmlId ?>').hide();
+    Event.observe('emptyAddBtn<?php echo $_htmlId ?>', 'click', function () {
+        $('grid<?php echo $_htmlId ?>').show();
+        $('empty<?php echo $_htmlId ?>').hide();
+        arrayRow<?php echo $_htmlId ?>.add('', '');
+    });
+
+    // if no rows, hide grid and show button only
+    <?php if (!$this->getArrayRows()):?>
+    arrayRow<?php echo $_htmlId ?>.showButtonOnly();
+    <?php endif;?>
+
+    // toggle the grid, if element is disabled (depending on scope)
+    <?php if ($this->getElement()->getDisabled()):?>
+    toggleValueElements({checked: true}, $('grid<?php echo $_htmlId ?>').parentNode);
+    <?php endif;?>
+    //]]>
+</script>

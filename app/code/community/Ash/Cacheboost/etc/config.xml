@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Boost cachability by enabling block-level cache on strategic core Magneto
+ * blocks
+ *
+ * @category    Ash
+ * @package     Ash_Cacheboost
+ * @copyright   Copyright (c) 2015 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Ash_Cacheboost>
+             <version>1.0.0</version>
+             <ashup
+                remote="https://s3.amazonaws.com/augustash/mage/Ash_Cacheboost-latest.zip" />
+        </Ash_Cacheboost>
+    </modules>
+
+    <global>
+        <helpers>
+            <ash_cacheboost>
+                <class>Ash_Cacheboost_Helper</class>
+            </ash_cacheboost>
+        </helpers>
+        <models>
+            <ash_cacheboost>
+                <class>Ash_Cacheboost_Model</class>
+            </ash_cacheboost>
+        </models>
+
+        <events>
+            <core_block_abstract_to_html_before>
+                <observers>
+                    <ash_cacheboost_block_before>
+                        <type>singleton</type>
+                        <class>ash_cacheboost/observer</class>
+                        <method>addBlockCache</method>
+                    </ash_cacheboost_block_before>
+                </observers>
+            </core_block_abstract_to_html_before>
+        </events>
+    </global>
+
+    <default>
+        <ash_cacheboost>
+        </ash_cacheboost>
+    </default>
+</config>

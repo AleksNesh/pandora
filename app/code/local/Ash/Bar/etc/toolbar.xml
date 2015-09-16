@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Magento Developer's Toolbar
+ *
+ * @category    Ash
+ * @package     Ash_Bar
+ * @copyright   Copyright (c) 2012 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <tabs>
+        <version translate="title" module="ash_bar">
+            <title>Magento Version</title>
+            <block>ash_bar/tab_version</block>
+        </version>
+        <time translate="title" module="ash_bar">
+            <title>Profiler Runtime</title>
+            <block>ash_bar/tab_time</block>
+            <options>
+                <icon>icon-time</icon>
+            </options>
+        </time>
+        <memory translate="title" module="ash_bar">
+            <title>Memory Used</title>
+            <block>ash_bar/tab_memory</block>
+            <options>
+                <icon>icon-bolt</icon>
+            </options>
+        </memory>
+        <database translate="title" module="ash_bar">
+            <title>SQL Queries</title>
+            <block>ash_bar/tab_database</block>
+            <options>
+                <icon>icon-hdd</icon>
+            </options>
+        </database>
+        <profiler translate="title" module="ash_bar">
+            <title>Profiler Stats</title>
+            <block>ash_bar/tab_profiler</block>
+            <options>
+                <icon>icon-bar-chart</icon>
+            </options>
+        </profiler>
+        <request translate="title" module="ash_bar">
+            <title>Request Details</title>
+            <block>ash_bar/tab_request</block>
+            <options>
+                <icon>icon-info-sign</icon>
+            </options>
+        </request>
+        <models translate="title" module="ash_bar">
+            <title>Models Used</title>
+            <block>ash_bar/tab_model</block>
+            <options>
+                <icon>icon-wrench</icon>
+            </options>
+        </models>
+        <collections translate="title" module="ash_bar">
+            <title>Collections Used</title>
+            <block>ash_bar/tab_collection</block>
+            <options>
+                <icon>icon-columns</icon>
+            </options>
+        </collections>
+        <blocks translate="title" module="ash_bar">
+            <title>Blocks Used</title>
+            <block>ash_bar/tab_block</block>
+            <options>
+                <icon>icon-reorder</icon>
+            </options>
+        </blocks>
+        <layout translate="title" module="ash_bar">
+            <title>Layout Details</title>
+            <block>ash_bar/tab_layout</block>
+            <options>
+                <icon>icon-th</icon>
+            </options>
+        </layout>
+        <events translate="title" module="ash_bar">
+            <title>Events Fired</title>
+            <block>ash_bar/tab_event</block>
+            <options>
+                <icon>icon-tasks</icon>
+            </options>
+        </events>
+        <system translate="title" module="ash_bar">
+            <title>System Tasks</title>
+            <block>ash_bar/tab_system</block>
+            <options>
+                <icon>icon-cogs</icon>
+            </options>
+        </system>
+    </tabs>
+</config>

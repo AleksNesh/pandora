@@ -1,0 +1,16 @@
+***************
+*** 30,35 ****
+  				$order->canHold())
+  			{
+  				$order->hold();
+  			}
+  		}
+  	}
+--- 30,36 ----
+  				$order->canHold())
+  			{
+  				$order->hold();
++ 				Mage::helper('frauddetection')->sendHoldEmail($order, $res);
+  			}
+  		}
+  	}

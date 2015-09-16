@@ -1,0 +1,382 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * WebShopApps Shipping Module
+ *
+ * @category    WebShopApps
+ * @package     WebShopApps_Endicia
+ * User         Genevieve Eddison
+ * Date         13 November 2013
+ * Time         11:00 AM
+ * @copyright   Copyright (c) 2013 Zowta Ltd (http://www.WebShopApps.com)
+ *              Copyright, 2013, Zowta, LLC - US license
+ * @license     http://www.WebShopApps.com/license/license.txt - Commercial license
+ *
+ */
+ -->
+
+<config>
+    <sections>
+        <carriers translate="label" module="shipping">
+            <label>Shipping Methods</label>
+            <tab>sales</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>320</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <wsaendicia translate="label">
+                    <label>USPS through Endicia - Powered by WebShopApps</label>
+                    <comment><![CDATA[
+                                  <div style="padding:10px;background-color:#fff;border:1px solid #ddd;margin-bottom:7px;">
+                                   This module was developed by <a href="http://www.webshopapps.com" target="_blank">WebShopApps.com</a> - <b>Magento Shipping Extension Specialists</b>.
+                                  <br/> For docs & examples refer to the WebShopApps <a href="http://support.webshopapps.com/endicia/">support docs</a>.
+                                  <br/>Don't have an Endicia Account? <a href="https://account.endicia.com/?referredBy=lwsa" target="_blank">Sign up with Endicia here</a>
+                                  </div>
+                                  ]]>
+                    </comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enable Shipping Rates</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <labels translate="label">
+                            <label>Enable Shipping Labels</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </labels>
+                        <serial translate="label">
+                            <label>Serial Key</label>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </serial>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <account_id translate="label">
+                            <label>Account ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </account_id>
+                        <password translate="label">
+                            <label>Pass Phrase</label>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </password>
+                        <sandbox_mode translate="label">
+                            <label>Sandbox Mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sandbox_mode>
+                        <webservices_heading translate="label">
+                            <label>Manage Endicia Account</label>
+                            <frontend_model>wsacommon_adminhtml/system_config_form_field_heading
+                            </frontend_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </webservices_heading>
+                        <balance translate="label">
+                            <label>Account Balance</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>wsaendicia/adminhtml_shipping_balance</frontend_model>
+                            <button_label>Check Account Balance</button_label>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </balance>
+                        <recreditamount>
+                            <label>Purchase Postage - Amount</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>wsaendicia/carrier_endicia_source_recreditamount</source_model>
+                            <sort_order>215</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </recreditamount>
+                        <recredit translate="label">
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>wsaendicia/adminhtml_shipping_recredit</frontend_model>
+                            <button_label>Purchase Postage</button_label>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </recredit>
+                        <newpassphrase>
+                            <label>New Pass Phrase</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>260</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </newpassphrase>
+                        <change_passphrase translate="label">
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>wsaendicia/adminhtml_shipping_changepassphrase</frontend_model>
+                            <button_label>Change Pass Phrase</button_label>
+                            <sort_order>270</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </change_passphrase>
+                        <labels_heading translate="label">
+                            <label>Label Configuration</label>
+                            <frontend_model>wsacommon_adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </labels_heading>
+                        <default_to_endicia>
+                            <label>Default To Endicia Label</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>305</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default_to_endicia>
+                        <stealth>
+                            <label>Hide Shipping Price On Label</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>310</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>USPS Online insurance for shipments is not available when this is set to yes</comment>
+                        </stealth>
+                        <default_domestic>
+                            <label>Default Service for Domestic Labels</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>wsaendicia/carrier_endicia_source_method</source_model>
+                            <sort_order>320</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default_domestic>
+                        <default_international>
+                            <label>Default Service for Internaional Labels</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>wsaendicia/carrier_endicia_source_method</source_model>
+                            <sort_order>330</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default_international>
+                        <insurance_provider>
+                            <label>Shipment Insurance From Provider</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>wsaendicia/carrier_endicia_source_insurance</source_model>
+                            <sort_order>335</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Optionally select to add insurance when creating a shipping label</comment>
+                        </insurance_provider>
+                        <container>
+                            <label>Default Shipping Container Type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>wsaendicia/carrier_endicia_source_containertype</source_model>
+                            <sort_order>340</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </container>
+                        <default_dimensions>
+                            <label>Default Shipment Dimensions</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>345</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Comma separated list of length, width, height]]></comment>
+                        </default_dimensions>
+                        <rubber_stamp_order translate="label">
+                            <label>Include Order # on Label</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>350</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </rubber_stamp_order>
+                        <rubber_stamp_1 translate="label">
+                            <label>Product Attribute Code 1 to Include on Label</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>360</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Advanced Setting - Don't Use Unless Directed by WebShopApps]]></comment>
+                        </rubber_stamp_1>
+                        <rubber_stamp_2 translate="label">
+                            <label>Product Attribute Code 2 to Include on Label</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>370</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Advanced Setting - Don't Use Unless Directed by WebShopApps]]></comment>
+                        </rubber_stamp_2>
+                        <rubber_stamp_3 translate="label">
+                            <label>Product Attribute Code 3 to Include on Label</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>380</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Advanced Setting - Don't Use Unless Directed by WebShopApps]]></comment>
+                        </rubber_stamp_3>
+                        <label_pdf>
+                            <label>Label Output as PDF</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>390</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </label_pdf>
+                        <standard_heading translate="label">
+                            <label>Standard Shipping</label>
+                            <frontend_model>wsacommon_adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </standard_heading>
+                        <wt_units>
+                            <label>Weight Units</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>wsaendicia/carrier_endicia_source_wtunits</source_model>
+                            <sort_order>405</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </wt_units>
+                        <handling_type translate="label">
+                            <label>Calculate handling fee</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>shipping/source_handlingType</source_model>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </handling_type>
+                        <handling_fee translate="label">
+                            <label>Handling fee</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </handling_fee>
+                        <allowed_methods translate="label">
+                            <label>Allowed Methods</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>wsaendicia/carrier_endicia_source_method</source_model>
+                            <sort_order>425</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                            <comment><![CDATA[Please select methods you wish to obtain rates for]]>
+                            </comment>
+                        </allowed_methods>
+                        <free_method translate="label">
+                            <label>Free Method</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_class>free-method</frontend_class>
+                            <source_model>wsaendicia/carrier_endicia_source_freemethod</source_model>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </free_method>
+                        <sallowspecific translate="label">
+                            <label>Ship to applicable countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>440</sort_order>
+                            <frontend_class>shipping-applicable-country</frontend_class>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sallowspecific>
+                        <specificcountry translate="label">
+                            <label>Ship to specific countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>450</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificcountry>
+                        <showmethod translate="label">
+                            <label>Show method if not applicable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>460</sort_order>
+                            <frontend_class>shipping-skip-hide</frontend_class>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showmethod>
+                        <specificerrmsg translate="label">
+                            <label>Displayed error message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>470</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificerrmsg>
+                        <sort_order translate="label">
+                            <label>Sort order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+
+                    </fields>
+                </wsaendicia>
+            </groups>
+        </carriers>
+    </sections>
+</config>

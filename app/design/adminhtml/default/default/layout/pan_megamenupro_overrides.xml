@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Simple module for extending core EM_Megamenupro module
+ *
+ * @category    Pan
+ * @package     Pan_Megamenupro
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @author      Josh Johnson (August Ash)
+ */
+-->
+<layout version="0.1.0">
+    <adminhtml_menueditor_edit>
+        <reference name="head">
+            <action method="removeItem">
+                <type>skin_js</type>
+                <name>em_megamenupro/js/jquery-1.8.2.js</name>
+            </action>
+        </reference>
+    </adminhtml_menueditor_edit>
+</layout>

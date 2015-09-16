@@ -1,0 +1,61 @@
+#devbar-activator {
+  position:fixed;
+  top:0;
+  left:0;
+  width:45px;
+  height:45px;
+  z-index:999999;
+  background-color:#333333;
+  border-right:1px solid #DDD;
+  text-align:center;
+}
+
+.devbar-logo {
+  padding:7px 6px 0 6px;
+  cursor:pointer;
+}
+
+.devbar .fixed {
+  z-index:999998;
+}
+
+.devbar .top-bar-section {
+  margin-left:45px;
+}
+
+.devbar .top-bar-section .has-info {
+  height:45px;
+  padding:0 4px;
+}
+
+.devbar .top-bar-section .has-info span {
+  margin-top:12px;
+}
+
+.devbar .top-bar-section .has-form {
+  padding:0;
+}
+
+.devbar .top-bar-section ul li > a.devbar-menu-item {
+  padding:12px 10px;
+}
+
+.devbar i {
+  font-style:normal;
+}
+
+.devbar-icon {
+  padding-right:6px;
+}
+
+.devbar-tab-section {
+  position:absolute;
+  top:45px !important;
+  left:0;
+  width:100%;
+  padding:10px 0;
+  background:#ffffff;
+  z-index:999997;
+  text-align:left;
+  border-bottom:1px solid #dddddd;
+}

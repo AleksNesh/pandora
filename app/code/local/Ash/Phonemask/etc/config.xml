@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Ash_Phonemask
+ *
+ * Custom phone mask for phone/fax fields
+ *
+ * @category    Ash
+ * @package     Ash_Phonemask
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @author      Josh Johnson (August Ash)
+ */
+-->
+<config>
+
+    <modules>
+        <Ash_Phonemask>
+             <version>0.1.0</version>
+        </Ash_Phonemask>
+    </modules>
+
+    <global>
+        <helpers>
+            <ash_phonemask>
+                <class>Ash_Phonemask_Helper</class>
+            </ash_phonemask>
+        </helpers>
+
+        <models>
+            <ash_phonemask>
+                <class>Ash_Phonemask_Model</class>
+            </ash_phonemask>
+        </models>
+
+        <events>
+            <customer_address_save_before>
+                <observers>
+                    <ash_phonemask>
+                        <type>singleton</type>
+                        <class>ash_phonemask/observer</class>
+                        <method>customer_address_save_before</method>
+                    </ash_phonemask>
+                </observers>
+            </customer_address_save_before>
+        </events>
+    </global>
+
+    <frontend>
+        <layout>
+            <updates>
+                <ash_phonemask>
+                    <file>ash_phonemask.xml</file>
+                </ash_phonemask>
+            </updates>
+        </layout>
+    </frontend>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <ash_phonemask>
+                    <file>ash_phonemask.xml</file>
+                </ash_phonemask>
+            </updates>
+        </layout>
+    </adminhtml>
+</config>

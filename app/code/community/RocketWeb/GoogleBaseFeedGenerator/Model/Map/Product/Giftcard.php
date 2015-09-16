@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * RocketWeb
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category  RocketWeb
+ * @package   RocketWeb_GoogleBaseFeedGenerator
+ * @copyright Copyright (c) 2012 RocketWeb (http://rocketweb.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author    RocketWeb
+ */
+class RocketWeb_GoogleBaseFeedGenerator_Model_Map_Product_Giftcard extends RocketWeb_GoogleBaseFeedGenerator_Model_Map_Product_Abstract
+{
+
+    public function getPrice($product = null) {
+        if (!$product) $product = $this->getProduct();
+
+        $allowedAmounts = array();
+        foreach ($product->getGiftcardAmounts() as $value) {
+            $allowedAmounts[] = Mage::app()->getStore()->roundPrice($value['website_value']);
+        }
+        $price = min($allowedAmounts);
+
+        if ($price <= 0) {
+            if ($product->getAllowOpenAmount()) {
+                $minPrice = $product->getOpenAmountMin();
+                $price = ($minPrice > 0) ? $minPrice : 1;
+            }
+        }
+
+        return $price;
+
+    }
+
+}

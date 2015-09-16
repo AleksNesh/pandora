@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright   Copyright (c) 2010 Amasty
+ */
+-->
+
+<config>
+    <modules>
+        <Amasty_Sorting>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Amasty_Sorting>
+    </modules>
+</config>

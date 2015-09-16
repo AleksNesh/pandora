@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Extend/Override Infomodus_Upslabel module
+ *
+ * @category    Pan_Infomodus
+ * @package     Pan_Infomodus_Upslabel
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Pan_Infomodusupslabel>
+            <version>0.1.0</version>
+        </Pan_Infomodusupslabel>
+    </modules>
+
+    <admin>
+        <routers>
+            <upslabel>
+                <args>
+                    <modules>
+                        <pan_infomodusupslabel before="Infomodus_Upslabel">Pan_Infomodusupslabel</pan_infomodusupslabel>
+                    </modules>
+                </args>
+            </upslabel>
+        </routers>
+    </admin>
+
+    <global>
+        <helpers>
+            <pan_infomodusupslabel>
+                <class>Pan_Infomodusupslabel_Helper</class>
+            </pan_infomodusupslabel>
+
+            <!--
+            ====================================================================
+            REWRITE Infomodus_Usplabel_Helper_Data
+            ====================================================================
+            -->
+            <upslabel>
+                <rewrite>
+                    <data>Pan_Infomodusupslabel_Helper_Data</data>
+                    <help>Pan_Infomodusupslabel_Helper_Help</help>
+                </rewrite>
+            </upslabel>
+        </helpers>
+        <models>
+            <pan_infomodusupslabel>
+                <class>Pan_Infomodusupslabel_Model</class>
+            </pan_infomodusupslabel>
+
+            <upslabel>
+                <rewrite>
+                    <observer>Pan_Infomodusupslabel_Model_Observer</observer>
+                </rewrite>
+            </upslabel>
+        </models>
+        <blocks>
+            <pan_infomodusupslabel>
+                <class>Pan_Infomodusupslabel_Block</class>
+            </pan_infomodusupslabel>
+        </blocks>
+    </global>
+</config>

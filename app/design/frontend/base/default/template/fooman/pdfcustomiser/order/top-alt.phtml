@@ -1,0 +1,101 @@
+<table width="100%" border="0" cellpadding="10" cellspacing="0">
+    <tr>
+        <?php if($this->getPdfHelper()->getPdfLogoPlacement() == 'auto'
+            || $this->getPdfHelper()->getPdfLogoPlacement() == 'no-scaling'):
+            ?>
+            <td
+                valign="top">&nbsp;<!--space for logo--></td>
+            <td <?php echo $this->getPdfHelper()->getImageHeight()?'height="'.$this->getPdfHelper()->getImageHeight().'mm"':''?>
+                valign="top"
+                width="50%"
+                style="font-weight:bold;
+                    font-size:<?php echo $this->getPdfHelper()->getPdfFontsize('large')?>"><?php echo $this->getPdfHelper()->getPdfTitle()?></td>
+        <?php else :?>
+            <td <?php echo $this->getPdfHelper()->getImageHeight()?'height="'.$this->getPdfHelper()->getImageHeight().'mm"':''?>
+                valign="top"
+                width="50%"
+                style="font-weight:bold;
+                    font-size:<?php echo $this->getPdfHelper()->getPdfFontsize('large')?>"><?php echo $this->getPdfHelper()->getPdfTitle()?></td>
+            <td valign="top">&nbsp;<!--space for logo--></td>
+        <?php endif; ?>
+    </tr>
+    <tr>
+        <td valign="top" width="50%"><?php echo $this->getPdfHelper()->getNumberText()?>: {{var sales_object.increment_id}}<br/>
+            <?php echo $this->getPdfHelper()->getPutOrderId() ? Mage::helper('sales')->__('Order #').': {{var order.increment_id}} <br/>' : '' ?>
+            <!--<?php echo Mage::helper('catalog')->__('Order Date')?>: <?php echo $this->getPdfHelper()->getOrderDate()?><br/>-->
+            <?php echo $this->getPdfHelper()->getTranslatedString('Date','catalog')?>: <?php echo $this->getPdfHelper()->getDate()?>
+            <?php echo $this->getPdfHelper()->getTopAdditional() ? $this->getPdfHelper()->getTopAdditional() : '' ?>
+        </td>
+        <td valign="top"><?php echo nl2br($this->getPdfHelper()->getPdfOwnerAddresss())?></td>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+        <?php if($this->getPdfHelper()->getPdfAddresses() == 'both'): ?>
+        <!--Example with indentation of address, adjust the percentages to adjust the left-right positioning
+            <td valign="top" colspan="2">
+                <table>
+                    <tr>
+                        <td width="5%"></td>
+                        <td width="45%"><?php echo $this->getPdfHelper()->getTranslatedString('Sold to:')?><br/>{{var billing_address}}</td>
+                        <td width="5%"></td>
+                        <td width="45%"><?php echo $this->getPdfHelper()->getTranslatedString('Ship to:')?><br/>{{var shipping_address}}</td>
+                    </tr>
+                </table>
+            </td>-->
+        <?php if($this->getPdfHelper()->getOrder()->getIsVirtual()):?>
+        <td colspan="2" style="font-weight:bold;border: 2px solid #808080;background-color: #ededed"
+            valign="top"><?php echo $this->getPdfHelper()->getTranslatedString('Sold to:')?></td>
+    </tr>
+    <tr>
+        <td colspan="2" style="border-left: 2px solid #808080;border-bottom: 2px solid #808080;border-right: 2px solid #808080;"
+            valign="top">{{var billing_address}}</td>
+        <?php else:?>
+        <td style="font-weight:bold;border: 2px solid #808080;background-color: #ededed"
+            valign="top" width="50%"><?php echo $this->getPdfHelper()->getTranslatedString('Sold to:')?></td>
+        <td style="font-weight:bold;border: 2px solid #808080;background-color: #ededed"
+            valign="top"><?php echo $this->getPdfHelper()->getTranslatedString('Ship to:')?></td>
+    </tr>
+    <tr>
+        <td style="border-left: 2px solid #808080;border-bottom: 2px solid #808080;"
+            valign="top" width="50%">{{var billing_address}}</td>
+        <td style="border-right: 2px solid #808080;border-bottom: 2px solid #808080;"
+            valign="top">{{var shipping_address}}</td>
+        <?php endif;?>
+        <?php elseif($this->getPdfHelper()->getPdfAddresses() == 'shipping'): ?>
+            <td valign="top" colspan="2">{{var shipping_address}}</td>
+        <?php elseif($this->getPdfHelper()->getPdfAddresses() == 'billing'): ?>
+            <td valign="top" colspan="2">{{var billing_address}}</td>
+        <?php endif;?>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+    <?php if($this->getPdfHelper()->getOrder()->getIsVirtual()):?>
+        <tr>
+            <td colspan="2" style="font-weight:bold;border: 2px solid #808080;background-color: #ededed"
+                valign="top"><?php echo $this->getPdfHelper()->getTranslatedString('Payment Method')?></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-left: 2px solid #808080;border-bottom: 2px solid #808080;border-right: 2px solid #808080;"
+                valign="top">{{var payment}}</td>
+        </tr>
+    <?php else:?>
+        <tr>
+            <td style="font-weight:bold;border: 2px solid #808080;background-color: #ededed"
+                valign="top" width="50%"><?php echo $this->getPdfHelper()->getTranslatedString('Payment Method')?></td>
+            <td style="font-weight:bold;border: 2px solid #808080;background-color: #ededed"
+                valign="top"><?php echo $this->getPdfHelper()->getTranslatedString('Shipping Method')?></td>
+        </tr>
+        <tr>
+            <td style="border-left: 2px solid #808080;border-bottom: 2px solid #808080;"
+                valign="top" width="50%">{{var payment}}</td>
+            <td style="border-right: 2px solid #808080;border-bottom: 2px solid #808080;"
+                valign="top">{{var shipping}}</td>
+        </tr>
+    <?php endif;?>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+</table>

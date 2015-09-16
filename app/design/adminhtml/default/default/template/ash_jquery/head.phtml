@@ -1,0 +1,75 @@
+<?php
+/**
+ * Add Jquery/Jquery UI support
+ *
+ * @category    Ash
+ * @package     Ash_Jquery
+ * @copyright   Copyright (c) 2013 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+// instantiate helper
+$_helper = Mage::helper('ash_jquery');
+
+// figure out which library version to include
+if ($_helper->useCdn()) {
+    if ($_helper->useMinified()) {
+        $jqueryName   = $_helper->getJqueryVersion() . '/jquery.min.js';
+        $migrateName  = '/jquery-migrate-'. $_helper->getJqueryMigrateVersion() . '.min.js';
+        $jqueryUiName = $_helper->getJqueryUiVersion() . '/jquery-ui.min.js';
+    } else {
+        $jqueryName   = $_helper->getJqueryVersion() . '/jquery.js';
+        $migrateName  = '/jquery-migrate-'. $_helper->getJqueryMigrateVersion() . '.js';
+        $jqueryUiName = $_helper->getJqueryUiVersion() . '/jquery-ui.js';
+    }
+}
+?>
+<meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>"/>
+<title><?php echo htmlspecialchars(html_entity_decode($this->getTitle())) ?></title>
+<link rel="icon" href="<?php echo $this->getSkinUrl('favicon.ico') ?>" type="image/x-icon"/>
+<link rel="shortcut icon" href="<?php echo $this->getSkinUrl('favicon.ico') ?>" type="image/x-icon"/>
+
+<script type="text/javascript">
+    var BLANK_URL = '<?php echo $this->getJsUrl() ?>blank.html';
+    var BLANK_IMG = '<?php echo $this->getJsUrl() ?>spacer.gif';
+    var BASE_URL = '<?php echo $this->getUrl('*') ?>';
+    var SKIN_URL = '<?php echo $this->getSkinUrl() ?>';
+    var FORM_KEY = '<?php echo $this->getFormKey() ?>';
+</script>
+
+<?php if ($_helper->useCdn()) : ?>
+<!-- JQUERY CDN -->
+<?php if ($_helper->isJqueryEnabled('cdn')) : ?>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/<?php echo $jqueryName; ?>"></script>
+<script type="text/javascript">jQuery.noConflict();</script>
+<?php if ($_helper->isJqueryMigrateEnabled('cdn')) : ?>
+<script type="text/javascript" src="//code.jquery.com/<?php echo $migrateName; ?>"></script>
+<?php endif; ?>
+<?php endif; ?>
+<?php if ($_helper->isJqueryUiEnabled('cdn')) : ?>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/<?php echo $jqueryUiName; ?>"></script>
+<?php endif; ?>
+<!-- /JQUERY CDN -->
+<?php endif; ?>
+
+<?php echo $this->getCssJsHtml() ?>
+
+<?php if($this->getCanLoadExtJs()): ?>
+<script type="text/javascript">
+    Ext.BLANK_IMAGE_URL = BLANK_IMG;
+    Ext.UpdateManager.defaults.loadScripts = false;
+    Ext.UpdateManager.defaults.disableCaching = true;
+</script>
+<?php endif; ?>
+
+<?php if($this->getCanLoadTinyMce()): // TinyMCE is broken when loaded through index.php ?>
+<script type="text/javascript" src="<?php echo $this->getJsUrl() ?>tiny_mce/tiny_mce.js"></script>
+<?php endif; ?>
+
+<script type="text/javascript">
+    Fieldset.addToPrefix(<?php echo Mage::helper('adminhtml')->getCurrentUserId() ?>);
+</script>
+
+<?php echo $this->helper('core/js')->getTranslatorScript() ?>
+<?php echo $this->getChildHtml('calendar'); ?>
+<?php echo $this->getChildHtml('optional_zip_countries'); ?>

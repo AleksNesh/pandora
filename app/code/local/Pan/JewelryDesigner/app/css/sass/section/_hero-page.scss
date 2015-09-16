@@ -1,0 +1,50 @@
+/////////////////////////////////////
+// Hero Page
+/////////////////////////////////////
+
+.hero-splash {
+    background: image-url('layout/login_bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+
+    .col-main {
+        height: 60vh;
+    }
+}
+
+.here-bg {
+    min-height: 500px;
+}
+
+.hero-unit {
+    background: rgba($purple-dark, 0.8);
+    border-radius: 5px;
+    width: 100%;
+    margin: 10% 0 0;
+    color: #fff;
+    text-align: center;
+    padding: 3em;
+    
+    @include media($large-up) {
+        width: 60%;
+        margin: 8em 0 6em 40%;
+    }
+
+    @include media($xlarge-up) {
+        width: 45%;
+        margin-left: 55%;
+    }
+
+    h1 {
+        color: #fff;
+        margin-bottom: 1em;
+    }
+
+    li {
+        display: inline-block;
+        margin: 0 0.5em;
+
+        a {
+            @extend %button-invert;
+        }
+    }
+}

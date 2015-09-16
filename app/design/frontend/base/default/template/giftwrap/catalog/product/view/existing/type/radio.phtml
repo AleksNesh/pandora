@@ -1,0 +1,64 @@
+<style>
+    #existing_giftbox_container{
+        padding:2%;
+    }
+</style>
+<?php
+$_product = $this->getProduct();
+$productId = $this->getRequest()->getParam('id');
+$session = Mage::getSingleton('checkout/session');
+$giftWrapDataSession = $session->getData('giftwrap');
+$giftWrapData = $giftWrapDataSession[$productId];
+$_helper = Mage::helper('giftwrap');
+$icon_image = $_helper->getGiftwrapIcon();
+$giftBoxCollection = $this->getGiftBoxCollection();
+$maxQtyPerBox = Mage::getStoreConfig('giftwrap/calculation/maximum_items_wrapall');
+?>
+
+<div id="existing_giftbox_container">
+    <?php if (count($giftBoxCollection) > 0): ?>
+        <script type="text/javascript">
+            function showDetails(id) {
+                var url = '<?php echo $this->getUrl('giftwrap/index/giftboxdetails') . 'giftbox/' ?>' + id;
+                TINY.box.show(url, 1, 860, 200, 1);
+            }
+        </script>
+        <?php foreach ($giftBoxCollection as $giftbox): ?>
+            <?php
+            $its = $giftbox->getItemCollection();
+            $numberitems = 0;
+            foreach ($its as $it) {
+                $qty = $it->getQty();
+                $numberitems += $qty;
+            }
+            ?>
+            <?php
+            $style = Mage::getModel('giftwrap/giftwrap')->load($giftbox->getStyleId());
+            ?>
+            <ul id="giftbox-existing" class="giftwrap-paper-list-radio">
+                <li class="giftwrap-paper">
+                    <div class="item">
+                        <div id="existing-radio" class="existing-radio">
+                            <div>
+                                <input type="radio" value="<?php echo $giftbox->getId(); ?>" name="existing_giftbox" id="existing_giftbox_<?php echo $giftbox->getId(); ?>" />
+                                <label style="font-size:14px;text-transform: uppercase" for="existing_giftbox_<?php echo $giftbox->getId(); ?>">
+                                    <?php echo $style->getTitle() . ' - ' . intval($numberitems) . '/' . Mage::getStoreConfig('giftwrap/calculation/maximum_items_wrapall') . ' items'; ?>
+                                    <a href="#" onclick="showDetails(<?php echo $giftbox->getId() ?>);"><?php echo $this->__('View details') ?></a>
+                                </label>
+                            </div>											
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <?php if ((int) $numberitems >= (int) $maxQtyPerBox): ?>
+                <script type="text/javascript">
+                    $('existing_giftbox_<?php echo $giftbox->getId(); ?>').disabled = true;
+                </script>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p class="note-msg"><?php echo $this->__('You have no gift box in shopping cart.') ?></p>
+    <?php endif; ?>
+</div>
+
+

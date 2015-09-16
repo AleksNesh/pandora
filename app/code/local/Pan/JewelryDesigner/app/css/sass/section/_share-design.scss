@@ -1,0 +1,61 @@
+.items-grid {
+
+    &.share {
+        background: $purple;
+        // border: 1px solid $purple-dark;
+        border: none;
+        min-height: 300px;
+        padding: 2em;
+
+        color: #fff;
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 1em;
+        }
+
+        p {
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        a:hover {
+            color: #fff;
+            cursor: pointer;
+        }
+
+
+        .table-minimal {
+            @extend %table-minimal;
+            width: 100%;
+
+            thead {
+                th {
+                    text-transform: uppercase;
+                    &:nth-child(4n) {
+                        text-align:right;
+                    }
+                }
+            }
+
+            tbody {
+                td {
+                    padding: $table-padding;
+
+                    &:nth-child(4n) {
+                        text-align:right;
+                    }
+                }
+                tr.totals-row {
+                    @extend %cinzel;
+                    font-size: 2em;
+
+                    td:nth-child(2n) {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+    }
+}

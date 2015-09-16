@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Simple module for synchronizing system configuration and database changes.
+ *
+ * @category    Pan
+ * @package     Pan_Updater
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Pan_Updater>
+            <version>1.1.2</version>
+        </Pan_Updater>
+    </modules>
+
+    <global>
+        <helpers>
+            <pan_updater>
+                <class>Pan_Updater_Helper</class>
+            </pan_updater>
+        </helpers>
+
+        <resources>
+            <pan_updater_setup>
+                <setup>
+                    <module>Pan_Updater</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </pan_updater_setup>
+        </resources>
+    </global>
+</config>

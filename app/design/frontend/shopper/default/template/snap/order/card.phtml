@@ -1,0 +1,53 @@
+<?php
+    $_order  = $this->getOrder();
+    $_source = $this->getSource();
+    $_cards  = $this->getGiftCards();
+?>
+<?php if ($_cards):?>
+<?php foreach ($_cards as $_card): ?>
+<tr>
+    <td <?php echo $this->getLabelProperties()?>>
+        <?php echo Mage::helper('snap_card')->__('Gift Card (%s)', $_card->getCode()); ?>
+    </td>
+    <td <?php echo $this->getValueProperties()?>>-<?php echo $_order->formatPrice($_card->getAmount()) ?></td>
+</tr>
+<?php endforeach; ?>
+<?php elseif ($_source->getSnapCardsAmount()>0): ?>
+<?php
+$can_explain_giftcards = false;
+if($_source->getSnapCards()) {
+    $snapcards = unserialize($_source->getSnapCards());
+    if(sizeof($snapcards) > 0) {
+        $can_explain_giftcards = true;
+        ?>
+
+<?php foreach ($snapcards as $snapcard): ?>
+<?php
+$last_four = $snapcard["c"] . "";
+if(strlen($last_four) > 4) {
+    $last_four = substr($last_four, strlen($last_four) - 4);
+}
+?>
+<tr>
+    <td <?php echo $this->getLabelProperties()?>>
+        <?php echo Mage::helper('snap_card')->__('Gift Card (... %s)', $last_four); ?>
+    </td>
+    <td <?php echo $this->getValueProperties()?>>-<?php echo $_order->formatPrice($snapcard["a"]) ?></td>
+</tr>
+<?php endforeach; ?>
+        <?php
+    }
+}
+
+if(!$can_explain_giftcards) {
+?>
+<tr>
+    <td <?php echo $this->getLabelProperties()?>>
+        <?php echo Mage::helper('snap_card')->__('Gift Card'); ?>
+    </td>
+    <td <?php echo $this->getValueProperties()?>>-<?php echo $_order->formatPrice($_source->getSnapCardsAmount()) ?></td>
+</tr>
+<?php
+}
+?>
+<?php endif?>

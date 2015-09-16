@@ -1,0 +1,124 @@
+<?php
+/**
+ * Brim LLC Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Brim LLC Commercial Extension License
+ * that is bundled with this package in the file license.pdf.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.brimllc.com/license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to support@brimllc.com so we can send you a copy immediately.
+ *
+ * @category   Brim
+ * @package    Brim_Groupedoptions
+ * @copyright  Copyright (c) 2011-2012 Brim LLC
+ * @license    http://ecommerce.brimllc.com/license
+ */
+?>
+<?php
+    $_option    = $this->getOption();
+    $_product   = $this->getProduct();
+
+?>
+
+<?php $isRequired = $_option->getIsRequire(); ?>
+
+<div class="grouped-option">
+    <label class="grouped-option-title">
+        <?php if ($isRequired) : ?>
+        <span class="required">*</span>
+        <?php endif; ?>
+        <?php echo $_option->getTitle(); ?>
+        <?php if($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_FIELD
+            || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_AREA
+            || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DATE
+            || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_TIME
+            || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DATE_TIME): ?>
+            <?php echo $this->getFormatedPrice(); ?>
+        <?php endif; ?>
+    </label>
+<?php
+/*
+ * Supports <select/> and <input type="[checkbox|radio|text]" /> is supported.
+ */
+?>
+<?php if($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DROP_DOWN) :
+    $select = $this->getLayout()->createBlock('core/html_select');
+    $select->setClass('product-custom-option product-custom-option-'.$_product->getId() . ($isRequired ? ' go-qty-required-entry' : ''));
+    $select->setName($this->getNamePrefix() . '['.$_product->getId().']['.$_option->getId().']');
+
+    $select->addOption('', '- ' . ($isRequired ? '*': '') . $this->__('Select') . ' ' . $_option->getTitle() . ' -');
+
+    foreach ($_option->getValues() as $value) {
+        $priceStr = $this->_formatPrice(array(
+            'is_percent' => ($value->getPriceType() == 'percent') ? true : false,
+            'pricing_value' => $value->getPrice(true)
+        ), false);
+        
+        $select->addOption($value->getOptionTypeId(), $value->getTitle() . ' ' . $priceStr);
+    }
+
+    echo $select->getHtml();
+?>
+<?php elseif($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX): ?>
+    <ul>
+    <?php foreach ($_option->getValues() as $value) :
+        $priceStr = $this->_formatPrice(array(
+            'is_percent' => ($value->getPriceType() == 'percent') ? true : false,
+            'pricing_value' => $value->getPrice(true)
+        ));
+        ?>
+        <li>
+            <input type="checkbox" id="super-options-<?php echo $value->getId(); ?>" class="product-custom-option product-custom-option-<?php echo $_product->getId(); ?><?php echo $isRequired ? ' go-qty-one-required' : ''; ?>"
+                onclick="optionsConfig<?php echo $_product->getId(); ?>.reloadPrice()" name="<?php echo $this->getNamePrefix(); ?>[<?php echo $_product->getId(); ?>][<?php echo $_option->getId(); ?>][]"
+                value="<?php echo $value->getOptionTypeId(); ?>" />
+            <span class="label"><label for="super-options-<?php echo $value->getId(); ?>"><?php echo $value->getTitle() . ' ' . $priceStr; ?></label></span>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+
+<?php elseif($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO): ?>
+    <ul>
+    <?php foreach ($_option->getValues() as $value) :
+        $value->setOption($_option);
+        $priceStr = $this->_formatPrice(array(
+            'is_percent' => ($value->getPriceType() == 'percent') ? true : false,
+            'pricing_value' => $value->getPrice(true)
+        ));
+        ?>
+        <li>
+            <input type="radio" id="super-options-<?php echo $value->getId(); ?>" class="product-custom-option product-custom-option-<?php echo $_product->getId(); ?><?php echo $isRequired ? ' go-qty-one-required' : ''; ?>"
+                onclick="optionsConfig<?php echo $_product->getId(); ?>.reloadPrice()" name="<?php echo $this->getNamePrefix(); ?>[<?php echo $_product->getId(); ?>][<?php echo $_option->getId(); ?>]"
+                value="<?php echo $value->getOptionTypeId(); ?>" />
+            <span class="label"><label for="super-options-<?php echo $value->getId(); ?>"><?php echo $value->getTitle() . ' ' . $priceStr; ?></label></span>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+<?php elseif($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_FIELD): ?>
+    <input type="text" name="<?php echo $this->getNamePrefix(); ?>[<?php echo $_product->getId(); ?>][<?php echo $_option->getId(); ?>]" class="product-custom-option product-custom-option-<?php echo $_product->getId(); ?><?php echo $isRequired ? ' go-qty-required-entry' : ''; ?>" />
+<?php elseif ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_AREA): ?>
+    <textarea id="options_<?php echo $_option->getId() ?>_text" class="<?php echo $_option->getIsRequire() ? ' go-qty-required-entry' : '' ?> <?php echo $_option->getMaxCharacters() ? ' validate-length maximum-length-'.$_option->getMaxCharacters() : '' ?> product-custom-option" name="<?php echo $this->getNamePrefix(); ?>[<?php echo $_product->getId(); ?>][<?php echo $_option->getId() ?>]" rows="5" cols="25"><?php echo $this->escapeHtml($this->getDefaultValue()) ?></textarea>
+<?php elseif($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DATE): ?>
+    <?php $dateBlock = $this->getLayout()->createBlock('groupedoptions/product_view_options_type_date')
+        ->setTemplate('catalog/product/view/options/type/date.phtml')
+        ->setProduct($_product)
+        ->setOption($_option);
+        echo $dateBlock->setNamePrefix($this->getNamePrefix())->getDateHtml(); ?>
+
+    <?php if (!$dateBlock->useCalendar()): ?>
+    <script type="text/javascript">
+    //<![CDATA[
+        Event.observe('superoptions_<?php echo $_option->getId(); ?>_month', 'change', dateOption.reloadMonth.bind(dateOption));
+        Event.observe('superoptions_<?php echo $_option->getId(); ?>_year', 'change', dateOption.reloadMonth.bind(dateOption));
+    //]]>
+    </script>
+    <?php endif; ?>
+
+    <div style="clear:both;"></div>
+<?php else :
+    echo $_option->getType();
+endif; ?>
+</div>

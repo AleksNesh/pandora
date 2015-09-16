@@ -1,0 +1,40 @@
+<html>
+<head><title>UPS label</title></head>
+<body>
+<?php
+$order_id = $this->getRequest()->getParam('order');
+$refund_id = $this->getRequest()->getParam('shipment_id');
+
+
+
+if (Mage::getStoreConfig('upslabel/return/refundaccess') == 1) {
+    $collections = Mage::getModel('upslabel/upslabel');
+                $colls = $collections->getCollection()->addFieldToFilter('shipment_id', $refund_id)->addFieldToFilter('type', 'refund');
+                $coll = 0;
+                foreach ($colls AS $k => $v) {
+                    $coll = $k;
+                    break;
+                }
+    $collection = Mage::getModel('upslabel/upslabel')->load($coll);
+        echo '
+    <style>
+    @media print {
+    br, input, span {
+    display: none;
+    }
+    }
+    .raspechatat_im{display:block !important;margin:0 !important;padding:0 !important;max-height:800px !important;height:100% !important;}
+    </style>
+    <br /><br />
+    <input type="button" value="   Print   " onclick="window.print()">
+        ';
+        echo '
+    <br /><br />
+    <span>Tracking Number ' . $collection['trackingnumber'] . '</span>
+    <br /><br />
+    <br />
+<img class="raspechatat_im" id="raspechatat_im" src="' . Mage::getBaseUrl('media') . 'upslabel/label/' . $collection['labelname'] . '" />';
+}
+?>
+</body>
+</html>

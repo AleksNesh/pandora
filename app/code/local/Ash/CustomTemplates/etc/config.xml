@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+ <global>
+  <page>
+   <layouts>
+    <home_page>
+     <label>Home Page</label>
+     <template>page/homepage.phtml</template>
+     <layout_handle>page_home</layout_handle>
+    </home_page>
+	<faq_page>
+     <label>FAQ Page</label>
+     <template>page/faq-template.phtml</template>
+     <layout_handle>page_faq</layout_handle>
+    </faq_page>
+   </layouts>
+  </page>
+ </global>
+</config>

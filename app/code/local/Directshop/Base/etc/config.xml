@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * @category   Directshop
+ * @package    Directshop_FraudDetection
+ * @author     Ben James
+ * @copyright  Copyright (c) 2008-2009 Directshop Pty Ltd. (http://directshop.com.au)
+ */
+-->
+<config>
+	<modules>
+		<Directshop_Base>
+			<version>0.1.0</version>
+			<depends>
+				<Mage_Sales />
+			</depends>
+		</Directshop_Base>
+	</modules>
+	
+	<global>
+		<models>
+			<dsbase>
+				<class>Directshop_Base_Model</class>
+			</dsbase>
+		</models>
+		
+		<helpers>
+			<dsbase>
+				<class>Directshop_Base_Helper</class>
+			</dsbase>
+		</helpers>
+		
+		
+	</global>
+	<adminhtml>
+	
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<dsbase>
+											<title>Directshop Solutions - Base</title>
+										</dsbase>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<events>
+			<controller_action_predispatch>
+                <observers>
+                    <directshop_base_notification>
+                        <class>dsbase/observer</class>
+                        <method>preDispatch</method>
+                    </directshop_base_notification>
+                </observers>
+            </controller_action_predispatch>
+		</events>
+	</adminhtml>
+	
+	<default>
+        
+	    <dsbase>
+	    	<notification>
+		    	<notification_enabled>1</notification_enabled>
+		        <feed_url>feeds.feedburner.com/directshopsolutions/tAWN</feed_url>
+		        <use_https>0</use_https>
+		        <frequency>24</frequency>
+		        <last_update>0</last_update>
+	        </notification>
+	    </dsbase>
+
+    </default>
+</config>

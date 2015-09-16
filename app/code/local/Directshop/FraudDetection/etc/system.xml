@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * @category   Directshop
+ * @package    Directshop_FraudDetection
+ * @author     Ben James
+ * @copyright  Copyright (c) 2008-2010 Directshop Pty Ltd. (http://directshop.com.au)
+ */
+-->
+<config>
+      <tabs>
+        <dsbase translate="label" module="frauddetection">
+            <label>Directshop Solutions</label>
+            <sort_order>100</sort_order>
+        </dsbase>
+    </tabs>
+    <sections>
+        <frauddetection translate="label" module="frauddetection">
+            <label>Directshop Fraud Detection</label>
+            <tab>dsbase</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>330</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                   
+				   
+				   <comment><![CDATA[<div style='border: 2px dotted #aaaacc;padding:4px;margin:4px;background-color:white'>			    				
+							  <ul style="padding:5px"><li>The riskScore, returned by the minFraud service, represents the likelihood that a given transaction is fraudulent. Merchants use the riskScore to determine whether to accept, reject, manually review, or submit transactions to complementary services for further screening.</li>
+							  <li>The riskScore is given as a percentage, and as such it ranges from 0.01 to 100.00. For example, an order with a riskScore of 20.00 has a 20% chance of being fraudulent, while an order with a riskScore of 0.10 has a 0.1% chance of being fraudulent.<li>
+							  <li>There is no single recommended set of riskScore values to use for deciding whether to accept, reject, manually review, or submit transactions to complementary services for analysis. In determining what thresholds to set, you should consider the costs of chargebacks and lost goods, the cost of manual review, the cost of complementary services, and the cost of potentially rejecting good orders.</li>
+							  <li><b>A recommended strategy is to at first only automatically accept orders under a low riskScore (e.g., 3.00), only automatically reject orders above a high riskScore (e.g., 70.00), and manually review all other transactions. After monitoring the riskScores received for the manually reviewed transactions, you can adjust the thresholds appropriately to reduce the amount of manual review required.</b></li>
+							  <li>Below is the distribution of riskScores returned by the minFraud service across all users. You can use this data to estimate the number of orders that will be approved, rejected, or held back for review given the thresholds you set. Please note that the distribution of riskScores you observe may differ.</li>
+							  <li>Approximate distribution of riskScores across all minFraud clients riskScore range Percent of orders in range</li>							  
+							  </ul>
+							  
+							  <table class="table table-bordered table-striped" style="-moz-border-bottom-colors: none;-moz-border-left-colors: none;-moz-border-right-colors: none;-moz-border-top-colors: none;border-collapse: separate;border-color: #DDDDDD #DDDDDD #DDDDDD #DDDDDD;border-image: none;border-radius: 4px 4px 4px 4px;border-style: solid solid solid solid;border-width: 1px 1px 1px 1px;line-height: 20px;border-spacing: 0;width: 480px;">
+							    <thead>
+									<tr>
+										<th style=" border-top-left-radius: 4px; padding: 8px;text-align: left;">riskScore range</th>
+										<th style="border-left: 1px solid #DDDDDD; padding: 8px;text-align: left;">Percent of orders in range</th>
+									</tr>
+								</thead>
+								<tbody>								
+									<tr >
+										<td style="padding: 8px;text-align: left;border-top: 1px solid #DDDDDD;background-color: #E8ECF1;">0.10 - 4.99</td>
+										<td style="border-left: 1px solid #DDDDDD; padding: 8px;text-align: left;border-top: 1px solid #DDDDDD;background-color: #E8ECF1;">90%</td>
+									</tr>									
+									<tr>
+										<td style="padding: 8px;text-align: left;border-top: 1px solid #DDDDDD;">5.00 - 9.99</td>
+										<td style="border-left: 1px solid #DDDDDD; padding: 8px;text-align: left;border-top: 1px solid #DDDDDD;">5%</td>
+									</tr>									
+									<tr>
+										<td style="padding: 8px;text-align: left;border-top: 1px solid #DDDDDD;background-color: #E8ECF1;">10.00 - 29.99</td>
+										<td style="border-left: 1px solid #DDDDDD; padding: 8px;text-align: left;border-top: 1px solid #DDDDDD;background-color: #E8ECF1;">3%</td>
+									</tr>									
+									<tr>
+										<td style="padding: 8px;text-align: left;border-top: 1px solid #DDDDDD;">30.00 - 99.99</td>
+										<td style="border-left: 1px solid #DDDDDD; padding: 8px;text-align: left;border-top: 1px solid #DDDDDD;">2%</td>
+									</tr>								
+								</tbody>
+								</table>						  
+							  </div>
+						 ]]></comment>
+				   
+				   
+				   
+				    <fields>
+						<threshold translate="label">
+                           <label>Score Threshold</label>
+                           <frontend_type>text</frontend_type>
+                           <sort_order>10</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>1</show_in_store>
+                       	</threshold>
+						<holdwhenflagged translate="label">
+                           <label>Hold order when over threshold</label>
+                           <frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+                           <sort_order>20</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>1</show_in_store>
+                        </holdwhenflagged>
+                        <email_when_holded_reciever translate="label">
+                            <label>Order Hold Email Reciever</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_when_holded_reciever>
+                        <email_when_holded_template translate="label">
+                            <label>Order Hold Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_when_holded_template>
+                        <email_when_holded_copy_to translate="label comment">
+                            <label>Send Order Hold Email Copy To</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Separate by ",".</comment>
+                        </email_when_holded_copy_to>
+                        <ipexceptions translate="label">
+                            <label>IP Address Exceptions</label>
+                            <frontend_model>frauddetection/adminhtml_system_config_form_field_ipexceptions</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Orders coming from these IP Addresses will not be checked for possible fraud.</comment>
+                        </ipexceptions>						 
+                    </fields>
+					
+                </general>
+				<maxmind translate="label">
+                    <label>MaxMind</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+						<licensekey translate="label">
+                            <label>MaxMind License Key</label>
+                            <comment><![CDATA[<a href='http://www.maxmind.com/en/ccv_buynow?rId=directshop' target ='_blank'>Sign up to MaxMind</a>]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </licensekey>
+						<request_type translate="label">
+                            <label>Request Type</label>
+                            <comment><![CDATA[<a href='http://www.maxmind.com/en/ccv_buynow?rId=directshop' target ='_blank'>Click here</a> to buy Maxmind credits]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>frauddetection/requesttype</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </request_type>
+                    </fields>
+                </maxmind>
+                <debug translate="label">
+                    <label>Debug</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+						<force_ip translate="label">
+                            <label>Force IP Address</label>
+                            <comment>This will override the IP address of all orders when retrieving fraud information. This should be left empty except for debugging purposes.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </force_ip>
+                    </fields>
+                </debug>
+            </groups>
+        </frauddetection>
+    </sections>
+</config>

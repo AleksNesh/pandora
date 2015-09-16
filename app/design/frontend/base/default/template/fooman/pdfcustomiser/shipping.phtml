@@ -1,0 +1,31 @@
+<?php
+$pdfHelper = $this->getPdfHelper();
+$totalWeight = $this->getTotalWeight();
+$tracks = $this->getTracks();
+$shippingDescription = $this->getShippingDescription();
+?>
+<?php echo $shippingDescription ?>
+<?php if (count($tracks)) : ?>
+    <?php foreach ($tracks as $track) : ?>
+        <?php if ($track->getNumber()) : ?>
+            <br/><?php echo $track->getTitle() ?> : <?php if ($pdfHelper->getPrintTrackingBarcode()) {
+                $barcodeParams = $this->getPdf()->serializeTCPDFtagParameters(
+                    array(
+                         $track->getNumber(),
+                         $pdfHelper->getBarcodeType(),
+                         //the parameters below refer to x, y, width, and height of the barcode respectively
+                         '', '', '35', '12'
+                    )
+                ); ?>
+                <tcpdf method="write1DBarcode" params="<?php echo $barcodeParams ?>"/><br/><br/>
+            <?php } else {
+                echo $track->getNumber();
+            } ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
+<?php endif; ?>
+<?php if ($totalWeight) : ?>
+    <br/>
+    <?php echo  Mage::helper('pdfcustomiser')->__('Total Weight') ?> : <?php echo $totalWeight .
+        Mage::getStoreConfig('sales_pdf/all/allweightunit', $pdfHelper->getStoreId()) ?>
+<?php endif; ?>

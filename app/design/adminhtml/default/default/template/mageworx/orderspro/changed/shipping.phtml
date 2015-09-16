@@ -1,0 +1,12 @@
+<?php
+$_order = $this->getOrder();
+?>
+<?php if ($_rate = $this->getActiveMethodRate()): ?>
+    <div id="order-shipping-method-info">
+        <strong><?php echo $this->escapeHtml($this->getCarrierName($_rate->getCarrier())) ?></strong> -
+        <?php echo $this->escapeHtml($_rate->getMethodTitle() ? $_rate->getMethodTitle() : $_rate->getMethodDescription()) ?>
+        <strong>
+            <?php echo $this->getShippingPrice(); ?>
+        </strong>
+    </div>
+<?php endif; ?>

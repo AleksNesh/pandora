@@ -1,0 +1,33 @@
+<?php
+/**
+ * @category    Fishpig
+ * @package     Fishpig_Wordpress
+ * @license     http://fishpig.co.uk/license.txt
+ * @author      Ben Tideswell <help@fishpig.co.uk>
+ */
+?>
+<?php $posts = $this->getPosts() ?>
+<?php if (count($posts) > 0): ?>
+    <div class="recent-post">
+        <?php if ($title = $this->getTitle()): ?>
+            <h2><?php echo $this->__($title) ?></h2>
+        <?php endif; ?>
+        <div id="<?php echo $this->getListId() ?>" class="block-content">
+            <?php foreach($posts as $post): ?>
+
+                <?php if ($featuredImage = $post->getFeaturedImage()): ?>
+                <div class="featured-image">
+                    <a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"><img src="<?php echo $featuredImage->getAvailableImage() ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"/></a>
+                </div>
+                <?php endif; ?>
+
+                <h4><a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->htmlEscape($post->getPostTitle()) ?>"><?php echo $this->htmlEscape($post->getPostTitle()) ?></a></h4>
+
+                <p class="post-excerpt"><?php $content = $post->getPostExcerpt(); $content = strip_tags($content); echo substr($content, 0, 100); ?> ...</p>
+                
+                <a class="read-more" href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->__('Read more'); ?>"><?php echo $this->__('Read more...'); ?></a>
+
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>

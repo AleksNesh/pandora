@@ -1,0 +1,50 @@
+<?php
+	$model	=	Mage::getModel("core/email_template_filter");
+	$data = $this->getMegamenupro();
+	$menu	=	$data['content'];
+	//echo '<pre>';print_r($menu);
+	
+	$container_css = '';
+?>
+<?php if (!empty($menu)): ?>
+<div class="em_nav">
+	<ul class="<?php echo $data['type'] == 1 ? 'vnav' : 'hnav' ?> <?php echo $data['css_class'] ?>">
+	<?php $close_tags = array() ?>
+	<?php foreach ($menu as $i => $item): 
+		$is_parent = ($i < count($menu) - 1) && $menu[$i+1]['depth'] > $item['depth'];
+		echo $this->open_tag($close_tags, $item['depth'], $container_css);
+		echo $this->close_tags($close_tags, $item['depth']);
+		
+		/* ---------- Menu Item: LINK ---------- */
+		if ($item['type'] == 'link'): ?>
+			<li class="menu-item-link menu-item-depth-<?php echo $item['depth'] ?> <?php echo $item['css_class'] ?> <?php echo $is_parent ? 'menu-item-parent' : '' ?>"><a class="em_link" href="<?php echo $model->filter($item['url']) ?>" <?php if ($item['target']): ?>target="<?php echo htmlspecialchars($item['target']) ?>"<?php endif ?>><span><?php echo $item['label'] ?></span>
+			<?php if ($item['sublabel']): ?><small><?php echo $item['sublabel'] ?></small><?php endif ?></a>
+			<?php $close_tags[ $item['depth'] ] = "</li>";
+			endif;
+			
+		/* ---------- Menu Item: TEXT ---------- */ 
+		if ($item['type'] == 'text'): ?>
+			<li class="menu-item-text menu-item-depth-<?php echo $item['depth'] ?> <?php echo $item['css_class'] ?> <?php echo $is_parent ? 'menu-item-parent' : '' ?>"><?php echo $item['text'] ?><?php $close_tags[ $item['depth'] ] = "</li>";
+			endif;
+			
+		/* ---------- Menu Item: HBOX ---------- */ 
+		if ($item['type'] == 'hbox'): ?>
+			<li class="menu-item-hbox menu-item-depth-<?php echo $item['depth'] ?> <?php echo $item['css_class'] ?> <?php echo $is_parent ? 'menu-item-parent' : '' ?>" style="<?php echo $item['width'] ? 'width:'.$item['width'].'px;' : '';
+			 echo $item['height'] ? 'height:'.$item['height'].'px;' : '';
+			 echo $item['spacing'] ? 'padding:'.$item['spacing'].'px;' : ''; ?>"><?php $close_tags[ $item['depth'] ] = "</li>";
+		endif;
+		
+		/* ---------- Menu Item: VBOX ---------- */
+		if ($item['type'] == 'vbox'): ?>
+			<li class="menu-item-vbox menu-item-depth-<?php echo $item['depth'] ?> <?php echo $item['css_class'] ?> <?php echo $is_parent ? 'menu-item-parent' : '' ?>" style="<?php echo $item['width'] ? 'width:'.$item['width'].'px;' : '';
+			 echo $item['height'] ? 'height:'.$item['height'].'px;' : '';
+			 echo $item['spacing'] ? 'padding:'.$item['spacing'].'px;' : ''; ?>"><?php $close_tags[ $item['depth'] ] = "</li>";
+		endif;
+		
+		$container_css = $item['container_css'];
+	endforeach;
+	
+	echo $this->close_tags($close_tags, 0); ?>
+	</ul>
+</div>
+<?php endif ?>

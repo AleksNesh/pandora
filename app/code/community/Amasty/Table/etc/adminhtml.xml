@@ -1,0 +1,62 @@
+<?xml version="1.0"?> 
+<!--
+/**
+ * @copyright   Copyright (c) 2009-2012 Amasty (http://www.amasty.com)
+ */
+-->
+<config>
+       <menu>
+            <sales>
+                <children>
+                    <amtable translate="title" module="amtable">
+                        <title>Custom Shipping Methods</title>
+                        <sort_order>850</sort_order>
+                        <action>amtable/adminhtml_method</action>
+                    </amtable>
+                </children>
+            </sales>
+        </menu>      
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+                <admin>
+                    <children>
+                        <sales>
+                            <children>
+                                <amtable>
+                                    <title>Custom Shipping Methods</title>
+                                </amtable>
+                            </children>
+                        </sales>
+			<system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <carriers>
+                                            <children>
+                                                <amtable>
+                                                    <title>Custom Shipping Methods</title>
+                                                </amtable>
+                                            </children>
+                                        </carriers>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>  
+
+                     </children>
+                </admin> 
+			</resources>
+		</acl>
+        <translate>
+            <modules>
+                <Amasty_Table>
+                    <files>
+                        <default>Amasty_Table.csv</default>
+                    </files>
+                </Amasty_Table>
+            </modules>
+        </translate> 	
+</config> 

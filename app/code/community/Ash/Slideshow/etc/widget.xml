@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Ash Slideshow Extension
+ *
+ * @category  Ash
+ * @package   Ash_Slideshow
+ * @copyright Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @author    August Ash Team <core@augustash.com>
+ */
+-->
+<widgets>
+    <ash_slideshow_widget type="ash_slideshow/widget" module="ash_slideshow">
+        <name>Ash Slideshow</name>
+        <description>Add responsive slideshow to a page</description>
+        <parameters>
+            <ash_slideshow_id>
+                <label>Slideshow</label>
+                <type>select</type>
+                <source_model>ash_slideshow/system_config_source_slideshow</source_model>
+                <visible>1</visible>
+                <required>1</required>
+            </ash_slideshow_id>
+        </parameters>
+    </ash_slideshow_widget>
+</widgets>

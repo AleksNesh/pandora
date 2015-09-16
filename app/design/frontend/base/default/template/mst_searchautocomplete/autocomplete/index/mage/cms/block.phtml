@@ -1,0 +1,16 @@
+<?php
+$_item         = $this->getItem();
+?>
+<li data-url="<?php echo $_url ?>">
+    <?php echo $_item->getData('title') ?>
+    <br>
+    <?php if ($_configHelper->isShowShortDescription()): ?>
+    <div class="highlight">
+        <?php 
+            $_html = Mage::helper('cms')->getPageTemplateProcessor()->filter($_item->getContent());
+            $_html = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $_html);
+        ?>
+        <?php echo Mage::helper('core/string')->truncate(strip_tags($_html), 300) ?>
+    </div>
+    <?php endif ?>
+</li>

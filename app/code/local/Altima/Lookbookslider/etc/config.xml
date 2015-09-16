@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Altima Lookbook Professional Extension
+ *
+ * Altima web systems.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is available through the world-wide-web at this URL:
+ * http://blog.altima.net.au/lookbook-magento-extension/lookbook-professional-licence/
+ *
+ * @category   Altima
+ * @package    Altima_LookbookProfessional
+ * @author     Altima Web Systems http://altimawebsystems.com/
+ * @license    http://blog.altima.net.au/lookbook-magento-extension/lookbook-professional-licence/
+ * @email      support@altima.net.au
+ * @copyright  Copyright (c) 2012 Altima Web Systems (http://altimawebsystems.com/)
+ */
+-->
+<config>
+    <modules>
+        <Altima_Lookbookslider>
+            <version>1.5.2</version>
+        </Altima_Lookbookslider>
+    </modules>
+    <frontend>
+        <routers>
+            <lookbookslider>
+                <use>standard</use>
+                <args>
+                    <module>Altima_Lookbookslider</module>
+                    <frontName>lookbookslider</frontName>
+                </args>
+            </lookbookslider>
+        </routers>
+        <translate>
+            <modules>
+                <Altima_Lookbookslider>
+                    <files>
+                        <default>Altima_Lookbookslider.csv</default>
+                    </files>
+                </Altima_Lookbookslider>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <lookbookslider>
+                    <file>lookbookslider.xml</file>
+                </lookbookslider>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+			<lookbookslider>
+				<use>admin</use>
+				<args>
+					<module>Altima_Lookbookslider</module>
+					<frontName>lookbookslider</frontName>
+				</args>
+			</lookbookslider>
+        </routers>
+    </admin>
+    <adminhtml>
+    <menu>
+            <cms>
+                <children>
+                    <lookbookslider translate="title" module="lookbookslider">
+                        <title>LookBook Professional</title>
+                        <action>lookbookslider/adminhtml_lookbookslider</action>
+ 			<children>
+	                    <lookbookslider translate="title" module="lookbookslider">
+	                        <title>LookBook Professional</title>
+	                        <action>lookbookslider/adminhtml_lookbookslider</action>
+			    </lookbookslider>
+	                    <settings translate="title" module="lookbookslider">
+	                        <title>Settings</title>
+	                        <action>adminhtml/system_config/edit/section/lookbookslider</action>
+	                        <sort_order>20</sort_order>
+	                    </settings>
+			</children>
+                    </lookbookslider>
+                 </children>
+            </cms>
+     </menu>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <cms>
+                            <children>
+                                <lookbookslider translate="title" module="lookbookslider">
+                                    <title>LookBook Professional</title> 
+                                </lookbookslider>
+                            </children>
+                        </cms>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <lookbookslider translate="title" module="lookbookslider">
+                                            <title>LookBook Professional</title>
+                                        </lookbookslider>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <translate>
+            <modules>
+                <Altima_Lookbookslider>
+                    <files>
+                        <default>Altima_Lookbookslider.csv</default>
+                    </files>
+                </Altima_Lookbookslider>
+            </modules>
+        </translate> 
+		<layout>
+			<updates>
+				<lookbookslider>
+					<file>lookbookslider.xml</file>
+				</lookbookslider>
+			</updates>
+		</layout>
+    </adminhtml>
+    <default>
+        <lookbookslider>
+            <general>
+                <enabled>1</enabled>
+                <enable_jquery>1</enable_jquery>
+                <cat_path_in_prod_url>1</cat_path_in_prod_url>
+                <max_upload_filesize>2097152</max_upload_filesize>
+                <allowed_extensions>jpg,jpeg,png,gif</allowed_extensions>
+                <interdict_areas_overlap>1</interdict_areas_overlap>
+                <show_product_desc>1</show_product_desc>
+                <show_add_to_cart>1</show_add_to_cart>
+                <hotspot_icon>default/hotspot-icon.png</hotspot_icon>       
+            </general>
+        </lookbookslider>
+    </default>     
+    <global>
+        <models>
+            <lookbookslider>
+                <class>Altima_Lookbookslider_Model</class>
+                <resourceModel>lookbookslider_mysql4</resourceModel>
+            </lookbookslider>
+            <lookbookslider_mysql4>
+                <class>Altima_Lookbookslider_Model_Mysql4</class>
+                <entities>
+                    <lookbookslider>
+                        <table>lookbookslider</table>
+                    </lookbookslider>
+                    <slide>
+                        <table>lookbookslider_slide</table>
+                    </slide>
+                    <category>
+                        <table>lookbookslider_category</table>
+                    </category>
+                    <page>
+                        <table>lookbookslider_page</table>
+                    </page>
+                </entities>
+            </lookbookslider_mysql4>
+        </models>
+        <resources>
+            <lookbookslider_setup>
+                <setup>
+                    <module>Altima_Lookbookslider</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </lookbookslider_setup>
+            <lookbookslider_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </lookbookslider_write>
+            <lookbookslider_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </lookbookslider_read>
+        </resources>
+        <blocks>
+            <lookbookslider>
+                <class>Altima_Lookbookslider_Block</class>
+            </lookbookslider>
+        </blocks>
+        <helpers>
+            <lookbookslider>
+                <class>Altima_Lookbookslider_Helper</class>
+            </lookbookslider>
+        </helpers>
+        <events>
+			<controller_action_layout_render_before>
+				<observers>
+					<lookbookslider_layout_generate_observer>
+						<type>singleton</type>
+						<class>lookbookslider/layout_generate_observer</class>
+						<method>includeJavascripts</method>
+					</lookbookslider_layout_generate_observer>
+				</observers>
+			</controller_action_layout_render_before>
+		</events>
+    </global>
+</config>

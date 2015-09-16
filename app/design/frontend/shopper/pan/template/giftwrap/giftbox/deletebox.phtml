@@ -1,0 +1,10 @@
+<?php 
+	$id=Mage::app()->getRequest()->getParam('id');
+	$idcard=Mage::app()->getRequest()->getParam('idcard');
+
+?>
+<div class="actions-button">
+	<button id="close-giftbox" onclick="return deleteGiftbox('<?php echo $id?>')" class="button yes-delete" type="submit"><span><span><?php echo $this->__('Yes, Delete')?></span></span></button>
+	<button id="close-giftbox" onclick="return showEditForm('<?php echo $id?>','<?php echo $idcard?>')" class="button no-edit" type="submit"><span><span><?php echo $this->__('Edit Giftbox')?></span></span></button>
+	<button id="close-giftbox" onclick="TINY.box.hide();return false;" class="button no-nothing"><span><span><?php echo $this->__('No')?></span></span></button>	
+</div>

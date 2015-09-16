@@ -1,0 +1,71 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: vitalij
+ * Date: 17.04.12
+ * Time: 12:20
+ * To change this template use File | Settings | File Templates.
+ */
+?>
+<?php
+$order_id = $this->getRequest()->getParam('id');
+$order = Mage::getModel('sales/order')->load($order_id);
+?>
+<?php if(!$_POST): ?>
+<div class="my-account">
+    <div class="page-title">
+        <h1><?php echo $this->__('Create refund UPS label'); ?></h1>
+    </div>
+</div>
+<?php
+$items = $order->getAllVisibleItems();
+?>
+<form action="<?php echo $this->getUrl('upslabel/refund/customerrefund/id/'.$order->getId()); ?>" method="post" id="form-validate">
+    <fieldset>
+        <table id="shopping-cart-table" class="data-table cart-table">
+            <colgroup>
+                <col width="1">
+                <col width="1">
+                <col width="1">
+            </colgroup>
+            <thead>
+            <tr class="first last">
+                <th rowspan="1"><span class="nobr"><?php echo $this->__('Product Name'); ?></span></th>
+                <th class="a-center" colspan="1"><span class="nobr"><?php echo $this->__('Unit Price'); ?></span></th>
+                <th rowspan="1" class="a-center"><?php echo $this->__('Qty'); ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($items as $itemId => $item):
+                ?>
+            <tr class="first last odd">
+                <td>
+                    <h2 class="product-name">
+                        <?php echo $item->getName(); ?>
+                    </h2>
+                </td>
+                <td class="a-right">
+                    <span class="cart-price"><span class="price"><?php echo $item->getPrice(); ?></span></span>
+                </td>
+                <td class="a-center">
+                    <input name="cart[<?php echo $item->getProductId(); ?>][qty]" value="" size="4" title="Qty" class="input-text qty" maxlength="12">
+                    <input name="weight[<?php echo $item->getProductId(); ?>]" type="hidden" value="<?php echo $item->getWeight(); ?>" size="4" title="Qty" class="input-text qty" maxlength="12">
+                </td>
+            </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <button type="submit" title="<?php echo $this->__('Submit'); ?>" class="button"><span><span><?php echo $this->__('Submit'); ?></span></span></button>
+    </fieldset>
+</form>
+<?php endif; ?>
+<?php
+if(strlen(Mage::registry('error'))>0){
+    echo Mage::registry('error');
+    echo '<br><br><br>';
+    echo $this->__('Unfortunately, UPS can not create your label.');
+    echo '<br><br>';
+    echo '<a href="'.$this->getUrl('contacts').'">'.$this->__('Please, contact webmaster.').'</a>';
+    echo '<br><br>';
+    echo '<a href="'.$this->getUrl('customer/account/index/').'">'.$this->__('Back to your account').'</a>';
+} ?>

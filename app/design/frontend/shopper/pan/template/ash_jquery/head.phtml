@@ -1,0 +1,165 @@
+<?php
+/**
+ * Add Jquery/Jquery UI support
+ *
+ * @category    Ash
+ * @package     Ash_Jquery
+ * @copyright   Copyright (c) 2013 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+// instantiate helper
+$_helper = Mage::helper('ash_jquery');
+
+// figure out which library version to include
+if ($_helper->useCdn()) {
+    if ($_helper->useMinified()) {
+        $jqueryName   = $_helper->getJqueryVersion() . '/jquery.min.js';
+        $migrateName  = '/jquery-migrate-'. $_helper->getJqueryMigrateVersion() . '.min.js';
+        $jqueryUiName = $_helper->getJqueryUiVersion() . '/jquery-ui.min.js';
+    } else {
+        $jqueryName   = $_helper->getJqueryVersion() . '/jquery.js';
+        $migrateName  = '/jquery-migrate-'. $_helper->getJqueryMigrateVersion() . '.js';
+        $jqueryUiName = $_helper->getJqueryUiVersion() . '/jquery-ui.js';
+    }
+}
+?>
+
+<?php
+/**
+ * Queldorei_Shopper Theme
+ */
+$config = Mage::getStoreConfig('shoppersettings/appearance', Mage::app()->getStore()->getId());
+$config_slideshow = Mage::getStoreConfig('shopperslideshow', Mage::app()->getStore()->getId());
+?>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!--[if IE]>
+    <script type='text/javascript' src='http://html5shiv.googlecode.com/svn/trunk/html5.js'></script>
+<![endif]-->
+
+<?php if (Mage::getStoreConfig('shoppersettings/design/responsive')): ?>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+<?php endif; ?>
+
+<meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>" />
+<title><?php echo $this->getTitle() ?></title>
+<meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
+<meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>" />
+<meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+<link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+
+<link rel="apple-touch-icon" href="<?php echo $this->getSkinUrl(); ?>apple-touch-icon.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="<?php echo $this->getSkinUrl(); ?>apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="<?php echo $this->getSkinUrl(); ?>apple-touch-icon-114x114.png" />
+
+
+<!--[if lt IE 7]>
+<script type="text/javascript">
+//<![CDATA[
+    var BLANK_URL = '<?php echo $this->helper('core/js')->getJsUrl('blank.html') ?>';
+    var BLANK_IMG = '<?php echo $this->helper('core/js')->getJsUrl('spacer.gif') ?>';
+//]]>
+</script>
+<![endif]-->
+
+<?php if ($_helper->useCdn()) : ?>
+<!-- JQUERY CDN -->
+<?php if ($_helper->isJqueryEnabled('cdn')) : ?>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/<?php echo $jqueryName; ?>"></script>
+<script type="text/javascript">jQuery.noConflict();</script>
+<?php if ($_helper->isJqueryMigrateEnabled('cdn')) : ?>
+<script type="text/javascript" src="//code.jquery.com/<?php echo $migrateName; ?>"></script>
+<?php endif; ?>
+<?php endif; ?>
+<?php if ($_helper->isJqueryUiEnabled('cdn')) : ?>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/<?php echo $jqueryUiName; ?>"></script>
+<?php endif; ?>
+<!-- /JQUERY CDN -->
+<?php endif; ?>
+
+<?php echo $this->getCssJsHtml() ?>
+
+<?php if (Mage::helper('shopperslideshow/data')->isSlideshowEnabled() && $config_slideshow['config']['slider'] == 'revolution') : ?>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js') . 'queldorei/jquery.themepunch.plugins.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js') . 'queldorei/jquery.themepunch.revolution.min.js'; ?>"></script>
+<?php endif; ?>
+<?php if ($config['enable_font']) :?>
+<link href='//fonts.googleapis.com/css?family=<?php echo str_replace(' ', '+', $config['font']); ?>:300,400,700' rel='stylesheet' type='text/css'>
+<?php if ($config['price_font'] != $config['font'] ) : ?>
+    <link href='//fonts.googleapis.com/css?family=<?php echo str_replace(' ', '+', $config['price_font']); ?>:300,400,700' rel='stylesheet' type='text/css'>
+    <?php endif; ?>
+<?php endif; ?>
+<link href='//fonts.googleapis.com/css?family=Rosario:400,400italic,700,700italic' rel='stylesheet' type='text/css'> <!-- font-family: 'Rosario', sans-serif; -->
+<link href='//fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'> <!-- font-family: 'Great Vibes', cursive; -->
+<link href='//fonts.googleapis.com/css?family=Cinzel:400,700' rel='stylesheet' type='text/css'> <!-- font-family: 'Cinzel', serif; -->
+<link href='//fonts.googleapis.com/css?family=Raleway:400,200,600,700' rel='stylesheet' type='text/css'><!-- font-family: 'Raleway', serif; -->
+<?php
+$options_link = '?store='.Mage::app()->getStore()->getCode();
+if ($cat = Mage::registry('current_category')) {
+    $options_link .= '&cat='.$cat->getId();
+} else if ( $cat = Mage::app()->getRequest()->getParam('qvc') ) {
+    $options_link .= '&cat='.$cat;
+}
+?>
+<link href='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB, Mage::app()->getFrontController()->getRequest()->isSecure()) . 'options.css.php' . $options_link;  ?>' rel='stylesheet' type='text/css'>
+
+<?php echo $this->getChildHtml() ?>
+<?php echo $this->helper('core/js')->getTranslatorScript() ?>
+<?php echo $this->getIncludes() ?>
+
+<!--
+Ebizmarts AutoResponders visitedproducts.js file to be loaded
+only if it's enabled AND on product view pages only!
+-->
+<?php if (Mage::registry('current_product') && Mage::getStoreConfig('ebizmarts_autoresponder/general/active')): ?>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js') . 'ebizmarts/autoresponders/visitedproducts.js'; ?>"></script>
+<?php endif; ?>
+
+
+<script type="text/javascript">
+    //<![CDATA[
+    var Shopper = {};
+    Shopper.url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB, Mage::app()->getFrontController()->getRequest()->isSecure()) ?>';
+    Shopper.store = '<?php echo Mage::app()->getStore()->getCode(); ?>';
+    Shopper.category = '<?php if ($cat = Mage::registry('current_category')) { echo $cat->getId(); }  ?>';
+    Shopper.price_circle = <?php echo Mage::getStoreConfig('shoppersettings/design/price_circle') ?>;
+    Shopper.fixed_header = <?php echo Mage::getStoreConfig('shoppersettings/design/fixed_header') ?>;
+    Shopper.totop = <?php echo Mage::getStoreConfig('shoppersettings/ajax/totop') ?>;
+    Shopper.responsive = <?php echo Mage::getStoreConfig('shoppersettings/design/responsive') ?>;
+    Shopper.quick_view = <?php echo Mage::getStoreConfig('shoppersettings/ajax/quick_view') ?>;
+    Shopper.shopby_num = '<?php echo Mage::getStoreConfig('shoppersettings/catalog/shopby_num') ?>';
+    Shopper.text = {};
+    Shopper.text.more = '<?php echo $this->__('more...') ?>';
+    Shopper.text.less = '<?php echo $this->__('less...') ?>';
+    Shopper.anystretch_bg = '';
+    <?php
+    $bg_image = '';
+    if (!empty($config['content_bg_img']) && $config['content_bg_img_mode'] == 'stretch') {
+        $bg_image = $config['content_bg_img'];
+    }
+
+    if ($current_category = Mage::registry('current_category')) {
+        $current_scheme = Mage::helper('shoppercategories')->getCategoryScheme($current_category->getId());
+        if ($current_scheme && !empty($current_scheme['content_bg_img'])) {
+            if ($current_scheme['content_bg_img_mode'] == 'stretch') {
+                $bg_image = str_replace('queldorei/shopper/', '', $current_scheme['content_bg_img']);
+            } else {
+                $bg_image = '';
+            }
+        }
+    }
+
+    $route = Mage::app()->getFrontController()->getRequest()->getRouteName();
+    $action = Mage::app()->getFrontController()->getRequest()->getActionName();
+    if ( ($route == 'customer' && ($action == 'login' || $action == 'forgotpassword' || $action == 'create')) && !empty($config['login_bg']) ) {
+        $bg_image = $config['login_bg'];
+    }
+
+    if ( !empty($bg_image) ) {
+        //echo "Shopper.anystretch_bg = '".Mage::getBaseUrl('media') . 'queldorei/shopper/' . $bg_image ."'; ";
+    }
+    ?>
+    //]]>
+</script>

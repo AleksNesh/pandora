@@ -1,0 +1,307 @@
+<?php
+$pdfItem = $this->getPdfItem();
+$columns = $this->getPdfHelper()->getPdfColumnHeaders();
+$vertSpacing = $this->getVertSpacing();
+$styleOverride = $this->getStyleOverride();
+$position = $this->getPosition();
+$maxColumns = sizeof($columns);
+?>
+<?php if ($columns) : ?>
+    <?php foreach ($columns as $column) : ?>
+        <?php
+        $isNotLast = (
+            $pdfItem['productDetails']['Options']
+                || $pdfItem['giftMessage']['message']
+                || $pdfItem['productDetails']['Subitems']
+        );
+        $style = $isNotLast
+            ? $column['style_first']
+            : $column['style_first'] . $column['style_last'];
+        $horizSpace = 0;
+        if ($styleOverride) {
+            $style = $isNotLast
+                ? $styleOverride['style_first']
+                : $styleOverride['style_first'] . $styleOverride['style_last'];
+            if (isset($styleOverride['horiz_whitespace'])) {
+                $horizSpace = $styleOverride['horiz_whitespace'];
+            }
+        }
+        ?>
+        <?php switch ($column['key']) {
+        case 'position':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing
+                    . $position . '.' . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php
+            break;
+        case 'name':
+        case 'name-space':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing
+                    . $pdfItem['productDetails']['Name']
+                    . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'name-sku':
+            ?>
+            <td style="<?php echo $style ?>" width="<?php echo $column['width'] ?>%"><?php echo
+                    $vertSpacing . $pdfItem['productDetails']['Name'] ?><br/>
+                <?php echo
+                    htmlentities(Mage::helper('sales')->__('SKU'), ENT_QUOTES, 'UTF-8', false) . ': '
+                    . $pdfItem['productDetails']['Sku'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'sku':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo  $vertSpacing
+                    . $pdfItem['productDetails']['Sku'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'custom':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo  $vertSpacing
+                    . $pdfItem['productDetails']['custom'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'custom2':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo  $vertSpacing
+                    . $pdfItem['productDetails']['custom2'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'custom3':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo  $vertSpacing .
+                    $pdfItem['productDetails']['custom3'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'custom4':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo  $vertSpacing
+                    . $pdfItem['productDetails']['custom4'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'custom5':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo  $vertSpacing
+                    . $pdfItem['productDetails']['custom5'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'image':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo  $vertSpacing
+                    . ($pdfItem['image'] ? '<img src="' . $pdfItem['image'] . '" height="180"/>' : '')
+                    . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'barcode':
+            $barcode = $pdfItem['productDetails']['Sku'];
+            $barcodeParams = $this->getPdfHelper()->getPdf()->serializeTCPDFtagParameters(
+                array(
+                    $barcode,
+                    $this->getPdfHelper()->getBarcodeType(),
+                    '', '', '35', '13'
+                )
+            );?>
+            <?php if ($this->getPdfHelper()->validateBarcode($barcode)):?>
+                <td valign="top" style="<?php echo $style ?>" width="<?php echo $column['width'] ?> '%">
+                    <tcpdf method="write1DBarcode" params="<?php echo  $barcodeParams ?>"/>
+                    <?php echo ($isNotLast ? '' : $vertSpacing)?></td>
+            <?php endif; ?>
+            <?php break;
+        case 'qty_ordered':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing
+                    . $pdfItem['qty_ordered'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'qty_backordered':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing
+                    . $pdfItem['qty_backordered'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'qty_detailed':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing?>
+            <?php foreach ($pdfItem['qty_detailed'] as $qtyRow) :?>
+                    <?php echo $qtyRow?><br/>
+            <?php endforeach;?>
+            <?php echo ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'qty':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing
+                    . $pdfItem['qty'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'qty_stock':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing
+                    . $pdfItem['qty_stock'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'price':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing ?><?php if($pdfItem['weee']):?>
+                    <span style="font-size:8pt"><?php foreach($pdfItem['weee'] as $tax):?>
+                        <?php echo $tax['title']. ' '. $this->getPdfHelper()->OutputPrice(
+                            $tax['amount'],
+                            $tax['base_amount'],
+                            $this->getPdfHelper()->getDisplayBoth(),
+                            $this->getPdfHelper()->getSalesObject()
+                        ) ?><br/>
+                    <?php endforeach;?></span>
+                <?php endif;?><?php echo
+                    $this->getPdfHelper()->OutputPrice(
+                        $pdfItem['price'],
+                        $pdfItem['basePrice'],
+                        $this->getPdfHelper()->getDisplayBoth(),
+                        $this->getPdfHelper()->getSalesObject()
+                    ) . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'item_status':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing
+                    . $pdfItem['item_status'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'discount':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing
+                    . $this->getPdfHelper()->OutputPrice(
+                        $pdfItem['discountAmount'],
+                        $pdfItem['baseDiscountAmount'],
+                        $this->getPdfHelper()->getDisplayBoth(),
+                        $this->getPdfHelper()->getSalesObject()
+                    ) . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'tax':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing
+                    . $this->getPdfHelper()->OutputPrice(
+                        $pdfItem['taxAmount'],
+                        $pdfItem['baseTaxAmount'],
+                        $this->getPdfHelper()->getDisplayBoth(),
+                        $this->getPdfHelper()->getSalesObject()
+                    ) . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'taxrate':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing
+                    . $pdfItem['taxPercent'] . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'subtotal':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing .
+                    $this->getPdfHelper()->OutputPrice(
+                        $pdfItem['subtotal'],
+                        $pdfItem['baseSubtotal'],
+                        $this->getPdfHelper()->getDisplayBoth(),
+                        $this->getPdfHelper()->getSalesObject()
+                    ) . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'subtotal2':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing .
+                    $this->getPdfHelper()->OutputPrice(
+                        $pdfItem['subtotal2'],
+                        $pdfItem['baseSubtotal2'],
+                        $this->getPdfHelper()->getDisplayBoth(),
+                        $this->getPdfHelper()->getSalesObject()
+                    ) . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'cost':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing .
+                    $this->getPdfHelper()->OutputPrice(
+                        $pdfItem['cost'],
+                        $pdfItem['cost'],
+                        $this->getPdfHelper()->getDisplayBoth(),
+                        $this->getPdfHelper()->getSalesObject()
+                    ) . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+
+        case 'row-cost':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing .
+                    $this->getPdfHelper()->OutputPrice(
+                        $pdfItem['rowCost'],
+                        $pdfItem['rowCost'],
+                        $this->getPdfHelper()->getDisplayBoth(),
+                        $this->getPdfHelper()->getSalesObject()
+                    ) . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        case 'rowtotal2':
+            ?>
+            <td style="<?php echo $style ?>" align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"><?php echo $vertSpacing .
+                    $this->getPdfHelper()->OutputPrice(
+                        $pdfItem['rowTotal2'],
+                        $pdfItem['baseRowTotal2'],
+                        $this->getPdfHelper()->getDisplayBoth(),
+                        $this->getPdfHelper()->getSalesObject()
+                    ) . ($isNotLast ? '' : $vertSpacing) ?></td>
+            <?php break;
+        }?>
+    <?php endforeach; ?>
+    <?php if (
+        $pdfItem['productDetails']['Options']
+        || $pdfItem['giftMessage']['message']
+        || $pdfItem['productDetails']['Subitems']
+    ) : ?>
+        </tr>
+        <tr nobr="true">
+        <td style="<?php echo ($styleOverride ? $styleOverride['style_last'] : $column['style_last']) ?>
+            " colspan="<?php echo  $maxColumns ?>" width="100%">
+            <?php $options = $pdfItem['productDetails']['Options'] ?>            
+            <?php if ($options) : ?>
+                <?php if (isset($options['options'])) : ?>
+                    <?php foreach ($options['options'] as $option) : ?>
+                        <?php if ($option['label'] == 'Detail') : ?>
+                            <?php foreach (explode("\n", $option['value']) as $detailLines) : ?>
+                                <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding($detailLines) ?>
+                            <?php endforeach; ?> 
+                        <?php else : ?>
+                            <?php //Aitoc Custom Product Options adds a whole bunch of JS ?>     
+                            <?php //filter it out here ?>            
+                            <?php if (strpos($option['value'], 'Aitcg.Main') === false) : ?>        
+                                <?php $printValue = isset($option['print_value']) ? $option['print_value'] : $option['value'] ?>
+                                <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding($option['label'] . ': ' . $printValue) ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>    
+                    <?php echo '<br/>' ?>
+                <?php endif; ?>
+                <?php if (isset($options['additional_options'])) : ?>
+                    <?php foreach ($options['additional_options'] as $additionalOption) : ?>
+                        <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding(
+                                    $additionalOption['label'] . ': ' . $additionalOption['value']) ?>
+                    <?php endforeach; ?>        
+                    <?php echo '<br/>' ?>  
+                <?php endif; ?>
+                <?php if (isset($options['attributes_info'])) : ?>
+                    <?php foreach ($options['attributes_info'] as $attribute) : ?>
+                        <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding(
+                                    $attribute['label'] . ': ' . $attribute['value']) ?> 
+                    <?php endforeach; ?>  
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php if(!empty($pdfItem['productDetails']['Subitems'])):?>
+                <?php foreach ($pdfItem['productDetails']['Subitems'] as $subitem) :?>
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $subitem['qty']?> x <?php echo $subitem['Name']?>
+                <?php endforeach;?>
+            <?php endif;?>
+            <?php echo $this->getPdfHelper()->OutputGiftMessageItem($pdfItem['giftMessage']) . $vertSpacing ?>
+        </td>
+    <?php endif; ?>
+<?php endif; ?>

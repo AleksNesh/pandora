@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * @category    Brainvire
+ * @package     Brainvire_OrderComment
+ * @copyright   Copyright (c) 2011-2012 Brainvire Infotech Pvt. Ltd. <www.brainvire.com>
+ */
+-->
+<config>
+    <modules>
+        <Brainvire_OrderComment>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Checkout />
+                <Mage_Sales />
+            </depends>
+        </Brainvire_OrderComment>
+    </modules>
+</config>

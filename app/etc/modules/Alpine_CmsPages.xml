@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Alpine_CmsPages>
+            <active>true</active>
+            <codePool>local</codePool>
+                    </Alpine_CmsPages>
+    </modules>
+</config>

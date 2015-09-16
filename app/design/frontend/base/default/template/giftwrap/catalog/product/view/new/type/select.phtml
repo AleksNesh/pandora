@@ -1,0 +1,116 @@
+<?php //select giftwrap in product page - HoaNTT                ?>
+<?php
+$_product = $this->getProduct();
+$productId = $this->getRequest()->getParam('id');
+$session = Mage::getSingleton('checkout/session');
+$giftWrapDataSession = $session->getData('giftwrap');
+$giftWrapData = $giftWrapDataSession[$productId];
+$_helper = Mage::helper('giftwrap');
+$icon_image = $_helper->getGiftwrapIcon();
+$papers = $this->getGiftWrapCollection();
+$giftcards = $this->getAllGiftCards();
+//zend_debug::dump(count($giftcards));die();
+$helpIcon = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . '/giftwrap/fam_help.png';
+$giftwrap_color = Mage::getStoreConfig('giftwrap/style/giftwrap_color');
+?>
+<style>
+    option{
+        padding-left: 30px;
+    }
+    .giftbox-title-message-product-view{
+        color: #8C6239;
+        float: left;
+        font-family: arial;
+        font-size: 15px;
+        font-weight: normal;
+        padding: 10px 0;
+        text-align: left;
+        width: 100%;
+    }
+</style>
+<?php if ($papers->getSize()): ?>
+    <div id="giftwrap-container" class="giftwrap-container" style="display:none;">
+        <div class="input-box">
+            <select name="giftbox_paper" onchange="selectpaper(this);" class="supper-attribute-select" id="paper-select" style="text-transform:uppercase;width:100%; border: solid 1px <?php echo '#' . $giftwrap_color ?>;">
+                <option value="0" style="padding-left:0px;">
+                <span><?php echo $this->__('No Gift Wrap') ?></span>
+                <?php foreach ($papers as $paper): ?>
+                    <option name="giftbox_paper" id="giftbox_paper_<?php echo $paper->getId(); ?>" value="<?php echo $paper->getId(); ?> " style="background:url(<?php echo Mage::getBaseUrl('media') . 'giftwrap/' . $paper->getImage(); ?>) no-repeat; background-size:25px 15px; padding-left:40px;">
+                    <span><?php echo $paper->getTitle(); ?></span>
+                    <span class="price-giftwrap"><?php echo Mage::helper('core')->currency($paper->getPrice()); ?></span>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+    </div>
+<?php else: ?>
+    <p class="note-msg"><?php echo $this->__('There is no gift box or paper to use.') ?></p>
+<?php endif; ?>
+<br/>
+
+<?php if ($papers->getSize() && $giftcards->getSize() && $_helper->checkUseCard()): ?>
+    <div id="giftcard-container" class="giftwrap-container" style="display:none;">
+        <div class="input-box">
+            <select  name="giftwrap_giftcard" onchange="selectcard(this);" class="supper-attribute-select" id="giftcard-select" style="text-transform:uppercase;width:100%;border: solid 1px <?php echo '#' . $giftwrap_color ?>;">
+                <option value="0" style="padding-left:0px;">
+                <span><?php echo $this->__('No Gift Card') ?></span>
+                </option>
+                <?php foreach ($giftcards as $giftcard): ?>
+                    <option id="giftwrap_giftcard_<?php echo $giftcard->getId(); ?>" value="<?php echo $giftcard->getId(); ?>" style="background:url(<?php echo Mage::getBaseUrl('media') . 'giftwrap/giftcard/' . $giftcard->getImage(); ?>) no-repeat; background-size:25px 15px; padding-left:30px;">
+                    <span><?php echo $giftcard->getName(); ?></span>
+                    <span class="price-giftwrap"><?php echo Mage::helper('core')->currency($giftcard->getPrice()); ?></span>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <?php foreach ($giftcards as $giftcard): ?>
+                <input type="hidden" id="max_len_<?php echo $giftcard->getId(); ?>" value="<?php echo $giftcard->getCharacter(); ?>"/>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div id="text_message" style="display:none">
+        <h5 class="giftbox-title-message-product-view">
+            <span style="float:left">
+                <?php echo $this->__('Your message ('); ?>
+                <strong id="giftcard-message-maxlen"></strong>
+                <?php echo $this->__(' characters max)'); ?></span>
+        </h5>
+        <textarea name="giftbox_message" id="giftcart-message-textarea" onkeydown="checkMaxLen();" onkeyup="checkMaxLen();"  ></textarea>
+    </div>
+<?php endif; ?>
+<script type="text/javascript">
+            function selectpaper(element) {
+                if (element.value == 0) {
+                    $('giftcard-container').style.display = 'none';
+                } else {
+
+                    $('giftcard-container').style.display = 'block';
+                }
+            }
+            function selectcard(element) {
+                if (element.value == 0) {
+                    $('text_message').style.display = 'none';
+                    $('giftcart-message-textarea').value = '';
+                } else {
+                    var len = $('max_len_' + element.value).value;
+                    $('giftcard-message-maxlen').innerHTML = len;
+                    $('giftcart-message-textarea').value = '';
+                    $('text_message').style.display = 'block';
+                }
+
+            }
+
+            function checkMaxLen() {
+                var el = $('giftcard-select');
+                var max = $('max_len_' + el.value).value;
+                var msg = $('giftcart-message-textarea');
+                if (max > 0) {
+                    if (msg.value.length > max) {
+                        msg.value = msg.value.substring(0, max);
+                    } else {
+
+                    }
+                }
+            }
+
+</script>

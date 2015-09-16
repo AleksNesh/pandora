@@ -1,0 +1,615 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/magestore/giftwrap.css</stylesheet>
+            </action>
+        </reference>
+    </default>
+    <checkout_cart_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>magestore/giftwrap.js</script>
+            </action>
+            <action method="addJs">
+                <script>magestore/tooltip/tooltip.js</script>
+            </action>
+            <!--<action method="addCss">
+                    <stylesheet>css/magestore/giftwrap.css</stylesheet>
+            </action>-->
+            <action method="addJs">
+                <script>magestore/giftwrap/tinybox.js</script>
+            </action>
+        </reference>
+        <!--<reference name="checkout.cart">           
+                        <action method="setCartTemplate"><value>giftwrap/checkout/cart.phtml</value></action>
+            <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>giftwrap/checkout/cart/item/default.phtml</template></action>
+            <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>giftwrap/checkout/cart/item/default.phtml</template></action>
+            <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>giftwrap/checkout/cart/item/default.phtml</template></action>
+            <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>giftwrap/checkout/cart/item/default.phtml</template></action>
+            <action method="addItemRender"><type>bundle</type><block>checkout/cart_item_renderer_bundle</block><template>giftwrap/checkout/cart/item/default.phtml</template></action>
+            <action method="addItemRender"><type>downloadable</type><block>checkout/cart_item_renderer_downloadable</block><template>giftwrap/checkout/cart/item/default.phtml</template></action>
+                        <action method="chooseTemplate"/>  
+        </reference>-->
+        <reference name="before_body_end">
+            <block type="giftwrap/checkout_cart" name="giftwrap.button.cart"/>
+        </reference>
+        <reference name="checkout.cart.form.before">
+            <block type="giftwrap/giftbox" name="giftwrap.giftwrap" after="checkout.cart.form.before"
+                   template="giftwrap/giftbox.phtml" />
+        </reference>
+        <reference name="checkout.cart.methods.onepage">
+            <action method="setTemplate">
+                <template>giftwrap/checkout/onepage/link.phtml</template>
+            </action>
+        </reference>
+    </checkout_cart_index>
+    <giftwrap_index_giftbox>
+        <reference name="head">
+        </reference>
+        <reference name="content">
+            <block type="giftwrap/giftbox_paper" name="giftwrap.giftbox.paper" />
+        </reference>
+    </giftwrap_index_giftbox>
+    <giftwrap_indexmulti_giftbox>
+        <reference name="head">
+        </reference>
+        <reference name="content">
+            <block type="giftwrap/giftbox_papermulti" name="giftwrap.giftbox.papermulti" />
+        </reference>
+    </giftwrap_indexmulti_giftbox>
+    <giftwrap_index_styleselection>
+        <remove name="right" />
+        <remove name="left" />
+        <block type="giftwrap/styleselection" name="giftwrap.styleselection"
+               output="toHtml" template="giftwrap/styleselection.phtml" />
+    </giftwrap_index_styleselection>
+    <giftwrap_indexmulti_styleselection>
+        <remove name="right" />
+        <remove name="left" />
+        <block type="giftwrap/styleselection" name="giftwrap.styleselection"
+               output="toHtml" template="giftwrap/styleselection.phtml" />
+    </giftwrap_indexmulti_styleselection>
+    <!--Order -->
+    <sales_order_view>
+        <reference name="order_items">
+            <action method="addItemRender">
+                <type>bundle</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>giftwrap/sales/order/view/items/renderer.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>default</type>
+                <block>sales/order_item_renderer_default</block>
+                <template>giftwrap/sales/order/view/items/default.phtml</template>
+            </action>
+             <action method="addItemRender">
+                <type>grouped</type>
+                <block>sales/order_item_renderer_grouped</block>
+                <template>giftwrap/sales/order/view/items/default.phtml</template>
+            </action>
+        </reference>
+        <reference name="additional.product.info">
+            <block type="giftwrap/giftwrap" name="giftwrap.giftwrap" />
+        </reference>
+        <reference name="order_totals">
+            <block type="giftwrap/sales_order_totals_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_totals_giftwraptax" name="giftwraptax" />
+        </reference>
+    </sales_order_view>
+    <sales_order_invoice>
+        <reference name="invoice_items">
+            <action method="addItemRender">
+                <type>bundle</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>giftwrap/sales/order/invoice/items/renderer.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>default</type>
+                <block>sales/order_item_renderer_default</block>
+                <template>giftwrap/sales/order/invoice/items/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>grouped</type>
+                <block>sales/order_item_renderer_grouped</block>
+                <template>giftwrap/sales/order/invoice/items/default.phtml</template>
+            </action>
+        </reference>
+        <reference name="invoice_totals">
+            <block type="giftwrap/sales_order_invoice_total_giftwrap" name="giftwrap" />
+        </reference>
+        <reference name="additional.product.info">
+            <block type="giftwrap/giftwrap" name="giftwrap.giftwrap" />
+        </reference>
+    </sales_order_invoice>
+    
+    <sales_order_creditmemo>
+        <reference name="creditmemo_items">
+            <action method="addItemRender">
+                <type>bundle</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>giftwrap/sales/order/creditmemo/items/renderer.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>default</type>
+                <block>sales/order_item_renderer_default</block>
+                <template>giftwrap/sales/order/creditmemo/items/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>grouped</type>
+                <block>sales/order_item_renderer_grouped</block>
+                <template>giftwrap/sales/order/creditmemo/items/default.phtml</template>
+            </action>
+        </reference>
+        <reference name="creditmemo_totals">
+            <block type="giftwrap/sales_order_creditmemo_total_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_creditmemo_total_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="additional.product.info">
+            <block type="giftwrap/giftwrap" name="giftwrap.giftwrap" />
+        </reference>
+    </sales_order_creditmemo>
+    <!-- print -->
+    <sales_order_print>
+        <reference name="sales.order.print">
+            <action method="addItemRender">
+                <type>bundle</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>giftwrap/sales/order/view/items/renderer.phtml</template>
+            </action>
+        </reference>
+        <reference name="order_totals">
+            <block type="giftwrap/sales_order_totals_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_totals_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="additional.product.info">
+            <block type="giftwrap/giftwrapprint" name="giftwrap.giftwrap" />
+        </reference>
+    </sales_order_print>
+    <sales_order_printinvoice>
+        <reference name="sales.order.print.invoice">   
+            <action method="addItemRender">
+                <type>bundle</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>giftwrap/sales/order/invoice/items/renderer.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>default</type>
+                <block>sales/order_item_renderer_default</block>
+                <template>giftwrap/sales/order/invoice/items/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>grouped</type>
+                <block>sales/order_item_renderer_grouped</block>
+                <template>giftwrap/sales/order/invoice/items/default.phtml</template>
+            </action>
+        </reference>
+        <reference name="invoice_totals">
+            <block type="giftwrap/sales_order_invoice_total_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_invoice_total_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="additional.product.info">
+            <block type="giftwrap/giftwrapprint" name="giftwrap.giftwrap" />
+        </reference>
+    </sales_order_printinvoice>
+    <sales_order_printcreditmemo>
+        <reference name="sales.order.print.creditmemo">   
+            <action method="addItemRender">
+                <type>bundle</type>
+                <block>bundle/sales_order_items_renderer</block>
+                <template>giftwrap/sales/order/creditmemo/items/renderer.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>default</type>
+                <block>sales/order_item_renderer_default</block>
+                <template>giftwrap/sales/order/creditmemo/items/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>grouped</type>
+                <block>sales/order_item_renderer_grouped</block>
+                <template>giftwrap/sales/order/creditmemo/items/default.phtml</template>
+            </action>
+        </reference>
+        <reference name="creditmemo_totals">
+            <block type="giftwrap/sales_order_creditmemo_total_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_creditmemo_total_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="additional.product.info">
+            <block type="giftwrap/giftwrapprint" name="giftwrap.giftwrap" />
+        </reference>
+    </sales_order_printcreditmemo>
+    <!--Email -->
+    <sales_email_order_items>
+        <reference name="order_totals">
+            <block type="giftwrap/sales_order_totals_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_totals_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="additional.product.info">
+            <block type="giftwrap/giftbox" name="giftwrap.giftitems" after="additional.product.info"
+                   template="giftwrap/email_giftbox.phtml" />
+        </reference>
+    </sales_email_order_items>
+    <giftwrap_index_listgiftbox>
+        <reference name="content">
+            <block type="giftwrap/giftbox" name="giftwrap.giftwrap" after="giftwrap.listgiftbox"
+                   template="giftwrap/listgiftbox.phtml" />
+        </reference>
+    </giftwrap_index_listgiftbox>
+    <giftwrap_indexmulti_listgiftbox>
+        <reference name="content">
+            <block type="giftwrap/giftbox" name="giftwrap.giftwrap" after="giftwrap.listgiftbox"
+                   template="giftwrap/listgiftbox.phtml" />
+        </reference>
+    </giftwrap_indexmulti_listgiftbox>
+    <sales_email_order_invoice_items>
+        <reference name="invoice_totals">
+            <block type="giftwrap/sales_order_totals_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_totals_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="additional.product.info">
+            <block type="giftwrap/giftbox" name="giftwrap.giftitems"
+                   template="giftwrap/email_giftbox.phtml" />
+        </reference>
+    </sales_email_order_invoice_items>
+    <sales_email_order_shipment_items>
+        <reference name="additional.product.info">
+            <block type="giftwrap/giftbox" name="giftwrap.giftitems" after="additional.product.info"
+                   template="giftwrap/email_giftbox.phtml" />
+        </reference>
+    </sales_email_order_shipment_items>
+    <sales_email_order_creditmemo_items>
+        <reference name="creditmemo_totals">
+            <block type="giftwrap/sales_order_totals_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_totals_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="additional.product.info">
+            <block type="giftwrap/giftbox" name="giftwrap.giftitems" after="additional.product.info"
+                   template="giftwrap/email_giftbox.phtml" />
+        </reference>
+    </sales_email_order_creditmemo_items>
+    
+    <catalog_product_view>
+        <reference name="head">
+            <action method="addJs">
+                <script>magestore/tooltip/tooltip.js</script>
+            </action>
+            <action method="addCss">
+                <stylesheet>css/magestore/giftwrap.css</stylesheet>
+            </action>
+            <action method="addJs">
+                <script>magestore/giftwrap/jcarousel/jquery-1.4.2.min.js</script>
+            </action> 
+            <action method="addJs">
+                <script>magestore/giftwrap/jcarousel/jquery.jcarousel.min.js</script>
+            </action> 			
+            <action method="addCss">
+                <stylesheet>css/magestore/jcarousel.css</stylesheet>
+            </action>
+            <action method="addJs">
+                <script>magestore/giftwrap.js</script>
+            </action>
+            <action method="addJs">
+                <script>magestore/giftwrap/tinybox.js</script>
+            </action>			
+        </reference>
+        <!--        <reference name="alert.urls">
+            <block type="giftwrap/catalog_product_giftwrap" name="giftwrap" as="giftwrap" template="giftwrap/catalog/product/view/giftwrap.phtml" />
+        </reference>-->
+        <reference name="alert.urls">
+            <block before="alert.urls" type="giftwrap/catalog_product_giftwrap" as="giftwrap.productview" name="giftwrap.productview" >
+                <block type="giftwrap/catalog_product_giftwrap_new" as="giftwrap.productview.new" name="giftwrap.productview.new"/>
+                <block type="giftwrap/catalog_product_giftwrap_existing" as="giftwrap.productview.existing" name="giftwrap.productview.existing">
+                    <block type="giftwrap/giftbox" name="giftwrap.giftwrap" as="giftwrap.existing.giftbox" after="checkout.cart.form.before"
+                           template="giftwrap/giftboxcatalog.phtml" />
+                </block>
+            </block>
+        </reference>
+    </catalog_product_view>
+    
+    <giftwrap_index_giftboxdetails>
+        <block type="giftwrap/giftbox" name="giftwrap.giftwrap" after="checkout.cart.form.before"
+               template="giftwrap/giftboxcatalog.phtml" />
+    </giftwrap_index_giftboxdetails>
+    
+    <giftwrap_index_pagers>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="giftwrap/pagers" name="giftwrap.pagers" template="giftwrap/pagers.phtml" />
+        </reference>
+    </giftwrap_index_pagers>
+    <giftwrap_indexmulti_pagers>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="giftwrap/pagers" name="giftwrap.pagers" template="giftwrap/pagers.phtml" />
+        </reference>
+    </giftwrap_indexmulti_pagers>
+    <checkout_multishipping_addresses translate="label">
+        <reference name="checkout_addresses">
+            <action method="setTemplate">
+                <template>giftwrap/checkout/multishipping/addresses.phtml</template>
+            </action>
+        </reference>
+    </checkout_multishipping_addresses>
+    <checkout_multishipping_shipping translate="label">
+        <reference name="checkout_shipping">
+            <action method="setTemplate">
+                <template>giftwrap/checkout/multishipping/shipping.phtml</template>
+            </action>
+        </reference>
+    </checkout_multishipping_shipping>
+    <giftwrap_multishipping_addgiftwrap>
+        <reference name="head">
+            <action method="addJs">
+                <script>magestore/giftwrap.js</script>
+            </action>
+            <action method="addJs">
+                <script>magestore/tooltip/tooltip.js</script>
+            </action>
+            <action method="addJs">
+                <script>magestore/giftwrap/tinybox.js</script>
+            </action>
+        </reference>
+        <remove name="right" />
+        <remove name="left" />
+        <!-- Mage_Checkout -->
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="checkout/multishipping_state" name="checkout_state" template="checkout/multishipping/state.phtml"/>
+            <block type="giftwrap/checkout_multishipping_addressesgiftwrap" name="multishipping_giftwwrap" template="giftwrap/checkout/multishipping/addressesgiftwrap.phtml">
+                <block type="giftwrap/giftboxmulti" name="giftwrap.giftwrap" after="checkout.cart.form.before" template="giftwrap/giftboxmulti.phtml" />
+                <action method="addItemRender">
+                    <type>default</type>
+                    <block>checkout/cart_item_renderer</block>
+                    <template>checkout/multishipping/item/default.phtml</template>
+                </action>
+                <action method="addItemRender">
+                    <type>grouped</type>
+                    <block>checkout/cart_item_renderer_grouped</block>
+                    <template>checkout/multishipping/item/default.phtml</template>
+                </action>
+                <action method="addItemRender">
+                    <type>configurable</type>
+                    <block>checkout/cart_item_renderer_configurable</block>
+                    <template>checkout/multishipping/item/default.phtml</template>
+                </action>
+                <block type="checkout/multishipping_billing_items" name="checkout_billing_items" template="checkout/multishipping/billing/items.phtml">
+                    <action method="addItemRender">
+                        <type>default</type>
+                        <block>checkout/cart_item_renderer</block>
+                        <template>checkout/multishipping/item/default.phtml</template>
+                    </action>
+                    <action method="addItemRender">
+                        <type>grouped</type>
+                        <block>checkout/cart_item_renderer_grouped</block>
+                        <template>checkout/multishipping/item/default.phtml</template>
+                    </action>
+                    <action method="addItemRender">
+                        <type>configurable</type>
+                        <block>checkout/cart_item_renderer_configurable</block>
+                        <template>checkout/multishipping/item/default.phtml</template>
+                    </action>
+                </block>
+            </block>
+        </reference>
+    </giftwrap_multishipping_addgiftwrap>
+    
+    <!-- Cart Item -->
+    <checkout_cart_index>
+        <reference name="checkout.cart">
+            <action method="addItemRender" unlessconfig="advanced/modules_disable_output/Magestore_Giftwrap" value='0' >
+                <type>simple</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender" unlessconfig="advanced/modules_disable_output/Magestore_Giftwrap" value='0'>
+                <type>grouped</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender" unlessconfig="advanced/modules_disable_output/Magestore_Giftwrap" value='0'>
+                <type>downloadable</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender" unlessconfig="advanced/modules_disable_output/Magestore_Giftwrap" value='0'>
+                <type>virtual</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender" unlessconfig="advanced/modules_disable_output/Magestore_Giftwrap" value='0'>
+                <type>configurable</type>
+                <block>giftwrap/cart_configurable_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender" unlessconfig="advanced/modules_disable_output/Magestore_Giftwrap" value='0'>
+                <type>bundle</type>
+                <block>giftwrap/cart_bundle_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+        </reference>
+    </checkout_cart_index>
+    <checkout_onepage_review>
+        <reference name="root">
+            <action method="addItemRender">
+                <type>simple</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>grouped</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>downloadable</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>virtual</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>configurable</type>
+                <block>giftwrap/cart_configurable_item</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>bundle</type>
+                <block>giftwrap/cart_bundle_item</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+        </reference>
+    </checkout_onepage_review>
+
+    <checkout_multishipping_addresses>
+        <reference name="checkout_addresses">
+            <action method="addItemRender">
+                <type>simple</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>grouped</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>downloadable</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>virtual</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>configurable</type>
+                <block>giftwrap/cart_configurable_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>bundle</type>
+                <block>giftwrap/cart_bundle_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+        </reference>
+    </checkout_multishipping_addresses>
+
+    <checkout_multishipping_shipping>
+        <reference name="checkout_shipping">
+            <action method="addItemRender">
+                <type>simple</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>grouped</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>downloadable</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>virtual</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>configurable</type>
+                <block>giftwrap/cart_configurable_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>bundle</type>
+                <block>giftwrap/cart_bundle_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+        </reference>
+        <reference name="checkout_billing_items">
+            <action method="addItemRender">
+                <type>simple</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>grouped</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>downloadable</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>virtual</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>configurable</type>
+                <block>giftwrap/cart_configurable_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>bundle</type>
+                <block>giftwrap/cart_bundle_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+        </reference>
+    </checkout_multishipping_shipping>
+
+    <checkout_multishipping_overview>
+        <reference name="checkout_overview">
+            <action method="addItemRender">
+                <type>simple</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>grouped</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>downloadable</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>virtual</type>
+                <block>giftwrap/cart_item</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>configurable</type>
+                <block>giftwrap/cart_configurable_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+            <action method="addItemRender">
+                <type>bundle</type>
+                <block>giftwrap/cart_bundle_item</block>
+                <template>checkout/multishipping/item/default.phtml</template>
+            </action>
+        </reference>
+    </checkout_multishipping_overview>
+</layout> 

@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright   Copyright (c) 2010 Amasty
+ */
+-->
+
+<config>
+    <modules>
+        <Amasty_Sorting>
+            <version>1.2.4</version>
+        </Amasty_Sorting>
+    </modules>
+
+    <global>
+        <blocks>
+            <amsorting>
+                <class>Amasty_Sorting_Block</class>
+            </amsorting>
+
+            <catalog>
+                <rewrite>
+                    <product_list_toolbar>Amasty_Sorting_Block_Catalog_Product_List_Toolbar</product_list_toolbar>
+                </rewrite>
+            </catalog>
+        </blocks>
+ 
+        <models>
+            <amsorting>
+                <class>Amasty_Sorting_Model</class>
+                <resourceModel>amsorting_mysql4</resourceModel>
+            </amsorting>
+            <amsorting_mysql4>
+                <class>Amasty_Sorting_Model_Mysql4</class>
+                <entities>
+                    <most_viewed>
+                        <table>am_sorting_most_viewed</table>
+                    </most_viewed> 
+                    <bestsellers>
+                        <table>am_sorting_bestsellers</table>
+                    </bestsellers>
+                    <wished>
+                        <table>am_sorting_wished</table>
+                    </wished>                    
+                </entities>
+            </amsorting_mysql4> 
+
+            <catalog>
+                <rewrite>
+                    <config>Amasty_Sorting_Model_Catalog_Config</config>
+                </rewrite>
+            </catalog>
+        </models>
+        
+        <resources>
+            <amsorting_setup>
+                <setup>
+                    <module>Amasty_Sorting</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </amsorting_setup>
+            
+            <amsorting_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </amsorting_write>
+            
+            <amsorting_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </amsorting_read>
+        </resources>        
+ 
+        <helpers>
+            <amsorting>
+                <class>Amasty_Sorting_Helper</class>
+            </amsorting>
+        </helpers>
+        
+        <index>
+            <indexer>
+                <amsorting_summary>
+                    <model>amsorting/indexer_summary</model>
+                </amsorting_summary>
+            </indexer>
+        </index>   
+                
+    </global>
+    
+    
+    <crontab>
+        <jobs>
+            <amsorting_index>
+                <!-- each day at 1:07 -->
+                <schedule><cron_expr>7 1 * * *</cron_expr></schedule> 
+                <run><model>amsorting/indexer_summary::reindexAll</model></run>
+            </amsorting_index>
+        </jobs> 
+    </crontab>
+    
+    
+     <frontend>
+        <translate>
+            <modules>
+                <Amasty_Sorting>
+                    <files>
+                        <default>Amasty_Sorting.csv</default>
+                    </files>
+                </Amasty_Sorting>
+            </modules>
+        </translate>
+    </frontend>
+    
+    <adminhtml>
+        <translate>
+            <modules>
+                <Amasty_Sorting>
+                    <files>
+                        <default>Amasty_Sorting.csv</default>
+                    </files>
+                </Amasty_Sorting>
+            </modules>
+        </translate>
+        <acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <amsorting>
+                                            <title>Improved Sorting</title>
+                                        </amsorting>
+                                    </children>
+                                </config>
+                            </children>
+                        </system> 
+                     </children>
+                </admin> 
+			</resources>
+		</acl>    
+    </adminhtml>
+    
+
+    <default>
+        <catalog>
+            <frontend>
+                <default_sort_by>created_at</default_sort_by>
+            </frontend>
+        </catalog>
+        <amsorting>
+            <general>
+                <use_index></use_index>
+                
+                <best_period></best_period>
+                <best_attr></best_attr>
+                
+                <viewed_period></viewed_period>
+                <viewed_attr></viewed_attr>
+                
+                <new_attr></new_attr>
+                <no_image_last>0</no_image_last>
+                <out_of_stock_last>2</out_of_stock_last>
+                <out_of_stock_qty>0</out_of_stock_qty>
+                <hide_best_value>1</hide_best_value>
+                <desc_attributes></desc_attributes>
+                <disable_methods>none</disable_methods>                
+            </general>
+        </amsorting>
+    </default>
+    
+</config>

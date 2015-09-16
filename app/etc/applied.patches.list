@@ -1,0 +1,31 @@
+-e -n 2014-02-25 23:35:33 UTC | SUPEE-1049 | EE-1.12.0.2 | v1 | 6d06f286f461562fa6d6573349f1491f7bf89859 | Wed Feb 13 17:46:13 2013 -0800 | v1.12.0.2..HEAD
+patching file app/code/core/Mage/Payment/Model/Method/Cc.php
+patching file js/prototype/validation.js
+Hunk #1 succeeded at 879 (offset 29 lines).
+
+
+2014-02-25 23:38:48 UTC | SUPEE-2747 | EE_1.13.1.0 | v1 | 5b7ff40ed56add4988dbf03f661f844f47ab140f | Tue Jan 14 18:36:41 2014 +0200 | v1.13.1.0..HEAD
+patching file app/code/core/Mage/Cms/Helper/Wysiwyg/Images.php
+patching file app/code/core/Mage/Cms/Model/Wysiwyg/Images/Storage.php
+
+
+2014-02-25 23:42:11 UTC | SUPEE-2619 | EE_1.13.1.0 | v1 | d0a215a139aa5e75d60e42efa1b2661d84fef2be | Tue Dec 10 17:41:31 2013 +0200 | v1.13.1.0..HEAD
+patching file app/code/core/Mage/Catalog/Model/Product.php
+patching file app/code/core/Mage/Core/Controller/Varien/Router/Standard.php
+patching file app/code/core/Zend/Pdf/FileParserDataSource.php
+
+
+-e 2015-04-17 21:03:38 UTC | SUPEE-5344 | EE_1.14.1.0 | v1 | a5c9abcb6a387aabd6b33ebcb79f6b7a97bbde77 | Thu Feb 5 19:14:49 2015 +0200 | v1.14.1.0..HEAD
+patching file app/code/core/Mage/Admin/Model/Observer.php
+patching file app/code/core/Mage/Core/Controller/Request/Http.php
+Hunk #2 succeeded at 537 (offset -4 lines).
+patching file app/code/core/Mage/Oauth/controllers/Adminhtml/Oauth/AuthorizeController.php
+patching file app/code/core/Mage/XmlConnect/Model/Observer.php
+patching file lib/Varien/Db/Adapter/Pdo/Mysql.php
+
+
+-e 2015-04-17 21:07:51 UTC | SUPEE-1533 | EE_1.13 | v1 | _ | n/a | SUPEE-1533_EE_1.13_v1.patch
+patching file app/code/core/Mage/Adminhtml/Block/Dashboard/Graph.php
+patching file app/code/core/Mage/Adminhtml/controllers/DashboardController.php
+
+

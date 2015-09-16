@@ -1,0 +1,73 @@
+<div ng-controller='WorkspaceCtrl' >
+    <div class='design-instructions' ng-hide='shouldHideInstructions()'>
+        <h3 class='instructions-title'>How to get started:</h3>
+        <ol>
+            <li><strong>Choose a Bracelet</strong> and then select the size</li>
+            <li><strong>Choose Charms</strong> with meaning or by style</li>
+            <li><strong>Choose Clips</strong> for balance on bracelets with threaded areas</li>
+            <li><strong>Review Your Design</strong> to save or purchase. You will have the option to edit / remove items in your Shopping Bag</li>
+        </ol>
+
+        <img src="/media/wysiwyg/bab-braceletsample.jpg" align="center"><p class="BABnotice">Please note: Our bracelet builder features a 19cm bracelet. The number of charms that will fit on your bracelet will depend on actual bracelet size and selected charms width. Leather bracelets are intended for a maximum of 7-9 charms. Items shown represent the current line of PANDORA bracelets and charms.</p>
+
+        <ul class='bottom-actions'>
+            <li>
+                <a class='btn small close' href='javascript:void(0);' ng-click='closeInstructions()'>Close</a>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<div class="design-canvas" ng-controller="DesignCtrl">
+    <div id="design-price">
+        Price: <span class="price">$</span><span class="price" id="tally">0.00</span>
+    </div>
+    <div id="snapshot-workspace">
+        <div id="bracelet-workspace" data-bracelet-price="0.00">
+            <img id="designer-bracelet-base" ng-src="{{appImgDir}}/placeholder_bracelet.png" />
+            <div class='circle bracelet-trace'></div>
+        </div>
+        <div id="charms-workspace"></div>
+    </div>
+
+    <div id="trash">
+        <span id="closedTrashCan" title="Trash a bead"></span>
+        <span id="openedTrashCan" style="display:none" title="Trash a bead"></span>
+    </div>
+
+
+    <!-- WIP -->
+    <div id="workspace-controls" ng-controller='WorkspaceCtrl'>
+        <ul class="bottom-actions">
+            <li>
+                <a href="javascript:void();false;" class="reset" ng-click="resetDesign()">Reset Bracelet</a>
+            </li>
+            <li ng-show='isLoggedIn()'>
+                <a href="javascript:void();false;" class="save" ng-click="saveDesign()">Save Bracelet</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<div class='admin-controls' ng-controller="WorkspaceCtrl" ng-show="isAdmin()">
+    <form name="adminDesignOptionsForm">
+        <ul class='admin-options'>
+            <li>
+                <label for="is_inspiration_design">
+                    <input name="is_inspiration_design" id="inspiration_chkbox" type="checkbox" ng-model="isInspiration">
+                    This is an Inspiration Bracelet
+                </label>
+                <p class='hint'>Inspiration Bracelets can be purchased by customers or cloned and modified to customer's tastes.</p>
+            </li>
+            <li>
+                <label for="is_available">
+                    <input name="is_inspiration_design" id="is_available_chkbox" type="checkbox" ng-model="isAvailable">
+                    Is Available to view on public frontend
+                </label>
+                <p class='hint'>If checked, the bracelet is considered to be available on the frontend for customers to find/purchase; otherwise the bracelet is considered 'un-available' and only viewable to admins.</p>
+            </li>
+        </ul>
+    </form>
+</div>

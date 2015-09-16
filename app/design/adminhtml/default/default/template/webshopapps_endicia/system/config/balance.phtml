@@ -1,0 +1,51 @@
+<?php
+/**
+ * WebShopApps Shipping Module
+ *
+ * @category    WebShopApps
+ * @package     WebShopApps_Endicia
+ * User         Genevieve Eddison
+ * Date         13 November 2013
+ * Time         11:00 AM
+ * @copyright   Copyright (c) 2013 Zowta Ltd (http://www.WebShopApps.com)
+ *              Copyright, 2013, Zowta, LLC - US license
+ * @license     http://www.WebShopApps.com/license/license.txt - Commercial license
+ *
+ */
+?>
+<?php
+/**
+ * @see Webshopapps_Endicia_Block_Adminhtml_Shipping_Balance.php
+ */
+?>
+<script type="text/javascript">
+    //<![CDATA[
+    function getBalance() {
+        var elem = $('<?php echo $this->getHtmlId() ?>');
+        params = {
+        };
+
+        new Ajax.Request('<?php echo $this->getAjaxUrl() ?>', {
+            parameters: params,
+            onSuccess: function(response) {
+
+                try {
+                    response = response.responseText.evalJSON();
+                    result = response.message;
+                    if (response.result == 1) {
+                        elem.removeClassName('fail').addClassName('success')
+                    } else {
+                        elem.removeClassName('success').addClassName('fail')
+                    }
+                } catch (e) {
+                    elem.removeClassName('success').addClassName('fail')
+                }
+                $('balance_result').update(result);
+            }
+        });
+    }
+    //]]>
+</script>
+<button onclick="javascript:getBalance(); return false;" class="scalable" type="button" id="<?php echo $this->getHtmlId() ?>">
+    <span id="balance_result"><?php echo $this->escapeHtml($this->getButtonLabel()) ?></span>
+</button>

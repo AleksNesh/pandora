@@ -1,0 +1,13 @@
+.design-ui-wrapper {
+    @include outer-container;
+    max-width: 100%;
+
+    .design-canvas {
+        @include span-columns(6);
+        min-height: 600px;
+    }
+
+    .items-grid {
+        @include span-columns(6);
+    }
+}

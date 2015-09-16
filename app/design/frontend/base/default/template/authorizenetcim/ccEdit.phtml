@@ -1,0 +1,154 @@
+<?php $billing = $this->getBillingAddressCim();?>
+<div class="page-title">
+    <h1><?php echo $this->__('Edit Credit Card') ?></h1>
+</div>
+
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<form action="<?php echo $this->getSaveUrl() ?>" method="post">
+
+    <div class="fieldset">
+        <h2 class="legend"><?php echo $this->__('Credit Card Info') ?></h2>
+        <ul class="form-list">
+<li>
+        <label for="cc_type" class="required"><em>*</em><?php echo $this->__('Credit Card Type') ?></label>
+        <div class="input-box">
+            <select id="cc_type" name="payment[cc_type]" class="required-entry validate-cc-type-select">
+                <option value=""><?php echo $this->__('--Please Select--')?></option>
+            <?php foreach ($this->getCcAvailableTypes() as $_typeCode => $_typeName): ?>
+                <option value="<?php echo $_typeCode ?>" <?php if($this->escapeHtml($this->getCcInfo()->getCcType()) == $_typeCode){ ?> selected <?php } ?>><?php echo $_typeName ?></option>
+            <?php endforeach ?>
+            </select>
+        </div>
+    </li>
+    <li>
+        <label for="cc_number" class="required"><em>*</em><?php echo $this->__('Credit Card Number') ?></label>
+        <div class="input-box">
+            <input type="text" id="cc_number" name="payment[cc_number]" title="<?php echo $this->__('Credit Card Number') ?>" class="input-text validate-cc-number validate-cc-type" value="<?php echo $this->escapeHtml($this->getCcInfo()->getCcLast4())?>" />
+        </div>
+    </li>
+    <li id="cc_type_exp_div">
+        <label for="expiration" class="required"><em>*</em><?php echo $this->__('Expiration Date') ?></label>
+        <div class="input-box">
+            <div class="v-fix">
+                <select id="expiration" name="payment[cc_exp_month]" class="month validate-cc-exp required-entry">
+                <?php foreach ($this->getCcMonths() as $k=>$v): ?>
+                    <option value="<?php echo $k?$k:'' ?>" <?php if($this->escapeHtml($this->getCcInfo()->getCcExpMonth()) == $k){ ?> selected <?php } ?>><?php echo $v ?></option>
+                <?php endforeach ?>
+                </select>
+            </div>
+            <div class="v-fix">
+                <select id="expiration_yr" name="payment[cc_exp_year]" class="year required-entry">
+                <?php foreach ($this->getCcYears() as $k=>$v): ?>
+                    <option value="<?php echo $k?$k:'' ?>" <?php if($this->escapeHtml($this->getCcInfo()->getCcExpYear()) == $k){ ?> selected <?php } ?>><?php echo $v ?></option>
+                <?php endforeach ?>
+                </select>
+            </div>
+        </div>
+    </li>
+    <li id="cc_type_cvv_div">
+        <label for="cc_cid" class="required"><em>*</em><?php echo $this->__('Card Verification Number') ?></label>
+        <div class="input-box">
+            <div class="v-fix">
+                <input type="text" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text cvv required-entry validate-cc-cvn" id="cc_cid" name="payment[cc_cid]" value="<?php echo $this->escapeHtml($this->getCcInfo()->getVerification()) ?>" />
+                <input type="hidden" name="edit" value="edit" />
+            </div>
+            <a href="#" class="cvv-what-is-this"><?php echo $this->__('What is this???') ?></a>
+        </div>
+    </li>
+        </ul>
+    </div>
+	
+<div class="fieldset">
+    <?php echo $this->getBlockHtml('formkey')?>
+    <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
+    <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+        <h2 class="legend"><?php echo $this->__('Contact Information') ?></h2>
+        <ul class="form-list">
+            <li class="fields">
+                <?php echo $this->getNameBlockHtml() ?>
+            </li>
+            <li class="fields">
+                <div class="field">
+                    <label for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="telephone" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text  <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>" id="telephone" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="fax"><?php echo $this->__('Fax') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="fax" id="fax" title="<?php echo $this->__('Fax') ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getFax()) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('fax') ?>" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="fieldset">
+        <h2 class="legend"><?php echo $this->__('Billing Address') ?></h2>
+        <ul class="form-list">
+        <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
+            <li class="wide">
+                <label for="street_1" class="required"><em>*</em><?php echo $this->__('Street Address') ?></label>
+                <div class="input-box">
+                    <input type="text" name="street[]" value="<?php echo $billing['address']; ?>" title="<?php echo $this->__('Street Address') ?>" id="street_1" class="input-text <?php echo $_streetValidationClass ?>" />
+                </div>
+            </li>
+        <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
+        <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
+            <li class="wide">
+                <div class="input-box">
+                    <input type="text" name="street[]" value="" title="<?php echo $this->__('Street Address %s', $_i) ?>" id="street_<?php echo $_i ?>" class="input-text <?php echo $_streetValidationClass ?>" />
+                </div>
+            </li>
+        <?php endfor; ?>
+            <?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
+            <li class="wide">
+                <label for="vat_id"><?php echo $this->__('VAT Number') ?></label>
+                <div class="input-box">
+                    <input type="text" name="vat_id" value="<?php echo $this->escapeHtml($this->getAddress()->getVatId()) ?>" title="<?php echo $this->__('VAT Number') ?>" id="vat_id" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('vat_id') ?>" />
+                </div>
+            </li>
+            <?php endif; ?>
+            <li class="fields">
+                <div class="field">
+                    <label for="city" class="required"><em>*</em><?php echo $this->__('City') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="city" value="<?php echo $this->escapeHtml($billing['city']) ?>"  title="<?php echo $this->__('City') ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="region_id" class="required"><em>*</em><?php echo $this->__('State/Province') ?></label>
+                    <div class="input-box">
+                        <input type="text" id="region" name="region" value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"  title="<?php echo $this->__('State/Province') ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" />
+                    </div>
+                </div>
+            </li>
+            <li class="fields">
+                <div class="field">
+                    <label for="zip" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="postcode" value="<?php echo $this->escapeHtml($billing['zip']) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="country" class="required"><em>*</em><?php echo $this->__('Country') ?></label>
+                    <div class="input-box">
+                        <?php echo $this->getCountryHtmlSelect() ?>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+	
+    <div class="buttons-set">
+        <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+        <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+        <button type="submit" title="<?php echo $this->__('Save Credit Card') ?>" class="button" id="edit"><span><span><?php echo $this->__('Save Credit Card') ?></span></span></button>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    var dataForm = new VarienForm('form-validate', true);
+    new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
+//]]>
+</script>

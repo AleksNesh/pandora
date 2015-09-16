@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<config>
+	<sections>
+		<alertsite translate="label">
+			<label>AlertSite</label>
+			<tab>service</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>400</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<alertsite_config translate="label">
+					<label>AlertSite Configuration</label>
+					<sort_order>5</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<expanded>1</expanded>
+					<fields>
+                        <smartbear_account_subheader translate="label">
+                            <label>Register</label>
+                            <frontend_model>alertsite/adminhtml_system_form_renderer_subheader</frontend_model>
+                            <comment><![CDATA[<a href="http://help.alertsite.com/AlertSite/MagentoHelp" target="_blank">Get help</a>]]></comment>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </smartbear_account_subheader>
+						<smartbear_account_header translate="label">
+							<label>Register</label>
+							<frontend_model>alertsite/adminhtml_system_form_renderer_configMessage</frontend_model>
+							<comment><![CDATA[<br /><p>Optimizing store performance and availability is critical to your revenue. Complete registration by clicking the button below and get your free AlertSite web monitoring services.</p><p>We'll monitor site availability and performance and show how you stack up against other leading sites.</p>]]></comment>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+                            <depends>
+                                <provisioned>0</provisioned>
+                            </depends>
+						</smartbear_account_header>
+						<smartbear_account_button>
+							<label/>
+							<frontend_model>alertsite/adminhtml_system_form_renderer_linkButton</frontend_model>
+							<button_label>Create my free account</button_label>
+							<button_url><![CDATA[http://www.alertsite.com]]></button_url>
+							<comment></comment>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+                            <depends>
+                                <provisioned>0</provisioned>
+                            </depends>
+						</smartbear_account_button>
+                        <enabled translate="label">
+                            <label><![CDATA[Enable AlertSite]]></label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <backend_model>alertsite/system_config_backend_enable</backend_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <provisioned>1</provisioned>
+                            </depends>
+                        </enabled>
+						<alertsite_user translate="label">
+							<label><![CDATA[AlertSite Account Login]]></label>
+                            <frontend_type>text</frontend_type>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+                            <depends>
+                                <provisioned>1</provisioned>
+                            </depends>
+						</alertsite_user>
+                        <alertsite_company translate="label">
+                            <label><![CDATA[Company]]></label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>alertsite/adminhtml_system_form_renderer_label</frontend_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <provisioned>1</provisioned>
+                            </depends>
+                        </alertsite_company>
+                        <alertsite_first_name translate="label">
+                            <label><![CDATA[First Name]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <provisioned>1</provisioned>
+                            </depends>
+                        </alertsite_first_name>
+                        <alertsite_last_name translate="label">
+                            <label><![CDATA[Last Name]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <provisioned>1</provisioned>
+                            </depends>
+                        </alertsite_last_name>
+                        <alertsite_phone>
+                            <label><![CDATA[AlertSite Account Phone]]></label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>alertsite/system_config_backend_editaccount</backend_model>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <provisioned>1</provisioned>
+                            </depends>
+                        </alertsite_phone>
+						<alertsite_pass translate="label">
+							<label><![CDATA[AlertSite Account Password]]></label>
+							<frontend_type>password</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>0</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</alertsite_pass>
+                        <smartbear_account_advance_link>
+                            <label/>
+                            <frontend_model>alertsite/adminhtml_system_form_renderer_advanceLink</frontend_model>
+                            <comment></comment>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <provisioned>1</provisioned>
+                            </depends>
+                        </smartbear_account_advance_link>
+                        <alertsite_activation_email translate="label">
+                            <label><![CDATA[Activation Email]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </alertsite_activation_email>
+                        <client_id>
+                            <label><![CDATA[Client ID]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </client_id>
+                        <device_id>
+                            <label><![CDATA[Device ID]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </device_id>
+                        <dejaclick_device_id>
+                            <label><![CDATA[Dejaclick Device ID]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dejaclick_device_id>
+                        <device_url>
+                            <label><![CDATA[Website URL]]></label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>alertsite/system_config_backend_editdevice</backend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <provisioned>1</provisioned>
+                            </depends>
+                        </device_url>
+                        <provisioned translate="label">
+                            <label><![CDATA[Account has been provisioned]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </provisioned>
+					</fields>
+				</alertsite_config>				
+			</groups>
+		</alertsite>
+	</sections>
+</config>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * WebShopApps Shipping Module
+ *
+ * @category    WebShopApps
+ * @package     WebShopApps_Endicia
+ * User         Genevieve Eddison
+ * Date         13 November 2013
+ * Time         11:00 AM
+ * @copyright   Copyright (c) 2013 Zowta Ltd (http://www.WebShopApps.com)
+ *              Copyright, 2013, Zowta, LLC - US license
+ * @license     http://www.WebShopApps.com/license/license.txt - Commercial license
+ *
+ */
+ -->
+
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addCss"><stylesheet>wsaendicia.css</stylesheet></action>
+        </reference>
+    </default>
+    <adminhtml_sales_order_shipment_view>
+        <reference name="form">
+            <action method="unsetChild"><name>shipment_packaging</name></action>
+            <block type="wsaendicia/adminhtml_sales_order_shipment_packaging" name="shipment_packaging" template="webshopapps_endicia/sales/order/shipment/packaging/popup.phtml"/>
+        </reference>
+    </adminhtml_sales_order_shipment_view>
+    <adminhtml_sales_order_shipment_new>
+        <reference name="form">
+            <action method="unsetChild"><name>shipment_packaging</name></action>
+            <block type="wsaendicia/adminhtml_sales_order_shipment_packaging" name="shipment_packaging" template="webshopapps_endicia/sales/order/shipment/packaging/popup.phtml"/>
+        </reference>
+    </adminhtml_sales_order_shipment_new>
+</layout>

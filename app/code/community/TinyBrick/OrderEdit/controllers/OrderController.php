@@ -1,0 +1,444 @@
+<?php
+
+/**
+ * Open Commerce LLC Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Commerce LLC Commercial Extension License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.opencommercellc.com/license/commercial-license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@opencommercellc.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this package to newer
+ * versions in the future. 
+ *
+ * @category   OpenCommerce
+ * @package    OpenCommerce_OrderEditadd
+ * @copyright  Copyright (c) 2013 Open Commerce LLC
+ * @license    http://store.opencommercellc.com/license/commercial-license
+ */
+class TinyBrick_OrderEdit_OrderController extends Mage_Adminhtml_Controller_Action {
+
+    /**
+     * This is the edit action that will edit the order
+     * Gets the order, initializes it, gets billing address data, shipping address data and any new info
+     * Runs through the shipping, billing, shipping method, existing items, new items, payment method, status and comments history
+     * 
+     */
+    /* public function editAction() {
+      $order = $this->_initOrder();
+      $changes = array();
+      foreach ($this->getRequest()->getParams() as $param) {
+      if (substr($param, 0, 1) == '{') {
+      if ($param = Zend_Json::decode($param)) {
+      $edits[] = $param;
+      }
+      }
+      }
+      foreach ($edits as $edit) {
+
+      if ($edit['type'] == 'shipping' || $edit['type'] == 'billing' || $edit['type'] == 'shippingmethod' || $edit['type'] == 'eitems' || $edit['type'] == 'nitems' || $edit['type'] == 'paymentmethod' || $edit['type'] == 'status' || $edit['type'] == 'commentshistory') {
+      $model = Mage::getModel('orderedit/edit_updater_type_' . $edit['type']);
+      if (!$changes[] = $model->edit($order, $edit)) {
+      $msgs[] = "Error updating " . $edit['type'];
+      }
+      }
+      }
+      $order->collectTotals()->save();
+      // fire event and log changes
+
+      Mage::dispatchEvent('orderedit_edit', array('order' => $order));
+      $this->_logChanges($order, $this->getRequest()->getParam('comment'), $this->getRequest()->getParam('admin_user'), $changes);
+
+      echo "Order updated successfully. The page will now refresh.";
+      }
+     */
+    public function editAction() {
+
+
+        $order = $this->_initOrder();
+        /*
+         * arrays for restoring order if error is thrown or payment is declined
+         */
+        $orderArr = $order->getData();
+        $billingArr = $order->getBillingAddress()->getData();
+        if (!$order->getIsVirtual())
+            $shippingArr = $order->getShippingAddress()->getData();
+
+        try {
+            $preTotal = $order->getGrandTotal();
+            $edits = array();
+            foreach ($this->getRequest()->getParams() as $param) {
+                if (substr($param, 0, 1) == '{') {
+                    if ($param = Zend_Json::decode($param)) {
+                        $edits[] = $param;
+                    }
+                }
+            }
+            $msgs = array();
+
+            $changes = array();
+            //print_r($edits);die;
+            foreach ($edits as $edit) {
+                if ($edit['type']) {
+
+                    //if($edit['type'] == 'shipping' || $edit['type'] == 'billing' || $edit['type'] == 'shippingmethod' || $edit['type'] == 'eitems' || $edit['type'] == 'nitems' || $edit['type'] == 'paymentmethod' || $edit['type'] == 'status' || $edit['type'] == 'commentshistory') {
+                    $model = Mage::getModel('orderedit/edit_updater_type_' . $edit['type']);
+
+                    if (!$changes[] = $model->edit($order, $edit)) {
+
+                        $msgs[] = "Error updating " . $edit['type'];
+                    }
+                    //}
+                }
+            }
+            //print_r($order);die;
+            $order->collectTotals()->save();
+            $postTotal = $order->getGrandTotal();
+	    $_SESSION['teo_post_total'] = $postTotal;
+            $_SESSION['teo_pre_total'] = $preTotal;
+             
+            if (count($msgs) < 1) {
+              
+                /**
+                 * auth for more if the total has increased and configured to do so
+                 */
+                    if(Mage::getStoreConfig('toe/orderedit/auth')) {
+                       
+					if($postTotal > $preTotal) {
+						$payment = $order->getPayment();
+						$orderMethod = $payment->getMethod();
+                                               
+						if($orderMethod != 'free' && $orderMethod != 'checkmo' && $orderMethod != 'purchaseorder') {
+							if(!$payment->authorize(1, $postTotal - $preTotal)) { //changed to pass only amount that was added to order
+							//if(!$payment->authorize(1, $postTotal)) {
+								$this->_orderRollBack($order, $orderArr, $billingArr, $shippingArr);
+								echo "There was an error re-authorizing payment.";
+								return $this;
+							}
+						}
+					}
+				}
+                /**
+                 * fire event and log changes
+                 */
+                Mage::dispatchEvent('orderedit_edit', array('order' => $order));
+                $this->_logChanges($order, $this->getRequest()->getParam('comment'), $this->getRequest()->getParam('admin_user'), $changes);
+                echo "Order updated successfully. The page will now refresh.";
+            } else {
+                $this->_orderRollBack($order, $orderArr, $billingArr, $shippingArr);
+                echo "There was an error saving information, please try again.";
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            $this->_orderRollBack($order, $orderArr, $billingArr, $shippingArr);
+        }
+        return $this;
+    }
+
+    /**
+     * This rolls back the order
+     * @param object $order Order object 
+     * @param array $orderArray Order Array to be rolled back
+     * @param array $billingArray Billing Array of billing info
+     * @param array $shippingArray Shipping Array of shipping info
+     */
+    protected function _orderRollBack($order, $orderArray, $billingArray, $shippingArray) {
+        $order->setData($orderArray)->save();
+        $order->getBillingAddress()->setData($billingArray)->save();
+        if ($shippingArray)
+            $order->getShippingAddress()->setData($shippingArray)->save();
+        $order->collectTotals()->save();
+    }
+
+    /**
+     * Log changes to the comments section
+     * @param object $order Order object
+     * @param string $comment Comments for the order
+     * @param string $user Name of the user making the changes
+     * @param array $array Array information - Not used
+     */
+    protected function _logChanges($order, $comment, $user, $array = array()) {
+        $logComment = $user . " made changes to this order. <br /><br />";
+        foreach ($array as $change) {
+            if ($change != 1) {
+                $logComment .= $change;
+            }
+        }
+        $logComment .= "<br />User comment: " . $comment;
+        $status = $order->getStatus();
+        $notify = 0;
+        $order->addStatusToHistory($status, $logComment, $notify);
+        $order->save();
+    }
+
+    /**
+     * Initializes the order and checks to see if it exists
+     */
+    protected function _initOrder() {
+        $id = $this->getRequest()->getParam('order_id');
+        $order = Mage::getModel('orderedit/order')->load($id);
+
+        if (!$order->getId()) {
+            $this->_getSession()->addError($this->__('This order no longer exists.'));
+            $this->_redirect('*/*/');
+            $this->setFlag('', self::FLAG_NO_DISPATCH, true);
+            return false;
+        }
+        Mage::register('sales_order', $order);
+        Mage::register('current_order', $order);
+        return $order;
+    }
+
+    /**
+     * Updates the comment
+     */
+    public function updateCommentAction() {
+        if ($order = $this->_initOrder()) {
+            echo $this->getLayout()->createBlock('adminhtml/sales_order_view_history')->setTemplate('sales/order/view/history.phtml')->toHtml();
+        }
+    }
+
+    /**
+     * Recalculates the order shipping info
+     */
+    public function recalcAction() {
+
+
+
+        echo $this->getLayout()->createBlock('orderedit/adminhtml_sales_order_shipping_update')->setTemplate('sales/order/view/tab/shipping-form.phtml')->toHtml();
+    }
+
+    /* Not in use currently
+      public function newItemAction()
+      {
+      //$childBlock = $this->getLayout()->createBlock('adminhtml/sales_order_create_search_grid');
+      //echo $this->getLayout()->createBlock('adminhtml/sales_order_create_search')->append($childBlock)->setTemplate('sales/order/create/abstract.phtml')->toHtml();
+      $childBlock = $this->getLayout()->createBlock('orderedit/adminhtml_sales_order_edit_search_grid');
+      echo $this->getLayout()->createBlock('orderedit/adminhtml_sales_order_edit_search')->append($childBlock)->setTemplate('orderedit/sales/order/edit/abstract.phtml')->toHtml();
+      }
+     */
+
+    /**
+     * Creates the new item in the order
+     */
+    public function newItemAction() {
+        echo $this->getLayout()->createBlock('orderedit/adminhtml_sales_order_view_items_add')->setTemplate('orderedit/sales/order/view/items/add.phtml')->toHtml();
+    }
+
+    /**
+     * adds products from product to order grid
+     */
+    public function addFromGridAction() {
+        echo $this->getLayout()->createBlock('orderedit/adminhtml_sales_order_view_items_add')->setTemplate('orderedit/sales/order/view/items/add_from_grid.phtml')->toHtml();
+    }
+
+    /**
+     * Gets the qty and Description of the new product
+     */
+    public function getQtyAndDescAction() {
+        $sku = $this->getRequest()->getParam('sku');
+        $product = Mage::getModel('catalog/product')->getCollection()
+                ->addAttributeToSelect('*')
+                ->addAttributeToFilter('sku', $sku)
+                ->getFirstItem();
+
+        // Return Drop Down Selection of Simple Skus for Configurable Products
+        if ($product->isConfigurable()) {
+            $allProducts = $product->getTypeInstance(true)->getUsedProducts(null, $product);
+            $simpleskus = "<p style='color:red;'>Configurable Product! Select a simple product from dropdown!</p>";
+            $simpleskus .= "<select class='n-item-simplesku'>";
+            foreach ($allProducts as $subproduct) {
+                $skunumber = $subproduct->getSku();
+                //$simpleproductname = $subproduct->getName();
+                $simpleskus .= "<option value='" . $skunumber . "'>" . $skunumber . "</option>";
+            }
+            $simpleskus .= "</select>";
+        }
+
+        $return = array();
+        $return['simpleskus'] = $simpleskus;
+        $return['name'] = $product->getName();
+
+        if ($product->getSpecialPrice()) {
+            $return['price'] = round($product->getSpecialPrice(), 2);
+        } else {
+            $return['price'] = round($product->getPrice(), 2);
+        }
+
+        if ($product->getManageStock()) {
+            $qty = $product->getQty();
+        } else {
+            $qty = 10;
+        }
+        $select = "<select class='n-item-qty'>";
+        $x = 1;
+        while ($x <= $qty) {
+            $select .= "<option value='" . $x . "'>" . $x . "</option>";
+            $x++;
+        }
+        $select .= "</select>";
+        $return['select'] = $select;
+        echo Zend_Json::encode($return);
+    }
+
+    /**
+     * Product grid for AJAX request.
+     * Sort and filter result for example.
+     */
+    public function gridAction() {
+        $this->loadLayout();
+        //$this->getResponse()->setBody($this->getLayout()->createBlock('orderedit/adminhtml_sales_order_edit_search_grid')->toHtml());
+        $this->renderLayout();
+    }
+
+      public function getReqData() {
+        $collection = Mage::getModel('catalog/product')->getCollection()
+                ->addAttributeToSelect('entity_id')
+                ->addAttributeToSelect('name')
+                ->addAttributeToSelect('sku')
+                ->addAttributeToSelect('price');
+
+
+        $q = 0;
+        foreach ($collection as $product) {
+
+//print_r($product->price);die;
+            $coll[$q]['entity_id'] = $product->entity_id;
+            $coll[$q]['name'] = $product->name;
+            $coll[$q]['sku'] = $product->sku;
+            $coll[$q]['price'] = $product->price;
+
+            $q++;
+        }
+        return $coll;
+    }
+
+
+    public function jsonAction() {
+        $storeId = (int) $this->getRequest()->getParam('store', 0);
+        $store = Mage::app()->getStore($storeId);
+     $currentpage = $this->getRequest()->getParam('page');
+        $numperpage = $this->getRequest()->getParam('rows');
+        $collection = Mage::getModel('catalog/product')->getCollection()
+                ->addAttributeToSelect('*');
+
+        $gridProduct = array();
+        $i = 0;
+        if ($this->getRequest()->getParam('sku')!='') {
+           $returnString='';
+           $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$this->getRequest()->getParam('sku'));
+          // print_r($collection->addAttributeToSelect('name'));die;
+           
+           // foreach ($collection as $product) {
+                $gridProduct[] = array(
+                    'id' => $product->getId(),
+                    'name' => $product->getName(),
+                    'sku' => $this->getRequest()->getParam('sku'),
+                    'price' => number_format($product->getPrice(), 2),
+                    'qty' => 1
+                );
+           // }
+            //print_r($gridProduct);die;
+               $returnString = '{"total":1' . ',"rows":' .
+                json_encode($gridProduct) . "}";
+        echo $returnString;
+        //die;
+        } 
+        
+          elseif ($this->getRequest()->getParam('id')!='') {
+             
+           $returnString='';
+           $product = Mage::getModel('catalog/product')->load($this->getRequest()->getParam('id'));
+          // print_r($collection->addAttributeToSelect('name'));die;
+           
+         
+                $gridProduct[] = array(
+                    'id' => $this->getRequest()->getParam('id'),
+                    'name' => $product->getName(),
+                    'sku' =>  $product->getSku(),
+                    'price' => number_format($product->getPrice(), 2),
+                    'qty' => 1
+                );
+         
+               $returnString = '{"total":1' . ',"rows":' .
+                json_encode($gridProduct) . "}";
+        echo $returnString;
+        //die;
+        }
+        
+        else {
+           $start = ($currentpage - 1) * $numperpage;
+
+            $cd = $this->getReqData();
+             //echo '<pre>';print_r($collection->getData());echo '</pre>';//die;
+            for ($i = $start; $i < ($numperpage + $start); $i++) {
+                $cd[$i]['name'] = str_replace("'", "", $cd[$i]['name']);
+                $gridProduct[] = array(
+                    'id' => $cd[$i]['entity_id'],
+                    'name' => $cd[$i]['name'],
+                    'sku' => $cd[$i]['sku'],
+                    'price' => number_format($cd[$i]['price'], 2),
+                    'qty' => 1
+                );
+            }
+
+              $returnString = '{"total":' . ($collection->getSize()) . ',"rows":' .
+                json_encode($gridProduct) . "}";
+        echo $returnString;
+        }
+
+      
+    }
+
+    public function setstatusAction() {
+        $this->loadLayout();
+
+        $model = Mage::getModel('catalog/product');
+        $model->load($this->getRequest()->getParam('id'));
+        if ($this->getRequest()->getParam('status') != null) {
+            $model->status = $this->getRequest()->getParam('status');
+        }
+        if ($this->getRequest()->getParam('name') != null) {
+            $model->name = $this->getRequest()->getParam('name');
+        }
+        if ($this->getRequest()->getParam('price') != null) {
+            $model->price = $this->getRequest()->getParam('price');
+        }
+        if ($this->getRequest()->getParam('qty') != null) {
+            $productId = $this->getRequest()->getParam('id');
+            $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
+
+            // update stock values
+            $stock->setQty($this->getRequest()->getParam('qty'));
+        }
+        if ($this->getRequest()->getParam('visibility') != null) {
+            $model->visibility = $this->getRequest()->getParam('visibility');
+        }
+        if ($this->getRequest()->getParam('status') != null) {
+            $model->status = $this->getRequest()->getParam('status');
+        }
+
+        try {
+            $model->save();
+            $stock->save();
+        } catch (Exception $e) {
+            
+        }
+        //var_dump($this->getRequest()->getParams());die;
+    }
+
+    private function _evalString($string) {
+        $flag = preg_replace("'", "\'", $string);
+        $flag = preg_replace('"', "\&#34;", $string);
+
+        return $string;
+    }
+
+}

@@ -1,0 +1,75 @@
+.qq-uploader { position:relative; display:block; float:left;}
+
+.qq-upload-button {
+    background: url("../images/btn_bg.gif") repeat-x scroll 0 100% #FFAC47;
+    border-color: #ED6502 #A04300 #A04300 #ED6502;
+    border-style: solid;
+    border-width: 1px;
+    float:left;
+    color: #FFFFFF;
+    cursor: pointer;
+    font: bold 12px arial,helvetica,sans-serif;
+    padding: 4px 7px 3px 7px;
+    text-align: center !important;
+    white-space: nowrap;
+}
+
+.qq-upload-button span {
+    padding-left: 20px;
+    background-image: url("../images/upload_btn_icon.png");
+    background-repeat: no-repeat;
+}
+
+.qq-upload-button:hover {
+    background:#f77c16 url(../images/btn_over_bg.gif) repeat-x 0 0;
+}
+
+.qq-upload-button input {
+	cursor: pointer !important;
+	width:auto !important;
+}
+
+.qq-upload-drop-area {
+    position:absolute; top:0; left:0; width:100%; height:100%; min-height: 70px; z-index:2;
+    background:#FF9797; text-align:center; 
+}
+.qq-upload-drop-area span {
+    display:block; position:absolute; top: 50%; width:100%; margin-top:-8px; font-size:16px;
+}
+.qq-upload-drop-area-active {background:#FF7171;}
+
+.qq-upload-list {margin:6px; padding:0; list-style:none; float:left;}
+.qq-upload-list li {font-size:12px;}
+.qq-upload-file, .qq-upload-spinner, .qq-upload-remove, .qq-upload-size, .qq-upload-cancel, .qq-upload-failed-text {
+    margin-right: 7px;
+}
+
+.qq-upload-spinner {display:inline-block; background: url("../images/loading.gif"); width:15px; height:15px; vertical-align:text-bottom;}
+.qq-upload-remove {display:none; background: url("../images/cancel.png"); width:17px; height:17px; vertical-align:text-bottom;}
+.qq-upload-size,
+.qq-upload-cancel {font-size:11px;}
+
+.qq-upload-failed-text {display:none;}
+.qq-upload-fail .qq-upload-failed-text {display:inline;}
+
+
+#LookbookImageBlock {
+    position:relative;
+}
+#maket_image {
+	margin-top:5px !important;
+    margin-bottom:5px !important;
+    position:relative;
+    float:left;
+}
+
+#lookbook_form {
+    padding:30px 50px;
+}
+#lookbook_form .form-list td.label {
+    width: 100px;
+} 
+
+#lookbook_form .form-list td.label label {
+    width: 75px;
+}

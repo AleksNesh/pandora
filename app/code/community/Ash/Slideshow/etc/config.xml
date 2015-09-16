@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Ash Slideshow Extension
+ *
+ * @category  Ash
+ * @package   Ash_Slideshow
+ * @copyright Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @author    August Ash Team <core@augustash.com>
+ */
+-->
+
+<config>
+    <modules>
+        <Ash_Slideshow>
+            <version>1.1.1</version>
+        </Ash_Slideshow>
+    </modules>
+
+    <frontend>
+        <routers>
+            <ash_slideshow>
+                <use>standard</use>
+                <args>
+                    <module>Ash_Slideshow</module>
+                    <frontName>ash_slideshow</frontName>
+                </args>
+            </ash_slideshow>
+        </routers>
+        <layout>
+            <updates>
+                <ash_slideshow>
+                    <file>ash_slideshow.xml</file>
+                </ash_slideshow>
+            </updates>
+        </layout>
+    </frontend>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <ash_slideshow>
+                    <file>ash_slideshow.xml</file>
+                </ash_slideshow>
+            </updates>
+        </layout>
+    </adminhtml>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Ash_Slideshow_Adminhtml before="Mage_Adminhtml">Ash_Slideshow_Adminhtml</Ash_Slideshow_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <global>
+        <blocks>
+            <ash_slideshow>
+                <class>Ash_Slideshow_Block</class>
+            </ash_slideshow>
+        </blocks>
+
+        <helpers>
+            <ash_slideshow>
+                <class>Ash_Slideshow_Helper</class>
+            </ash_slideshow>
+        </helpers>
+
+        <models>
+            <ash_slideshow>
+                <class>Ash_Slideshow_Model</class>
+                <resourceModel>ash_slideshow_resource</resourceModel>
+            </ash_slideshow>
+
+            <ash_slideshow_resource>
+                <class>Ash_Slideshow_Model_Resource</class>
+                <entities>
+                    <asset>
+                        <table>ash_slideshow_assets</table>
+                    </asset>
+                    <slideshow>
+                        <table>ash_slideshow_slideshows</table>
+                    </slideshow>
+                    <slideshowasset>
+                        <table>ash_slideshow_slideshow_assets</table>
+                    </slideshowasset>
+                </entities>
+            </ash_slideshow_resource>
+        </models>
+
+        <resources>
+            <ash_slideshow_setup>
+                <setup>
+                    <module>Ash_Slideshow</module>
+                </setup>
+            </ash_slideshow_setup>
+        </resources>
+    </global>
+</config>

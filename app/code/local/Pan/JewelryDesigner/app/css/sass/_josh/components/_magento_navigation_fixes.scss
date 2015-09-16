@@ -1,0 +1,23 @@
+body[class*="jewelrydesigner"] {
+    // Fixes conflicts with Bourbon Bitters and Magento's default menu styling
+    .header {
+        font: 12px/1.5em Arial, Helvetica, sans-serif;
+
+        .nav-bar {
+            font-weight: 600;
+
+            #nav a {
+                padding: 0 10px;
+            }
+        }
+    }
+
+    .demo-notice p,
+    p.demo-notice {
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 1.15;
+        padding: 0.5em 0;
+        margin-bottom: 0;
+    }
+}

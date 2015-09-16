@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<layout>
+    <!--Totals-->
+    <adminhtml_sales_order_view>
+        <reference name="order_totals">
+            <block type="adminhtml/sales_order_totals_item" name="giftcardaccount" template="snap/sales/order/totals/card.phtml">
+                <action method="setBeforeCondition"><param>customerbalance</param></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_invoice_new>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="giftcardaccount" template="snap/sales/invoice/totals/card.phtml">
+                <action method="setBeforeCondition"><param>customerbalance</param></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="giftcardaccount" template="snap/sales/invoice/totals/card.phtml">
+                <action method="setBeforeCondition"><param>customerbalance</param></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="giftcardaccount" template="snap/sales/invoice/totals/card.phtml" />
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="creditmemo_totals">
+            <block type="adminhtml/sales_order_totals_item" name="giftcardaccount" template="snap/sales/creditmemo/totals/card.phtml" after="-">
+                <action method="setBeforeCondition"><param>customerbalance</param></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="giftcardaccount" template="snap/sales/creditmemo/totals/card.phtml" after="-">
+                <action method="setBeforeCondition"><param>customerbalance</param></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="giftcardaccount" template="snap/sales/creditmemo/totals/view.phtml" after="-">
+                <action method="setBeforeCondition"><param>customerbalance</param></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+    <!--/Totals-->
+    
+    <adminhtml_sales_order_view>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/snapcharges.js</name></action>
+        </reference>
+        <reference name="sales_order_tabs">
+            <block type="snap_card/snaptab" name="order_snap_unit"/>
+            <action method="addTab">
+                <name>order_snap</name>
+                <block>order_snap_unit</block>
+            </action>
+        </reference>
+    </adminhtml_sales_order_view>
+
+</layout>

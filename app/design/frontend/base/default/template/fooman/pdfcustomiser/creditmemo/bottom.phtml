@@ -1,0 +1,147 @@
+<?php $pdfHelper = $this->getPdfHelper() ?>
+<?php $commentHistory = $pdfHelper->OutputCommentHistory() ?>
+<?php $giftMessage = $pdfHelper->OutputGiftMessage() ?>
+<?php $orderComments = $pdfHelper->OutputCustomerOrderComment() ?>
+<?php $customText = $pdfHelper->getPdfCustom() ?>
+<?php $taxSummary = $this->OutputTaxSummary() ?>
+<?php $totals = $this->getTotals() ?>
+<?php $displayBoth = $pdfHelper->getDisplayBoth() ?>
+<?php $vertSpacing =
+    '<tcpdf method="addHTMLVertSpace" params="'.$this->getPdf()->serializeTCPDFtagParameters(array(0, 3)).'"/>'
+?>
+
+
+<!--
+
+you can add the below styles to any element to force a page break
+style="page-break-before:always;"
+style="page-break-after:always;"
+
+-->
+
+<?php if($totals): ?>
+    <?php if($displayBoth) :?>
+        <table nobr="true" width="100%" border="0" cellpadding="2" cellspacing="0">
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <?php $nrTotals = sizeof($totals['totals']) ?>
+            <?php $counterTotals = 1 ?>
+            <?php foreach ($totals['totals'] as $total):?>
+            <?php $isLast =  $counterTotals >= $nrTotals ?>
+            <tr>
+                <td width="36%">&nbsp;</td>
+                <td <?php echo $isLast?'style="border-bottom:1px solid black;"':'' ?>
+                        align="right"
+                        width="32%"><?php echo $total['label'].($isLast?$vertSpacing:'') ?></td>
+                <td <?php echo $isLast?'style="border-bottom:1px solid black;"':'' ?>
+                        align="right"
+                        width="16%"><?php echo $total['amount'].($isLast?$vertSpacing:'') ?></td>
+                <td <?php echo $isLast?'style="border-bottom:1px solid black;"':'' ?>
+                        align="right"
+                        width="16%"><?php echo $total['base_amount'].($isLast?$vertSpacing:'') ?></td>
+            </tr>
+            <?php $counterTotals++ ?>
+            <?php endforeach; ?>
+            <?php $counterTotals = 1 //reset?>
+            <?php foreach ($totals['grand_totals'] as $total):?>
+            <?php $bs = $total['bold']?'<b>':''; ?>
+            <?php $be = $total['bold']?'</b>':''; ?>
+            <?php $isFirst =  $counterTotals == 1 ?>
+            <tr>
+                <td width="36%">&nbsp;</td>
+                <td align="right" width="32%"><?php echo ($isFirst?$vertSpacing:'').$bs.$total['label'].$be ?></td>
+                <td align="right" width="16%"><?php echo ($isFirst?$vertSpacing:'').$bs.$total['amount'].$be ?></td>
+                <td align="right" width="16%"><?php echo ($isFirst?$vertSpacing:'').$bs.$total['base_amount'].$be ?></td>
+            </tr>
+            <?php $counterTotals++ ?>
+            <?php endforeach; ?>
+        </table>
+    <?php else: ?>
+        <table nobr="true" width="100%" border="0" cellpadding="2" cellspacing="0">
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <?php $nrTotals = sizeof($totals['totals']) ?>
+            <?php $counterTotals = 1 ?>                   
+            <?php foreach ($totals['totals'] as $total):?>
+                <?php $isLast =  $counterTotals >= $nrTotals ?>
+                <tr>
+                    <td width="50%">&nbsp;</td>
+                    <td <?php echo $isLast?'style="border-bottom:1px solid black;"':'' ?>
+                            align="right"
+                            width="34%"><?php echo $total['label'].($isLast?$vertSpacing:'') ?></td>
+                    <td <?php echo $isLast?'style="border-bottom:1px solid black;"':'' ?>
+                            align="right"
+                            width="16%"><?php echo $total['amount_default'].($isLast?$vertSpacing:'') ?></td>
+                </tr>
+                <?php $counterTotals++ ?>
+            <?php endforeach; ?>       
+            <?php $counterTotals = 1 //reset ?>
+            <?php foreach ($totals['grand_totals'] as $total):?>
+                <?php $bs = $total['bold']?'<b>':''; ?>
+                <?php $be = $total['bold']?'</b>':''; ?>
+                <?php $isFirst =  $counterTotals == 1 ?>
+                <tr>
+                    <td width="50%">&nbsp;</td>                    
+                    <td align="right" width="34%"><?php echo ($isFirst?$vertSpacing:'').$bs.$total['label'].$be ?></td>
+                    <td align="right" width="16%"><?php echo ($isFirst?$vertSpacing:'').$bs.$total['amount_default'].$be ?></td>
+                </tr>
+                <?php $counterTotals++ ?>
+            <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
+<?php endif; ?>
+
+<?php if ($giftMessage) : ?>
+    <br/>
+    <strong><?php echo Mage::helper('giftmessage')->__('Gift Message') ?></strong><br/>
+    <b><?php echo Mage::helper('giftmessage')->__('From:') ?></b> <?php echo $giftMessage['from'] ?><br/>
+    <b><?php echo Mage::helper('giftmessage')->__('To:') ?></b> <?php echo $giftMessage['to'] ?><br/>
+    <b><?php echo Mage::helper('giftmessage')->__('Message:') ?></b> <?php echo $giftMessage['message'] ?> <br/>
+<?php endif; ?>  
+
+<?php if ($orderComments) : ?>
+    <br/>
+    <?php foreach ($orderComments as $orderComment): ?>
+        <strong><?php echo $orderComment['title'] ?></strong><br/>
+        <?php echo $orderComment['comment'] ?>
+    <?php endforeach; ?>
+    <br/>
+<?php endif; ?>
+        
+<?php if ($commentHistory) : ?>
+    <br/>
+    <strong><?php echo Mage::helper('sales')->__('Comments') ?></strong><br/>  
+    <table border="0" cellpadding="2" cellspacing="0">
+    <?php foreach ($commentHistory as $history): ?>
+        <tr>
+            <td><?php echo $history['date'] ?><?php if ($history['label']): ?> | <?php echo $history['label'] ?><?php endif; ?></td>
+            <td><?php echo $history['comment'] ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </table>
+    <br/>
+<?php endif; ?>
+
+<?php if ($customText) : ?>
+    <br/>
+    <?php echo $customText ?>
+    <br/>
+<?php endif; ?>
+
+<?php if ($taxSummary) : ?>
+    <br/>
+    <br/>
+    <table border="0" cellpadding="2" cellspacing="0">
+        <?php foreach ($taxSummary as $line): ?>
+            <tr>
+                <td width="20%"><?php echo $line[0] ?></td>
+                <td width="20%"><?php echo $line[1] ?></td>
+                <td width="20%"><?php echo $line[2] ?></td>
+                <td width="20%"><?php echo $line[3] ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <br/>
+<?php endif; ?>

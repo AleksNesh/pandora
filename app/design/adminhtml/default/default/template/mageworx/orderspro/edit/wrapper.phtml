@@ -1,0 +1,65 @@
+<?php
+/**
+ * MageWorx
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MageWorx EULA that is bundled with
+ * this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.mageworx.com/LICENSE-1.0.html
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.mageworx.com/ for more information
+ *
+ * @category   MageWorx
+ * @package    MageWorx_OrdersPro
+ * @copyright  Copyright (c) 2012 MageWorx (http://www.mageworx.com/)
+ * @license    http://www.mageworx.com/LICENSE-1.0.html
+ */
+
+/**
+ * Orders Pro extension
+ *
+ * @category   MageWorx
+ * @package    MageWorx_OrdersPro
+ * @author     MageWorx Dev Team
+ */
+?>
+<script type="text/javascript">
+
+    <?php
+    /** @var MageWorx_OrdersPro_Helper_Edit $helper */
+    $helper = Mage::helper('mageworx_orderspro/edit');
+    ?>
+    var orderEdit = new OrdersProEdit(
+        '<?php echo $helper->getEditUrlTemplate() ?>',
+        '<?php echo $helper->getProductGridUrl() ?>',
+        '<?php echo $helper->getCustomersGridUrl() ?>',
+        '<?php echo $helper->getSubmitCustomerUrl() ?>',
+        '<?php echo $helper->getApplyChangesUrl() ?>',
+        <?php echo $this->getBlocksJson(); ?>,
+        '<?php echo $this->__('The order has pending changes. Are you sure you want to skip them?') ?>',
+        '<?php echo $helper->getSaveChangesUrl() ?>',
+        '<?php echo $helper->getCancelChangesUrl() ?>'
+    );
+
+    var orderEditItems = new OrdersProEditItems(
+        '<?php echo $this->getCurrencySymbol(); ?>',
+        <?php echo Zend_Json::encode($this->getQuoteItemIds()); ?>
+    );
+
+    Event.observe(window, 'load',  function() {
+        if (window.productConfigure) {
+            productConfigure.addListType('product_to_add', {
+                urlFetch: '<?php echo $this->getUrl('*/sales_order_create/configureProductToAdd') ?>'
+            });
+            productConfigure.addListType('quote_items', {
+                urlFetch: '<?php echo $this->getUrl('*/sales_order_create/configureQuoteItems') ?>'
+            });
+        }
+    });
+</script>

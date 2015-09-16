@@ -1,0 +1,155 @@
+
+<?php $create = Mage::getBlockSingleton('giftwrap/adminhtml_sales_order_create_items') ?>
+<?php $newUrl = $this->getUrl('admingiftwrap/adminhtml_index/giftbox'); ?>
+<?php $deleteUrl = $this->getUrl('admingiftwrap/adminhtml_index/deletegiftbox'); ?>
+<?php
+//TrungHa: check wrapable item
+$hasGiftwrap = false;
+$items = Mage::getSingleton('adminhtml/sales_order_create')->getQuote()->getAllItems();
+foreach ($items as $item) {
+    $productId = $item->getProductId();
+    $giftwrap = Mage::getModel('catalog/product')->load($productId)->getGiftwrap();
+    if ($giftwrap == 1) {
+        $hasGiftwrap = true;
+    }
+}
+//TrungHa end
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-cart"><?php echo $this->getHeaderText() ?></h4>
+        <div class="form-buttons"><?php echo $this->getButtonsHtml() ?></div>
+    </div>
+    <!-- show button add giftwrap if order contains wrapable product -->
+    <?php if ($hasGiftwrap == true): ?>
+
+        <button class="scalable" onclick="showEditForm('<?php echo $newUrl ?>')" title="Create New Gift Box" type="button">
+            <span>
+                <span>Create New Gift Box</span>
+            </span>
+        </button>
+
+        <!-- TrungHa end -->
+        <?php //var_dump(Mage::getSingleton('adminhtml/session_quote')->getQuote()->getId()); ?>	
+        <?php $gifboxcollection = $create->getGiftboxCollection(); ?>
+
+        <?php if (count($gifboxcollection)): ?>	
+            <div id="giftwrap-giftbox-additional" class="grid">
+                <table class="data-table data order-tables" id="giftwrap-giftbox">
+                    <colgroup>				
+                        <col width="50">
+                        <col width="150">
+                        <col width="150">
+                        <col width="450">
+                        <col width="100">
+                        <col width="100">
+                        <col width="100">
+                        <col width="100">
+                    </colgroup>
+                    <thead>
+                        <tr class="headings">
+                            <th class="a-center no-link"><?php echo $this->__('No'); ?></th>
+                            <th class="a-center no-link"><?php echo $this->__('Paper'); ?></th>
+                            <th class="a-center no-link"><?php echo $this->__('Gift Card'); ?></th>
+                            <th class="a-center no-link"><?php echo $this->__('Items'); ?></th>
+                            <th class="a-center no-link"><?php echo $this->__('Unit Price'); ?></th>
+                            <th class="a-center no-link"><?php echo $this->__('Subtotal'); ?></th>
+                            <th class="a-center no-link"><?php echo $this->__('Action'); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody class="even">
+                        <?php
+                        $i = 1;
+                        foreach ($gifboxcollection as $giftbox):
+                            $style = Mage::getModel('giftwrap/giftwrap')->load($giftbox->getStyleId());
+                            $giftcard = Mage::getModel('giftwrap/giftcard')->load($giftbox->getGiftcardId());
+                            ?>
+                            <tr class="first">
+                                <td style="text-align:center">
+                                    #<?php echo $i; ?>
+                                </td>
+                                <td style="text-align:center">
+                        <li>
+                            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/' . $style->getImage() ?>" width="75" height="75" />
+                        </li>
+                        <li >
+                            <?php echo $style->getTitle(); ?>
+                        </li>
+                        </td>
+                        <td  style="text-align:center">
+                            <?php if ($giftcard->getId()) { ?>
+                            <li>
+                                <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/giftcard/' . $giftcard->getImage() ?>" width="75" height="75" />
+                            </li>
+                            <li >
+                                <?php echo $giftcard->getName(); ?>
+                            </li>
+                        <?php } ?>
+                        </td>
+                        <td>
+                            <ul>
+                                <?php
+                                $its = $giftbox->getItemCollection();
+                                $numberitems = 0;
+                                foreach ($its as $it) {
+                                    $itemId = $it->getItemId();
+                                    $item = Mage::getModel('sales/quote_item')->load($itemId);
+                                    $product = Mage::getModel('catalog/product')->load($item->getProductId());
+                                    $qty = $it->getQty();
+                                    $numberitems += $qty;
+                                    if ($product->getVisibility() == '1') {
+                                        $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($product->getId()); // check for grouped product
+                                        if (!$parentIds)
+                                            $parentIds = Mage::getModel('catalog/product_type_grouped')->getParentIdsByChild($product->getId()); //check for config product
+                                    }
+                                    
+                                    if($parentIds){
+                                        $productUrl = Mage::getModel('catalog/product')->load($parentIds[0])->getProductUrl();
+                                    } else {
+                                        $productUrl = $product->getProductUrl();
+                                    }
+                                    ?>
+                                    <li><a href='<?php echo $productUrl; ?>' ><?php echo $item->getName(); ?> </a><?php echo ' - ' . intval($qty) . ' item(s)'; ?> </li>
+                                    <?php
+                                }
+                                $giftwrapAmount = floatval($style->getPrice()) + floatval($giftcard->getPrice());
+                                if ($giftbox->getCalculateByItem() == '1') {
+                                    $giftwrapAmountOnItem = floatval($numberitems) * $giftwrapAmount;
+                                } else {
+                                    $giftwrapAmountOnItem = $giftwrapAmount;
+                                }
+                                ?>
+                            </ul>
+                        </td>
+                        <!--<td><?php echo Mage::helper('core')->currency(floatval($style->getPrice()) + floatval($giftcard->getPrice())); ?></td>-->
+                        <td  style="text-align:center"><?php echo Mage::helper('core')->currency($giftwrapAmount); ?></td>
+                        <td  style="text-align:center"><?php echo Mage::helper('core')->currency(floatval($giftwrapAmountOnItem)); ?></td>
+                        <td style="text-align:center">
+                            <a href="" onclick="showEditForm('<?php echo $newUrl ?>', '<?php echo $giftbox->getId(); ?>', '<?php if ($giftbox->getGiftcardId()) echo $giftbox->getGiftcardId(); ?>');
+                        return false;"><?php echo $this->__('Edit'); ?></a>|
+                            <a href="" onclick="deleteGiftbox('<?php echo $deleteUrl ?>', '<?php echo $giftbox->getId(); ?>');
+                        return false;"><?php echo $this->__('Delete'); ?></a>
+                        </td>
+                        </tr>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+
+                    </tbody>
+                </table>
+                <script type="text/javascript"> decorateTable('giftwrap-giftbox');</script>
+            </div>
+        <?php endif; ?>
+
+    <?php endif ?>
+    <?php echo $this->getChildHtml() ?>
+</div>
+
+
+<script type="text/javascript">
+    Event.observe(window, 'load', function() {
+        var data = {};
+        order.loadArea(['totals'], true, data);
+    });
+
+</script>
+

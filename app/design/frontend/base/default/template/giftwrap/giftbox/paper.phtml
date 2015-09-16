@@ -1,0 +1,485 @@
+<?php
+$papers = $this->getAllPapers();
+
+$quote_id = Mage::getSingleton('checkout/cart')->getQuote()->getId();
+$id = Mage::app()->getRequest()->getParam('id');
+$giftbox = Mage::getModel('giftwrap/selection')->load($id);
+//Zend_Debug::dump($giftbox->getData());
+$item_id = Mage::app()->getRequest()->getParam('item_id');
+$_item = Mage::getModel('sales/quote_item')->load($item_id);
+$items = array();
+// if($item_id):
+// $items = $this->getCurrentItems(null,$item_id);
+// else :
+$items = $this->getAvailableItems($id);
+// endif;   
+$item_ids = $this->getItemIdsByGiftbox($id);
+$giftcardcollection = $this->getAllGiftcards();
+$maxItems = Mage::getStoreConfig('giftwrap/calculation/maximum_items_wrapall');
+$helper = Mage::helper('giftwrap');
+$helpIcon = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . '/giftwrap/fam_help.png';
+$_product = Mage::getModel('catalog/product')->load($_item->getProductId());
+if (Mage::getSingleton('checkout/session')->getData('giftwrap_color')) {
+    $giftwrap_color = Mage::getSingleton('checkout/session')->getData('giftwrap_color');
+} else {
+    $giftwrap_color = Mage::getStoreConfig('giftwrap/style/giftwrap_color');
+}
+?>
+<!--Show note-->
+<?php if (!$id): ?> <!--Create new wrap-->
+    <div class="block-title" style="background-color:<?php echo '#' . $giftwrap_color ?>"> 
+        <h3><?php echo $this->__('Gift Wrap for ') ?>
+            <a href='<?php echo $_product->getProductUrl(); ?>' ><?php echo Mage::getModel('catalog/product')->load($_item->getProductId())->getName() ?></a>
+        </h3>
+    </div>
+    <div class="giftwrap-step">            
+        <ul><li class="notice-msg" style="margin-bottom: 10px;text-align: left;">
+                <?php echo $this->__('There are <strong>%s item(s)</strong>of %s in your wrap.', $this->getNumberOfItemsCanWraped($_item, $id), Mage::getModel('catalog/product')->load($_item->getProductId())->getName()) ?>
+            </li></ul>
+        <!--HoaNTT-->
+        <?php if (Mage::getStoreConfig('giftwrap/general/enable_note') && Mage::getStoreConfig('giftwrap/general/use_card')) { ?>
+            <p class="simple-step"><?php echo $this->__('Prepare your wrap in <strong>3 simple steps:</strong></br>') ?></p>
+        <?php } elseif (Mage::getStoreConfig('giftwrap/general/enable_note') || Mage::getStoreConfig('giftwrap/general/use_card')) { ?>
+            <p class="simple-step"><?php echo $this->__('Prepare your wrap in <strong>2 simple steps:</strong></br>') ?></p>
+        <?php } else { ?>
+            <p class="simple-step"><?php echo $this->__('Prepare your wrap in <strong>1 simple step:</strong></br>') ?></p>
+        <?php } ?>
+
+        <p><?php echo '1.' . $this->__(Mage::helper('giftwrap')->getNoteConfig('first')) ?></p>
+        <?php if (Mage::getStoreConfig('giftwrap/general/use_card')): ?>
+            <p><?php
+                echo '2.' . $this->__(Mage::helper('giftwrap')->getNoteConfig('second'));
+                $step2 = '2';
+                ?></p>
+        <?php endif; ?>
+        <?php if (Mage::getStoreConfig('giftwrap/general/enable_note')) { ?>
+            <?php if (Mage::getStoreConfig('giftwrap/general/use_card')) { ?>
+                <p><?php
+                    echo '3.' . $this->__(Mage::helper('giftwrap')->getNoteConfig('third'));
+                    $step2 = '2';
+                    $step3 = '3';
+                    ?></p>
+            <?php } else { ?>
+                <p><?php
+                    echo '2.' . $this->__(Mage::helper('giftwrap')->getNoteConfig('third'));
+                    $step3 = '2';
+                    ?></p>
+                <?php
+            }
+        }
+        ?>
+        <!--End Hoa NTT-->
+        <p class="notice-end"><?php echo $this->__('You can hover your mouse over any'); ?> 
+            <img alt="<?php echo $this->__('Help') ?>" src="<?php echo $helpIcon; ?>"/>
+            <?php echo $this->__('button for help.') ?></p>
+    </div>
+<?php else: ?><!--Edit wrap-->
+    <div class="block-title" style="background-color:<?php echo '#' . $giftwrap_color ?>"> 
+        <h3><?php echo $this->__('Edit Your Gift') ?></h3>
+    </div>        
+    <ul><li class="notice-msg" style="margin-bottom: 10px;text-align: left;">
+            <p style="margin-bottom: 3px;"><?php echo $this->__('Items in your gift wrap:') ?></p>
+            <?php
+            $its = $giftbox->getItemCollection();
+            $numberitems = 0;
+            foreach ($its as $it) {
+                $itemId = $it->getItemId();
+                $item = Mage::getModel('sales/quote_item')->load($itemId);
+                $product = Mage::getModel('catalog/product')->load($item->getProductId());
+                $qty = $it->getQty();
+                $numberitems += $qty;
+                ?>
+                <p style="margin: 0 0 0 20px;"><a href='<?php echo $product->getProductUrl(); ?>' ><?php echo $item->getName(); ?> </a><?php echo ' - ' . intval($qty) . ' item(s)'; ?> </p>
+                <?php
+            }
+            ?>
+        </li></ul>     
+<?php endif ?>  
+
+
+
+<!--Form - step-->
+<br/>
+<form id="giftwrap-form" action="<?php echo $this->getUrl('giftwrap/index/savegiftbox') ?>" method="post">      
+    <div>
+        <fieldset>
+            <!--Step 1-->
+            <?php if (count($papers)) { ?>
+
+                <div class="fieldset" style="min-height:230px;border:none;">
+                    <h2 class="legend" style="text-align:left;background: none;margin: -45px 0px 0px -40px;border: none;"><!--fix lại style bị lỗi-->
+                        <span class="step1" style="background-color:<?php echo '#' . $giftwrap_color ?>;border:1px solid <?php echo '#' . $giftwrap_color ?>"></span>
+                        <?php echo $this->__('Select wrapping '); ?>
+                    </h2><br/>
+                    <div id="giftwrap-giftbox-paper-div" class="form-list">
+                        <div id="giftwrap-giftbox-paper-table">             
+
+                            <!--Slider for banner-->        
+                            <div id="slider-features">
+                                <div id="features-screen">              
+
+                                    <ul id="images">                                                                                            
+                                        <?php foreach ($papers as $paper): ?>   
+                                            <li>
+                                                <div class="item">
+                                                    <div class="product-info">
+                                                        <div class="featuredproduct-image"> 
+                                                            <a href="#" class="product-img">
+                                                                <label for="giftbox_paper_<?php echo $paper->getId(); ?>"><img src='<?php echo Mage::getBaseUrl('media') . 'giftwrap/' . $paper->getImage(); ?>' /></label>
+                                                            </a>                                        
+                                                        </div>
+                                                        <div class="featuredproduct-content">
+
+                                                            <h2><?php echo $paper->getTitle(); ?></h2>
+                                                            <div class="price-box">
+                                                                <span class="regular-price">
+                                                                    <span class="price"><?php echo Mage::helper('core')->currency($paper->getPrice()); ?></span>
+                                                                </span>
+                                                            </div>  
+                                                            <div>
+                                                                <input type="radio" value="<?php echo $paper->getId(); ?>" <?php if ($paper->getId() == $giftbox->getStyleId()) { ?> checked="checked" <?php } else { ?>  <?php } ?> name="giftbox_paper" class="validate-one-required-by-name" id="giftbox_paper_<?php echo $paper->getId(); ?>" />
+                                                            </div>
+
+                                                        </div>
+                                                    </div>  
+                                                </div>  
+                                            </li>   
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            </div>      
+                        </div>
+                    </div>
+                </div>
+
+            <?php } else { ?>
+                <div class="mess-gift"><b><?php echo $this->__('No paper to select'); ?></b></div>
+            <?php } ?>
+            <div class="clearer"></div>
+            <!--End Step 1-->
+
+            <!--checkbox - button Proceed-->
+            <!--check edit/ create new-->
+
+            <div class="check-gift" id="check-gift">
+                <input type="checkbox" value="1" <?php if ($giftbox->getGiftcardId() || $id) { ?> checked="checked" <?php } ?> onclick="showGiftcardForm()" name="use_giftcard" id="use_giftcard" title = "Use Giftcard"/> 
+
+            </div>
+
+
+            <!--Step 2-->
+
+            <!--HoaNTT-->
+            <?php if (!Mage::getStoreConfig('giftwrap/general/use_card') || !count($giftcardcollection)): ?>
+                <div id="step2" style="display:none;">
+                <?php else: ?>
+                    <div id="step2">
+                    <?php endif ?>
+
+                    <!--End HoaNTT-->
+
+                    <?php if (count($giftcardcollection)) { ?>
+                        <div class="fieldset" style="border:none;">
+                            <?php if (!Mage::getStoreConfig('giftwrap/general/use_card')): ?>
+                                <div id="title_step2" style="display:none;">
+                                <?php else: ?>
+                                    <div id="title_step2">    
+                                    <?php endif ?>
+                                    <h2 class="legend" id="giftwrap-giftbox-giftcard" style="cursor:pointer;text-align:left;background: none;margin: -45px 0px 0px -40px;border: none;" onclick = "showGiftcardForm_1()" ><!--fix lại style bị lỗi-->
+
+                                        <span class="step2" id="step-2"></span><!--edit by Sally--> 
+                                        <?php echo $this->__('Choose a gift card'); ?></h2>
+                                    <br/>
+                                </div>
+                                <!-- div id="giftbox-giftcard-div"-->
+                                <div id="giftbox-giftcard" style="display:none;">
+                                    <ul  class="form-list">     
+                                        <div id="view2">
+                                            <ul id="images2">
+                                                <li style="text-align:center;">
+                                                    <div class="item">
+                                                        <div class="product-info">
+                                                            <div class="featuredproduct-image"> 
+                                                                    <a href="#" class="product-img" id="img-giftbox_giftcard_null">
+                                                                        <label for="giftbox_giftcard_null; ?>"><img src='<?php echo Mage::getBaseUrl('media') . 'giftwrap/' . 'no_gift_card.png'; ?>' width="135" height="105" />	</label>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="featuredproduct-content">
+
+                                                                    <h2><?php echo $this->__('No Gift Card'); ?></h2>
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">
+                                                                            <span class="price"><?php echo Mage::helper('core')->currency(0); ?></span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <input type="radio" onclick="hideMessage()" value="0" <?php if ($giftbox->getGiftcardId() == 0) { ?> checked="checked" <?php } else { ?>  <?php } ?> name="giftbox_giftcard" class="validate-one-required-by-name" id="giftbox_giftcard_null" />
+                                                                        		
+                                                                    </div>
+                                                                </div>									
+                                                        </div>		
+                                                        <input type="hidden" name="gift-cart-tooltip" id="img-gift-null" value="0"/>
+                                                    </div>
+
+                                                </li>
+                                                <?php foreach ($giftcardcollection as $giftcard): ?>                                                                                    
+                                                    <li style="text-align:center;">
+                                                        <div class="item">
+                                                            <div class="product-info">
+                                                                <div class="featuredproduct-image"> 
+                                                                    <a href="#" class="product-img" id="img-gift-<?php echo $giftcard->getId() ?>">
+                                                                        <label for="giftbox_giftcard_<?php echo $giftcard->getId(); ?>"><img src='<?php echo Mage::getBaseUrl('media') . 'giftwrap/giftcard/' . $giftcard->getImage(); ?>' width="135" height="105" />  </label>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="featuredproduct-content">
+
+                                                                    <h2><?php echo $giftcard->getName(); ?></h2>
+                                                                    <div class="price-box">
+                                                                        <span class="regular-price">
+                                                                            <span class="price"><?php echo Mage::helper('core')->currency($giftcard->getPrice()); ?></span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <input type="radio" onclick="
+                                viewMaxLen('<?php echo $giftcard->getCharacter() ?>');" value="<?php echo $giftcard->getId(); ?>" <?php if ($giftcard->getId() == $giftbox->getGiftcardId()) { ?> checked="checked" <?php } else { ?>  <?php } ?> name="giftbox_giftcard" class="validate-one-required-by-name" id="giftbox_giftcard_<?php echo $giftcard->getId(); ?>" />
+                                                                        <input type="hidden" id="max_len_<?php echo $giftcard->getId(); ?>" value="<?php echo $giftcard->getCharacter(); ?>"/>          
+                                                                    </div>
+                                                                </div>                                  
+                                                            </div>  
+                                                            <input type="hidden" name="gift-cart-tooltip" id="img-gift-<?php echo $giftcard->getId() ?>" value="<?php echo $giftcard->getId(); ?>"/>
+                                                        </div>
+                                                    </li>
+
+                                                <?php endforeach; ?>
+
+                                            </ul>
+                                        </div>
+                                    </ul>
+                                </div>
+
+                                <!--/div-->
+
+                                <?php if ($giftbox->getGiftcardId()): ?>
+                                    <?php $giftcard = Mage::getModel('giftwrap/giftcard')->load($giftbox->getGiftcardId()); ?>
+                                    <div id="text_message" style="display:none">
+                                    <?php else : ?>
+                                        <div id="text_message" style="display:none">
+                                        <?php endif; ?>
+                                        <label style="padding:10px" id="giftbox-message-label" for="giftcart-message-textarea"><?php echo $this->__('Message to your friend ('); ?>
+                                            <strong id="giftcard-message-maxlen"></strong>
+                                            <?php echo $this->__(' characters max)'); ?>
+                                        </label>
+                                        <div class="input-box">
+                                            <textarea name="giftbox_message" placeholder="Enter your message here" id="giftcart-message-textarea" onkeydown="checkMaxLen();" onkeyup="checkMaxLen();"  ><?php
+                                                if ($giftcard->getId()) {
+                                                    echo $giftbox->getMessage();
+                                                }
+                                                ?></textarea>
+                                        </div>
+                                        </ul>
+                                    </div>
+                                <?php } else { ?>
+                                    <div class="mess-gift"><b><?php echo $this->__('No giftcard to select'); ?></b></div>
+                                <?php } ?>
+                            </div>
+                        </div>
+
+                        <!-- Step 3-->
+                        <!--HoaNTT-->
+                        <?php if (count($items)) { ?>
+                            <div class="fieldset" style="border:none;" >
+                                <?php if (!$id): ?>
+                                    <?php if (Mage::getStoreConfig('giftwrap/general/use_card') && Mage::getStoreConfig('giftwrap/general/enable_note')): ?>
+                                        <h2 class="legend" style="cursor:pointer;text-align:left;background: none;margin: -45px 0px 0px -40px;border: none;" onclick = "showGiftcardForm_2();" >
+                                            <span class="step3" id="step-3" ></span>
+                                            <?php echo $this->__('Edit items for wrapping'); ?></h5><br/>
+                                        <?php endif; ?>
+                                        <?php if (!Mage::getStoreConfig('giftwrap/general/use_card') && Mage::getStoreConfig('giftwrap/general/enable_note')): ?>
+                                            <h2 class="legend" style="cursor:pointer;text-align:left;background: none;margin: -45px 0px 0px -40px;border: none;" onclick = "showGiftcardForm_2();">
+                                                <span class="step2" id="step-3"></span>
+                                                <?php echo $this->__('Add other items to this gift'); ?></h5><br/>  
+                                            <?php endif; ?>
+                                        <?php else: ?>  
+                                            <?php if (Mage::getStoreConfig('giftwrap/general/use_card') && Mage::getStoreConfig('giftwrap/general/enable_note')): ?>
+                                                <h2 class="legend" style="cursor:pointer;text-align:left;background: none;margin: -45px 0px 0px -40px;border: none;" onclick = "showGiftcardForm_2();">
+                                                    <span class="step3" id="step-3"></span>
+                                                    <?php echo $this->__('Edit your gift items'); ?></h5><br/>
+                                                <?php endif; ?>
+                                                <?php if (!Mage::getStoreConfig('giftwrap/general/use_card') && Mage::getStoreConfig('giftwrap/general/enable_note')): ?>
+                                                    <h2 class="legend" style="cursor:pointer;text-align:left;background: none;margin: -45px 0px 0px -40px;border: none;" onclick = "showGiftcardForm_2();">
+                                                        <span class="step2" id="step-3"></span>
+                                                        <?php echo $this->__('Edit your gift items'); ?></h5><br/>  
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+
+                                                <br/>
+                                                <!--HoaNTT-->
+                                                <?php if (!Mage::getStoreConfig('giftwrap/general/use_card')): ?>
+                                                    <div id="title_step3" style="display:none;">
+                                                    <?php else: ?>
+                                                        <div id="title_step3">    
+                                                        <?php endif ?>
+                                                        <!--End HoaNTT-->
+                                                        <!--End HoaNTT-->
+                                                        <div id="giftbox-wraptype" style="display:none;" >
+                                                            <ul  class="form-list">
+                                                                <?php if (!$id): ?>
+                                                                    <li class="wrap-only">
+                                                                        <input type="radio" name="wrap_type" id="wrap_all" onclick="loadListProduct();" value="1" <?php if ((!$giftbox->getId()) || ($giftbox->getType() == 1) && !$id) { ?> checked="checked" <?php } ?>/>
+                                                                        <label for="wrap_all"><?php echo $this->__('Wrap this product with selected Qty.') ?></label>
+
+                                                                    </li>
+                                                                    <li class="choose-product">
+                                                                        <input type="radio" name="wrap_type" id="wrap_one" onclick="loadListProduct();" value="2" <?php if ($giftbox->getType() == 2 || $id) { ?> checked="checked" <?php } ?> />
+                                                                        <label for="wrap_one"><?php echo $this->__('Edit wrapped Qty. or Choose other items in cart for wrapping') ?>
+                                                                        </label>        
+                                                                    </li>
+                                                                    <input id="hidden_item" type="hidden" name="hidden_item" value="<?php echo $item_id ?>">
+                                                                <?php else: ?>
+                                                                    <li>
+                                                                        <input style="" type="radio" name="wrap_type" id="wrap_one" onclick="loadListProduct();"  value="2" <?php if ($giftbox->getType() == 2 || $id) { ?> checked="checked" <?php } ?> />
+                                                                        <label for="wrap_one"><?php echo $this->__('Edit wrapped Qty. or Choose other items in cart for wrapping') ?>
+
+                                                                        </label>        
+                                                                    </li>
+
+                                                                <?php endif; ?>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div id="giftbox-item-div" style="display:none;">
+
+                                                            <div class="data-table box-table giftwrap-style-table" id="giftwrap-giftbox-item" >
+                                                                <?php $i = 1; ?>
+                                                                <?php foreach ($items as $ite): ?>
+                                                                    <?php
+                                                                    $class = "";
+
+                                                                    $quote = Mage::getSingleton('checkout/session')->getQuote();
+                                                                    $item = $quote->getItemById($ite);
+
+                                                                    $options = Mage::helper('giftwrap')->getOptionList($item);
+                                                                    $product = Mage::getModel('catalog/product')->load($item->getProductId());
+                                                                    if ($i % 2 == 0) {
+                                                                        $class = "even";
+                                                                    } else {
+                                                                        $class = "odd";
+                                                                    }
+                                                                    if ($i == 1) {
+                                                                        $class.=" first";
+                                                                    } else if ($i == count($items)) {
+                                                                        $class.=" last";
+                                                                    }
+                                                                    ?>
+
+                                                                    <ul class="<?php echo $class; ?>" style="float: left;width: 100%;border-bottom: 1px solid #e7e7e7;">
+                                                                        <li class="image-small">
+                                                                            <span class="img-small"><img src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(66, 53); ?>" width="66" height="53" alt="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" /></span>
+
+                                                                        </li>
+                                                                        <li class="info">
+                                                                            <div>
+                                                                                <ul>
+                                                                                    <li>
+
+                                                                                        <span class="product-name"><?php echo $item->getName(); ?></span>
+                                                                                        <?php if (count($options)) { ?>
+                                                                                            <dl class="item-options">
+                                                                                                <?php foreach ($options as $_option) : ?>
+                                                                                                    <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+                                                                                                    <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
+                                                                                                    <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?>
+                                                                                                        <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                                                                                                            <div class="truncated_full_value">
+                                                                                                                <dl class="item-options">
+                                                                                                                    <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
+                                                                                                                    <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
+                                                                                                                </dl>
+                                                                                                            </div>
+                                                                                                        <?php endif; ?>
+                                                                                                    </dd>
+                                                                                                <?php endforeach; ?>
+                                                                                            </dl>
+                                                                                        <?php } ?>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <span class="title-item"><?php echo $this->__('Price'); ?>
+                                                                                            <strong class="price content-item" style="color:#1e1e1e; font-weight: 700;"><?php echo Mage::helper('core')->currency($item->getPrice()); ?></strong></span>
+
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <span class="title-item"><?php echo $this->__('Qty to be wrapped'); ?>
+                                                                                            <strong class="content-item" style="color:#1e1e1e; font-weight: 700;"><?php if ($id) $selectionItem = Mage::getModel('giftwrap/selectionitem')->loadBySelectionAndItem($id, $item->getId()); ?>
+                                                                                                <input type="hidden" name="qty_can_wrapped_<?php echo $item->getId() ?>" id="qty_can_wrapped_<?php echo $item->getId() ?>" value="<?php echo $this->getNumberOfItemsCanWraped($item, $id); ?>" />
+                                                                                                <?php if ($item_id): ?>
+                                                                                                    <input <?php if (!in_array($item->getId(), $item_ids) && $item_id != $item->getId()) { ?> disabled="disabled" <?php } ?>  style="width:30px; color:#1e1e1e;" type="text" name="qty_wrap_<?php echo $item->getId(); ?>" id="qty_wrap_<?php echo $item->getId(); ?>" value="<?php
+                                                                                                    if ($id && $selectionItem->getId()) {
+                                                                                                        echo floatval($giftbox->getQty()) * floatval($selectionItem->getQty());
+                                                                                                    } else {
+                                                                                                        echo $this->getNumberOfItemsCanWraped($item, $id);
+                                                                                                    }
+                                                                                                    ?>"/>
+                                                                                                                                                                                          <?php else: ?>
+                                                                                                    <input <?php if (!in_array($item->getId(), $item_ids)) { ?> disabled="disabled" <?php } ?>  style="width:30px; color:#1e1e1e;" type="text" name="qty_wrap_<?php echo $item->getId(); ?>" id="qty_wrap_<?php echo $item->getId(); ?>" value="<?php
+                                                                                                    if ($id && $selectionItem->getId()) {
+                                                                                                        echo floatval($giftbox->getQty()) * floatval($selectionItem->getQty());
+                                                                                                    } else {
+                                                                                                        echo $this->getNumberOfItemsCanWraped($item, $id);
+                                                                                                    }
+                                                                                                    ?>"/>
+                                                                                                                                                            <?php endif; ?>
+                                                                                            </strong>
+                                                                                        </span>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <span class="title-item"><?php echo $this->__('Qty already wrapped / Total'); ?>
+
+                                                                                            <span class="content-item"><?php if ($id): ?>
+                                                                                                    <span class='qty_wraped' style="color:#1e1e1e;"><?php echo floatval($item->getQty()) - floatval($this->getNumberCanWraped($item, $id)); ?></span>/<span class='qty_all'><?php echo $item->getQty(); ?></span>
+                                                                                                <?php else: ?>
+                                                                                                    <span class='qty_wraped' style="color:#1e1e1e;"><?php echo floatval($this->getQtyWrap($item)); ?></span>/<span class='qty_all'><?php echo $item->getQty(); ?></span>
+                                                                                                <?php endif; ?>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                    </li>
+
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+
+
+                                                                        <li class="item check">
+                                                                            <input type="checkbox" onclick="checkWrap(this,<?php echo $item->getId() ?>);" value=<?php echo $item->getId(); ?> <?php if (in_array($item->getId(), $item_ids) || $item_id == $item->getId()) { ?> checked="checked" <?php } ?> class="" id="wrap-item-<?php echo $item->getId() ?>"  name="wrap[]"/>
+                                                                        </li>
+                                                                    </ul>
+
+                                                                    <?php $i++; ?>
+                                                                <?php endforeach; ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php } else { ?>
+                                                    <div class="mess-gift"><h4><?php echo $this->__('No item for wrapping.'); ?></h4></div>
+                                                <?php } ?>
+                                            </div>
+
+
+                                            </div>
+                                            </fieldset>
+
+                                            <input type="hidden" name="giftbox_quoteid" value="<?php echo $quote_id; ?>" />
+                                            <input type="hidden" name="giftbox_id" value="<?php echo $id; ?>" />
+                                            </div>
+                                            <!--button close + save-->                                                           
+                                            <?php if ($id): ?>
+                                                <div class="actions-button" style>
+                                                <?php else: ?>
+                                                    <div class="actions-button" id="actions-button-id">
+                                                    <?php endif; ?>
+
+                                                    <button id="close-giftbox" onclick="TINY.box.hide();
+                        return false;" class="button" style="background-color:<?php echo '#' . $giftwrap_color ?>;border:none"><span style="background-color:<?php echo '#' . $giftwrap_color ?>;border:none"><span style="background-color:<?php echo '#' . $giftwrap_color ?>;border:none"><?php echo $this->__('Cancel') ?></span></span></button>
+                                                    <button style="background-color:<?php echo '#' . $giftwrap_color ?>;border:none" id="save-giftbox" onclick="return checkAll();" class="button" type="submit"><span style="background-color:<?php echo '#' . $giftwrap_color ?>;border:none"><span style="background-color:<?php echo '#' . $giftwrap_color ?>;border:none"><?php echo $this->__('Save & Close') ?></span></span></button>
+                                                </div>
+                                            </div>
+                                            </form>

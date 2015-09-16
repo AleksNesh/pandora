@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+    	<payment translate="label" module="payment">
+         	<groups>
+            	<authorizenetcim translate="label" module="authorizenetcim">
+    				<label>TinyBrick Authorize.net CIM</label>
+     				<frontend_type>text</frontend_type>
+     				<sort_order>60</sort_order>
+     				<show_in_default>1</show_in_default>
+     				<show_in_website>1</show_in_website>
+     				<show_in_store>1</show_in_store>
+     				<fields>
+                        <nfg translate="label">
+                        	<label>Registered Domain</label>
+                        	<comment>
+               					 <![CDATA[Registered Domain is required in order to enable this module]]>
+              				</comment>
+                        	<note>test</note>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </nfg>
+                        <wdf translate="label">
+                        	<label>License</label>
+                        	<comment>
+               					 <![CDATA[License is required in order to enable this module]]>
+              				</comment>
+                        	<frontend_type>text</frontend_type>
+                        	<sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </wdf>
+                        <ntr translate="label">
+                        	<label>Install Key</label>
+                        	<comment>
+               					 <![CDATA[Install Key is required in order to enable this module]]>
+              				</comment>
+                        	<frontend_type>text</frontend_type>
+                        	<sort_order>3</sort_order>
+                        	<show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ntr>
+      					<active translate="label">
+       						<label>Enabled</label>
+       						<frontend_type>select</frontend_type>
+					       <source_model>authorizenetcim/adminhtml_config_enabled</source_model>
+					       <sort_order>10</sort_order>
+					       <show_in_default>1</show_in_default>
+					       <show_in_website>1</show_in_website>
+					       <show_in_store>1</show_in_store>
+      					</active>
+     					<order_status translate="label">
+                            <label>New order status</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status_processing</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <test_mode translate="label">
+						    <label>Use Test Account?</label>
+						    <frontend_type>select</frontend_type>
+						    <source_model>adminhtml/system_config_source_yesno</source_model>
+						    <sort_order>40</sort_order>
+						    <show_in_default>1</show_in_default>
+						    <show_in_website>1</show_in_website>
+						    <show_in_store>1</show_in_store>
+						</test_mode>
+                        <test_username translate="label">
+							<label>Test Username</label>
+							<frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</test_username>
+						<test_password translate="label">
+							<label>Test Transaction Key</label>
+							<frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+							<sort_order>60</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</test_password>
+                        <username translate="label">
+							<label>Live Username</label>
+							<comment>
+               					 <![CDATA[You MUST re-enter the Transaction Key and Username when you save this form]]>
+              				</comment>
+							<frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+							<sort_order>70</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</username>
+						<password translate="label">
+							<label>Live Transaction Key</label>
+							<comment>
+               					 <![CDATA[You MUST re-enter the Transaction Key and Username when you save this form]]>
+              				</comment>
+							<frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+							<sort_order>80</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</password>
+                        <cctypes translate="label">
+                            <label>Credit Card Types</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>adminhtml/system_config_source_payment_cctype</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </cctypes>
+                        <useccv translate="label">
+                            <label>Request Card Security Code</label>
+                            <frontend_type>select</frontend_type>
+                          <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </useccv>
+                        <payment_action translate="label">
+                           <label>Payment Action</label>
+                           <frontend_type>select</frontend_type>
+                           <source_model>paygate/authorizenet_source_paymentAction</source_model>
+                           <sort_order>110</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>1</show_in_store>
+                       </payment_action>
+     				</fields>
+                </authorizenetcim>
+        	</groups>
+    	</payment>
+    </sections>
+</config>

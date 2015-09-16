@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * @category   Directshop
+ * @package    Directshop_FraudDetection
+ * @author     Ben James
+ * @copyright  Copyright (c) 2008-2009 Directshop Pty Ltd. (http://directshop.com.au)
+ */
+-->
+<config>
+	<modules>
+		<Directshop_FraudDetection>
+			<version>1.10.08</version>
+			<depends>
+				<Mage_Sales />
+			</depends>
+		</Directshop_FraudDetection>
+	</modules>
+	
+	<global>
+		<models>
+			<frauddetection>
+				<class>Directshop_FraudDetection_Model</class>
+				<resourceModel>frauddetection_mysql4</resourceModel>
+			</frauddetection>
+			<frauddetection_mysql4>
+				<class>Directshop_FraudDetection_Model_Mysql4</class>
+				<entities>
+					<stats>
+						<table>frauddetection_stats</table>
+					</stats>
+					<result>
+						<table>frauddetection_data</table>
+					</result>
+				</entities>
+			</frauddetection_mysql4>
+		</models>
+		
+		<helpers>
+			<frauddetection>
+				<class>Directshop_FraudDetection_Helper</class>
+			</frauddetection>
+		</helpers>
+		
+		<blocks>
+			<adminhtml>
+				<rewrite>
+					<sales_order_view_tab_info>Directshop_FraudDetection_Block_Adminhtml_Sales_Order_View_Tab_Info</sales_order_view_tab_info>
+					<sales_order_grid>Directshop_FraudDetection_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+				</rewrite>
+			</adminhtml>
+			<frauddetection>
+				<class>Directshop_FraudDetection_Block</class>
+			</frauddetection>
+		</blocks>
+		
+		
+		<events>
+			<sales_order_payment_place_end>
+				<observers>
+					<directshop_frauddetection_payment_observer>
+						<type>singleton</type>
+						<class>frauddetection/payment_observer</class>
+						<method>call_maxmind</method>
+					</directshop_frauddetection_payment_observer>
+				</observers>
+			</sales_order_payment_place_end>
+			<sales_order_save_after>
+				<observers>
+                    <directshop_frauddetection_notification>
+                        <class>frauddetection/observer</class>
+                        <method>salesOrderAfterSave</method>
+                    </directshop_frauddetection_notification>
+                </observers>
+			</sales_order_save_after>
+		</events>
+		
+		<resources>
+			<frauddetection_setup>
+				<setup>
+					<module>Directshop_FraudDetection</module>
+					<class>Mage_Core_Model_Resource_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</frauddetection_setup>
+			<frauddetection_write>
+				<connection>
+				    <use>core_write</use>
+				</connection>
+			</frauddetection_write>
+			<frauddetection_read>
+				<connection>
+				    <use>core_read</use>
+				</connection>
+			</frauddetection_read>
+		</resources>
+		<remote_addr_headers><!-- list headers that contain real client IP if webserver is behind a reverse proxy -->
+                       <header1>HTTP_X_FORWARDED_FOR</header1>
+                       <header2>HTTP_X_REAL_IP</header2>
+                       <header3>REMOTE_ADDR</header3>
+               </remote_addr_headers>
+        <template>
+            <email>
+                <frauddetection_general_email_when_holded_template translate="label" module="frauddetection">
+                    <label>Order Hold Fraud Email</label>
+                    <file>dsfrauddetection_email_when_holded_template.html</file>
+                    <type>html</type>
+                </frauddetection_general_email_when_holded_template>
+            </email>
+        </template>
+	</global>
+	
+	<adminhtml>
+		<layout>
+				<updates>
+						<frauddetection>
+								<file>frauddetection.xml</file>
+						</frauddetection>
+				</updates>
+		</layout>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<frauddetection>
+											<title>Fraud Detection</title>
+										</frauddetection>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+	<admin>
+		<attributes>
+			<name/>
+			<short_description/>
+			<description/>
+			<image/>
+		</attributes>
+		<routers>
+			<frauddetection>
+				<use>admin</use>
+				<args>
+					<module>Directshop_FraudDetection</module>
+					<frontName>frauddetection</frontName>
+				</args>
+			</frauddetection>
+		</routers>
+	</admin>
+	 <default>
+	    <frauddetection>
+			<general>
+			<threshold>3</threshold>
+			</general>		
+		</frauddetection>
+	</default>
+</config>

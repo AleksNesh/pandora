@@ -1,0 +1,97 @@
+<?php
+        //$address_id = $this->getRequest()->getParam('address_id');
+	//$gifboxcollection=$this->getGiftboxCollection($address_id);
+?>
+<div id="giftwrap-giftbox-additional">
+<script type="text/javascript">
+        var is_check_giftwrap_form = false;
+        function showEditForm(id,id_giftbox,hasgiftcard){
+            if(id){
+				if(!id_giftbox)
+            	var url = '<?php echo $this->getUrl('giftwrap/indexmulti/giftboxmulti').'id/' ?>'+id;
+				if(id_giftbox)
+				var url = '<?php echo $this->getUrl('giftwrap/indexmulti/giftboxmulti').'id/' ?>'+id+'/id_giftbox/'+id_giftbox;
+            	if(!hasgiftcard){
+                	
+            		TINY.box.show(url, 1, 642, 640, 1);
+            	}else{
+                	
+            		TINY.box.show(url, 1, 642, 980, 1);
+            	}
+            }else{
+            	var url = '<?php echo $this->getUrl('giftwrap/indexmulti/giftboxmulti')?>';
+            	TINY.box.show(url, 1, 642, 655, 1);
+            }
+            afterShowGiftWrapForm();
+        }
+		
+        function deleteGiftbox(id){
+        	var url = '<?php echo $this->getUrl('giftwrap/indexmulti/deletegiftbox').'id/' ?>'+id;
+        	var request = new Ajax.Request(
+					url, 
+					{
+						method: 'post', 
+						onComplete: '', 
+						onSuccess: function(transport) {
+							window.location.reload(true);
+							response=transport.responseText;
+							$('giftwrap-giftbox-additional').innerHTML=response;
+							},
+						onFailure: ""
+					}	
+				);	
+        }
+        function showGiftcardForm(){
+    		if($('use_giftcard').checked){
+    			$('giftwrap-giftbox-giftcard').style.display='block';
+    			$('tinybox').style.height="auto";
+    		}else{
+    			$('giftwrap-giftbox-giftcard').style.display='none';
+    			$('tinybox').style.height="auto";
+    		}
+    	}
+    	function checkMaxLen(){
+    		var elements=$$('input[name="giftbox_giftcard"][type="radio"]');
+    		var max=0;
+    		elements.each(function(el){
+        		if(el.checked){
+        				
+            			max=$('max_len_'+el.value).value;
+            		}
+        		});
+    		var element=$('giftcart-message-textarea');
+    		if(max>0){
+        	
+	        	if(element.value.length>max){
+	            	element.value=element.value.substring(0,max);
+	            }else{
+	                
+	            }
+    		} 
+    	}
+
+    	function viewMaxLen(max){
+    		$('giftcard-message-maxlen').innerHTML = max;
+    	}
+		
+		function afterShowGiftWrapForm(){
+			if(is_check_giftwrap_form == true){
+				return;
+			}
+			if($('giftwrap-form') != null){
+				var giftwrapForm = new VarienForm('giftwrap-form');											
+				is_check_giftwrap_form = true;
+				
+				var nametool = document.getElementsByName('gift-cart-tooltip');
+				//alert(nametool[0].id);
+				var i=0;
+				for( i=0; i < nametool.length; i++)
+				{					
+					new Tooltip(nametool[i].id, nametool[i].id+'-quick-view');
+				}
+			} else {
+				setTimeout("afterShowGiftWrapForm()",200);
+			}
+		}
+		
+</script>

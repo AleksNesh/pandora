@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Ash_Slideshow>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Ash_Jquery/>
+            </depends>
+        </Ash_Slideshow>
+    </modules>
+</config>

@@ -1,0 +1,39 @@
+<div id="topnav-wrapper">
+    <div class='page-header'>
+        <h1>{{title}}</h1>
+        <div class='app-navigation' ng-include="appNavTemplateUrlPath"></div>
+    </div>
+</div>
+
+<div class='inspiration-designs-wrapper' ng-show='showDesigns()'>
+    <ul class='bxslider inspiration-slider' bx-slider="mode: 'horizontal', pager: false, controls: true, infiniteLoop: true, hideControlOnEnd: true">
+        <li id="design_{{design.id}}" class='inspiration-block' ng-repeat="design in designs" notify-when-repeat-finished>
+            <div class='design-img'>
+                <img ng-src="{{design.snapshot}}" alt="{{design.name}}" />
+                <div class='details'>
+                    <p class='product-title'>{{design.name}}</p>
+                    <em class='product-price'>{{design.price | currency }}</em>
+
+                    <div class='actions'>
+                        <a class='btn small secondary add-to-cart' ng-click="addToCart(design.id)" ng-hide="isAdmin()">Add to Bag</a>
+
+                        <button ng-show="isAdmin()" ng-click="cloneDesign(design.id)">Clone Bracelet</button>
+
+                        <ul class='alternative-actions' ng-hide="isAdmin()">
+                            <li>
+                                <a href='javascript:void(0);' class='text small' ng-click="cloneDesign(design.id)">Edit Bracelet</a>
+                            </li>
+                            <li>
+                                <a href='javascript:void(0);'class='text small add-to-wishlist' ng-click="addToWishlist(design.id)">Add to Wishlist</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class='no-content' ng-hide="showDesigns()">
+    <h3>Sorry, but no Inspiration Bracelets exists at this time.</h3>
+</div>

@@ -1,0 +1,53 @@
+
+.alertsite-dashboard-box{
+    width:100%;
+    padding:20px 30px 30px 30px;
+}
+
+.alertsite-dashboard-box .device-description{
+    font-weight:bold;
+    display:block;
+    font-size:130%;
+}
+
+.alertsite-dashboard-box h4{
+    margin-bottom:0;
+}
+
+.alertsite-dashboard-box .smartbear-status-icon{
+    float:left;
+}
+
+.alertsite-friendly-status{
+    width:60%;
+    float:left;
+    margin-left:20px;
+}
+
+.alertsite-subheader{
+    list-style:none;
+}
+
+/** special cases **/
+.entry-edit .alertsite-subheader{
+    margin-left:10px;
+}
+
+.alertsite-subheader li{
+    display:block;
+    float:left;
+    margin-right:15px !important;
+}
+
+.alertsite-subheader li a{
+    color:#3366BB;
+}
+
+.smartbear-status-links{
+    padding: 0 0 0 80px;
+}
+
+.smartbear-status-links span, fieldset .smartbear-status-links li{
+    margin:6px 10px 0 0;
+    float:left;
+}

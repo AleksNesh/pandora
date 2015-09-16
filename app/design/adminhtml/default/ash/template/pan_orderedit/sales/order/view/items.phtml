@@ -1,0 +1,100 @@
+<?php
+/**
+ * Updated item list template
+ *
+ * @category    Alpine
+ * @package     Alpine_Giftwrap
+ * @theme       ash
+ * @copyright   Copyright (c) 2015 Alpine Consulting, Inc
+ * @author      dmitry.ilin@alpineinc.com
+ */
+?>
+<?php
+
+    $_order = $this->getOrder();
+    $_items = $this->getItemsCollection();
+    // iterator count
+    $i      = 0;
+?>
+<div class="grid np">
+    <div class="hor-scroll">
+        <table cellspacing="0" class="data order-tables" id="items-table">
+            <col />
+            <col width="1" />
+
+            <!--
+            ====================================================================
+            AAI HACK TO ADD STOCK STATUS
+            ====================================================================
+            -->
+            <col width="1" />
+            <!--
+            ====================================================================
+            / AAI HACK TO ADD STOCK STATUS
+            ====================================================================
+            -->
+
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <thead>
+                <tr class="headings">
+                    <th><?php echo $this->helper('sales')->__('Product') ?></th>
+
+                    <!--
+                    ============================================================
+                    AAI HACK TO ADD STOCK STATUS
+                    ============================================================
+                    -->
+                    <th><?php echo $this->helper('sales')->__('Stock Status') ?></th>
+                    <!--
+                    ============================================================
+                    / AAI HACK TO ADD STOCK STATUS
+                    ============================================================
+                    -->
+
+
+                    <th><span class="nobr"><?php echo $this->helper('sales')->__('Item Status') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->helper('sales')->__('Original Price') ?></span></th>
+                    <th><?php echo $this->helper('sales')->__('Price') ?></th>
+                    <th class="a-center"><?php echo $this->helper('sales')->__('Qty') ?></th>
+                    <th><?php echo $this->helper('sales')->__('Subtotal') ?></th>
+                    <th><span class="nobr"><?php echo $this->helper('sales')->__('Tax Amount') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->helper('sales')->__('Tax Percent') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->helper('sales')->__('Discount Amount') ?></span></th>
+                    <th class="last">
+                        <span class="nobr"><?php echo $this->helper('sales')->__('Row Total') ?></span>
+                    </th>
+                    <th class="last e-item-remove" style="display: none;">
+                        <span class="nobr"><?php echo $this->helper('sales')->__('Remove Item') ?></span>
+                    </th>
+                </tr>
+            </thead>
+            <?php foreach ($_items as $_item): ?>
+                <?php if ($_item->getParentItem()): ?>
+                    <?php continue; ?>
+                <?php else: ?>
+                    <?php $i++; ?>
+                <?php endif; ?>
+                <tbody class="<?php echo $i % 2 ? 'even' : 'odd' ?>">
+                    <?php echo $this->getItemHtml($_item) ?>
+                    <?php echo $this->getItemExtraInfoHtml($_item) ?>
+                </tbody>
+            <?php endforeach; ?>
+            <tbody id="new_products_from_grid"></tbody>
+        </table>
+
+        <div id="items-add-btn" style="text-align:right; width:100%; padding-top: 4px; display: none;">
+            <button id="add-item-btn"onclick="addItem();">
+                <span><?php echo $this->__('Add Item') ?></span>
+            </button>
+        </div>
+
+    </div>
+</div>
+<br />

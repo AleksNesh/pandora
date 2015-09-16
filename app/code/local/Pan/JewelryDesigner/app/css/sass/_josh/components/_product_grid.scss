@@ -1,0 +1,45 @@
+.jewelry-product-grid {
+    max-height: 600px;
+    overflow-y: scroll;
+
+    li.block {
+        @include span-columns(6);
+        @include omega(2n);
+    }
+
+    .product-thumb {
+      text-align: center;
+    }
+
+    .product-title {
+        font-size: 1em;
+    }
+
+    .product-price {
+      float: left;
+
+    }
+
+    .stock-status {
+      float: right;
+      font-size: 0.8em;
+      font-weight: 500;
+
+      .label {
+        margin-right: 2em;
+        padding: 4px;
+      }
+
+      .in-stock {
+        color: green;
+      }
+      .out-of-stock {
+        color: red;
+      }
+    }
+
+    .actions {
+      clear: both;
+      margin-top: 2em;
+    }
+}

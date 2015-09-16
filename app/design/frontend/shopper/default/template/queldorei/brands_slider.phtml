@@ -1,0 +1,78 @@
+<?php
+/**
+ * Brands slider template
+ *
+ * @see Queldorei_ShopperSettings_Block_Brands
+ */
+$brands = $this->getBrands();
+$time = uniqid('shopper_');
+if (!empty($brands)) :
+	?>
+	<!-- brands slider BOF -->
+
+	<div class="product-slider-container brands-slider-container">
+		<div class="row">
+			<div class="clearfix title-container">
+				<h2><?php echo $this->__('Popular Brands') ?></h2>
+				<a href="#" class="jcarousel-prev-horizontal" id="shopper_carousel_prev<?php echo $time; ?>"></a>
+				<a href="#" class="jcarousel-next-horizontal" id="shopper_carousel_next<?php echo $time; ?>"></a>
+			</div>
+			<ul id="shopper_carousel<?php echo $time; ?>" class="brands jcarousel-skin-tango clearfix">
+				<?php foreach ($brands as $b) : ?>
+					<li>
+						<a href="<?php echo $b['url'] ?>"><span></span><img src="<?php echo $b['image'] ?>" alt="<?php echo $b['name'] ?>" width="<?php echo Mage::getStoreConfig('shopperbrands/main/image_width', Mage::app()->getStore()->getId()); ?>" /></a>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		jQuery(document).ready(function ($) {
+
+			var carouselID = '#shopper_carousel<?php echo $time; ?>';
+
+			function mycarousel_initCallback(carousel) {
+				$('#shopper_carousel_next<?php echo $time; ?>').bind('click', function () {
+					carousel.next();
+					return false;
+				});
+				$('#shopper_carousel_prev<?php echo $time; ?>').bind('click', function () {
+					carousel.prev();
+					return false;
+				});
+
+				if (typeof $('.brands-slider-container').swipe !== 'undefined') {
+					$('.brands-slider-container').swipe({
+						swipeLeft: function () {
+							carousel.next();
+						},
+						swipeRight: function () {
+							carousel.prev();
+						},
+						swipeMoving: function () {
+						}
+					});
+				}
+			};
+
+			var mycarousel_reloadCallback = function (carousel) {
+				if (!isResize('shopper_carousel_<?php echo $time; ?>')) return;
+				carousel.list = $(carouselID);
+				var li = $(carouselID).children('li');
+				carousel.list.css(carousel.lt, "0px");
+				carousel.list.css(carousel.wh, $(li.get(0)).outerWidth(!0) * li.size() + 100);
+				carousel.first = 1;
+				carousel.last = $(carouselID).parent().width() / $(li.get(0)).outerWidth(!0);
+			}
+
+			$('#shopper_carousel<?php echo $time; ?>').jcarousel({
+				scroll: 1,
+				initCallback: mycarousel_initCallback,
+				reloadCallback: mycarousel_reloadCallback,
+				buttonNextHTML: null,
+				buttonPrevHTML: null
+			});
+		});
+	</script>
+	<!-- brands slider EOF -->
+<?php endif; ?>

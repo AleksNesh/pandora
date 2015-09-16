@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Extend/Override TinyBrick_Authorizenetcim module
+ *
+ * @category    Pan
+ * @package     Pan_Authorizenetcim
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Pan_Authorizenetcim>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <TinyBrick_Authorizenetcim/>
+            </depends>
+        </Pan_Authorizenetcim>
+    </modules>
+</config>

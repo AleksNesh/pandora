@@ -1,0 +1,169 @@
+/////////////////////////////////////
+// Placeholders
+/////////////////////////////////////
+
+%helvetica {
+    font-family: 'Helvetica', Helvetica, Arial, sans-serif;
+    font-weight: normal;
+}
+
+%cinzel {
+    font-family: 'Cinzel', serif;
+    font-weight: 300;
+}
+
+%raleway {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+}
+
+%button {
+    border-style: solid;
+    border-width: 0px;
+    cursor: pointer;
+    @extend %helvetica;
+    font-weight: normal;
+    line-height: 1;
+    margin: 0 0 1em;
+    position: relative;
+    text-decoration: none;
+    text-align: center;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 1em;
+    font-size: 1em;
+    background-color: $purple;
+    border-color: darken($purple, 10%);
+    color: #fff;
+    @include transition(background 0.3s ease-out);
+
+    &:hover {
+        background-color: $gray-dark;
+    }
+}
+
+%button-invert {
+    @extend %button;
+    background-color: $purple-dark;
+    border-color: darken($purple-dark, 10%);
+    color: #fff;
+    @include transition(background 0.3s ease-out);
+
+    &:hover {
+        background-color: #fff;
+        color: $purple-dark;
+    }
+}
+
+%grid-block {
+    float: left;
+    width: 32%;
+    margin-right: 2%;
+    text-align: center;
+
+    &:nth-child(3n) {
+        margin-right: 0;
+    }
+
+    &:nth-child(3n+1) {
+        clear: left;
+    }
+
+    @include media($large-up) {
+        width: 49%;
+
+        &:nth-child(2n) {
+            margin-right: 0;
+        }
+
+        &:nth-child(2n+1) {
+            clear: left;
+        }
+
+        &:nth-child(3n) {
+            margin-right: 0;
+        }
+
+        &:nth-child(3n+1) {
+            clear: none;
+        }
+    }
+
+    @include media($xlarge-up) {
+        width: 32%;
+
+        &:nth-child(2n) {
+            margin-right: 2%;
+        }
+
+        &:nth-child(2n+1) {
+            clear: none;
+        }
+
+        &:nth-child(3n) {
+            margin-right: 0;
+        }
+
+        &:nth-child(3n+1) {
+            clear: left;
+        }
+    }
+}
+
+%grid-block-3-col {
+    float: left;
+    width: 32%;
+    margin-right: 2%;
+    text-align: center;
+
+    &:nth-child(3n) {
+        margin-right: 0;
+    }
+
+    &:nth-child(3n+1) {
+        clear: left;
+    }
+}
+
+%table-minimal {
+    border-collapse: separate;
+    border-spacing: 0;
+
+    tbody {
+        tr:hover > td, tr:hover > th {
+            background-color: $table-hover-color;
+        }
+        tr:first-child td {
+            border-top: 2px solid $table-border-color;
+        }
+    }
+
+    thead {
+        th {
+            background-color: $table-header-color;
+            padding: $table-padding;
+            border-bottom: 0px;
+        }
+    }
+
+    tbody {
+        background-color: $table-background;
+
+        td {
+            padding: $table-padding;
+            border-top: 1px solid $table-border-color;
+            border-bottom: 0px;
+
+            button {
+                @include button(simple, $table-background);
+                margin-right: 0.5em;
+                display: inline-block;
+                width: 100%;
+                margin-bottom: .3em;
+                outline: none;
+
+            }
+        }
+    }
+}

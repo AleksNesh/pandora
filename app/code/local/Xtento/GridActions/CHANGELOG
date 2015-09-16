@@ -1,0 +1,88 @@
+Xtento_GridActions
+
+-------------
+  CHANGELOG
+-------------
+
+===== 1.0.0 =====
+ * Initial Release
+
+[...]
+
+===== 1.2.1 =====
+ * Rewrote processor model
+ * Suppressed error that could show up for not correctly removed/uninstalled shipping methods
+
+===== 1.2.2 =====
+ * Unhold order before invoicing/shipping/completing it.
+
+===== 1.2.3 =====
+ * Added example to config.xml to show how the modules columns can be moved to the last columns of the grid.
+
+===== 1.2.4 =====
+ * Added a couple new actions to (re-)send emails for already created invoices/shipments.
+
+===== 1.2.5 =====
+ * Bugfix release
+
+===== 1.2.6 =====
+ * Fixed bug in JS that handles grid carriers/tracking numbers
+
+===== 1.2.7 =====
+ * Compatibility with Advanced Order Status
+
+===== 1.2.8 =====
+ * Compatibility with certain Amasty extensions
+
+===== 1.2.9 =====
+ * Updated XtCore
+ * Configuration section opened by default
+ * Fixed a bug with regards to status changes
+
+===== 1.3.0 =====
+ * Fixed a bug that did not count emails resent as order updates
+
+===== 1.4.0 =====
+ + Added permissions to ACL so roles can be limited to allow certain operations only
+
+===== 1.5.0 =====
+ * Added ability to render carrier/tracking field into one column in the Sales > Order grid
+
+===== 1.6.0 =====
+ + Added ability to mass-capture payments for already invoiced orders
+ * Several bugfixes
+
+===== 1.6.1 =====
+ * Adjusted adminhtml controller to cope with full page caches better
+
+===== 1.6.2 =====
+ + Added option to force order status changes
+
+===== 1.6.3 =====
+ + Improved compatibility with not properly uninstalled shipping methods
+
+===== 1.7.0 =====
+ + Added ability to combine other actions with "Print Shipping Labels" for supported carriers (just like the "Print Shipping Label" mass action)
+
+===== 1.7.1 =====
+ + Individual actions can be assigned to roles now properly, this must be done under "Sales > Orders > XTENTO Simplify Bulk Order Processing > Actions", before it was at System and caused the user to be logged into the modules configuration. When updating be sure to add action rights to roles again.
+
+===== 1.7.2 =====
+ * Fixed a bug which could lead to the carrier title being the same for all shipped orders in one execution, even though the shipping description is different
+
+===== 1.7.3 =====
+ + Added further possible controller_names to the Observer to match more grids
+
+===== 1.7.4 =====
+ * Fixed warning that shows up for rewrite check of certain classes (Shipping_Config)
+
+===== 1.7.5 =====
+ + Added ability to localize/translate some more strings of the extension
+ * Fixed a bug that lead to the carrier/tracking number column HTML being exported into the built-in CSV/Excel XML export functionality of Magento.
+
+===== 1.7.6 =====
+ + Added ability to re-send new order email to customer in bulk
+ ! Confirmed compatibility with Magento CE 1.9.0.0 / EE 1.14.0.0
+
+===== 1.7.7 =====
+ * Various bugfixes and code optimization in license code

@@ -1,0 +1,85 @@
+<?php
+/**
+ * Open Commerce LLC Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Commerce LLC Commercial Extension License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.opencommercellc.com/license/commercial-license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@opencommercellc.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this package to newer
+ * versions in the future.
+ *
+ * @category   OpenCommerce
+ * @package    OpenCommerce_OrderEdit
+ * @copyright  Copyright (c) 2013 Open Commerce LLC
+ * @license    http://store.opencommercellc.com/license/commercial-license
+ */
+?>
+
+<?php 
+$selected_rows = json_decode($_REQUEST['selectedrows'],TRUE);
+//echo '<pre>';print_r(json_decode($_REQUEST['selectedrows'],TRUE));echo '</pre>';die;
+for($i=0;$i<count($selected_rows);$i++){
+   
+    ?>
+<tr id="additem-row-<?php echo $selected_rows[$i]['id'];?>" class="add-item-form">
+
+    <td class="a-left">
+        <div class="item-container" id="order_item_3">
+            <div class="item-text">
+
+                <h5 class="title"><span id="order_item_3_title"><?php echo $selected_rows[$i]['name'];?></span></h5>
+                <div><strong>SKU:</strong> <input type="text" class="n-item-sku" id="" value="<?php echo $selected_rows[$i]['sku'];?>" style="width:130px;" name="item_sku" /></div>
+            </div>
+        </div>
+    </td>
+    <td class="a-center">Ordered</td>
+    <td class="a-right"><span class="price" ><?php echo $selected_rows[$i]['price'];?></span></td>
+
+
+<td class="a-right">
+    <span class="price-excl-tax">
+
+        <span class="price"><?php echo $selected_rows[$i]['price'];?></span>                
+
+        <input type="text" value="<?php echo $selected_rows[$i]['price'];?>" size="7" class="n-item-price" style="">				
+    </span>
+    
+</td>
+<td><table cellspacing="0" class="qty-table">
+        <tbody><tr>
+                <td>Ordered</td>
+                <td><strong></strong></td>
+            </tr>
+        </tbody></table>
+    <input type="text" class="n-item-qty" value="<?php echo $selected_rows[$i]['qty'];?>" style="" size="3"></td>
+
+<td class="a-right">
+    <span class="price-excl-tax">
+
+        <span class="price"></span>                
+
+    </span>
+    
+
+</td>
+<td class="a-right"><span class="price"></span></td>
+<td width="80" class="a-right"></td>
+<td class="a-right"><span class="price">$0.00</span><input type="text" value="0" size="7" class="n-item-discount" name="discount" style=""></td>
+<td class="a-right last">
+    <span class="price"></span>    </td>
+<td style="" class="e-item-remove a-right last">
+    <button id="cancel-item-btn"onclick="cancelAddItem(<?php echo $selected_rows[$i]['id'];?>);"><span>Remove</span></button>
+</td>
+
+</tr>
+
+<?php  } ?>

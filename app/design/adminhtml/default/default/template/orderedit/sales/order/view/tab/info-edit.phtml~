@@ -1,0 +1,731 @@
+<?php
+/**
+ * Open Commerce LLC Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Commerce LLC Commercial Extension License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.opencommercellc.com/license/commercial-license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@opencommercellc.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this package to newer
+ * versions in the future.
+ *
+ * @category   OpenCommerce
+ * @package    OpenCommerce_OrderEdit
+ * @copyright  Copyright (c) 2013 Open Commerce LLC
+ * @license    http://store.opencommercellc.com/license/commercial-license
+ */
+?>
+
+<link rel="stylesheet" type="text/css"
+      href="<?php echo $this->getSkinUrl('teo/datagrid.css') ?>" />
+
+<?php $_order = $this->getOrder() ?>
+<div>
+    <div id="order-messages">
+        <?php echo $this->getChildHtml('order_messages') ?>
+    </div>
+
+    <!-- order edit js and style -->
+    <script>
+        var order = new AdminOrder(<?php echo $this->getOrderDataJson() ?>);
+        // console.log(order);
+        order.setLoadBaseUrl('<?php echo $this->getLoadBlockUrl() ?>');
+        function billing_showhide() {
+            //alert('edit this section');
+            if ($('billing-edit').innerHTML === 'Edit Billing') {
+                $('billing-edit').innerHTML = 'Save Billing';
+                $('billing-static').hide();
+                $('billing-edit-form').show();
+            }
+
+            else if ($('billing-edit').innerHTML === 'Save Billing') {
+                var params = {};
+                params['admin_user'] = '<?php echo Mage::getSingleton('admin/session')->getUser()->getUsername() ?>';
+
+                params['order_id'] = <?php echo $_order->getId() ?>;
+                var billing = $('billing-fields').serialize(true);
+                params['billing'] = Object.toJSON(billing);
+
+
+                new Ajax.Request('<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/edit') ?>', {
+                    method: 'post',
+                    parameters: params,
+                    onSuccess: function(transport) {
+                        var qt = transport.responseText.replace(/(^\s+|\s+$)/g, '')
+                        if (qt == 'Order updated successfully. The page will now refresh.') {
+                            window.location.reload();
+                            $('billing-static').show();
+                            $('billing-edit-form').hide();
+
+                        } else {
+                            //console.log(transport.responseText);
+                        }
+                    }
+                });
+            }
+
+            //
+
+
+        }
+
+
+
+        function shipping_showhide() {
+            //alert('edit this section');
+            if ($('shipping-edit').innerHTML === 'Edit Shipping') {
+                $('shipping-edit').innerHTML = 'Save Shipping';
+                $('shipping-static').hide();
+                $('shipping-edit-form').show();
+            }
+
+            else if ($('shipping-edit').innerHTML === 'Save Shipping') {
+                var params = {};
+                params['admin_user'] = '<?php echo Mage::getSingleton('admin/session')->getUser()->getUsername() ?>';
+                params['order_id'] = <?php echo $_order->getId() ?>;
+                var shipping = $('shipping-fields').serialize(true);
+                params['shipping'] = Object.toJSON(shipping);
+
+
+                new Ajax.Request('<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/edit') ?>', {
+                    method: 'post',
+                    parameters: params,
+                    onSuccess: function(transport) {
+                        var qt = transport.responseText.replace(/(^\s+|\s+$)/g, '')
+                        if (qt == 'Order updated successfully. The page will now refresh.') {
+                            window.location.reload();
+                            $('shipping-static').show();
+                            $('shipping-edit-form').hide();
+
+                        } else {
+                            //console.log(transport.responseText);
+                        }
+                    }
+                });
+            }
+
+            //
+
+
+        }
+
+        function sh_showhide() {
+            if ($('sh-edit').innerHTML === 'Edit Shipping and handling') {
+                $('sh-edit').innerHTML = 'Save Shipping and handling';
+                //$('shippingmethod-static').hide();
+                $('shippingmethod-edit-form').show();
+                calcShipping();
+            }
+            else if ($('sh-edit').innerHTML === 'Save Shipping and handling') {
+
+                var params = {};
+                params['admin_user'] = '<?php echo Mage::getSingleton('admin/session')->getUser()->getUsername() ?>';
+                params['order_id'] = <?php echo $_order->getId() ?>;
+                if ($('shippingmethod-fields'))
+                {
+                    var shippingmethod = $('shippingmethod-fields').serialize(true);
+                    shippingmethod.customcarrier = $('customCarrier').value;
+                    // shippingmethod.rateid = $F('rateid');
+                    if ($F('rateid') == null) {
+                        shippingmethod.rateid = $$('input:checked[type=radio][name=rateid]')[0].value;
+                    } else {
+                        shippingmethod.rateid = $F('rateid');
+                    }
+
+                    params['shippingmethod'] = Object.toJSON(shippingmethod);
+                }
+
+                new Ajax.Request('<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/edit') ?>', {
+                    method: 'post',
+                    parameters: params,
+                    onSuccess: function(transport) {
+                        var qt = transport.responseText.replace(/(^\s+|\s+$)/g, '')
+                        if (qt == 'Order updated successfully. The page will now refresh.') {
+                            window.location.reload();
+                            $('shippingmethod-static').show();
+                            $('shippingmethod-edit-form').hide();
+
+                        } else {
+                            console.log(transport.responseText);
+                        }
+                    }
+                });
+            }
+
+
+        }
+
+        function payment_showhide() {
+            if ($('payment-edit').innerHTML === 'Edit Payment') {
+                $('payment-edit').innerHTML = 'Save Payment';
+                $('paymentmethod-static').hide();
+                $('paymentmethod-edit-form').show();
+            }
+
+            else if ($('payment-edit').innerHTML === 'Save Payment') {
+                var params = {};
+                params['admin_user'] = '<?php echo Mage::getSingleton('admin/session')->getUser()->getUsername() ?>';
+                params['order_id'] = <?php echo $_order->getId() ?>;
+                var paymentmethod = $('paymentmethod-fields').serialize(true);
+                params['paymentmethod'] = Object.toJSON(paymentmethod);
+
+                new Ajax.Request('<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/edit') ?>', {
+                    method: 'post',
+                    parameters: params,
+                    onSuccess: function(transport) {
+                        var qt = transport.responseText.replace(/(^\s+|\s+$)/g, '')
+                        if (qt == 'Order updated successfully. The page will now refresh.') {
+                            window.location.reload();
+                          
+                        } else {
+                            console.log(transport.responseText);
+                        }
+                    }
+                });
+            }
+
+        }
+
+        function item_showhide() {
+
+            if ($('item-edit').innerHTML === 'Edit Items') {
+                //document.getElementById("add_product_widget").style.display="";
+                $$('div.add_product_widget').invoke('show');
+                $('item-edit').innerHTML = 'Save Items';
+                $$('.e-item-price').invoke('show');
+                $$('.e-item-qty').invoke('show');
+                $$('.e-item-discount').invoke('show');
+                $$('.e-item-remove').invoke('show');
+               }
+            else if ($('item-edit').innerHTML === 'Save Items') {
+
+                /* calculations */
+                var params = {};
+                params['admin_user'] = '<?php echo Mage::getSingleton('admin/session')->getUser()->getUsername() ?>';
+                params['order_id'] = <?php echo $_order->getId() ?>;
+                var eitems = new Object();
+                eitems.id = new Array();
+                eitems.price = new Array();
+                eitems.qty = new Array();
+                eitems.discount = new Array();
+                eitems.remove = new Array();
+                eitems.type = 'eitems';
+                $$('.e-item-id').each(function(s) {
+                    eitems.id.push(s.value);
+                });
+                $$('.e-item-qty').each(function(s) {
+                    eitems.qty.push(s.value);
+                });
+                $$('.e-item-price').each(function(s) {
+                    eitems.price.push(s.value);
+                });
+                $$('.e-item-discount').each(function(s) {
+                    eitems.discount.push(s.value);
+                });
+                $$('.e-item-remove-val').each(function(s) {
+                    eitems.remove.push(s.value);
+                });
+                params['eitems'] = Object.toJSON(eitems);
+
+
+                //get values for new items
+                var nitems = new Object();
+                nitems.sku = new Array();
+                nitems.simplesku = new Array();
+                nitems.qty = new Array();
+                nitems.price = new Array();
+                nitems.discount = new Array();
+                nitems.type = 'nitems';
+                $$('.n-item-sku').each(function(s) {
+                    nitems.sku.push(s.value);
+                });
+                $$('.n-item-simplesku').each(function(s) {
+                    nitems.simplesku.push(s.value);
+                });
+                $$('.n-item-qty').each(function(s) {
+                    nitems.qty.push(s.value);
+                });
+                $$('.n-item-price').each(function(s) {
+                    nitems.price.push(s.value);
+                });
+                $$('.n-item-discount').each(function(s) {
+                    nitems.discount.push(s.value);
+                });
+                params['nitems'] = Object.toJSON(nitems);
+                //console.log(params['nitems']);return false;
+                new Ajax.Request('<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/edit') ?>', {
+                    method: 'post',
+                    parameters: params,
+                    onSuccess: function(transport) {
+                        var qt = transport.responseText.replace(/(^\s+|\s+$)/g, '')
+                        if (qt == 'Order updated successfully. The page will now refresh.') {
+                            window.location.reload();
+                        } else {
+                            alert(transport.responseText)
+                        }
+                    }
+                });
+                /* till here */
+            }
+        }
+
+        function status_showhide() {
+            if ($('status-edit').innerHTML === 'Edit Status') {
+                $('status-edit').innerHTML = 'Save Status';
+                $('orderinfo-edit-form').show();
+                $('orderinfo-static').hide();
+            }
+
+            else if ($('status-edit').innerHTML === 'Save Status') {
+                var params = {};
+                params['admin_user'] = '<?php echo Mage::getSingleton('admin/session')->getUser()->getUsername() ?>';
+                params['order_id'] = <?php echo $_order->getId() ?>;
+                //get values for order info (status, etc)
+                var orderinfo = $('orderinfo-fields').serialize(true);
+                params['orderinfo'] = Object.toJSON(orderinfo);
+                new Ajax.Request('<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/edit') ?>', {
+                    method: 'post',
+                    parameters: params,
+                    onSuccess: function(transport) {
+                        var qt = transport.responseText.replace(/(^\s+|\s+$)/g, '')
+                        if (qt == 'Order updated successfully. The page will now refresh.') {
+                            window.location.reload();
+                         
+                        } else {
+                            console.log(transport.responseText);
+                        }
+                    }
+                });
+            }
+        }
+        
+             function comment_showhide() {
+            if ($('comment-edit').innerHTML === 'Edit Comments History') {
+                $('comment-edit').innerHTML = 'Save Comments History';
+                $('items-add-btn').show();
+                $('commentshistory-edit-form').show();
+                $('commentshistory-static').hide();
+            }
+
+            else if ($('comment-edit').innerHTML === 'Save Comments History') {
+                var commentshistory = new Object();
+                var params = {};
+                commentshistory.id = new Array();
+                commentshistory.comment = new Array();
+                commentshistory.remove = new Array();
+                commentshistory.type = 'commentshistory';
+                $$('.commentshistory-id').each(function(s) {
+                    commentshistory.id.push(s.value);
+                });
+                $$('textarea.commentshistory-comment').each(function(s) {
+                    commentshistory.comment.push(s.value);
+                });
+                $$('.commentshistory-remove-val').each(function(s) {
+                    commentshistory.remove.push(s.value);
+                });
+
+                params['commentshistory'] = Object.toJSON(commentshistory);
+                params['order_id'] = <?php echo $_order->getId() ?>;
+               
+                var orderinfo = $('orderinfo-fields').serialize(true);
+                params['orderinfo'] = Object.toJSON(orderinfo);
+                new Ajax.Request('<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/edit') ?>', {
+                    method: 'post',
+                    parameters: params,
+                    onSuccess: function(transport) {
+                        var qt = transport.responseText.replace(/(^\s+|\s+$)/g, '')
+                        if (qt == 'Order updated successfully. The page will now refresh.') {
+                            window.location.reload();
+
+                        } else {
+                            console.log(transport.responseText);
+                        }
+                    }
+                });
+            }
+        }
+
+        function calcShipping()
+        {
+            var params = {};
+            if ($('shipping-fields'))
+            {
+                // console.log('<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/recalc') ?>');
+                var shipping = $('shipping-fields').serialize(true);
+                params['shipping'] = Object.toJSON(shipping);
+                params['order_id'] = <?php echo $_order->getId() ?>;
+                new Ajax.Request('<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/recalc') ?>', {
+                    method: 'get',
+                    parameters: params,
+                    onSuccess: function(transport) {
+                        $('shippingmethod-address-method-select').innerHTML = transport.responseText;
+                    }
+                });
+            }
+        }
+
+        function flagRemoveItem(id)
+        {
+            if ($('rem' + id).value == 0) {
+                $('tblrow' + id).setStyle({
+                    'color': '#CCCCCC'
+                });
+                $('rem' + id).value = 1;
+                $('rem-btn' + id).innerHTML = 'Undo Remove';
+            } else {
+                $('tblrow' + id).setStyle({
+                    'color': ''
+                });
+                $('rem' + id).value = 0;
+                $('rem-btn' + id).innerHTML = 'Remove';
+            }
+        }
+
+        function flagRemoveComment(id)
+        {
+         
+            if ($('rem' + id).value == 0) {
+              
+                $('rem' + id).value = 1;
+                $('rem-btn' + id).innerHTML = 'Undo Remove';
+            } else {
+               
+                $('rem' + id).value = 0;
+                $('rem-btn' + id).innerHTML = 'Remove';
+            }
+        }
+
+        var x = 1;
+        function addItem()
+        {
+
+            var params = {};
+            params['num'] = x;
+            new Ajax.Request('<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/newitem') ?>', {
+                method: 'get',
+                parameters: params,
+                onSuccess: function(transport) {
+                    $('items-table').insert({bottom: transport.responseText});
+                }
+            });
+            x++;
+        }
+
+        function cancelAddItem(id)
+        {
+            $('additem-row-' + id).remove();
+        }
+
+        function $RF(el, radioGroup) {
+            if ($(el).type && $(el).type.toLowerCase() == 'radio') {
+                var radioGroup = $(el).name;
+                var el = $(el).form;
+            } else if ($(el).tagName.toLowerCase() != 'form') {
+                return false;
+            }
+
+            var checked = $(el).getInputs('radio', radioGroup).find(
+                    function(re) {
+                        return re.checked;
+                    }
+            );
+            return (checked) ? $F(checked) : null;
+        }
+
+    </script>
+    <style type="text/css">
+        .admin-widget-edit-fields		{margin-bottom: 7px;}
+        .admin-widget-edit-fields label	{float: left; width: 160px;}
+        .admin-widget-edit-fields input	{width: 200px;}
+        .admin-widget-edit-req-field	{color: red; font-size: 12px;}
+        sdfvdf {text-decoration: line-through}
+    </style>
+
+
+    <?php
+    //echo "@@@@@".get_class($this);
+    echo $this->getChildHtml('order_info')
+    ?>
+    <input type="hidden" name="order_id" value="<?php echo $_order->getId() ?>"/>
+    <?php if ($_order->getIsVirtual()): ?>
+        <div class="box-right">
+        <?php else: ?>
+            <div class="box-left">
+            <?php endif; ?>
+            <!--Payment Method-->
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-payment-method"><?php echo Mage::helper('sales')->__('Payment Information') ?></h4><?php if (Mage::getStoreConfig('toe/orderedit/active') == 1) { ?><span style="float:right"><a id="payment-edit" onclick="payment_showhide();
+                return false;" href="">Edit Payment</a></span><?php } ?>
+                </div>
+                <fieldset id="paymentmethod-edit-form" style="display:none;">
+                    <form id="paymentmethod-fields">
+                        <input type="hidden" name="type" value="paymentmethod" />
+                        <div class="admin-widget-edit-fields"><label>Payment Method:</label> 
+                            <select name="paymentmethod_id">
+                                <?php $paymentmethods = $this->getActivPaymentMethods() ?>
+                                <?php foreach ($paymentmethods as $paymentmethod): ?>
+                                    <option <?php echo $paymentmethod['value'] == $_order->getPayment()->getMethod() ? "Selected " : "" ?>value="<?php echo $paymentmethod['value'] ?>"><?php echo $paymentmethod['label'] ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+
+                    </form>
+                </fieldset>
+                <fieldset id="paymentmethod-static">
+                    <?php echo $this->getPaymentHtml() ?>
+                    <div><?php echo Mage::helper('sales')->__('Order was placed using %s', $_order->getOrderCurrencyCode()) ?></div>
+                </fieldset>
+            </div>
+        </div>
+        <?php if (!$_order->getIsVirtual()): ?>
+            <div class="box-right">
+                <!--Shipping Method-->
+                <div class="entry-edit">
+                    <div class="entry-edit-head">
+                        <h4 class="icon-head head-shipping-method"><?php echo Mage::helper('sales')->__('Shipping &amp; Handling Information') ?></h4><?php if (Mage::getStoreConfig('toe/orderedit/active') == 1) { ?><span style="float:right"><a id="sh-edit" onclick="sh_showhide();
+                    return false;" href="">Edit Shipping and handling</a></span><?php } ?>
+                    </div>
+                    <fieldset id="shippingmethod-static">
+                        <?php if ($_order->getTracksCollection()->count()) : ?>
+                            <a href="#" id="linkId" onclick="popWin('<?php echo $this->helper('shipping')->getTrackingPopupUrlBySalesModel($_order) ?>', 'trackorder', 'width=800,height=600,resizable=yes,scrollbars=yes')" title="<?php echo $this->__('Track Order') ?>"><?php echo $this->__('Track Order') ?></a>
+                            <br/>
+                        <?php endif; ?>
+                        <?php if ($_order->getShippingDescription()): ?>
+                            <strong><?php echo $_order->getShippingDescription() ?></strong>
+
+                            <?php if ($this->helper('tax')->displayShippingPriceIncludingTax()): ?>
+                                <?php $_excl = $this->displayShippingPriceInclTax($_order); ?>
+                            <?php else: ?>
+                                <?php $_excl = $this->displayPriceAttribute('shipping_amount', false, ' '); ?>
+                            <?php endif; ?>
+                            <?php $_incl = $this->displayShippingPriceInclTax($_order); ?>
+
+                            <?php echo $_excl; ?>
+                            <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <?php echo $this->helper('sales')->__('No shipping information available'); ?>
+                        <?php endif; ?>
+                    </fieldset>
+
+                    <fieldset id="shippingmethod-edit-form" style="display:none;">
+                        <form id="shippingmethod-fields">
+                            <input type="hidden" name="type" value="shippingmethod" />
+                            <div id="shippingmethod-required-shippingmethod" class="admin-widget-edit-req-field" style="display:none;">A new shipping rate is required.</div>
+                            <div id="shippingmethod-address-method-recalculate" ></div>
+                            <div id="shippingmethod-address-method-select" ></div>
+
+                            <?php if (Mage::getStoreConfig('toe/orderedit/calc')): ?>
+                                <br /><a href="javascript:void(0);" onclick="calcShipping();">Get new shipping methods and rates</a>
+                            <?php endif ?>
+                        </form>
+                    </fieldset>
+
+                </div>
+            </div>
+        <?php endif; ?>
+        <div class="clear"></div>
+
+        <?php echo $this->getGiftOptionsHtml() ?>
+
+        <div class="clear"></div>
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-products"><?php echo Mage::helper('sales')->__('Items Ordered') ?></h4> <?php if (Mage::getStoreConfig('toe/orderedit/active') == 1) { ?> <span style="float:right"><a id="item-edit" onclick="item_showhide();
+                return false;" href="">Edit Items</a></span><?php } ?>
+            </div>
+        </div>
+
+            <?php 
+            // echo get_class($this);
+            echo $this->getItemsHtml();
+            //echo $this->getChildHtml('order_items');
+            ?>
+        <div class="clear"></div>
+
+
+
+        <!-- Nirmesh final grid-->
+
+        <?php if (Mage::getStoreConfig('toe/orderedit/active') == 1) { ?>
+            <div class="add_product_widget">
+                <div style="margin:10px 0;"></div>
+                <div id="tb" style="padding:3px">
+                    <span>SKU:</span>
+                    <input id="sku" style="line-height:26px;border:1px solid #ccc">
+                    <span>Product ID:</span>
+                    <input id="productid" style="line-height:26px;border:1px solid #ccc">
+                    <a href="#" class="easyui-linkbutton" plain="true" onclick="doSearch();
+                return false;">Search</a>
+                </div>
+
+                <table id="dg" class="easyui-datagrid" title="Please Select Product To Add" style="width:700px;height:250px"
+                       data-options="rownumbers:true,
+                       multiSelect:true,
+                       url:'<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/json') ?>',
+                       method:'get',
+                       remoteSort:false,
+                       multiSort:true,
+                       pagination:false,
+                       toolbar:'#tb',
+
+                       ">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'ck',checkbox:true"></th>
+                            <th data-options="field:'id',width:80,align:'right',sortable:true">Product ID</th>
+                            <th data-options="field:'name',width:200,align:'left',sortable:true">Product Name</th>
+                            <th data-options="field:'sku',width:80,align:'left',sortable:true">SKU</th>
+                            <th data-options="field:'price',width:80,align:'right',sortable:true">Price</th>
+                            <th data-options="field:'qty',width:80,align:'right',sortable:true">Qty</th>
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div style="margin:10px 0;" class="addButton">
+                <button onclick="getSelections();"><span><span>Add To Order Grid</span></span></button>
+            </div>
+            </body>
+            <script type="text/javascript">
+            function doSearch() {
+
+
+                jQuery('#dg').datagrid('load', {
+                    sku: jQuery('#sku').val(),
+                    id: jQuery('#productid').val()
+                });
+
+            }
+            function getSelections() {
+
+                if ($('item-edit').innerHTML === 'Edit Items') {
+                    jQuery.messager.alert('Info', 'To Add Order First Press Edit Item link');
+                }
+                else {
+                    var ss = [];
+                    var rows = jQuery('#dg').datagrid('getSelections');
+                    var params = {};
+                    params['selectedrows'] = Object.toJSON(rows);
+
+                    new Ajax.Request('<?php echo Mage::getModel('adminhtml/url')->getUrl('orderedit/order/addFromGrid') ?>', {
+                        method: 'post',
+                        parameters: params,
+                        dataType: "json",
+                        onSuccess: function(transport) {
+    //                        var fields = transport.responseText.evalJSON();
+                            $('new_products_from_grid').innerHTML = transport.responseText;
+                        }
+                    });
+
+                }
+            }
+
+            function getData() {
+                var rows = [];
+                for (var i = 1; i <= 800; i++) {
+                    var amount = Math.floor(Math.random() * 1000);
+                    var price = Math.floor(Math.random() * 1000);
+                    rows.push({
+                        inv: 'Inv No ' + i,
+                        date: jQuery.fn.datebox.defaults.formatter(new Date()),
+                        name: 'Name ' + i,
+                        amount: amount,
+                        price: price,
+                        cost: amount * price,
+                        note: 'Note ' + i
+                    });
+                }
+                return rows;
+            }
+
+            function pagerFilter(data) {
+                if (typeof data.length == 'number' && typeof data.splice == 'function') {	// is array
+                    data = {
+                        total: data.length,
+                        rows: data
+                    }
+                }
+                var dg = jQuery(this);
+                var opts = dg.datagrid('options');
+                var pager = dg.datagrid('getPager');
+                pager.pagination({
+                    onSelectPage: function(pageNum, pageSize) {
+                        opts.pageNumber = pageNum;
+                        opts.pageSize = pageSize;
+                        pager.pagination('refresh', {
+                            pageNumber: pageNum,
+                            pageSize: pageSize
+                        });
+                        dg.datagrid('loadData', data);
+                    }
+                });
+                if (!data.originalRows) {
+                    data.originalRows = (data.rows);
+                }
+                var start = (opts.pageNumber - 1) * parseInt(opts.pageSize);
+                var end = start + parseInt(opts.pageSize);
+                data.rows = (data.originalRows.slice(start, end));
+                return data;
+            }
+
+
+            </script>
+
+            <!-- till here-->
+            <br/><br/>
+        <?php } ?>
+        <div class="clear"></div>
+
+        <div class="box-left">
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4><?php echo Mage::helper('sales')->__('Comments History') ?></h4><?php if (Mage::getStoreConfig('toe/orderedit/active') == 1) { ?><span style="float:right"><a id="comment-edit" onclick="comment_showhide();
+                        return false;" href="">Edit Comments History</a></span><?php } ?>
+                </div>
+                <fieldset id="commentshistory-static"><?php echo $this->getChildHtml('order_history') ?></fieldset>
+
+                <fieldset id="commentshistory-edit-form" style="display:none;">
+                    <form id="commentshistory-fields">
+                        <input type="hidden" name="type" value="commentshistory" />
+                        <div id="order_history_block">
+                            <strong>Edit Comments History</strong><br/>
+                            <ul class="note-list">
+                                <?php foreach ($this->getOrder()->getStatusHistoryCollection(true) as $_item): ?>
+                                    <input type="hidden" class="commentshistory-id" name="commentshistory-id" value="<?php echo $_item->getEntityID() ?>" />
+                                    <li>
+                                        <a href="javascript:void(0)" onclick="flagRemoveComment(<?php echo $_item->getEntityID() ?>);" id="rem-btn<?php echo $_item->getEntityID() ?>">Remove</a><input type="hidden" id="rem<?php echo $_item->getEntityID() ?>" name="commentshistory-remove-val" value="0" class="commentshistory-remove-val" /><br/>
+                                        <strong><?php echo $this->helper('core')->formatDate($_item->getCreatedAtDate(), 'medium') ?></strong>
+                                        <?php echo $this->helper('core')->formatTime($_item->getCreatedAtDate(), 'medium') ?><span class="separator">|</span><strong><?php echo $_item->getStatusLabel() ?></strong><br/>
+
+                                        <?php if ($_item->getComment()): ?>
+                                            <br/>
+                                            <textarea class="commentshistory-comment" name="commentshistory-comment" style="height:12em; width: 99%;" cols="5" rows="3">
+                                                <?php echo htmlentities($_item->getComment()) ?>
+                                            </textarea>
+                                        <?php endif; ?>
+                                        <?php echo $_item->getEntityID() ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </form>
+                </fieldset>         
+            </div>
+        </div>
+        <div class="box-right entry-edit">
+            <div class="entry-edit-head"><h4><?php echo Mage::helper('sales')->__('Order Totals') ?></h4></div>
+            <div class="order-totals"><?php echo $this->getChildHtml('order_totals') ?></div>
+        </div>
+        <div class="clear"></div>
+    </div>

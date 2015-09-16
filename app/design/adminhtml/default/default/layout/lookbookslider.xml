@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Altima Lookbook Professional Extension
+ *
+ * Altima web systems.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is available through the world-wide-web at this URL:
+ * http://blog.altima.net.au/lookbook-magento-extension/lookbook-professional-licence/
+ *
+ * @category   Altima
+ * @package    Altima_LookbookProfessional
+ * @author     Altima Web Systems http://altimawebsystems.com/
+ * @license    http://blog.altima.net.au/lookbook-magento-extension/lookbook-professional-licence/
+ * @email      support@altima.net.au
+ * @copyright  Copyright (c) 2012 Altima Web Systems (http://altimawebsystems.com/)
+ */
+-->
+<layout version="0.1.0">
+    <lookbookslider_adminhtml_lookbookslider_index>
+        <reference name="content">
+            <block type="lookbookslider/adminhtml_lookbookslider" name="lookbookslider" />
+        </reference>
+    </lookbookslider_adminhtml_lookbookslider_index>
+    <lookbookslider_adminhtml_lookbookslider_edit>
+	<update handle="editor"/>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+            <action method="setCanLoadTinyMce"><flag>1</flag></action>
+            <action method="addJs"><script>mage/adminhtml/variables.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/wysiwyg/widget.js</script></action> 
+            <action method="addJs"><script>lib/flex.js</script></action>
+            <action method="addJs"><script>lib/FABridge.js</script></action> 
+            <action method="addJs"><script>mage/adminhtml/flexuploader.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/browser.js</script></action>
+            <action method="addJs"><script>prototype/window.js</script></action>
+            <action method="addItem"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+            <action method="addItem"><type>js_css</type><name>prototype/windows/themes/magento.css</name></action>
+            <action method="addItem"><type>js</type><name>mage/adminhtml/wysiwyg/tiny_mce/setup.js</name><params/></action>
+            <action method="addItem"><type>js</type><name>tiny_mce/tiny_mce.js</name><params/></action>
+        </reference>
+    </lookbookslider_adminhtml_lookbookslider_edit>
+    <lookbookslider_adminhtml_slide_index>
+        <reference name="content">
+            <block type="lookbookslider/adminhtml_slide" name="slide" />
+        </reference>
+    </lookbookslider_adminhtml_slide_index>
+     <lookbookslider_adminhtml_slide_edit>
+        <reference name="head">
+                <action method="addCss"><stylesheet>lookbookslider/css/annotation.css</stylesheet></action>
+                <action method="addCss"><stylesheet>lookbookslider/css/fileuploader.css</stylesheet></action>
+                
+                 <action method="addJs"><script>jquery/jquery-1.8.2.min.js</script></action>                 
+                 <action method="addItem"><type>skin_js</type><name>lookbookslider/js/jquery-ui-1.9.1.js</name></action>
+                 <action method="addItem"><type>skin_js</type><name>lookbookslider/js/jquery.annotate.js</name></action>
+                 <action method="addItem"><type>skin_js</type><name>lookbookslider/js/fileuploader.js</name></action>
+                 <action method="addItem"><type>skin_js</type><name>lookbookslider/js/json2.min.js</name></action>
+        </reference>
+    </lookbookslider_adminhtml_slide_edit>
+</layout>

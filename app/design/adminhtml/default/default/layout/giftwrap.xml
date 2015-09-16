@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/magestore/giftwrap.css</stylesheet>
+            </action>
+            <action method="addJs">
+                <script>magestore/giftwrap/giftwrap.js</script>
+            </action>
+        </reference>		
+    </default>
+    <admingiftwrap_adminhtml_giftwrap_index>
+        <reference name="content">
+            <block type="adminhtml/store_switcher" name="store_switcher"
+                   before="-">
+            </block>
+            <block type="giftwrap/adminhtml_giftwrap" name="giftwrap"
+                   template="giftwrap/list.phtml" />
+        </reference>
+    </admingiftwrap_adminhtml_giftwrap_index>
+    <admingiftwrap_adminhtml_giftcard_index>
+        <reference name="content">
+            <block type="adminhtml/store_switcher" name="store_switcher"
+                   before="-">
+            </block>
+            <block type="giftwrap/adminhtml_giftcard" name="giftcard"
+                   template="giftwrap/giftcardlist.phtml" />
+        </reference>
+    </admingiftwrap_adminhtml_giftcard_index>
+    <admingiftwrap_adminhtml_product_index>
+        <reference name="content">
+            <block type="giftwrap/adminhtml_product" name="product.giftwrap" />
+        </reference>
+    </admingiftwrap_adminhtml_product_index>
+    <adminhtml_sales_order_view>
+        <reference name="order_totals">
+            <block type="giftwrap/sales_order_totals_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_totals_giftwraptax" name="giftwraptax" />
+        </reference>
+        <update handle="sales_order_tabs" />
+        <!--		<reference name="sales_order_tabs">
+                <action method="addTab">
+                        <name>giftwrap_information</name>
+                        <block>giftwrap/adminhtml_sales_order_view_tab_giftwrap</block>
+                </action>
+        </reference>-->
+        <!--start loki-->
+        <reference name="order_item_extra_info">
+            <block type="giftwrap/adminhtml_sales_order_view_giftwrap"
+                   as="giftwrap_additional" />
+        </reference>
+        <!--end loki-->
+    </adminhtml_sales_order_view>
+    <adminhtml_sales_order_invoice_new>
+        <reference name="invoice_totals">
+            <block type="giftwrap/sales_order_invoice_total_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_invoice_total_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="giftwrap/adminhtml_sales_order_invoice_new_giftwrap" as="giftwrap_additional" />
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_totals">
+            <block type="giftwrap/sales_order_invoice_total_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_invoice_total_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="giftwrap/adminhtml_sales_order_invoice_view_giftwrap" as="giftwrap_additional" />
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+    <!--TrungHa: show giftwrap information after update Qty to invoice-->
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="invoice_totals">
+            <block type="giftwrap/sales_order_invoice_total_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_invoice_total_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="giftwrap/adminhtml_sales_order_invoice_new_giftwrap"
+                   as="giftwrap_additional" />
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="creditmemo_totals">
+            <block type="giftwrap/sales_order_creditmemo_total_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_creditmemo_total_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="giftwrap/adminhtml_sales_order_creditmemo_new_giftwrap"  as="giftwrap_additional" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+    <!--TrungHa: show giftwrap information after update Qty to refund-->
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="creditmemo_totals">
+            <block type="giftwrap/sales_order_creditmemo_total_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_creditmemo_total_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="giftwrap/adminhtml_sales_order_creditmemo_new_giftwrap"
+                   as="giftwrap_additional" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_totals">
+            <block type="giftwrap/sales_order_creditmemo_total_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_creditmemo_total_giftwraptax" name="giftwraptax" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="giftwrap/adminhtml_sales_order_creditmemo_view_giftwrap"
+                   as="giftwrap_additional" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+    <adminhtml_sales_order_shipment_new>
+        <reference name="order_item_extra_info">
+            <block type="giftwrap/adminhtml_sales_order_view_giftwrap"
+                   as="giftwrap_additional" />
+        </reference>
+    </adminhtml_sales_order_shipment_new>
+    <adminhtml_sales_order_shipment_view>
+        <reference name="order_item_extra_info">
+            <block type="giftwrap/adminhtml_sales_order_view_giftwrap"
+                   as="giftwrap_additional" />
+        </reference>
+    </adminhtml_sales_order_shipment_view>
+    <admingiftwrap_adminhtml_giftwrap_edit>
+        <reference name="left">
+            <block type="adminhtml/store_switcher" name="store_switcher"
+                   before="-">
+            </block>
+        </reference>
+    </admingiftwrap_adminhtml_giftwrap_edit>
+    <admingiftwrap_adminhtml_giftcard_edit>
+        <reference name="left">
+            <block type="adminhtml/store_switcher" name="store_switcher"
+                   before="-">
+            </block>
+        </reference>
+    </admingiftwrap_adminhtml_giftcard_edit>
+    <adminhtml_sales_order_create_index>
+        <!-- <reference name="items">
+                <block type="giftwrap/adminhtmlgiftbox" name="giftwrap.create_items" template="giftwrap/giftwrap/giftbox.phtml"/>			
+        </reference> -->
+        <reference name="head">
+            <action method="addJs">
+                <script>magestore/giftwrap.js</script>
+            </action>
+            <action method="addJs">
+                <script>magestore/tooltip/tooltip.js</script>
+            </action>			
+            <action method="addJs">
+                <script>magestore/giftwrap/tinybox.js</script>
+            </action>
+            <action method="addJs">
+                <file>mage/adminhtml/sales.js</file>
+            </action>
+            <action method="addJs">
+                <file>mage/adminhtml/giftmessage.js</file>
+            </action>
+            <action method="addJs">
+                <file>mage/adminhtml/product/composite/configure.js</file>
+            </action>
+            <action method="addJs">
+                <file>varien/configurable.js</file>
+            </action>
+            <action method="addJs">
+                <file>mage/adminhtml/giftoptions/tooltip.js</file>
+            </action>
+            <block type="adminhtml/template" name="optional_zip_countries" as="optional_zip_countries" template="directory/js/optional_zip_countries.phtml" />
+        </reference>
+        <reference name="items">			
+            <block type="giftwrap/adminhtml_giftbox" name="giftwrap.create_items" template="giftwrap/giftwrap/giftbox.phtml">			
+                <!-- <block type="adminhtml/sales_order_create_items_grid" template="sales/order/create/items/grid.phtml" name="items_grid">
+                        <block type="adminhtml/sales_order_create_coupons" template="sales/order/create/coupons/form.phtml" name="coupons">
+                                <block type="adminhtml/sales_order_create_coupons_form" template="sales/order/create/coupons/form.phtml" name="form" />
+                        </block>
+                </block>	 -->
+            </block>
+        </reference>
+        <reference name="checkout.cart.methods.onepage">
+            <action method="setTemplate">
+                <template>giftwrap/checkout/onepage/link.phtml</template>
+            </action>
+        </reference> 
+    </adminhtml_sales_order_create_index>
+	
+    <!-- Giftwarp filter King_211112 -->
+    <adminhtml_sales_order_create_index>    			
+        <reference name="items">			
+            <action method="setTemplate">
+                <template>giftwrap/sales/order/create/items.phtml</template>				
+            </action>
+        </reference>
+        <reference name="order_totals">
+            <block type="giftwrap/sales_order_totals_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_totals_giftwraptax" name="giftwraptax" />
+        </reference>
+    </adminhtml_sales_order_create_index> 
+    <adminhtml_sales_order_create_load_block_data> 		
+        <reference name="items">			
+            <action method="setTemplate">
+                <template>giftwrap/sales/order/create/items.phtml</template>				
+            </action>
+        </reference>
+        <reference name="totals">
+            <block type="giftwrap/sales_order_totals_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_totals_giftwraptax" name="giftwraptax" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_data> 	
+    <adminhtml_sales_order_create_load_block_items> 		
+        <reference name="items">			
+            <action method="setTemplate">
+                <template>giftwrap/sales/order/create/items.phtml</template>				
+            </action>
+        </reference>
+        <reference name="totals">
+            <block type="giftwrap/sales_order_totals_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_totals_giftwraptax" name="giftwraptax" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_items> 	
+    <adminhtml_sales_order_create_load_block_totals>		
+        <reference name="totals">
+            <block type="giftwrap/sales_order_totals_giftwrap" name="giftwrap" />
+            <block type="giftwrap/sales_order_totals_giftwraptax" name="giftwraptax" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_totals>
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/jscolor/jscolor.js</name>
+            </action>
+        </reference>
+    </adminhtml_system_config_edit>
+</layout>

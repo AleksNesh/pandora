@@ -1,0 +1,34 @@
+<div id="topnav-wrapper">
+    <div class='page-header'>
+        <h1>{{title}}</h1>
+        <div class='app-navigation' ng-include="appNavTemplateUrlPath"></div>
+    </div>
+</div>
+
+<div class='my-designs-wrapper' ng-show='showDesigns()'>
+    <ul class='designs-grid'>
+        <li id="design_{{design.id}}" class='design-block' ng-repeat="design in designs">
+            <div class='design-thumb'>
+                <img ng-src="{{design.snapshot}}" alt="{{design.name}}" />
+                <div class='actions'>
+                    <a class='btn small secondary' ui-sref='ui.review({ designId: design.id })'>Review Bracelet</a>
+
+                    <a class='btn small' ui-sref='ui.share({designId: design.id})' ng-hide='isAdmin()'>Share Bracelet</a>
+                    <ul class='alternate-actions'>
+                        <li>
+                            <a class='text danger' ng-click="deleteDesign(design.id)">Delete Bracelet</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class='product-title'>{{design.name}}</p>
+            <em class='product-price'>{{design.price | currency }}</em>
+        </li>
+    </ul>
+</div>
+
+<div class='no-content' ng-hide="showDesigns()">
+    <h3>You do not currently have any bracelet designs!</h3>
+    <p>Please start by <a ui-sref="ui.bracelets({designId: 'new'})">selecting a bracelet.</a></p>
+</div>

@@ -1,0 +1,136 @@
+ <?php
+/**
+ * Altima Lookbook Professional Extension
+ *
+ * Altima web systems.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is available through the world-wide-web at this URL:
+ * http://blog.altima.net.au/lookbook-magento-extension/lookbook-professional-licence/
+ *
+ * @category   Altima
+ * @package    Altima_LookbookProfessional
+ * @author     Altima Web Systems http://altimawebsystems.com/
+ * @license    http://blog.altima.net.au/lookbook-magento-extension/lookbook-professional-licence/
+ * @email      support@altima.net.au
+ * @copyright  Copyright (c) 2012 Altima Web Systems (http://altimawebsystems.com/)
+ */
+?>
+<?php
+$slider = $this->getSlider();
+if (!$slider):
+    echo $this->getChildHtml();
+else:
+    $helper = Mage::helper('lookbookslider');
+    $slides = $this->_getSlidesCollection($slider->getId()); 
+    if ($slides->getSize()) :
+         $content_before = $this->helper('cms')->getBlockTemplateProcessor()->filter($slider->getContentbefore());
+         $content_after = $this->helper('cms')->getBlockTemplateProcessor()->filter($slider->getContentafter());
+         $width = $slider->getWidth();
+         $height = $slider->getHeight();
+         $height_procent = $height/$width*100;
+         $thumb_width = intval($width/($height/100));
+         $effect = $slider->getEffect();
+         if ($effect=='') $effect = 'random';
+         $navigation = ($slider->getNavigation()==1) ? 'true' : 'false';
+         $navigationHover = ($slider->getNavigationHover()==1) ? 'true' : 'false';
+         $thumbnails = ($slider->getThumbnails()==1) ? 'true' : 'false';
+         $time = ($slider->getTime()) ? $slider->getTime() : 7000;
+         $trans_period = ($slider->getTransPeriod()) ? $slider->getTransPeriod() : 1500;
+         $hotspots = array();
+        if ($slider->getIncludeJquery()==1) {
+             echo $this->helper('core/js')->includeScript('jquery/jquery-1.8.2.min.js');
+             echo $this->helper('core/js')->includeScript('jquery/noconflict.js');
+             echo $this->helper('core/js')->includeSkinScript('lookbookslider/js/jquery-migrate-1.2.1.min.js');
+        }
+        if ($slider->getIncludeSlidesJs()==1) {
+               echo $this->helper('core/js')->includeSkinScript('lookbookslider/js/jquery.mobile.customized.min.js');
+               echo $this->helper('core/js')->includeSkinScript('lookbookslider/js/jquery.easing.1.3.js');
+               echo $this->helper('core/js')->includeSkinScript('lookbookslider/js/camera.min.js');
+               echo $this->helper('core/js')->includeSkinScript('lookbookslider/js/hotspots.js');  
+        }
+?>
+         <div class="content-before"><?php echo $content_before;?></div>
+         <div class="camera_wrap camera_black_skin" id="lookbookslider_widget_<?php echo $slider->getId()?>" style="max-width:<?php echo $width;?>px; max-height:<?php echo $height;?>px;">
+                <?php foreach ($slides as $slide): ?>
+            		<div
+                <?php if($slide->getLink()): ?>
+                    <?php $link = str_replace('http://', '', $slide->getLink());?>
+                    data-link="http://<?php echo $link;?>" 
+                <?php endif; ?>
+                            data-thumb="<?php echo $helper->getResizedUrl($slide->getData('image_path'), $thumb_width, 100);?>" 
+                            data-src="<?php echo $helper->getResizedUrl($slide->getData('image_path'), $width, $height);?>"
+                            >
+                         <img src="<?php echo $helper->getResizedUrl($slide->getData('image_path'), $width, $height);?>" alt="Slide <?php echo $slide->getId();?>"/>
+                         <?php if($slide->getCaption()!='' && $slider->getShowslidenames()==1) :?>
+                             <div class="camera_caption fadeFromBottom">
+                                 <?php echo $slide->getCaption();?>
+                             </div>
+                         <?php endif;?>
+                    </div>
+                    <?php $hotspots[] = $this->getHotspotsWithProductDetails($slide); ?>
+                <?php endforeach; ?>
+             </div>
+        <div class="content-after"><?php echo $content_after;?></div>
+        <div style="clear:both;"></div>
+<?php 
+    $thumb = TRUE;
+    if(count($slides) <= 1):
+        $navigation = 'false';
+        $thumb = FALSE;
+    endif;
+?>
+        
+        <script type="text/javascript">
+        //<![CDATA[
+        jQuery(window).load(function() { 
+            jQuery('#lookbookslider_widget_<?php echo $slider->getId()?>').camera({
+                    fx: '<?php echo $effect;?>',
+                    navigation: <?php echo $navigation;?>,
+                    navigationHover: <?php echo $navigationHover;?>,
+         <?php if (!$thumb): ?>
+            playPause: false,
+            loader: 'none',
+         <?php endif; ?>    
+         <?php if ($slider->getThumbnails()==1 && $thumb): ?>
+    		pagination: false,
+		thumbnails: true,
+         <?php elseif($slider->getThumbnails()!==1 && $thumb): ?>
+    		pagination: true,
+		thumbnails: false,
+         <?php else: ?>
+    		pagination: false,
+        	thumbnails: false,
+          <?php endif;?>
+                    time: <?php echo $time;?>,
+                    trans_period: <?php echo $trans_period;?>,           
+                    width: '<?php echo $width;?>px',
+                    height: '<?php echo $height_procent;?>%',
+                    minHeight: '60px',
+                    onLoaded: function(){
+                            var hotspots = <?php echo json_encode($hotspots);?>;
+                    jQuery('#lookbookslider_widget_<?php echo $slider->getId()?>').css('margin-bottom','140px');
+           <?php if(!$thumb): ?>
+                    jQuery('#lookbookslider_widget_<?php echo $slider->getId()?>').cameraStop();
+                    jQuery('#lookbookslider_widget_<?php echo $slider->getId()?>').css('margin-bottom','0px');
+           <?php endif; ?>
+                            jQuery('#lookbookslider_widget_<?php echo $slider->getId()?> .cameraContent').each(function(){
+                            var ind = jQuery(this).index();
+                            jQuery.setHotspots(jQuery(this), hotspots[ind]);   
+                            
+                            if(jQuery('#lookbookslider_widget_<?php echo $slider->getId()?> .camera_thumbs_cont ul > li').length){
+                                var thumb_length = jQuery('#lookbookslider_widget_<?php echo $slider->getId()?> .camera_thumbs_cont ul > li').length;
+                                var thumb_width = jQuery('#lookbookslider_widget_<?php echo $slider->getId()?> .camera_thumbs_cont ul > li').outerWidth();
+                                jQuery('#lookbookslider_widget_<?php echo $slider->getId()?> .camera_thumbs_cont ul').css('width',thumb_length*thumb_width+thumb_length*8+1);
+                            }
+                        });
+                    }
+        	});          
+        });  
+        //]]>
+        </script>
+    <?php endif;?>
+<?php endif;?>
+

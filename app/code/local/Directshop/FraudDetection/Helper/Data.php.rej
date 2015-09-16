@@ -1,0 +1,47 @@
+***************
+*** 282,285 ****
+  				->save();
+  			}
+  	}
+  }
+--- 282,321 ----
+  				->save();
+  			}
+  	}
++ 
++ 	function sendHoldEmail($order, $fraudResult)
++ 	{
++ 		$mailTemplate = Mage::getModel('core/email_template');
++ 		/* @var $mailTemplate Mage_Core_Model_Email_Template */
++ 
++ 		$template = Mage::getStoreConfig('frauddetection/general/email_when_holded_template');
++ 
++ 		$copyTo = explode(",", Mage::getStoreConfig('frauddetection/general/email_when_holded_copy_to'));
++ 		if ($copyTo) {
++ 			$mailTemplate->addBcc($copyTo);
++ 		}
++ 
++ 		$_reciever = Mage::getStoreConfig('frauddetection/general/email_when_holded_reciever');
++ 		$sendTo = array(
++ 			array(
++ 				'email' => Mage::getStoreConfig('trans_email/ident_'.$_reciever.'/email'),
++ 				'name'  => Mage::getStoreConfig('trans_email/ident_'.$_reciever.'/name')
++ 			)
++ 		);
++ 
++ 		foreach ($sendTo as $recipient) {
++ 			$mailTemplate->setDesignConfig(array('area'=>'frontend', 'store'=>Mage::app()->getStore()->getId()))
++ 				->sendTransactional(
++ 					$template,
++ 					'sales',
++ 					$recipient['email'],
++ 					$recipient['name'],
++ 					array(
++ 						'increment_id' => $order->getIncrementId(),
++ 						'fraudScore' => $fraudResult['riskScore'],
++ 						'orderLink'     => Mage_Adminhtml_Helper_Data::getUrl('dsadmin/sales_order/view', array('order_id' => $order->getId()))
++ 					)
++ 				);
++ 		}
++ 	}
+  }

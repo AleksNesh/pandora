@@ -1,0 +1,81 @@
+<div class="search-tools">
+    <div class='filter search'>
+        <input class="input-text" type="text" ng-model="search.$" placeholder="Search Clips">
+    </div>
+
+    <div class='filter select select-1'>
+        <label for="show-color">Color:</label>
+        <select name='show-color' ng-model="showColor">
+            <option value=" " selected>All</option>
+            <option ng-repeat="color in colors" value="{{color}}">{{color}}</option>
+        </select>
+    </div>
+
+    <div class='filter select select-2'>
+        <label for="show-material">Material</label>
+        <select ng-model="showMaterial">
+            <option value=" " selected>All</option>
+            <option ng-repeat="material in materials" value="{{material}}">{{material}}</option>
+            </select>
+    </div>
+
+    <div class='filter select select-3'>
+        <label for="show-theme">Theme</label>
+        <select ng-model="showTheme">
+            <option value=" " selected>All</option>
+            <option ng-repeat="theme in themes" value="{{theme}}">{{theme}}</option>
+        </select>
+    </div>
+
+    <div class='filter select select-4'>
+        <label for="sort-order">Sort By</label>
+        <select name="sort-order" ng-model="sortorder">
+            <option value="name" selected>Name (A-Z)</option>
+            <option value="-name">Name (Z-A)</option>
+            <option value="price">Price (Low to High)</option>
+            <option value="-price">Price (High to Low)</option>
+        </select>
+    </div>
+</div>
+
+
+<ul class='jewelry-product-grid'>
+    <li class='bracelet-block' ng-repeat="clip in products
+        | orderBy:sortorder
+        | filter:showColor
+        | filter:showMaterial
+        | filter:showTheme
+        | filter:search ">
+        <div class='product-thumb'>
+            <img ng-src="{{clip.images.thumbnail.url}}" alt="{{clip.name
+                | replace:'PANDORA':''
+                | replace:'Pandora':''
+                | replace:'CLIP':'Clip'
+            }}" />
+            <div class='actions' ng-controller='WorkspaceCtrl'>
+                <button id="add_to_canvas_product-{{clip.id}}" class="btn small secondary" ng-click="addToWorkspace(clip, braceletCenter, formData)" data-object="{{clip}}">Add to Bracelet</button>
+                <form name="itemOwnedForm">
+                    <div class="item-owned">
+                        <label for="is_already_owned">
+                            <input class='checkbox' name="is_already_owned" type="checkbox" ng-model="formData.is_already_owned">I Already Own This
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <h3 class="product-title">
+            {{clip.name
+                | replace:'PANDORA':''
+                | replace:'Pandora':''
+                | replace:'Clip':'Clip'
+            }}
+        </h3>
+        <em class="product-price">{{clip.price | currency}}</em>
+        <span class='stock-status'>
+            <span class='in-stock' ng-show="clip.is_in_stock">In stock</span>
+            <span class='out-of-stock' ng-hide="clip.is_in_stock">Out of stock</span>
+        </span>
+    </li>
+    <div style='clear: both;'></div>
+    <div class='loading' ng-show='products.busy'>Loading more products...</div>
+</ul>

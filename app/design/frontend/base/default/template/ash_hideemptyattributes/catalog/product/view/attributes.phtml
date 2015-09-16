@@ -1,0 +1,46 @@
+<?php
+/**
+ * Ash_HideEmptyAttributes
+ *
+ * Skip listing of attributes if they have a 'NA' or 'No' value
+ *
+ * @category    Ash
+ * @package     Ash_HideEmptyAttributes
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/**
+ * Product additional attributes template
+ *
+ * @see Mage_Catalog_Block_Product_View_Attributes
+ */
+?>
+
+<?php
+    $_helper    = $this->helper('ash_hideemptyattributes/output');
+    $_product   = $this->getProduct();
+?>
+<?php if($_additional = $this->getAdditionalData()): ?>
+    <h2><?php echo $this->__('Additional Information') ?></h2>
+    <table class="data-table" id="product-attribute-specs-table">
+        <col width="25%" />
+        <col />
+        <tbody>
+        <?php foreach ($_additional as $_data): ?>
+            <?php
+                $label  = $this->escapeHtml($this->__($_data['label']));
+                $value  = $_helper->productAttribute($_product, $_data['value'], $_data['code']);
+                $skip   = $_helper->shouldSkipDisplayOfAttribute($_data['code'], $value);
+            ?>
+            <?php if (!$skip): ?>
+                <tr>
+                    <th class="label"><?php echo $label; ?></th>
+                    <td class="data"><?php echo $value; ?></td>
+                </tr>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <script type="text/javascript">decorateTable('product-attribute-specs-table')</script>
+<?php endif;?>

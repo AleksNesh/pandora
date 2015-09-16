@@ -1,0 +1,10 @@
+<?php
+/** @var $this RocketWeb_GoogleBaseFeedGenerator_Block_Product_View_Microdata */
+
+// render parent
+echo $this->getLayout()->getBlock('microdata.data')->setProduct($this->getProduct())->toHtml();
+
+// render all children
+foreach ($this->getChildren() as $child) {
+    echo $this->getLayout()->getBlock('microdata.data')->setProduct($child)->toHtml();
+}

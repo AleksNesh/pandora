@@ -1,0 +1,104 @@
+<?php
+$giftbox =  Mage::getModel('giftwrap/selection')->load($this->getRequest()->getParam('giftbox'));
+$helper = Mage::helper('giftwrap');
+?>
+<div id="giftwrap-giftbox-additional">
+        <table class="data-table" id="giftwrap-giftbox">
+            <thead>
+                <tr>
+                    <th class="a-center"><?php echo $this->__('No'); ?></th>
+                    <th class="a-center"><?php echo $this->__('Paper'); ?></th>
+                    <th class="a-center"><?php echo $this->__('Gift Card'); ?></th>
+                    <th class="a-center"><?php echo $this->__('Items'); ?></th>
+                    <th class="a-center"><?php echo $this->__('Unit Price'); ?></th>
+    <!--                    <th class="a-center"><?php echo $this->__('Quantity'); ?></th>-->
+                    <th class="a-center"><?php echo $this->__('Subtotal'); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $i = 1;
+                    $style = Mage::getModel('giftwrap/giftwrap')->load($giftbox->getStyleId());
+                    $giftcard = Mage::getModel('giftwrap/giftcard')->load($giftbox->getGiftcardId());
+                    ?>
+                    <tr>
+			<th class="a-center-hidden"><?php echo $this->__('No'); ?></th>
+                        <td style="text-align:center">
+                            #<?php echo $i; ?>
+                        </td>
+                        
+			<th class="a-center-hidden image"><?php echo $this->__('Paper'); ?></th>
+                        <td style="text-align:center">
+                        <li>
+                              <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/' . $style->getImage() ?>" width="75" height="75" />
+                        </li>
+                        <li >
+                                <?php echo $style->getTitle(); ?>
+                        </li>
+                        </td>
+                        
+                        <th class="a-center-hidden image"><?php echo $this->__('Gift Card'); ?></th>
+                        <td  style="text-align:center">
+                                <?php if ($giftcard->getId()) { ?>
+                                <li>
+                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/giftcard/' . $giftcard->getImage() ?>" width="75" height="75" />
+                                </li>
+                                <li >
+                                        <?php echo $giftcard->getName(); ?>
+                                </li>
+                        <?php } ?>
+                        </td>
+                        
+                        <th class="a-center-hidden"><?php echo $this->__('Items'); ?></th>
+                        <td  style="text-align:center">
+                                <ul>
+                                    <?php
+                                    $its = $giftbox->getItemCollection();
+                                    $numberitems = 0;
+                                    foreach ($its as $it) {
+                                            $itemId = $it->getItemId();
+                                            $item = Mage::getModel('sales/quote_item')->load($itemId);
+                                            $product = Mage::getModel('catalog/product')->load($item->getProductId());
+                                            $qty = $it->getQty();
+                                            $numberitems += $qty;
+                                            ?>
+                                            <li><a href='<?php echo $product->getProductUrl(); ?>' ><?php echo $item->getName(); ?> </a><?php echo ' - ' . intval($qty) . ' item(s)'; ?> </li>
+                                            <?php
+                                    }
+                                    if (Mage::getStoreConfig('giftwrap/calculation/amount_on_number_items')) {
+                                            $giftwrapAmount = floatval($numberitems) * (floatval($style->getPrice()) + floatval($giftcard->getPrice()));
+                                    } else {
+                                            $giftwrapAmount = floatval($style->getPrice()) + floatval($giftcard->getPrice());
+                                    }
+                                    ?>
+                                </ul>
+                        </td>
+                        <!--<td><?php echo Mage::helper('core')->currency(floatval($style->getPrice()) + floatval($giftcard->getPrice())); ?></td>-->
+                        <th class="a-center-hidden"><?php echo $this->__('Unit Price'); ?></th>
+                        <td  style="text-align:center"><?php echo Mage::helper('core')->currency($giftwrapAmount); ?></td>
+        <!--                <td  style="text-align:center"><?php echo $giftbox->getQty(); ?></td>-->
+                        <th class="a-center-hidden"><?php echo $this->__('Subtotal'); ?></th>
+                        <td  style="text-align:center"><?php echo Mage::helper('core')->currency(floatval($giftwrapAmount) * floatval($giftbox->getQty())); ?></td>
+                </tr>
+            </tbody>
+        </table>
+        <script type="text/javascript"> decorateTable('giftwrap-giftbox');</script>
+</div>
+<div style="display:none;z-index:9999;" id="help-item-1-info">
+    <?php echo $helper->getNoteConfig('first_hover'); ?>
+</div>
+<div style="display:none;z-index:9999;" id="help-item-2-info">
+    <?php echo $helper->getNoteConfig('second_hover'); ?>
+</div>
+<div style="display:none;z-index:9999;" id="help-message-info">
+    <?php echo $helper->getNoteConfig('third_hover'); ?>
+</div>
+<div style="display:none;z-index:9999;" id="help-wrapped-total-info">
+    <?php echo $helper->getNoteConfig('four_hover'); ?>
+</div>
+<div style="display:none;z-index:9999;" id="help-qty-wrapped-info">
+    <?php echo $helper->getNoteConfig('five_hover'); ?>
+</div>
+<div style="display:none;z-index:9999;" id="help-tick-info">
+    <?php echo $helper->getNoteConfig('six_hover'); ?>
+</div>

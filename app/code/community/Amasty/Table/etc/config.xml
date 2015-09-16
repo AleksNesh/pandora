@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright   Copyright (c) 2009-2012 Amasty (http://www.amasty.com)
+ */
+-->
+<config>
+    <modules>
+        <Amasty_Table>
+            <version>2.0.2</version>
+        </Amasty_Table>
+    </modules>
+
+    <global>
+        <models>
+            <amtable>
+                <class>Amasty_Table_Model</class>
+                <resourceModel>amtable_mysql4</resourceModel>
+            </amtable>
+            <amtable_mysql4>
+                <class>Amasty_Table_Model_Mysql4</class>
+                <entities>
+                    <method>
+                        <table>am_table_method</table>
+                    </method> 
+                    <rate>
+                        <table>am_table_rate</table>
+                    </rate>  
+                </entities>
+            </amtable_mysql4>   
+        </models>      
+        
+             
+        <resources>
+            <amtable_setup>
+                <setup>
+                    <module>Amasty_Table</module>
+                    <class>Amasty_Table_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </amtable_setup>
+            
+            <amtable_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </amtable_write>
+            
+            <amtable_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </amtable_read>
+        </resources>
+
+        <blocks>
+            <amtable>
+                <class>Amasty_Table_Block</class>
+            </amtable>
+        </blocks>
+        
+        <helpers>
+            <amtable>
+                <class>Amasty_Table_Helper</class>
+            </amtable>
+        </helpers>
+        <events> 
+            <sales_quote_config_get_product_attributes>
+                <observers>
+                    <amtable>
+                        <class>amtable/observer</class>
+                        <method>addProductAttributes</method>
+                    </amtable>
+                </observers>
+            </sales_quote_config_get_product_attributes> 
+         </events>              
+    </global>
+    
+    <admin>
+        <routers>
+			<amtable>
+				<use>admin</use>
+				<args>
+					<module>Amasty_Table</module>
+					<frontName>amtable</frontName>
+				</args>
+			</amtable>
+        </routers>
+    </admin> 
+    
+    <adminhtml>
+        <menu>
+            <sales>
+                <children>
+                    <amtable translate="title" module="amtable">
+                        <title>Shipping Table Rates</title>
+                        <sort_order>850</sort_order>
+                        <action>amtable/adminhtml_method</action>
+                    </amtable>
+                </children>
+            </sales>
+        </menu>      
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+                <admin>
+                    <children>
+                        <sales>
+                            <children>
+                                <amtable>
+                                    <title>Shipping Table Rates</title>
+                                </amtable>
+                            </children>
+                        </sales>
+			            <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <carriers>
+                                            <children>
+                                                <amtable>
+                                                    <title>Shipping Table Rates</title>
+                                                </amtable>
+                                            </children>
+                                        </carriers>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                     </children>
+                </admin> 
+			</resources>
+		</acl>
+        <translate>
+            <modules>
+                <Amasty_Table>
+                    <files>
+                        <default>Amasty_Table.csv</default>
+                    </files>
+                </Amasty_Table>
+            </modules>
+        </translate> 		
+    </adminhtml>
+
+<default>
+        <carriers>
+            <amtable>
+                <active>0</active>
+                <title>Shipping Table Rates</title>
+                <sort_order>100</sort_order>
+                <sallowspecific>0</sallowspecific>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+                <model>amtable/carrier_table</model>
+                <allow_promo>1</allow_promo>
+                <numeric_zip>1</numeric_zip>
+                <ignore_virtual>1</ignore_virtual>
+                <after_discount>0</after_discount>
+                <including_tax>0</including_tax>                 
+            </amtable>
+        </carriers>
+</default> 
+</config>

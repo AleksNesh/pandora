@@ -1,0 +1,246 @@
+.product-category-title{/* Remove this style if you want to show page title */
+    display : none;
+}
+.first_bracelet_block{
+        background : #e7f3f5 url('/media/bracelets/bracelets-home-bg.jpg') 0 0 no-repeat;
+        background-size : contain;
+}
+.first_bracelet_block h1{
+    font-size : 28px;
+    color : #963535;
+}
+.first_bracelet_block h3{
+    font-size : 21px;
+    color : #963535;
+}
+.first_bracelet_block{
+    background-color : #eef3f7;
+}
+.first_bracelet_block .line > div{
+    margin-top : 0;
+}
+.first_bracelet_block .container{
+    padding-top : 20px;
+}
+.classic_bracelets{
+    background : transparent url('/media/bracelets/pandora-classic-bracelets.png') 100% 0 no-repeat;
+    background-size : 175px auto;
+}
+.leather_bracelets{
+    background : transparent url('/media/bracelets/pandora-leather-bracelets.png') 0 0 no-repeat;
+    background-size : 200px auto;
+}
+.essence_bracelets{
+    background : transparent url('../../images/alpine/first_block_3.png') 100% 0 no-repeat;
+    background-size : 150px auto;
+}
+.fifth_block{
+    color : #fff;
+    background: #3B8DA5;
+	margin-top:0;
+}
+.line .item{
+    background : #fff;
+    height : 310px;
+    padding : 10px;
+}
+.sixth_block .bx-wrapper .bx-controls-direction a.bx-next{
+    right : 0;
+}
+.sixth_block .bx-wrapper .bx-controls-direction a{
+    top: -40px;
+    right : 40px;
+    left : auto;
+}
+.line .item span,
+.line .item a{
+    display : block;
+    width : 50%;
+}
+.fifth_block .container{
+    min-height : 280px;
+}
+.img-border {
+	border: 4px solid white;
+}
+.fifth_block p{
+    margin-top : 20px;
+    font-size : 14px;
+    line-height : 1.4;
+	text-align: center;
+}
+.fifth_block h3{
+	font-family: 'Copperplate Gothic Light', Copperplate, Arial, sans-serif;
+	font-weight: 500;
+	line-height: 15px;
+	display : block;
+    color : #fff;
+    text-align : center;
+	margin-top: 20px;
+}
+
+.essence_bracelets,
+.classic_bracelets{
+    padding-right : 175px;
+}
+.leather_bracelets{
+    padding-left : 210px;
+}
+.line > div{
+    margin-top : 10px;
+}
+.line > *:last-child{
+    margin-bottom : 10px;
+}
+.fourth_block{
+    background-color : #f2eeef;
+}
+.line h3.mobile_header{
+    text-align : center;
+    font-size : 24px;
+    padding-top : 10px;
+}
+@media (min-width : 768px){ /*.col-sm- */
+    .first_block .container{
+        min-height : 400px;
+    }
+	.first_bracelet_block .container{
+        min-height : 350px;
+    }
+    .right_text{
+        position : absolute;
+        top : 30%;
+        right : 10px;
+        width : 40%;
+    }
+    .left_text{
+        position : absolute;
+        top : 10%;
+        left : 10px;
+        width : 40%;
+        padding-left : 20px;
+    }
+    .left_text h4,
+    .right_text h4{
+        color : #000;
+        font-size : 14px;
+        text-transform : uppercase;
+    }
+    .left_text h4 span,
+    .right_text h4 span{
+        display : block;
+        font-family : 'Great Vibes', cursive;
+        font-size : 24px;
+        line-height : 1.1;
+        text-transform : capitalize;
+    }
+    .left_text p,
+    .right_text p{
+        font-size : 12px;
+        line-height : 1.2;
+        padding-right : 20px;
+    }
+    .left_text p{
+        padding-right : 0;
+    }
+    .third_block{
+        text-align : center;
+    }
+    .mobile_wrapper{
+        display : inline-block;
+        position : relative;
+        text-align : left;
+    }
+    .first_block{
+        background : #e7f3f5 url('../../images/alpine/first_block_bg.jpg') 0 0 no-repeat;
+        background-size : contain;
+    }
+    .sixth_block{
+        background : transparent url('../../images/alpine/sixth_block_bg.jpg') 0 0 repeat-x;
+        background-size : auto 100%;
+    }
+
+    .sixth_block .container{
+        padding : 50px 0 20px;
+    }
+}/* media (min-width : 768px) */
+
+@media (min-width : 960px){ /*.col-md- */
+    .first_bracelet_block .container{
+        min-height : 450px;
+    }
+    .second_block .line > div{
+        margin-top : 0;
+    }
+
+    .second_block .line > *:last-child{
+        margin-bottom : 0;
+    }
+    .third_block,
+    .second_block{
+        margin-top : 10px;
+        margin-bottom : 10px;
+    }
+    .first_block{
+        background : #e7f3f5;
+    }
+    .first_block .container{
+        background : transparent url('../../images/alpine/first_block_bg.jpg') 5px 0 no-repeat;
+        background-size : contain;
+        padding-top : 75px;
+    }
+    .fourth_block > .container{
+        background : transparent url('../../images/alpine/fourth_block_bg.jpg') 5px 0 no-repeat;
+        background-size : contain;
+    }
+    .fifth_block{
+        background: #3b8da5 url('../../images/alpine/fifth_block_wrapper_bg.jpg') 0 0 no-repeat;
+        background-size         : cover;
+    }
+    .sixth_block .container{
+        background : transparent url('../../images/alpine/sixth_block_1.jpg') 100% 0 no-repeat;
+        background-size : auto 100%;
+    }
+}/* media (min-width : 960px) */
+
+@media (min-width : 1200px){ /*.col-lg- */
+    .first_bracelet_block .container{
+        min-height : 550px;
+    }
+    .left_text h4,
+    .right_text h4{
+        font-size : 18px;
+    }
+    .left_text h4 span,
+    .right_text h4 span{
+        font-size : 36px;
+    }
+}/* media (min-width : 1200px) */
+
+/* Graphics only for Retina displays */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+	.first_block .container{
+    	background : #000;
+	}
+}
+/* Graphics only for Retina displays end */
+
+.img-rollover {
+	border: 4px solid white;
+    opacity: 0.7;
+    transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -webkit-transition: opacity 1s ease-in-out;
+}
+.img-rollover:hover {
+    opacity: 1.0;
+    transition: opacity .55s ease-in-out;
+    -moz-transition: opacity .55s ease-in-out;
+    -webkit-transition: opacity .55s ease-in-out;
+}

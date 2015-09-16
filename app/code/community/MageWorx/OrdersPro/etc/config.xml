@@ -1,0 +1,331 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * MageWorx
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MageWorx EULA that is bundled with
+ * this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.mageworx.com/LICENSE-1.0.html
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.mageworx.com/ for more information
+ *
+ * @category   MageWorx
+ * @package    MageWorx_OrdersPro
+ * @copyright  Copyright (c) 2014 MageWorx (http://www.mageworx.com/)
+ * @license    http://www.mageworx.com/LICENSE-1.0.html
+ */
+
+/**
+ * Orders Pro extension
+ *
+ * @category   MageWorx
+ * @package    MageWorx_OrdersPro
+ * @author     MageWorx Dev Team
+ */
+-->
+<config>
+    <modules>
+        <MageWorx_OrdersPro>
+            <version>1.19.0</version>
+        </MageWorx_OrdersPro>
+    </modules>
+    <frontend>
+        <routers>
+            <mageworx_orderspro>
+                <use>standard</use>
+                <args>
+                    <module>MageWorx_OrdersPro</module>
+                    <frontName>mageworx_orderspro</frontName>
+                </args>
+            </mageworx_orderspro>
+        </routers>
+        <translate>
+            <modules>
+                <MageWorx_OrdersPro>
+                    <files>
+                        <default>MageWorx_OrdersPro.csv</default>
+                    </files>
+                </MageWorx_OrdersPro>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <mageworx_orderspro>
+                    <file>mageworx_orderspro.xml</file>
+                </mageworx_orderspro>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+            <mageworxadmin>
+                <args>
+                    <modules>
+                        <MageWorx_OrdersPro before="MageWorx_All">MageWorx_OrdersPro</MageWorx_OrdersPro>
+                    </modules>
+                </args>
+            </mageworxadmin>
+        </routers>
+    </admin>
+    <global>
+        <events>
+            <sales_convert_order_item_to_quote_item>
+                <observers>
+                    <mageworx_orderspro_convert_order_item_to_quote_item>
+                        <class>mageworx_orderspro/observer</class>
+                        <method>convertOrderItemToQuoteItem</method>
+                    </mageworx_orderspro_convert_order_item_to_quote_item>
+                </observers>
+            </sales_convert_order_item_to_quote_item>
+            <sales_convert_order_to_quote>
+                <observers>
+                    <mageworx_orderspro_convert_order_to_quote>
+                        <class>mageworx_orderspro/observer</class>
+                        <method>convertOrderToQuote</method>
+                    </mageworx_orderspro_convert_order_to_quote>
+                </observers>
+            </sales_convert_order_to_quote>            
+            <sales_quote_collect_totals_after>
+                <observers>
+                    <mageworx_orderspro_quote_collect_totals_after>
+                        <class>mageworx_orderspro/observer</class>
+                        <method>quoteCollectTotalsAfter</method>
+                    </mageworx_orderspro_quote_collect_totals_after>
+                </observers>
+            </sales_quote_collect_totals_after>
+            <adminhtml_sales_order_create_process_data>
+                <observers>
+                    <mageworx_orderspro_order_create_process_data>
+                        <class>mageworx_orderspro/observer</class>
+                        <method>orderCreateProcessData</method>
+                    </mageworx_orderspro_order_create_process_data>
+                </observers>
+            </adminhtml_sales_order_create_process_data>
+            
+            <core_collection_abstract_load_before>
+                <observers><amflags><type>disabled</type></amflags></observers>
+            </core_collection_abstract_load_before>
+        </events>    
+        <blocks>
+            <mageworx_orderspro>
+                <class>MageWorx_OrdersPro_Block</class>
+            </mageworx_orderspro>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_grid>MageWorx_OrdersPro_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+                    <sales_order_view>MageWorx_OrdersPro_Block_Adminhtml_Sales_Order_View</sales_order_view>
+                    <customer_edit_tab_orders>MageWorx_OrdersPro_Block_Adminhtml_Customer_Edit_Tab_Orders</customer_edit_tab_orders>
+                </rewrite>                
+            </adminhtml>
+            <sales>
+                <rewrite>
+                    <order_history>MageWorx_OrdersPro_Block_Sales_Order_History</order_history>
+                    <order_recent>MageWorx_OrdersPro_Block_Sales_Order_Recent</order_recent>
+                </rewrite>
+            </sales>            
+        </blocks>        
+        
+        <rewrite>
+            <mageworx_orderspro_order>
+                <from><![CDATA[#^/sales/order/view/#]]></from>
+                <to>/mageworx_orderspro/order/view/</to>
+            </mageworx_orderspro_order>
+        </rewrite>        
+        
+        <models>
+            <sales_mysql4>
+                <rewrite>
+                    <order_grid_collection>MageWorx_OrdersPro_Model_Mysql4_Order_Grid_Collection</order_grid_collection>
+                    <order_status_history_collection>MageWorx_OrdersPro_Model_Mysql4_Order_Status_History_Collection</order_status_history_collection>
+                </rewrite>
+            </sales_mysql4>
+            <salesrule>
+                <rewrite>                    
+                    <quote_discount>MageWorx_OrdersPro_Model_SalesRule_Quote_Discount</quote_discount>
+                </rewrite>
+            </salesrule>
+            
+            <payment>
+                <rewrite>
+                    <method_ccsave>MageWorx_OrdersPro_Model_Payment_Method_Ccsave</method_ccsave>
+                </rewrite>
+            </payment>
+            <paypal>
+                <rewrite>
+                    <payflowpro>MageWorx_OrdersPro_Model_Paypal_Payflowpro</payflowpro>
+                    <direct>MageWorx_OrdersPro_Model_Paypal_Direct</direct>
+                    <api_nvp>MageWorx_OrdersPro_Model_Paypal_Api_Nvp</api_nvp>
+                </rewrite>
+            </paypal>
+            <paygate>
+                <rewrite>
+                    <authorizenet>MageWorx_OrdersPro_Model_Paygate_Authorizenet</authorizenet>
+                </rewrite>
+            </paygate>
+            <sales>
+                <rewrite>
+                    <order_payment>MageWorx_OrdersPro_Model_Sales_Order_Payment</order_payment>
+                </rewrite>
+            </sales>
+            <ordertags>
+                <rewrite>
+                    <observer>MageWorx_OrdersPro_Model_AwOrdertags_Observer</observer>
+                </rewrite>
+            </ordertags>
+
+            <mageworx_orderspro>
+                <class>MageWorx_OrdersPro_Model</class>
+                <resourceModel>mageworx_orderspro_mysql4</resourceModel>
+            </mageworx_orderspro>
+            
+            <mageworx_orderspro_mysql4>
+                <class>MageWorx_OrdersPro_Model_Mysql4</class>
+                <entities>
+                    <order_group>
+                        <table>mageworx_orderspro_order_group</table>
+                    </order_group>
+                    <upload_files>
+                        <table>mageworx_orderspro_upload_files</table>
+                    </upload_files>                    
+                </entities>
+            </mageworx_orderspro_mysql4>
+        </models>
+        
+        <helpers>
+            <mageworx_orderspro>
+                <class>MageWorx_OrdersPro_Helper</class>
+            </mageworx_orderspro>
+        </helpers>
+        
+        <resources>
+            <mageworx_orderspro_setup>
+                <setup>
+                    <module>MageWorx_OrdersPro</module>
+                    <class>MageWorx_OrdersPro_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </mageworx_orderspro_setup>
+            <mageworx_orderspro_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </mageworx_orderspro_write>
+            <mageworx_orderspro_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </mageworx_orderspro_read>
+        </resources>
+        
+        <template>
+            <email>               
+               <mageworx_orderspro_email_order_comment_template translate="label" module="mageworx_orderspro">
+                   <label>Order Edit</label>
+                   <file>mageworx/orderspro/mageworx_order_edited.html</file>
+                   <type>html</type>
+               </mageworx_orderspro_email_order_comment_template>
+               <mageworx_orderspro_email_order_comment_guest_template translate="label" module="mageworx_orderspro">
+                   <label>Order Edit for Guest</label>
+                   <file>mageworx/orderspro/mageworx_order_edited_guest.html</file>
+                   <type>html</type>
+               </mageworx_orderspro_email_order_comment_guest_template>
+            </email>
+        </template>
+        
+        <sales>            
+           <order_invoice>
+                <totals>
+                    <mageworx_orderspro>
+                        <class>mageworx_orderspro/sales_order_invoice_total</class>
+                        <after>tax,grand_total</after>
+                    </mageworx_orderspro>
+                    <subtotal>
+                        <class>mageworx_orderspro/sales_order_invoice_subtotal</class>
+                    </subtotal>
+                    <mageworx_orderspro_shipping>
+                        <class>mageworx_orderspro/sales_order_invoice_shipping</class>
+                        <after>shipping</after>
+                    </mageworx_orderspro_shipping>
+                </totals>
+            </order_invoice>       
+        </sales>
+    </global>
+    
+    <adminhtml>        
+        <layout>
+            <updates>
+                <mageworx_orderspro>
+                    <file>mageworx_orderspro.xml</file>
+                </mageworx_orderspro>
+            </updates>
+        </layout>
+        <events>
+            <sales_order_grid_collection_load_before>
+                <observers><enterprise_salesarchive><type>disabled</type></enterprise_salesarchive></observers>
+            </sales_order_grid_collection_load_before>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <mw_add_coupon_block>
+                        <type>singleton</type>
+                        <class>mageworx_orderspro/observer</class>
+                        <method>insertCouponBlock</method>
+                    </mw_add_coupon_block>
+                </observers>
+            </core_block_abstract_to_html_after>
+        </events>
+        
+        <translate>
+            <modules>
+                <MageWorx_OrdersPro>
+                    <files>
+                        <default>MageWorx_OrdersPro.csv</default>
+                    </files>
+                </MageWorx_OrdersPro>
+            </modules>
+        </translate>        
+        
+    </adminhtml>
+    
+    <default>
+        <mageworx_orderspro>
+            <general>
+                <enabled>1</enabled>
+                <enable_shipping_price_edition>1</enable_shipping_price_edition>
+                <enable_invoice_orders>1</enable_invoice_orders>
+                <send_invoice_email>0</send_invoice_email>
+                <enable_ship_orders>1</enable_ship_orders>
+                <send_shipment_email>0</send_shipment_email>                
+                <enable_archive_orders>1</enable_archive_orders>
+                <days_before_orders_get_archived>0</days_before_orders_get_archived>
+                <archive_orders_status>canceled,closed,complete</archive_orders_status>
+                <enable_delete_orders>1</enable_delete_orders>
+                <hide_deleted_orders_for_customers>1</hide_deleted_orders_for_customers>
+                <enable_delete_orders_completely>1</enable_delete_orders_completely>                
+                <grid_columns>real_order_id,store_id,created_at,billing_name,shipping_name,base_grand_total,grand_total,status,order_group,action</grid_columns>
+                <customer_grid_columns>increment_id,created_at,billing_name,shipping_name,grand_total,store_id,action</customer_grid_columns>
+                <number_comments>3</number_comments>
+                <show_thumbnails>1</show_thumbnails>
+                <thumbnail_height>50</thumbnail_height>
+            </general>
+        </mageworx_orderspro>
+    </default>
+    
+    <crontab>
+        <jobs>
+            <mageworx_orderspro_archive>
+                <schedule><cron_expr>0 0 * * *</cron_expr></schedule>
+                <run><model>mageworx_orderspro/observer::scheduledArchiveOrders</model></run>
+            </mageworx_orderspro_archive>
+        </jobs>
+    </crontab>
+    
+</config>

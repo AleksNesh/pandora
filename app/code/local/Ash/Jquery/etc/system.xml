@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Add Jquery/Jquery UI support
+ *
+ * @category    Ash
+ * @package     Ash_Jquery
+ * @copyright   Copyright (c) 2013 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <sections>
+        <ash_jquery translate="label" module="ash_jquery">
+            <label>jQuery</label>
+            <tab>ash</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>12</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label" module="ash_jquery">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <use_minified translate="label" module="ash_jquery">
+                            <label>Use Minified Source</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </use_minified>
+                    </fields>
+                </general>
+                <cdn translate="label" module="ash_jquery">
+                    <label>CDN Source</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label,comment" module="ash_jquery">
+                            <label>Use Google CDN</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment><![CDATA[If using the CDN, make sure to disable any local sources.]]></comment>
+                        </enabled>
+                        <jquery_enabled translate="label" module="ash_jquery">
+                            <label>jQuery Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </jquery_enabled>
+                        <jquery_migrate_enabled translate="label" module="ash_jquery">
+                            <label>jQuery Migrate Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </jquery_migrate_enabled>
+                        <jqueryui_enabled translate="label" module="ash_jquery">
+                            <label>jQuery UI Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </jqueryui_enabled>
+                    </fields>
+                </cdn>
+                <jquery translate="label" module="ash_jquery">
+                    <label>Local Source</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label,comment" module="ash_jquery">
+                            <label>jQuery Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment><![CDATA[If using local sources, make sure to disable the CDN.]]></comment>
+                        </enabled>
+                        <migrate_enabled translate="label" module="ash_jquery">
+                            <label>jQuery Migrate Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </migrate_enabled>
+                        <ui_enabled translate="label,comment" module="ash_jquery">
+                            <label>jQuery UI Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment><![CDATA[If using local sources, make sure to disable the CDN]]></comment>
+                        </ui_enabled>
+                    </fields>
+                </jquery>
+                <version translate="label" module="ash_jquery">
+                    <label>Versions</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <jquery translate="label" module="ash_jquery">
+                            <label>jQuery</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ash_jquery/system_config_source_version_jquery</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </jquery>
+                        <jquery_ui translate="label" module="ash_jquery">
+                            <label>jQuery UI</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ash_jquery/system_config_source_version_jqueryui</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </jquery_ui>
+                    </fields>
+                </version>
+            </groups>
+        </ash_jquery>
+    </sections>
+</config>

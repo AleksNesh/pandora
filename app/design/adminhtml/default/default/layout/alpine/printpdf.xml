@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<layout>
+    <alpine_printpdf_base>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>alpine/printpdf/page.phtml</template>
+            </action>
+            <action method="unsetChild">
+                <alias>head</alias>
+            </action>
+            <block type="adminhtml/page_head" name="head" as="head" template="page/head.phtml">
+                <action method="setTitle" translate="title">
+                    <title>Print PDF</title>
+                </action>
+                <action method="addJs">
+                    <script>prototype/prototype.js</script>
+                </action>
+                <action method="addJs">
+                    <script>prototype/window.js</script>
+                </action>
+                <action method="addJs">
+                    <script>mage/translate.js</script>
+                </action>
+                <action method="addJs">
+                    <script>mage/adminhtml/tools.js</script>
+                </action>
+                <action method="addItem">
+                    <type>skin_css</type>
+                    <name>alpine/css/printpdf.css</name>
+                </action>
+                <action method="addJs" ifconfig="alpine_printpdf/qz/enabled">
+                    <script>qz/deployJava.js</script>
+                </action>
+                <action method="addJs" ifconfig="alpine_printpdf/qz/enabled">
+                    <script>qz/qzbase.js</script>
+                </action>
+                <action method="addJs" ifconfig="alpine_printpdf/qz/enabled">
+                    <script>qz/qzprint.js</script>
+                </action>
+            </block>
+        </reference>
+        <reference name="content">
+            <block name="iframe" type="alpine_printpdf/iframe" template="alpine/printpdf/iframe/native.phtml">
+                <action method="setTemplate" ifconfig="alpine_printpdf/qz/enabled">
+                    <template>alpine/printpdf/iframe/applet.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </alpine_printpdf_base>
+    <alpine_printpdf_print_order>
+        <update handle="alpine_printpdf_base"/>
+    </alpine_printpdf_print_order>
+    <alpine_printpdf_print_orders>
+        <update handle="alpine_printpdf_base"/>
+    </alpine_printpdf_print_orders>
+    <alpine_printpdf_print_label>
+        <update handle="alpine_printpdf_base"/>
+    </alpine_printpdf_print_label>
+    <alpine_printpdf_print_invoice>
+        <update handle="alpine_printpdf_base"/>
+    </alpine_printpdf_print_invoice>
+    <alpine_printpdf_print_invoices>
+        <update handle="alpine_printpdf_base"/>
+    </alpine_printpdf_print_invoices>
+    <alpine_printpdf_print_packingslips>
+        <update handle="alpine_printpdf_base"/>
+    </alpine_printpdf_print_packingslips>
+    <alpine_massaction_print>
+        <reference name="head">
+            <action method="addJs">
+                <name>alpine/printpdf/massaction.js</name>
+            </action>
+        </reference>
+    </alpine_massaction_print>
+    <adminhtml_sales_order_index>
+        <update handle="alpine_massaction_print"/>
+    </adminhtml_sales_order_index>
+    <adminhtml_sales_shipment_index>
+        <update handle="alpine_massaction_print"/>
+    </adminhtml_sales_shipment_index>
+    <upslabel_adminhtml_upslabel_showlabel>
+        <reference name="showlabel">
+            <action method="setTemplate">
+                <template>alpine/printpdf/uspslabel/showlabel.phtml</template>
+            </action>
+        </reference>
+    </upslabel_adminhtml_upslabel_showlabel>
+</layout>

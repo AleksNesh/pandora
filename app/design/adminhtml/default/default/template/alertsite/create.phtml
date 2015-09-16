@@ -1,0 +1,92 @@
+<?php /** @var $this Smartbear_Alertsite_Block_Adminhtml_Create */ ?>
+<div class="main-col-inner">
+    <div id="messages">
+
+    </div>
+
+    <div class="content-header">
+        <table cellspacing="0">
+            <tbody>
+                <tr>
+                    <td>
+                        <h3>AlertSite Account Creation</h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend">New AlertSite Account Information</h4>
+        </div>
+        <div class="fieldset">
+            <?php echo $this->getChildHtml('alertsite.subheader'); ?>
+            <form action="<?php echo $this->getFormAction(); ?>" method="post" id="alertsite-provision" >
+                <table class="form-list">
+                    <input name="form_key" type="hidden" value="<?php echo $this->getFormKey(); ?>">
+                    <tr>
+                        <td class="label">
+                            <label for="company_name" style="">Company Name</label>
+                        </td>
+                        <td class="value">
+                            <input id="company_name" name="company_name" value="<?php echo $this->getCompanyName(); ?>" class=" input-text required-entry" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="first_name" style="">First Name</label>
+                        </td>
+                        <td class="value">
+                            <input id="first_name" name="first_name" class="input-text" value="<?php echo $this->getFirstname(); ?>" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="last_name" style="">Last Name</label>
+                        </td>
+                        <td class="value">
+                            <input id="last_name" name="last_name" class="input-text" value="<?php echo $this->getLastname(); ?>" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="phone" style="">Phone</label>
+                        </td>
+                        <td class="value">
+                            <input id="phone" name="phone" value="" class="input-text" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="login_email" style="">Login Email <span class="required">*</span></label>
+                        </td>
+                        <td class="value">
+                            <input id="login_email" class="validate-email input-text" name="login_email" value="<?php echo $this->getEmail(); ?>" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">
+                            <label for="monitor_url" style="">Monitor URL <span class="required">*</span></label>
+                        </td>
+                        <td class="value">
+                            <input id="monitor_url" name="monitor_url" value="<?php echo $this->getStoreUrl(); ?>" class="input-text" type="text">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><br /><strong>Creating a free AlertSite account indicates you accept <a href="http://www.alertsite.com/magento_extension_terms.shtml" target="_blank" >our user terms</a></strong><br /></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <br />
+                            <button type="submit" class="button"><span>Create AlertSite Account</span>&nbsp;<img style="position:relative; top:3px;" class="smartbear-icon" src="<?php echo $this->getSkinUrl($this->__('smartbear/alertsite/images/alertsite_15_icon.png')); ?>" alt="AlertSite" /></button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>

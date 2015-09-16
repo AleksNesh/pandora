@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Alpine_PrintPdf>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Fooman_PdfCustomiser/>
+                <Fooman_EmailAttachments/>
+                <Infomodus_Upslabel/>
+            </depends>
+        </Alpine_PrintPdf>
+    </modules>
+</config>

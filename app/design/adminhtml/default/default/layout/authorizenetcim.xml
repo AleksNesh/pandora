@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+  <adminhtml_customer_edit>
+  <reference name="customer_edit_tabs">
+  	<action method="addTab"><name>authorizenetcim_action</name><block>authorizenetcim/adminhtml_customer_edit_tab_action</block></action>
+  </reference>
+  	<!--<reference name="customer_edit_tab_view">
+		<block type="authorizenetcim/adminhtml_customer_edit_tab_action" name="authorizenetcim" />
+	</reference>-->
+  </adminhtml_customer_edit>
+
+  <adminhtml_sales_order_create_index>
+    <reference name="head">
+	  <action method="addItem"><type>skin_js</type><name>js/authorizenetcim.js</name></action>
+    </reference>
+  </adminhtml_sales_order_create_index>
+
+</layout>

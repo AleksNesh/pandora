@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+	<default>
+		<reference name="head">
+    		<action method="addJs"><script>authorizenetcim/authorizenetcim.js</script></action>
+		</reference>
+	</default>
+	<authorizenetcim_index_index>
+		<update handle="customer_account" />
+		<reference name="my.account.wrapper">
+			<block type="authorizenetcim/authorizenetcim" name="authorizenetcim_content" template="authorizenetcim/ccSave.phtml"/>
+		</reference>
+	</authorizenetcim_index_index>
+	
+	<authorizenetcim_index_ccedit>
+		<update handle="customer_account" />
+		<reference name="my.account.wrapper">
+			<block type="authorizenetcim/ccedit" name="authorizenetcim_ccedit" template="authorizenetcim/ccEdit.phtml" />
+		</reference>
+	</authorizenetcim_index_ccedit>
+	
+	<authorizenetcim_index_ccnew>
+		<update handle="customer_account" />
+		<reference name="my.account.wrapper">
+			<block type="authorizenetcim/ccnew" name="authorizenetcim_ccnew" template="authorizenetcim/ccNew.phtml" />
+		</reference>
+	</authorizenetcim_index_ccnew>
+	
+	<customer_account>
+		<reference name="customer_account_navigation">
+			<action method="addLink">
+				<name>saved_credit_cards</name>
+				<path>authorizenetcim/index/index</path>
+				<label>Saved Credit Cards</label>
+			</action>
+		</reference>
+	</customer_account>
+</layout>

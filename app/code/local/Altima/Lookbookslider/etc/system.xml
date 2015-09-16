@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Altima Lookbook Professional Extension
+ *
+ * Altima web systems.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is available through the world-wide-web at this URL:
+ * http://blog.altima.net.au/lookbook-magento-extension/lookbook-professional-licence/
+ *
+ * @category   Altima
+ * @package    Altima_LookbookProfessional
+ * @author     Altima Web Systems http://altimawebsystems.com/
+ * @license    http://blog.altima.net.au/lookbook-magento-extension/lookbook-professional-licence/
+ * @email      support@altima.net.au
+ * @copyright  Copyright (c) 2012 Altima Web Systems (http://altimawebsystems.com/)
+ */
+-->
+<config>
+	<tabs>
+		<altima translate="label comment" module="lookbookslider">
+	            <label>Altima</label>
+	            <sort_order>500</sort_order>
+                <show_in_default>1</show_in_default>
+                <show_in_website>1</show_in_website>
+                <show_in_store>1</show_in_store>
+		</altima>
+	</tabs>
+    <sections>
+        <lookbookslider translate="label comment" module="lookbookslider">
+            <tab>altima</tab>
+            <label>LookBook Professional</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>600</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label comment" module="lookbookslider">
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                          <label>Enabled</label>
+                          <frontend_type>select</frontend_type>
+                          <source_model>adminhtml/system_config_source_yesno</source_model>
+                          <sort_order>10</sort_order>
+                          <show_in_default>1</show_in_default>
+                          <show_in_website>1</show_in_website>
+                          <show_in_store>1</show_in_store>
+                        </enabled>
+                        <enable_jquery translate="label">
+                          <label>Enable Jquery (frontend)</label>
+                          <frontend_type>select</frontend_type>
+                          <source_model>adminhtml/system_config_source_yesno</source_model>
+                          <sort_order>15</sort_order>
+                          <show_in_default>1</show_in_default>
+                          <show_in_website>1</show_in_website>
+                          <show_in_store>1</show_in_store>
+                          <comment><![CDATA[Not applicable for the sliders are inserted as a widget.]]></comment>
+                        </enable_jquery>
+                        <serial translate="label">
+                            <label>Serial</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </serial>
+                        <cat_path_in_prod_url translate="label">
+                          <label>Use Categories Path for Product URLs</label>
+                          <frontend_type>select</frontend_type>
+                          <source_model>adminhtml/system_config_source_yesno</source_model>
+                          <sort_order>30</sort_order>
+                          <show_in_default>1</show_in_default>
+                          <show_in_website>1</show_in_website>
+                          <show_in_store>1</show_in_store>
+                        </cat_path_in_prod_url>
+                        <max_upload_filesize translate="label comment">
+                            <label>Uploaded file max size (bytes)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-digits required-entry</validate>
+                            <comment><![CDATA[Must be less then upload_max_filesize and post_max_size in php.ini]]></comment>
+                        </max_upload_filesize>
+                        <allowed_extensions translate="label comment">
+                            <label>Allowed extensions</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Comma separated file extensions. Example, &quot; jpg,gif,png &quot;]]></comment>
+                        </allowed_extensions>
+                        <interdict_areas_overlap translate="label comment">
+                          <label>Disallow hotspots areas overlap</label>
+                          <frontend_type>select</frontend_type>
+                          <source_model>adminhtml/system_config_source_yesno</source_model>
+                          <sort_order>60</sort_order>
+                          <show_in_default>1</show_in_default>
+                          <show_in_website>1</show_in_website>
+                          <show_in_store>1</show_in_store>
+                          <comment><![CDATA[If &quot;Yes&quot;, will disallow hotspots areas overlap]]></comment>
+                        </interdict_areas_overlap>
+                        <show_product_desc translate="label">
+                          <label>Show product description and thumbnail in hotspot popup</label>
+                          <frontend_type>select</frontend_type>
+                          <source_model>adminhtml/system_config_source_yesno</source_model>
+                          <sort_order>70</sort_order>
+                          <show_in_default>1</show_in_default>
+                          <show_in_website>1</show_in_website>
+                          <show_in_store>1</show_in_store>
+                        </show_product_desc>
+                        <show_add_to_cart translate="label">
+                          <label>Show Add to Cart form in hotspot popup</label>
+                          <frontend_type>select</frontend_type>
+                          <source_model>adminhtml/system_config_source_yesno</source_model>
+                          <sort_order>80</sort_order>
+                          <show_in_default>1</show_in_default>
+                          <show_in_website>1</show_in_website>
+                          <show_in_store>1</show_in_store>
+                        </show_add_to_cart>
+                        <hotspot_icon translate="label comment">
+                            <label>Hotspot Icon</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">lookbookslider/icons</upload_dir>
+                            <base_url type="media" scope_info="1">lookbookslider/icons</base_url>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[If empty, default will be used.]]></comment>
+                        </hotspot_icon>                                                   
+                    </fields>
+                </general>
+            </groups>
+        </lookbookslider>
+    </sections>
+</config>

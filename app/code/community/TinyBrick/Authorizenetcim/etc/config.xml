@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <TinyBrick_Authorizenetcim>
+            <version>1.3.0</version>
+        </TinyBrick_Authorizenetcim>
+    </modules>
+    
+    <!-- frontend overwrites the index controller and puts in the frontName instead -->
+    
+    <frontend>
+    	<routers>
+    		<authorizenetcim>
+    			<use>standard</use>
+    			<args>
+    				<module>TinyBrick_Authorizenetcim</module>
+    				<frontName>authorizenetcim</frontName>
+    			</args>
+    		</authorizenetcim>
+    	</routers>
+    	    
+    	<!-- this defines the layout file -->
+    
+	    <layout>
+	    	<updates>
+	    		<authorizenetcim module="TinyBrick_Authorizenetcim">
+	    			<file>authorizenetcim.xml</file>
+	    		</authorizenetcim>
+	    	</updates>
+	    </layout>
+	
+		<!-- force the Authorize.net CIM credit card edit / add to be behind SSL -->
+	
+		<secure_url>
+        	<authorizenetcim_index_index>/authorizenetcim/index/index</authorizenetcim_index_index>
+        	<authorizenetcim_index_ccedit>/authorizenetcim/index/ccedit</authorizenetcim_index_ccedit>
+			<authorizenetcim_index_ccnew>/authorizenetcim/index/ccnew</authorizenetcim_index_ccnew>
+			<authorizenetcim_index_submit>/authorizenetcim/index/submit</authorizenetcim_index_submit>
+    	</secure_url>
+	
+    </frontend>
+    
+    <global>
+        <models>
+            <authorizenetcim>
+                <class>TinyBrick_Authorizenetcim_Model</class>
+                <resourceModel>authorizenetcim_mysql4</resourceModel>
+            </authorizenetcim>
+            <authorizenetcim_mysql4>
+                <class>TinyBrick_Authorizenetcim_Model_Mysql4</class>
+                <entities>
+                	<authorizenetcim>
+                		<table>tinybrick_authorizenetcim_ccsave</table>
+                	</authorizenetcim>
+                	<teoauths>
+                		<table>oc_teo_authorizations</table>
+                	</teoauths>
+                	<guests>
+                		<table>oc_authorizenetcim_guest</table>
+                	</guests>
+                </entities>
+            </authorizenetcim_mysql4>
+            <sales>
+            	<rewrite>
+            		<order_payment>TinyBrick_Authorizenetcim_Model_Sales_Order_Payment</order_payment>
+            	</rewrite>
+            </sales>
+        </models>
+     	<helpers>
+	    	<authorizenetcim>
+	    		<class>TinyBrick_Authorizenetcim_Helper</class>
+	    	</authorizenetcim>
+    	</helpers>
+        <blocks>
+            <authorizenetcim>
+                <class>TinyBrick_Authorizenetcim_Block</class>
+            </authorizenetcim>
+        </blocks>
+        
+        <!-- This defines the mysql read/write/setup -->
+        
+        <resources>
+        	<authorizenetcim_setup>
+        		<setup>
+        			<module>TinyBrick_Authorizenetcim</module>
+        		</setup>
+        		<connection>
+        			<use>core_setup</use>
+        		</connection>
+        	</authorizenetcim_setup>
+        	
+        	<authorizenetcim_write>
+        		<connection>
+        			<use>core_write</use>
+        		</connection>
+        	</authorizenetcim_write>
+        	
+        	<authorizenetcim_read>
+        		<connection>
+        			<use>core_read</use>
+        		</connection>
+        	</authorizenetcim_read>
+        	
+        </resources>
+    </global>
+    
+    <adminhtml>
+    	<layout>
+    		<updates>
+    			<tinybrick_authorizenetcim>
+    				<file>authorizenetcim.xml</file>
+    			</tinybrick_authorizenetcim>
+    		</updates>
+    	</layout>
+    </adminhtml>
+    
+    <admin>
+    </admin>
+    
+    <!-- default values for system config -->
+    <default>
+    	<payment>
+    		<authorizenetcim>
+    			<active>1</active>
+    			<model>authorizenetcim/authorizenetcimsoap</model>
+    			<order_status>processing</order_status>
+    			<title>TinyBrick Authorize.net CIM</title>
+    			<test_username backend_model="adminhtml/system_config_backend_encrypted" />
+				<test_password backend_model="adminhtml/system_config_backend_encrypted" />
+    			<username backend_model="adminhtml/system_config_backend_encrypted" />
+				<password backend_model="adminhtml/system_config_backend_encrypted" />
+    		</authorizenetcim>
+    	</payment>
+    </default>
+</config>

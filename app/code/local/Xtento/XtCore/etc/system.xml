@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <xtento translate="label">
+            <label><![CDATA[<img src="//www.xtento.com/media/images/extension_logo.png" alt="XTENTO" height="20" style="vertical-align:bottom;margin-left:-1px;"/> XTENTO Extensions]]></label>
+            <sort_order>650</sort_order>
+        </xtento>
+    </tabs>
+    <sections>
+        <xtcore translate="label" module="xtcore">
+            <label>General Configuration</label>
+            <tab>xtento</tab>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <adminnotification translate="label">
+                    <label>Extensions and Notifications</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <comment>
+                        <![CDATA[
+                    <a href="http://www.xtento.com" target="_blank"><img src="//www.xtento.com/media/images/xtento_module.png" style="border:none;"></a>
+
+                    <div style="margin-top:0px 4px 8px; color: #666;">Extension and Notification Setup</div>
+                    <strong>Copyright © <script>var today=new Date(); document.write(today.getFullYear());</script> <a href="http://www.xtento.com" target="_blank">www.xtento.com</a> / <a href="mailto:support@xtento.com">support@xtento.com</a></strong><br /><br/>
+                    Got questions? Feel like you need help? Please check out our <a href="http://support.xtento.com/" target="_blank">support wiki</a> before contacting us.<br/><br/>
+                    <hr />
+                    ]]>
+                    </comment>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Notifications enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </enabled>
+                        <follow translate="label">
+                            <label>I'd like to receive updates about</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>xtcore/feed_source_updates_type</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                            <comment>Hold down CTRL to select multiple notifications.</comment>
+                        </follow>
+                    </fields>
+                </adminnotification>
+                <compatibility_fixes translate="label">
+                    <label>Compatibility Mode &amp; Fixes</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <comment>
+                        <![CDATA[<strong>Only change the below settings if instructed by a XTENTO representative.</strong> These are fixes/patches that can be enabled, which are required only in SOME Magento environments.]]>
+                    </comment>
+                    <fields>
+                        <disable_timestamp_timezone_adjustment translate="label">
+                            <label>Enable: Don't adjust timestamp timezone</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>If enabled, any timestamps (seconds since 1970) output by our export extensions will not be adjusted by the stores timezone, and will be output in UTC instead.</comment>
+                        </disable_timestamp_timezone_adjustment>
+                        <zend_date_gmt_offset translate="label">
+                            <label>Enable: Zend_Date GMT Offset Fix</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Some Zend_Date versions always return a positive $gmtOffset. This can lead to wrong date/times being shown/exported.</comment>
+                        </zend_date_gmt_offset>
+                    </fields>
+                </compatibility_fixes>
+                <!--<extensions translate="label">
+                    <label>Installed Extensions</label>
+                    <frontend_type>text</frontend_type>
+                    <frontend_model>xtcore/system_config_form_xtento_extensions</frontend_model>
+                    <sort_order>200</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                </extensions>-->
+                <debug translate="label">
+                    <label>Debug Information</label>
+                    <frontend_type>text</frontend_type>
+                    <frontend_model>xtcore/system_config_form_xtento_debug</frontend_model>
+                    <sort_order>200</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                </debug>
+            </groups>
+        </xtcore>
+        <xtstore translate="label" module="xtcore">
+            <label>XTENTO Extension Store</label>
+            <tab>xtento</tab>
+            <sort_order>101</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <store translate="label">
+                    <label>XTENTO Extensions Store</label>
+                    <frontend_type>text</frontend_type>
+                    <frontend_model>xtcore/system_config_form_xtento_store</frontend_model>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                </store>
+            </groups>
+        </xtstore>
+    </sections>
+</config>
+<!--
+/**
+ * Product:       Xtento_XtCore (1.7.7)
+ * ID:            o5J5Fxf1uEhWScFFa24PUq6DVEzgtn6EKR9tAUroEmE=
+ * Packaged:      2014-08-04T20:41:36+00:00
+ * Last Modified: 2014-06-27T15:39:48+02:00
+ * File:          app/code/local/Xtento/XtCore/etc/system.xml
+ * Copyright:     Copyright (c) 2014 XTENTO GmbH & Co. KG <info@xtento.com> / All rights reserved.
+ */
+-->

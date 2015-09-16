@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Extend/Override TinyBrick_Authorizenetcim module
+ *
+ * @category    Pan_TinyBrick
+ * @package     Pan_TinyBrick_Authorizenetcim
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+
+<layout>
+    <adminhtml_sales_order_view>
+        <reference name="head">
+            <!-- remove duplicated jQuery in favor of Ash_Jquery version -->
+            <action method="removeItem">
+                <type>js</type>
+                <name>teo/jquery.min.js</name>
+            </action>
+            <action method="removeItem">
+                <type>js</type>
+                <name>teo/no-conflict.js</name>
+            </action>
+        </reference>
+    </adminhtml_sales_order_view>
+</layout>

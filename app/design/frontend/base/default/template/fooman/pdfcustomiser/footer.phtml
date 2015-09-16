@@ -1,0 +1,24 @@
+<?php
+$marginBetween = $this->getMarginBetween();
+$width = $this->getWidth();
+$footers = $this->getFooters();
+?>
+<table>
+    <tr>
+        <?php foreach ($footers as $key => $footer) : ?>
+            <?php /* don't display first element */ ?>
+            <?php if ($key > 0) : ?>
+                <?php if ($key < $footers[0]) : ?>
+                    <?php /* not last element */ ?>
+                    <td width="<?php echo $width ?>mm"><?php echo $footer ?></td>
+                    <td width="<?php echo $marginBetween ?>mm"></td>
+                <?php elseif ($key == $footers[0]): ?>
+                    <?php /* last element */ ?>
+                    <?php if (!empty($footer)): ?>
+                        <td width="<?php echo $width ?>mm"><?php echo $footer ?></td>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endforeach;?>
+    </tr>
+</table>

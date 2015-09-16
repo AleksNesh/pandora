@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <system>
+            <children>
+                <xtento_extensions translate="title">
+                    <title>XTENTO Extensions</title>
+                    <sort_order>1</sort_order>
+                    <children>
+                        <gridactions translate="title">
+                            <title>Simplify Bulk Order Processing</title>
+                            <sort_order>250</sort_order>
+                            <action>adminhtml/system_config/edit/section/gridactions</action>
+                        </gridactions>
+                    </children>
+                </xtento_extensions>
+            </children>
+        </system>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <gridactions translate="title">
+                                        <title>XTENTO Simplify Bulk Order Processing</title>
+                                        <sort_order>1</sort_order>
+                                    </gridactions>
+                                </children>
+                            </config>
+                            <xtento_extensions translate="title">
+                                <title>XTENTO Extensions</title>
+                                <sort_order>1</sort_order>
+                                <children>
+                                    <gridactions translate="title">
+                                        <title>Simplify Bulk Order Processing</title>
+                                        <sort_order>250</sort_order>
+                                        <action>adminhtml/system_config/edit/section/gridactions</action>
+                                    </gridactions>
+                                </children>
+                            </xtento_extensions>
+                        </children>
+                    </system>
+                    <sales>
+                        <children>
+                            <order>
+                                <children>
+                                    <gridactions translate="title">
+                                        <title>XTENTO Simplify Bulk Order Processing</title>
+                                        <sort_order>1</sort_order>
+                                        <children>
+                                            <actions translate="title">
+                                                <title>Actions</title>
+                                                <children>
+                                                    <invoice translate="title"><title>Invoice</title></invoice>
+                                                    <capture translate="title"><title>Capture Payment</title></capture>
+                                                    <ship translate="title"><title>Ship</title></ship>
+                                                    <print translate="title"><title>Print</title></print>
+                                                    <complete translate="title"><title>Complete</title></complete>
+                                                    <email translate="title"><title>Email</title></email>
+                                                    <change_status translate="title"><title>Change Status</title></change_status>
+                                                    <delete translate="title"><title>Delete</title></delete>
+                                                </children>
+                                            </actions>
+                                        </children>
+                                    </gridactions>
+                                </children>
+                            </order>
+                        </children>
+                    </sales>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
+<!--
+/**
+ * Product:       Xtento_GridActions (1.7.7)
+ * ID:            o5J5Fxf1uEhWScFFa24PUq6DVEzgtn6EKR9tAUroEmE=
+ * Packaged:      2014-08-04T20:41:36+00:00
+ * Last Modified: 2013-09-10T11:31:58+02:00
+ * File:          app/code/local/Xtento/GridActions/etc/adminhtml.xml
+ * Copyright:     Copyright (c) 2014 XTENTO GmbH & Co. KG <info@xtento.com> / All rights reserved.
+ */
+-->

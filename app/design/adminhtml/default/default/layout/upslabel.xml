@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <upslabel_adminhtml_upslabel_index>
+        <reference name="content">
+            <block type="upslabel/adminhtml_upslabel" name="upslabel"/>
+        </reference>
+    </upslabel_adminhtml_upslabel_index>
+    <upslabel_adminhtml_upslabel_intermediate>
+        <reference name="content">
+            <block type="upslabel/adminhtml_upslabel" name="intermediate" template="upslabel/intermediate.phtml"/>
+        </reference>
+    </upslabel_adminhtml_upslabel_intermediate>
+    <upslabel_adminhtml_upslabel_showlabel>
+        <reference name="content">
+            <block type="upslabel/adminhtml_upslabel" name="showlabel" template="upslabel/showlabel.phtml"/>
+        </reference>
+    </upslabel_adminhtml_upslabel_showlabel>
+    <adminhtml_sales_order_shipment_new>
+        <!--<update handle="order_items"/>-->
+        <reference name="head">
+            <action method="addJs"><script>infomodusupslabel.js</script></action>
+        </reference>
+        <reference name="content">
+            <reference name="sales_shipment_create">
+                <reference name="form">
+                    <reference name="order_items">
+                        <update handle="order_items"/>
+                        <action method="setTemplate">
+                            <template>upslabel/sales/order/shipment/create/items.phtml</template>
+                        </action>
+                    </reference>
+                </reference>
+            </reference>
+        </reference>
+    </adminhtml_sales_order_shipment_new>
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="content">
+            <reference name="sales_creditmemo_create">
+                <reference name="form">
+                    <reference name="order_items">
+                        <update handle="order_items"/>
+                        <action method="setTemplate">
+                            <template>upslabel/sales/order/creditmemo/create/items.phtml</template>
+                        </action>
+                    </reference>
+                </reference>
+            </reference>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="order_items">
+            <update handle="order_items"/>
+            <action method="setTemplate">
+                <template>upslabel/sales/order/creditmemo/create/items.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+    <upslabel_adminhtml_pickup_index>
+        <reference name="content">
+            
+            <block type="upslabel/adminhtml_pickup" name="pickup"/>
+        </reference>
+    </upslabel_adminhtml_pickup_index>
+    <upslabel_adminhtml_pickup_new>
+        <reference name="content">
+            <block type="upslabel/adminhtml_pickup_new" name="pickup_new"/>
+        </reference>
+    </upslabel_adminhtml_pickup_new>
+    <upslabel_adminhtml_account_index>
+        <reference name="content">
+            <block type="upslabel/adminhtml_account" name="account"/>
+        </reference>
+    </upslabel_adminhtml_account_index>
+    <upslabel_adminhtml_account_new>
+        <reference name="content">
+            <block type="upslabel/adminhtml_account_new" name="account_new"/>
+        </reference>
+    </upslabel_adminhtml_account_new>
+    <upslabel_adminhtml_lists_index>
+        <reference name="content">
+            <block type="upslabel/adminhtml_lists" name="lists"/>
+        </reference>
+    </upslabel_adminhtml_lists_index>
+    <default>
+        <reference name="notifications">
+            <block type="upslabel/adminhtml_notifications" name="upslabel_notifications" template="upslabel/notification/notifications.phtml"/>
+        </reference>
+    </default>
+    <upslabel_adminhtml_conformity_index>
+        <reference name="content">
+            
+            <block type="upslabel/adminhtml_conformity" name="conformity"/>
+        </reference>
+    </upslabel_adminhtml_conformity_index>
+    <upslabel_adminhtml_conformity_new>
+        <reference name="content">
+            <block type="upslabel/adminhtml_conformity_new" name="conformity_new"/>
+        </reference>
+    </upslabel_adminhtml_conformity_new>
+</layout>

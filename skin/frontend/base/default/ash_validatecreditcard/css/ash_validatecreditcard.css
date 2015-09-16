@@ -1,0 +1,116 @@
+form input[id$='_cc_number'].valid {
+  background: url(../images/tick.png) 97% center no-repeat;
+}
+
+.cards {
+  overflow: hidden;
+}
+
+.sp-methods .form-list li {
+  margin: 0 8px 8px 0;
+}
+
+.cards li {
+  list-style: none;
+  display: inline-block;
+  -webkit-transition: all .2s;
+  -moz-transition: all .2s;
+  -ms-transition: all .2s;
+  -o-transition: all .2s;
+  transition: all .2s;
+  margin-right: 8px;
+  text-indent: -99999px;
+}
+.cards.large li {
+  background: url(../images/creditcards/cards_horizontal.png) 0 0 no-repeat;
+  width: 73px;
+  height: 44px;
+}
+
+.cards.small li {
+  background: url(../images/creditcards/cards_horizontal_small.png) 0 0 no-repeat;
+  width: 49px;
+  height: 30px;
+}
+
+.cards .off {
+  opacity: 0.75;
+}
+
+.cards.large .visa {
+  background-position: 0 0;
+}
+.cards.large .visa.off {
+  background-position: 0 -44px;
+}
+.cards.small .visa {
+  background-position: 0 0;
+}
+.cards.small .visa.off {
+  background-position: 0 -30px;
+}
+
+.cards.large .mastercard {
+  background-position: -73px 0;
+}
+.cards.large .mastercard.off {
+  background-position: -73px -44px;
+}
+.cards.small .mastercard {
+  background-position: -50px 0;
+}
+.cards.small .mastercard.off {
+  background-position: -50px -30px;
+}
+
+.cards.large .discover {
+  background-position: -146px 0;
+}
+.cards.large .discover.off {
+  background-position: -146px -44px;
+}
+.cards.small .discover {
+  background-position: -100px 0;
+}
+.cards.small .discover.off {
+  background-position: -100px -30px;
+}
+
+.cards.large .american_express {
+  background-position: -219px 0;
+}
+.cards.large .american_express.off {
+  background-position: -219px -44px;
+}
+.cards.small .american_express {
+  background-position: -150px 0;
+}
+.cards.small .american_express.off {
+  background-position: -150px -30px;
+}
+
+.cards.large .diners {
+  background-position: -292px 0;
+}
+.cards.large .diners.off {
+  background-position: -292px -44px;
+}
+.cards.small .diners {
+  background-position: -200px 0;
+}
+.cards.small .diners.off {
+  background-position: -200px -30px;
+}
+
+.cards.large .jcb {
+  background-position: -365px 0;
+}
+.cards.large .jcb.off {
+  background-position: -365px -44px;
+}
+.cards.small .jcb {
+  background-position: -250px 0;
+}
+.cards.small .jcb.off {
+  background-position: -250px -30px;
+}

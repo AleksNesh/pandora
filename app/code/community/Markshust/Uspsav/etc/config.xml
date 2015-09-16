@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+ * @category    Markshust
+ * @package     Markshust_Uspsav
+ * @author      Mark Shust <mark@shust.com>
+ * @license     http://markshust.com/eula/
+-->
+<config>
+    <modules>
+        <Markshust_Uspsav>
+            <version>1.2.1</version>
+        </Markshust_Uspsav>
+    </modules>
+    <global>
+        <helpers>
+            <markshust_uspsav>
+                <class>Markshust_Uspsav_Helper</class>
+            </markshust_uspsav>
+        </helpers>
+    </global>
+    <frontend>
+        <routers>
+            <checkout>
+                <args>
+                    <modules>
+                        <Markshust_Uspsav before="Mage_Checkout">Markshust_Uspsav_Checkout</Markshust_Uspsav>
+                    </modules>
+                </args>
+            </checkout>
+        </routers>
+        <layout>
+            <updates>
+                <markshust_uspsav>
+                    <file>markshust/uspsav.xml</file>
+                </markshust_uspsav>
+            </updates>
+        </layout>
+    </frontend>
+</config>

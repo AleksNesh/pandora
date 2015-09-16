@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<layout>
+    <default>
+        <reference name="notifications">
+            <block type="alertsite/adminhtml_notifications" name="alertsite_notifications" template="alertsite/notifications.phtml" />
+        </reference>
+    </default>
+
+    <smartbear_adminhtml_index>
+		<reference name="content">
+			<block type="alertsite/adminhtml_smartbear" name="smartbear">
+                <block type="core/template" template="alertsite/subheader.phtml" name="alertsite.subheader"></block>
+            </block>
+		</reference>
+	</smartbear_adminhtml_index>
+
+    <adminhtml_alertsite_create>
+        <reference name="head">
+            <action method="addCss"><name>smartbear/alertsite/css/alertsite.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="alertsite/adminhtml_create" name="smartbear.create" template="alertsite/create.phtml">
+                <block type="core/template" template="alertsite/subheader.phtml" name="alertsite.subheader"></block>
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="adminhtml/system_config_switcher" name="adminhtml.system.config.switcher" before="-"/>
+        </reference>
+    </adminhtml_alertsite_create>
+
+    <adminhtml_alertsite_advance>
+        <reference name="head">
+            <action method="addCss"><name>smartbear/alertsite/css/alertsite.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="alertsite/adminhtml_advance" name="smartbear.advance" template="alertsite/advance.phtml">
+                <block type="core/template" template="alertsite/subheader.phtml" name="alertsite.subheader"></block>
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="adminhtml/system_config_switcher" name="adminhtml.system.config.switcher" before="-"/>
+        </reference>
+    </adminhtml_alertsite_advance>
+
+    <adminhtml_dashboard_index>
+        <reference name="head">
+            <action method="addCss"><name>smartbear/alertsite/css/alertsite.css</name></action>
+        </reference>
+    </adminhtml_dashboard_index>
+
+    <adminhtml_alertsite_scatterplot>
+        <reference name="head">
+            <action method="addCss"><name>smartbear/alertsite/css/alertsite.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="alertsite/adminhtml_report" name="smartbear.create" template="alertsite/scatterplot.phtml">
+                <block type="core/template" template="alertsite/subheader.phtml" name="alertsite.subheader"></block>
+                <action method="setReportType"><param1>scatterplot</param1></action>
+            </block>
+        </reference>
+    </adminhtml_alertsite_scatterplot>
+
+
+    <adminhtml_alertsite_benchmark>
+        <reference name="head">
+            <action method="addCss"><name>smartbear/alertsite/css/alertsite.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="alertsite/adminhtml_report" name="smartbear.create" template="alertsite/benchmark.phtml">
+                <block type="core/template" template="alertsite/subheader.phtml" name="alertsite.subheader"></block>
+                <action method="setReportType"><param1>benchmark</param1></action>
+            </block>
+        </reference>
+    </adminhtml_alertsite_benchmark>
+
+</layout>

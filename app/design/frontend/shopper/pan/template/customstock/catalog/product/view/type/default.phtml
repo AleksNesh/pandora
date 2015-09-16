@@ -1,0 +1,53 @@
+<?php $_product = $this->getProduct() ?>
+<?php
+/**
+ * Customized to show item number and stock availability closer to their mockups
+ */
+?>
+
+<?php
+    $productkind      = $_product->getTypeId();
+    $theGoods         = Mage::helper('customstockstatus')->getTheGoods($_product->getId());
+    $availabilitytext = Mage::helper('customstockstatus')->getAvailabilityText($theGoods, $productkind);
+    $stockInfo        = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
+    $stocklevel       = (int)$stockInfo->getQty();
+    $backordered      = $stockInfo->getBackorders();
+    $stockmanaged     = $stockInfo->getManageStock();
+    $restrictionsText = Mage::helper('customstockstatus')->getRestrictionsText();
+
+    $availabilityStockCss = ($_product->isAvailable()) ? 'in-stock' : 'out-of-stock';
+?>
+
+
+<?php if (Mage::getStoreConfig('shoppersettings/labels/sku')): ?>
+    <p class="sku">
+        <?php echo $this->__('Item Number:') ?>
+        <span><?php echo $_product->getSku() ?></span>
+    </p>
+<?php endif; ?>
+
+<div class='availability-wrapper'>
+    <span class="availability-label">Availability:</span>
+    <p class='availability <?php echo $availabilityStockCss; ?>'><?php echo $availabilitytext; ?></p>
+    <?php if($restrictionsText) echo $restrictionsText; ?>
+
+
+    <?php if ($_product->isAvailable()): ?>
+        <?php if(($productkind == 'simple' || $productkind == 'virtual') && $stockmanaged == 1 && $backordered != 1): ?>
+            <?php if($stocklevel > 0): ?>
+                <p class="shipsin">
+                    <?php echo Mage::helper('customstockstatus')->getShipDateHtml($theGoods, $productkind); ?>
+                </p>
+            <?php endif; ?>
+        <?php else: ?>
+            <p class="shipsin">
+                <?php echo Mage::helper('customstockstatus')->getShipDateHtml($theGoods, $productkind); ?>
+            </p>
+        <?php endif; ?>
+    <?php endif; ?>
+
+</div>
+
+<?php echo $this->getChildHtml('product_type_data_extra') ?>
+<?php echo $this->getPriceHtml($_product) ?>
+<div class="clear"></div>

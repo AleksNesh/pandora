@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Snap_Card>
+            <active>false</active>
+            <codePool>community</codePool>
+        </Snap_Card>
+    </modules>
+</config>

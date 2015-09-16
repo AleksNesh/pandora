@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Ash Core Extension
+ *
+ * Maintains common settings and configuration for AAI-built Magento websites.
+ *
+ * @category    Ash
+ * @package     Ash_Core
+ * @copyright   Copyright (c) 2012 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <ash_support translate="title" module="ash">
+                                        <title>Ash Support</title>
+                                    </ash_support>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+
+    <menu>
+        <ash translate="title" module="ash">
+            <title>Ash</title>
+            <sort_order>500</sort_order>
+            <children>
+                <ash_info translate="title" module="ash">
+                    <title>Ash Support</title>
+                    <sort_order>0</sort_order>
+                    <action>adminhtml/system_config/edit/section/ash_support</action>
+                </ash_info>
+            </children>
+        </ash>
+    </menu>
+</config>

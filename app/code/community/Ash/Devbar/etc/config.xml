@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Magento Developer's Toolbar
+ *
+ * @category    Ash
+ * @package     Ash_Devbar
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Ash_Devbar>
+             <version>0.1.0</version>
+             <ashup
+                remote="https://s3.amazonaws.com/augustash/mage/ash_devbar-latest.zip" />
+        </Ash_Devbar>
+    </modules>
+
+    <global>
+        <helpers>
+            <ash_devbar>
+                <class>Ash_Devbar_Helper</class>
+            </ash_devbar>
+        </helpers>
+        <blocks>
+            <ash_devbar>
+                <class>Ash_Devbar_Block</class>
+            </ash_devbar>
+        </blocks>
+        <models>
+            <ash_devbar>
+                <class>Ash_Devbar_Model</class>
+            </ash_devbar>
+        </models>
+
+        <events>
+            <http_response_send_before>
+                <observers>
+                    <ash_devbar_add_init_toolbar>
+                        <type>singleton</type>
+                        <class>ash_devbar/observer</class>
+                        <method>toolbarInit</method>
+                    </ash_devbar_add_init_toolbar>
+                </observers>
+            </http_response_send_before>
+
+            <controller_action_predispatch>
+                <observers>
+                    <ash_devbar_collect_system_data>
+                        <type>singleton</type>
+                        <class>ash_devbar/collector_tab_system</class>
+                        <method>collectData</method>
+                    </ash_devbar_collect_system_data>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+    </global>
+
+    <frontend>
+        <routers>
+            <ash_devbar>
+                <use>standard</use>
+                <args>
+                    <module>Ash_Devbar</module>
+                    <frontName>devbar</frontName>
+                </args>
+            </ash_devbar>
+        </routers>
+    </frontend>
+
+    <defaults>
+        <ash_devbar>
+            <general>
+                <front_enabled>0</front_enabled>
+                <admin_enabled>0</admin_enabled>
+                <use_included_zurb>1</use_included_zurb>
+            </general>
+        </ash_devbar>
+    </defaults>
+</config>

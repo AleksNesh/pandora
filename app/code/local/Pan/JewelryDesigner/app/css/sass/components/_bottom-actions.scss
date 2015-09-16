@@ -1,0 +1,59 @@
+/////////////////////////////////////
+// Bottom Actions
+/////////////////////////////////////
+
+ul.bottom-actions {
+    position: relative;
+    @include clearfix;
+    text-align: center;
+
+    li {
+        display: inline-block;
+        margin: 0 3em;
+    }
+
+    a {
+        @include transition(all 0.3s);
+        display: block;
+        border-radius: 3px;
+        @extend %cinzel;
+        line-height: 30px;
+        color: $gray;
+        font-size: 1.2em;
+        padding: 0.5em 0.5em 0.5em 3em;
+
+        &.reset {
+            background: image-url('layout/ico-reset.png') no-repeat 0.5em center;
+        }
+
+        &.remove {
+            background: image-url('layout/ico-remove.png') no-repeat 0.5em center;
+        }
+
+        &.save {
+            padding: 0.5em 1em;
+        }
+
+        &.alternate {
+            text-transform: uppercase;
+            background: #fff;
+            color: $purple;
+            border: 1px solid $purple;
+
+            &.text {
+                background: none;
+                color: #fff;
+            }
+
+            &:hover {
+                background-color: $gray-dark;
+                color: #fff;
+            }
+        }
+
+        &:hover {
+            background-color: #fff;
+            color: $purple-dark;
+        }
+    }
+}

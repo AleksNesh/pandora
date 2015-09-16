@@ -1,0 +1,12 @@
+<?php 
+	$id=Mage::app()->getRequest()->getParam('id');
+	$idcard=Mage::app()->getRequest()->getParam('idcard');
+    $giftwrap_color = Mage::getStoreConfig('giftwrap/style/giftwrap_color');
+?>
+<p> <?php echo $this->__('Are you sure you want to delete this wrap?') ?> </p>
+<br/>
+<div class="actions-button">
+	<button style="background-color: <?php echo '#'.$giftwrap_color ?>" id="close-giftbox" onclick="return deleteGiftbox('<?php echo $id?>')" class="button yes-delete" type="submit"><span><span><?php echo $this->__('Yes, Delete')?></span></span></button>
+	<button style="background-color: <?php echo '#'.$giftwrap_color ?>" id="close-giftbox" onclick="return showEditForm('<?php echo $id?>','<?php echo $idcard?>')" class="button no-edit" type="submit"><span><span><?php echo $this->__('Edit Wrap')?></span></span></button>
+	<button style="background-color: <?php echo '#'.$giftwrap_color ?>" id="close-giftbox" onclick="TINY.box.hide();return false;" class="button no-nothing"><span><span><?php echo $this->__('No')?></span></span></button>	
+</div>

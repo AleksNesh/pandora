@@ -1,0 +1,325 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Fooman_PdfCustomiser>
+            <version>2.11.4</version>
+            <depends>
+            </depends>
+        </Fooman_PdfCustomiser>
+    </modules>
+
+    <global>
+        <rewrite>
+            <!--compatibility fix for EM Delete Order extension-->
+            <fooman_pdfcustomiser_adminhtml_sales_order_em>
+                <from><![CDATA[#^/[^/]+/adminhtml_sales_order/pdfshipments#]]></from>
+                <to>/pdfcustomiser/adminhtml_sales_order/pdfshipments/</to>
+            </fooman_pdfcustomiser_adminhtml_sales_order_em>
+            <!-- end fix -->
+        </rewrite>
+        <blocks>
+            <pdfcustomiser>
+                <class>Fooman_PdfCustomiser_Block</class>
+            </pdfcustomiser>
+        </blocks>
+        <models>
+            <pdfcustomiser>
+                <class>Fooman_PdfCustomiser_Model</class>
+            </pdfcustomiser>
+            <sales>
+                <rewrite>
+                    <order_pdf_invoice>Fooman_PdfCustomiser_Model_Invoice</order_pdf_invoice>
+                </rewrite>
+                <rewrite>
+                    <order_pdf_shipment>Fooman_PdfCustomiser_Model_Shipment</order_pdf_shipment>
+                </rewrite>
+                <rewrite>
+                    <order_pdf_creditmemo>Fooman_PdfCustomiser_Model_Creditmemo</order_pdf_creditmemo>
+                </rewrite>
+            </sales>
+            <!--<emailattachments>
+                <rewrite>
+                    <order_pdf_order>Fooman_PdfCustomiser_Model_Order</order_pdf_order>
+                </rewrite>
+            </emailattachments>
+            <udropship>
+                <rewrite>
+                    <pdf_shipment>Fooman_PdfCustomiser_Model_Shipment</pdf_shipment>
+                </rewrite>
+            </udropship>-->
+        </models>
+        <helpers>
+            <pdfcustomiser>
+                <class>Fooman_PdfCustomiser_Helper</class>
+            </pdfcustomiser>
+            <emailattachments>
+                <rewrite>
+                    <data>Fooman_PdfCustomiser_Helper_Data</data>
+                </rewrite>
+            </emailattachments>
+        </helpers>
+        <customer>
+              <address>
+                <formats>
+                    <label translate="title" module="pdfcustomiser">
+                        <title>Integrated Label</title>
+                        <renderer>pdfcustomiser/address_renderer_label</renderer>
+                        <htmlEscape>true</htmlEscape>
+                    </label>
+
+                    <european>
+                        <title>European</title>
+                        <defaultFormat><![CDATA[
+{{depend company}}{{var company}}<br/>{{/depend}}
+{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}<br/>
+{{var street1}}<br/>
+{{depend street2}}{{var street2}}<br/>{{/depend}}
+{{depend street3}}{{var street3}}<br/>{{/depend}}
+{{depend street4}}{{var street4}}<br/>{{/depend}}
+{{var postcode}}  {{depend city}}{{var city}}{{/depend}} <br/>
+{{var country}}
+                        ]]></defaultFormat>
+                    </european>
+                    <us>
+                        <title>US</title>
+                        <defaultFormat><![CDATA[
+{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}<br/>
+{{depend company}}{{var company}}<br />{{/depend}}
+{{var street1}}<br />
+{{depend street2}}{{var street2}}<br />{{/depend}}
+{{depend street3}}{{var street3}}<br />{{/depend}}
+{{depend street4}}{{var street4}}<br />{{/depend}}
+{{depend city}}{{var city}},  {{/depend}}{{depend region}}{{var region}}, {{/depend}}{{var postcode}}<br/>
+{{var country}}<br/>
+{{depend telephone}}T: {{var telephone}}{{/depend}}
+{{depend fax}}<br/>F: {{var fax}}{{/depend}}
+                        ]]></defaultFormat>
+                    </us>
+                    <jp>
+                        <title>JP</title>
+                        <defaultFormat><![CDATA[
+{{var lastname}}{{var firstname}}{{depend suffix}} {{var suffix}}{{/depend}}<br/>
+{{depend company}}{{var company}}<br />{{/depend}}
+{{var country}}<br/>
+{{var postcode}}<br/>
+{{depend region}}{{var region}}{{/depend}}{{depend city}}{{var city}}{{/depend}}<br/>
+{{var street1}}<br />
+{{depend street2}}{{var street2}}<br />{{/depend}}
+{{depend street3}}{{var street3}}<br />{{/depend}}
+{{depend street4}}{{var street4}}<br />{{/depend}}
+{{depend telephone}}T: {{var telephone}}{{/depend}}
+{{depend fax}}<br/>F: {{var fax}}{{/depend}}
+                        ]]></defaultFormat>
+                    </jp>
+                </formats>
+            </address>
+        </customer>
+        <events>
+            <core_block_abstract_to_html_before>
+                <observers>
+                    <fooman_pdfcustomiser_addbutton>
+                        <type>singleton</type>
+                        <class>pdfcustomiser/observer</class>
+                        <method>addbutton</method>
+                    </fooman_pdfcustomiser_addbutton>
+                </observers>
+            </core_block_abstract_to_html_before>
+            <!--<orderpreparation_order_added_to_download_document>
+                    <observers>
+                        <fooman_pdfcustomiser_mdm_erp>
+                            <type>singleton</type>
+                            <class>pdfcustomiser/observer</class>
+                            <method>adjustPdf</method>
+                        </fooman_pdfcustomiser_mdm_erp>
+                    </observers>
+            </orderpreparation_order_added_to_download_document>-->
+        </events>
+        <pdf>
+            <totals>
+                <webposdiscount>
+                    <source_field>webpos_discount_amount</source_field>
+                    <sort_order>570</sort_order>
+                    <amount_prefix>-</amount_prefix>
+                </webposdiscount>
+                <weboposgiftwrap>
+                    <source_field>webpos_giftwrap_amount</source_field>
+                    <sort_order>570</sort_order>
+                </weboposgiftwrap>
+                <multifees>
+                    <title>Additional Fees</title>
+                    <source_field>multifees_amount</source_field>
+                    <display_zero>0</display_zero>
+                    <sort_order>570</sort_order>
+                </multifees>
+                <points>
+                    <title>Reward Points</title>
+                    <source_field>money_for_points</source_field>
+                    <display_zero>0</display_zero>
+                    <sort_order>580</sort_order>
+                </points>
+                <shipping_and_handling_tax translate="title">
+                    <title>Shipping Tax</title>
+                    <source_field>shipping_and_handling_tax</source_field>
+                    <display_zero>1</display_zero>
+                    <sort_order>NO</sort_order>
+                </shipping_and_handling_tax>
+                <giftwrapping_order translate="title">
+                    <title>Gift Wrapping for Order</title>
+                    <source_field>gw_price</source_field>
+                    <display_zero>0</display_zero>
+                    <sort_order>550</sort_order>
+                </giftwrapping_order>
+                <giftwrapping_items translate="title">
+                    <title>Gift Wrapping for Items</title>
+                    <source_field>gw_items_price</source_field>
+                    <display_zero>0</display_zero>
+                    <sort_order>560</sort_order>
+                </giftwrapping_items>
+                <gw_card_price translate="title">
+                    <title>Printed Card</title>
+                    <source_field>gw_card_price</source_field>
+                    <display_zero>0</display_zero>
+                    <sort_order>570</sort_order>
+                </gw_card_price>
+                <gw_combined translate="title">
+                    <title>Gift Wrapping</title>
+                    <source_field>gw_combined</source_field>
+                    <display_zero>0</display_zero>
+                    <sort_order>NO</sort_order>
+                </gw_combined>
+            </totals>
+        </pdf>
+    </global>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <Fooman_PdfCustomiser>
+                    <files>
+                        <default>Fooman_PdfCustomiser.csv</default>
+                    </files>
+                </Fooman_PdfCustomiser>
+            </modules>
+        </translate>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Fooman_PdfCustomiser_Adminhtml before="Mage_Adminhtml">Fooman_PdfCustomiser_Adminhtml</Fooman_PdfCustomiser_Adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <frontend>
+        <routers>
+            <fooman_pdfcustomiser>
+                <use>standard</use>
+                <args>
+                    <module>Fooman_PdfCustomiser</module>
+                    <frontName>pdfcustomiser</frontName>
+                </args>
+            </fooman_pdfcustomiser>
+            <sales>
+                <args>
+                    <modules>
+                        <fooman_pdfcustomiser before="Mage_Sales">Fooman_PdfCustomiser</fooman_pdfcustomiser>
+                    </modules>
+                </args>
+            </sales>
+        </routers>
+        <translate>
+            <modules>
+                <Fooman_PdfCustomiser>
+                    <files>
+                        <default>Fooman_PdfCustomiser.csv</default>
+                    </files>
+                </Fooman_PdfCustomiser>
+            </modules>
+        </translate>
+    </frontend>
+    <default>
+        <sales_pdf>
+            <all>
+                <alllogo/>
+                <alllogoplacement>auto</alllogoplacement>
+                <alllogowidth>5</alllogowidth>
+                <alllogoheight>2</alllogoheight>
+                <alllogofromleft>12</alllogofromleft>
+                <alllogofromtop>5</alllogofromtop>
+                <allbgimage/>
+                <allowneraddress/>
+                <allfooter1/>
+                <allfooter2/>
+                <allfooter3/>
+                <allfooter4/>
+                <allpagesize>A4</allpagesize>
+                <allpagenumbers>0</allpagenumbers>
+                <allrowtotaltaxinclusive>0</allrowtotaltaxinclusive>
+                <allonly1grandtotal>1</allonly1grandtotal>
+                <displayboth>0</displayboth>
+                <alladdressformat>pdf</alladdressformat>
+                <allmargintop>15</allmargintop>
+                <allmarginbottom>25</allmarginbottom>
+                <allmarginsides>20</allmarginsides>
+                <allfont/>
+                <allfontsize>12</allfontsize>
+                <allqtyasint>1</allqtyasint>
+                <alldisplayweight>0</alldisplayweight>
+                <alltaxsummary>0</alltaxsummary>
+                <allweightunit>kg</allweightunit>
+                <alldisplayemail>0</alldisplayemail>
+                <allbarcode>C39E+</allbarcode>
+                <allprintcomments>0</allprintcomments>
+                <allsign>0</allsign>
+                <allsigncertificate/>
+                <allsignpassword/>
+                <allnewwindow>0</allnewwindow>
+                <nameformat>{TITLE}_{INCREMENT}</nameformat>
+                <allprintaltstore/>
+            </all>
+            <order>
+                <ordertitle>ORDER CONFIRMATION</ordertitle>
+                <orderaddresses>both</orderaddresses>
+                <ordercolumns>name,sku,price,qty,tax,subtotal</ordercolumns>
+                <ordercustom/>
+                <ordercolumnwidths/>
+            </order>
+            <invoice>
+                <invoicetitle>TAX INVOICE</invoicetitle>
+                <invoicedeliverydate>0</invoicedeliverydate>
+                <invoicetaxnumber/>
+                <invoiceaddresses>both</invoiceaddresses>
+                <invoicecolumns>name,sku,price,qty,tax,subtotal</invoicecolumns>                
+                <invoicecustom/>
+                <invoiceintegratedlabels>0</invoiceintegratedlabels>
+                <invoicecolumnwidths/>
+            </invoice>
+            <shipment>
+                <shipmenttitle>PACKING SLIP</shipmenttitle>
+                <shipmentuseorder>0</shipmentuseorder>
+                <shipmentaddresses>both</shipmentaddresses>
+                <shipmentcolumns>name,sku,qty</shipmentcolumns>                
+                <shipmentcustom/>
+                <shipmentintegratedlabels>0</shipmentintegratedlabels>
+                <shipmentcolumnwidths/>
+            </shipment>
+            <creditmemo>
+                <creditmemotitle>CREDIT MEMO</creditmemotitle>
+                <creditmemoaddresses>both</creditmemoaddresses>
+                <creditmemocolumns>name,sku,price,qty,tax,subtotal</creditmemocolumns>                
+                <creditmemocustom/>
+                <creditmemocolumnwidths/>
+            </creditmemo>
+        </sales_pdf>
+    </default>
+    <phpunit>
+        <suite>
+            <modules>
+                <Fooman_PdfCustomiser />
+            </modules>
+        </suite>
+    </phpunit>
+</config>

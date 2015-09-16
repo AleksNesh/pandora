@@ -1,0 +1,80 @@
+<?php 
+/**
+ * Brim LLC Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Brim LLC Commercial Extension License
+ * that is bundled with this package in the file license.pdf.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.brimllc.com/license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to support@brimllc.com so we can send you a copy immediately.
+ *
+ * @category   Brim
+ * @package    Brim_Groupedoptions
+ * @copyright  Copyright (c) 2011-2012 Brim LLC
+ * @license    http://ecommerce.brimllc.com/license
+ */
+?>
+<?php
+/**
+ * This template handles individual configurable products that have been associated with a grouped product.
+ */
+?>
+
+<?php
+$_product   = $this->getProduct();
+$_attributes= Mage::helper('core')->decorateArray($this->getAllowAttributes());
+$_wrapperId = "product_addtocart_wrapper_".$_product->getId();
+$_formId    = "product_addtocart_form_".$_product->getId();
+$_formJsVar = "productAddToCartForm".$_product->getId();
+?>
+
+<div id="<?php echo $_wrapperId; ?>">
+    <div class="no-display">
+        <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+        <input type="hidden" name="related_product" id="related-products-field" value="" />
+    </div>
+<?php if ($_product->isSaleable() && count($_attributes)):?>
+
+    <?php foreach($_attributes as $_attribute): ?>
+    <div class="grouped-option">
+        <label class="grouped-option-title"><span class="required">*&nbsp;</span><?php echo $_attribute->getLabel() ?></label>
+        <select name="super_attribute[<?php echo $_product->getId() ?>][<?php echo $_attribute->getAttributeId() ?>]" id="<?php echo $this->helper('groupedoptions')->getHtmlConfigAttributeId($_attribute);?>" class="go-qty-required-entry super-attribute-select super-attribute-<?php echo $_product->getId() ?>">
+            <option><?php echo $this->__('Choose an Option...') ?></option>
+        </select>
+    </div>
+    <?php endforeach; ?>
+
+    <script type="text/javascript">
+        var spConfig = new Product.GroupedConfig(<?php echo $this->getJsonConfig() ?>, <?php echo $_product->getId() ?>);
+        spConfig.setOptionsPrice(new Product.OptionsPrice(<?php echo Mage::helper('groupedoptions')->getProductViewJsonConfig($_product) ?>));
+    </script>
+
+    <script type="text/javascript">
+    //<![CDATA[
+        var <?php echo $_formJsVar ?> = new VarienForm('<?php echo $_formId ?>');
+        <?php echo $_formJsVar ?>.submit = function(){
+                if (this.validator.validate()) {
+                        this.form.submit();
+                }
+        }.bind(<?php echo $_formJsVar ?>);
+
+        document.observe('dom:loaded', function() {
+            $$('.super-attribute-<?php echo $_product->getId() ?>').each(function(element) {
+                Event.observe(element, 'change', function(event) {
+                    var qtyField = $$('input[name="super_group[<?php echo $_product->getId() ?>]"]').first();
+                    if (qtyField.value == 0) { qtyField.value = 1 }
+                });
+            });
+        });
+    //]]>
+    </script>
+
+    <?php include $this->helper('groupedoptions')->includeCustomOptionsTemplate(); ?>
+
+<?php endif;?>
+</div>
+

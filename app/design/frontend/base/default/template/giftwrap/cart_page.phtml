@@ -1,0 +1,70 @@
+<?php
+/**
+ * add link giftwrap in cartpage
+ */
+$giftwrapcollection = $this->helper('giftwrap')->getAllPapers();
+
+?>
+<?php
+if (Mage::getStoreConfig('giftwrap/general/active') && count($giftwrapcollection)):
+    // $_item = $this->getItem();
+    $items = $this->getItems();
+    ?>
+    <?php foreach ($items as $item): ?>
+        <?php 
+            $producttype = $item->getProductType();
+            $can_wrap = 0;
+            if($producttype != 'virtual' && $producttype != 'downloadable'){
+                $can_wrap = 1;
+            }
+        ?>
+        <?php $count_item = Mage::getBlockSingleton('giftwrap/giftbox_paper')->getNumberOfItemsCanWraped($item); ?>
+        <script type="text/javascript">
+            $$('a.btn-remove').each(function(el) {
+
+                if (el.href.search('cart/delete/id/' + '<?php echo $item->getId() ?>') != -1) {
+                    var proElement = el.up('td');
+                    if (proElement.className == 'a-center last') { //remove class="product-cart-remove"
+                        var giftwrapButton = document.createElement('div');
+                        giftwrapButton.className = 'gidtwrap_button';
+                        giftwrapButton.innerHTML = '<input id="giftwrap_checkbox_' + '<?php echo $item->getId() ?>' + '" type="checkbox" name="giftwrap_checkbox" ' +
+                                'value="" class="giftwrap_first" style="width:16px;height:16px;" onclick="goToGiftwrap(' + '<?php echo $item->getId() ?>' + ')">' +
+                                '<label for="giftwrap_checkbox_' + '<?php echo $item->getId() ?>' + '" class="giftwrap_last"><?php echo $this->__('Giftwrap') ?></label>';
+                        if ('<?php echo Mage::getModel('catalog/product')->load($item->getProductId())->getGiftwrap() ?>' == '1' && '<?php echo $can_wrap ?>' == '1') {
+                            proElement.appendChild(giftwrapButton);
+                        }
+                    }
+                }
+            });
+
+            Event.observe(window, 'load', function()
+            {
+                var itemId = '<?php echo $item->getId() ?>';
+                var checkboxId = 'giftwrap_checkbox_' + itemId;
+                var numberItem = '<?php echo $count_item ?>';
+                if (numberItem > 0) {
+                    if ($(checkboxId)) {
+                        $(checkboxId).checked = false;
+                        $(checkboxId).disabled = false;
+                    }
+                } else {
+                    if ($(checkboxId)) {
+                        $(checkboxId).checked = true;
+                        $(checkboxId).disabled = true;
+                    }
+                }
+            });
+        </script>
+    <?php endforeach; ?>
+<?php endif; ?>
+<script type="text/javascript">
+    function goToGiftwrap(value)
+    {
+        var checkboxId = 'giftwrap_checkbox_' + value;
+        if ($(checkboxId).checked) {
+            showEditForm(null, null, value);
+            $(checkboxId).checked = false;
+        }
+    }
+
+</script>

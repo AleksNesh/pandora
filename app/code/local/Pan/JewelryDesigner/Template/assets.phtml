@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * Core module for providing common functionality between BraceletBuilder and other related submodules
+ *
+ * @category    Pan
+ * @package     Pan_JewelryDesigner
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+// instantiate helper
+$_helper = Mage::helper('pan_jewelrydesigner');
+
+$inAdminArea = $_helper->inAdminArea();
+?>
+
+
+<?php
+/**
+ * @see  https://docs.angularjs.org/guide/ie
+ */
+?>
+<!--[if lte IE 7]>
+  <script type="text/javascript" src="<?php echo $_helper->getAngularAppJsDir(); ?>/lib/polyfills/json3.min.js"></script>
+<![endif]-->
+
+<script type="text/javascript" src="<?php echo $_helper->getAngularPublicJsDir(); ?>/lib.js"></script>
+<script type="text/javascript" src="<?php echo $_helper->getAngularPublicJsDir(); ?>/jewelrydesigner_app.js"></script>
+
+<!-- JewelryDesigner App JS Files (that can't be included via Gulp as of right now) -->
+
+<script type="text/javascript" src="<?php echo $_helper->getAngularAppJsDir(); ?>/lib/zone.js"></script>
+<script type="text/javascript" src="<?php echo $_helper->getAngularAppJsDir(); ?>/lib/designer_workspace.js"></script>
+<script type="text/javascript" src="<?php echo $_helper->getAngularAppJsDir(); ?>/lib/designer.js"></script>
+<!-- /JewelryDesigner App JS Files -->
+
+
+<link rel="stylesheet" type="text/css" href="<?php echo $_helper->getAngularAppJsDir(); ?>/lib/bxslider/jquery.bxslider.css" />
+
+
+<!-- JewelryDesigner App CSS Files -->
+
+<link rel="stylesheet" type="text/css" href="<?php echo $_helper->getAngularPublicCssDir(); ?>/styles.css" />
+
+<?php if ($inAdminArea): ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $_helper->getAngularPublicCssDir(); ?>/foundation-5.4.5.custom/foundation.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $_helper->getAngularPublicCssDir(); ?>/admin_styles.css" />
+<?php else: ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $_helper->getAngularPublicCssDir(); ?>/frontend_styles.css" />
+<?php endif; ?>
+
+
+<!-- /JewelryDesigner App CSS Files -->
+
+
+<script type="text/javascript">
+    //<![CDATA[
+    jQuery( document ).ready(function() {
+        new PAN.Designer();
+    });
+    //]]>
+</script>

@@ -1,0 +1,64 @@
+<?php
+/**
+ * MageWorx
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MageWorx EULA that is bundled with
+ * this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.mageworx.com/LICENSE-1.0.html
+ *
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@mageworx.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.mageworx.com/ for more information
+ * or send an email to sales@mageworx.com
+ *
+ * @category   design_default
+ * @package    MageWorx_Tweaks
+ * @copyright  Copyright (c) 2009 MageWorx (http://www.mageworx.com/)
+ * @license    http://www.mageworx.com/LICENSE-1.0.html
+ */
+
+/**
+ * Tweaks extension
+ *
+ * @category   design_default
+ * @package    MageWorx_Tweaks
+ * @author     MageWorx Dev Team <dev@mageworx.com>
+ */
+?>
+<?php $helper = Mage::helper('tweaks') ?>
+<?php if ($helper->isOnepageCheckoutNewsletterEnabled()): ?>
+<li id="register-customer-newsletter"><input type="checkbox" name="billing[is_subscribed]" value="1" title="<?php echo Mage::helper('tweaks')->__('Sign Up for Newsletter') ?>" id="billing:is_subscribed"<?php echo ($this->isChecked() || $helper->isNewsletterChecked())?' checked="checked"':'' ?> />&nbsp;<label for="billing:is_subscribed"><?php echo Mage::helper('tweaks')->__('Sign Up for Newsletter') ?></label></li>
+
+<script type="text/javascript">
+//<![CDATA[
+Element.show('register-customer-newsletter');
+hideCheckoutNewsletter = function() {
+	<?php if ($this->isRegister()): ?>
+		<?php if ($helper->isNewsletterVisibleRegister()): ?>
+			Element.show('register-customer-newsletter');
+		<?php else: ?>
+			Element.hide('register-customer-newsletter');
+			$('billing:is_subscribed').checked = false;
+		<?php endif; ?>
+	<?php else: ?>
+		<?php if ($helper->isNewsletterVisibleGuest()): ?>
+			Element.show('register-customer-newsletter');
+		<?php else: ?>
+			Element.hide('register-customer-newsletter');
+			$('billing:is_subscribed').checked = false;
+		<?php endif ?>
+	<?php endif; ?>
+}
+setInterval("hideCheckoutNewsletter()", 100);
+//]]>
+</script>
+<?php endif ?>

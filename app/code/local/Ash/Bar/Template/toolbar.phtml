@@ -1,0 +1,43 @@
+<?php
+/**
+ * Magento Developer's Toolbar
+ *
+ * @category    Ash
+ * @package     Ash_Bar
+ * @copyright   Copyright (c) 2012 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<div id="ashbar-button">
+    <img class="ashbar-logo" src="<?php echo $this->getSkinPath() . '/images/m_logo.png' ?>" alt="<?php echo $this->__('Toggle Toolbar') ?>" />
+</div>
+<div class="ashbar" id="ashbar-menu" style="display:none;">
+    <ul id="ashbar-nav">
+
+        <?php foreach($this->getTabs() as $_tab): ?>
+
+        <li id="ashbar-<?php echo $_tab->getId();?>" class="ashbar-nav-item">
+            <?php echo $_tab->renderLabel(); ?>
+        </li>
+
+        <?php endforeach; ?>
+
+    </ul>
+
+    <?php foreach($this->getTabs() as $_tab): ?>
+    <?php if ($_tab->getTemplate()): ?>
+    <div id="ashbar-<?php echo $_tab->getId();?>-content" class="ashbar ashbar-tab-container" style="display:none;">
+        <?php echo $_tab->toHtml(); ?>
+    </div>
+    <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+
+    Ashbar.Toolbar = new Ashbar.Toolbar();
+    Ashbar.Toolbar.initialize('#ashbar-menu', collectedData);
+
+});
+</script>

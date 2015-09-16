@@ -1,0 +1,100 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * Author Rudyuk Vitalij Anatolievich
+ * Email rvansp@gmail.com
+ * Blog www.cervic.info
+ */
+$order_id = Mage::registry('order_id');
+$shipment_id = Mage::registry('shipment_id');
+$upsl = Mage::registry('upsl');
+$upsl2 = Mage::registry('upsl2');
+$backLink = Mage::registry('backLink');
+$type = Mage::registry('type');
+$error = Mage::registry('error');
+
+if (count($error) == 0) {
+    $shipidnumber = array_key_exists('shipidnumber', $upsl) ? $upsl['shipidnumber'] : $upsl[0]['shipmentidentificationnumber'];
+    echo '<h1> Order ID ' . $order_id . ' Shipment ID ' . $shipment_id . '</h1>
+<br />
+<a href="' . $backLink . '"><button type="button" class="scalable back"><span><span><span>' . Mage::helper('adminhtml')->__('Back') . '</span></span></span></button></a>&nbsp;&nbsp;
+<a href="' . $this->getUrl('upslabel/adminhtml_upslabel/deletelabel/order_id/' . $order_id . '/shipment_id/' . $shipment_id . '/type/' . $type) . '"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Delete Label') . '</span></span></span></button></a>';
+    if (file_exists(Mage::getBaseDir('media') . DS . 'upslabel' . DS . 'label' . DS . "HVR" . $shipidnumber . ".html")) {
+        echo '&nbsp;&nbsp;&nbsp;<a href="' . Mage::getBaseUrl('media') . 'upslabel/label/HVR' . $shipidnumber . '.html" target="_blank"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Print High Value report') . '</span></span></span></button></a>';
+    }
+    $ups_data = array_key_exists('arrResponsXML', $upsl) ? $upsl['arrResponsXML'] : $upsl;
+    if ($ups_data[0]['type_print'] == "GIF") {
+        echo '&nbsp;&nbsp;&nbsp;<a href="' . $this->getUrl('upslabel/adminhtml_pdflabels/onepdf/order_id/' . $order_id . '/shipment_id/' . $shipment_id . '/type/' . $type) . '" target="_blank"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Print PDF') . '</span></span></span></button></a>';
+        foreach ($ups_data AS $upsl_one) {
+            echo '<br />
+<br />
+<a href="' . $this->getUrl('upslabel/adminhtml_upslabel/print/imname/' . 'label' . $upsl_one['trackingnumber'] . '.gif') . '" target="_blank"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Print Label Gif') . '</span></span></span></button></a>
+&nbsp;&nbsp;&nbsp;<a href="' . Mage::getBaseUrl('media') . 'upslabel/label/' . $upsl_one['trackingnumber'] . '.html" target="_blank"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Print Html image') . '</span></span></span></button></a>';
+
+            echo '
+<br /><br />
+<h3>Tracking Number ' . $upsl_one['trackingnumber'] . '</h3>
+<br /><a href="' . Mage::getBaseUrl('media') . 'upslabel/label/' . 'label' . $upsl_one['trackingnumber'] . '.gif' . '" target="_blank"><img src="' . Mage::getBaseUrl('media') . 'upslabel/label/' . 'label' . $upsl_one['trackingnumber'] . '.gif' . '" /></a>';
+        }
+    }
+    else {
+        if(Mage::getStoreConfig('upslabel/printing/automatic_printing') == 1){
+            echo '<br><br><h2>'.Mage::helper('adminhtml')->__('Label sent to print').'</h2><br>';
+        }
+        echo '&nbsp;&nbsp;&nbsp;<a href="' . $this->getUrl('upslabel/adminhtml_upslabel/autoprint/order_id/'.$order_id.'/shipment_id/'.$shipment_id.'/type/'.$type) . '" target="_blank"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Print Label') . '</span></span></span></button></a>';
+        echo '&nbsp;&nbsp;&nbsp;<a href="' . $this->getUrl('upslabel/adminhtml_upslabel/downloadnotgif/order_id/'.$order_id.'/shipment_id/'.$shipment_id.'/type/'.$type) . '" target="_blank"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Download Label') . '</span></span></span></button></a>';
+        if(!isset($upsl2)){
+            foreach ($ups_data AS $k => $upsl_one) {
+                if($upsl_one['type_print'] == "GIF"){
+                    echo "<br /><br /><br /> <h3><u>Return label</u></h3>";
+                    echo '<br />';
+                    if ($ups_data[0]['type_print'] != "GIF") {
+                        echo '<a href="' . $this->getUrl('upslabel/adminhtml_pdflabels/onepdf/order_id/' . $order_id . '/shipment_id/' . $shipment_id . '/type/' . $type) . '" target="_blank"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Print PDF') . '</span></span></span></button></a>';
+                    }
+                echo '
+&nbsp;&nbsp;&nbsp;<a href="' . $this->getUrl('upslabel/adminhtml_upslabel/print/imname/' . 'label' . $upsl_one['trackingnumber'] . '.gif') . '" target="_blank"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Print Label Gif') . '</span></span></span></button></a>
+&nbsp;&nbsp;&nbsp;<a href="' . Mage::getBaseUrl('media') . 'upslabel/label/' . $upsl_one['trackingnumber'] . '.html" target="_blank"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Print Html image') . '</span></span></span></button></a>';
+
+                echo '
+<br /><br />
+<h3>Tracking Number ' . $upsl_one['trackingnumber'] . '</h3>
+<br /><a href="' . Mage::getBaseUrl('media') . 'upslabel/label/' . 'label' . $upsl_one['trackingnumber'] . '.gif' . '" target="_blank"><img src="' . Mage::getBaseUrl('media') . 'upslabel/label/' . 'label' . $upsl_one['trackingnumber'] . '.gif' . '" /></a>';
+            }
+            }
+        }
+    }
+    if (isset($upsl2)) {
+        if (!isset($upsl2['error']) && !isset($upsl2['status']) && (!isset($upsl2['status']) || $upsl2['status'] == 0)) {
+            $ups_data = array_key_exists('arrResponsXML', $upsl2) ? $upsl2['arrResponsXML'] : $upsl2;
+if(isset($ups_data[0]['type_print']) && $ups_data[0]['type_print'] == "GIF"){
+    echo "<br /><br /> Return label";
+            foreach ($ups_data AS $upsl_one) {
+                echo '<br /><br />';
+echo '<a href="' . $this->getUrl('upslabel/adminhtml_upslabel/print/imname/' . 'label' . $upsl_one['trackingnumber'] . '.gif') . '" target="_blank"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Print Label Gif') . '</span></span></span></button></a>
+&nbsp;&nbsp;&nbsp;<a href="' . Mage::getBaseUrl('media') . 'upslabel/label/' . $upsl_one['trackingnumber'] . '.html" target="_blank"><button type="button" class="scalable"><span><span><span>' . Mage::helper('adminhtml')->__('Print Html image') . '</span></span></span></button></a>';
+
+                echo '
+<br /><br />
+<h3>Tracking Number ' . $upsl_one['trackingnumber'] . '</h3>
+<br /><a href="' . Mage::getBaseUrl('media') . 'upslabel/label/' . 'label' . $upsl_one['trackingnumber'] . '.gif' . '" target="_blank"><img src="' . Mage::getBaseUrl('media') . 'upslabel/label/' . 'label' . $upsl_one['trackingnumber'] . '.gif' . '" /></a>';
+            }
+}
+        } else if(isset($upsl2['status']) && $upsl2['status'] == 1){
+            echo "<br /><br /> <b>Return label error</b> <br />";
+            echo $upsl2['statustext'];
+        }
+        else {
+            echo $upsl2['error'];
+        }
+    }
+} else {
+    echo $error['error'];
+    /*echo '<h3 style="color: red;">
+    We are very sorry, but our test UPS account temporary inactive.<br>
+But we guarantee, that extension will work with your UPS account credentials.<br>
+If after purchase you will have problems, we will help you. Please contact our <a href="mailto:shippinglabels@infomodus.com">Support Team</a><br>
+If we will not able to resolve problems, we will return your money.<br>
+If you want to test our extension with your UPS account credentials, please send us request by <a href="mailto:shippinglabels@infomodus.com">email</a>.<br>
+Thank you!
+    </h3>';*/
+}

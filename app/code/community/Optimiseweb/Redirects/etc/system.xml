@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* @package    Optimiseweb_Redirects
+* @author     Kathir Vel (sid@optimiseweb.co.uk)
+* @copyright  Copyright (c) 2014 Optimise Web
+* @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+<config>
+
+    <tabs>
+        <optimisewebconfig translate="label comment" module="ow_redirects">
+            <label>Optimise Web</label>
+            <sort_order>0</sort_order>
+        </optimisewebconfig>
+    </tabs>
+
+    <sections>
+        <optimisewebredirects translate="label comment" module="ow_redirects">
+            <label>Mass 301 Redirects</label>
+            <tab>optimisewebconfig</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>99999</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+
+                <general translate="label comment" module="ow_redirects">
+                    <label>Legacy - Upload / Download CSV File</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <upload translate="label comment" module="ow_redirects">
+                            <label>Upload Redirects File</label>
+                            <comment>If you have already uploaded a CSV file and wish to add or edit the URLs, please download the current CSV file and reupload that file after making the changes.</comment>
+                            <frontend_type>file</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_file</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">optimiseweb/redirects</upload_dir>
+                            <base_url type="media" scope_info="1">optimiseweb/redirects</base_url>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </upload>
+                        <download translate="label comment" module="ow_redirects">
+                            <label>Download Redirects File</label>
+                            <comment>Right click on this link and click on 'Save Link As...'</comment>
+                            <frontend_model>ow_redirects/system_config_backend_download</frontend_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </download>
+                    </fields>
+                </general>
+
+                <redirects1 translate="label comment" module="ow_redirects">
+                    <label>Redirects System v1.0</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>3</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <upload translate="label comment" module="ow_redirects">
+                            <label>Upload Redirects File</label>
+                            <comment>If you have already uploaded a CSV file and wish to add or edit the URLs, please download the current CSV file and reupload that file after making the changes.</comment>
+                            <frontend_type>file</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_file</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">optimiseweb/redirects</upload_dir>
+                            <base_url type="media" scope_info="1">optimiseweb/redirects</base_url>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </upload>
+                        <download translate="label comment" module="ow_redirects">
+                            <label>Download Redirects File</label>
+                            <comment>Right click on this link and click on 'Save Link As...'</comment>
+                            <frontend_model>ow_redirects/system_config_backend_download1</frontend_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </download>
+                        <delimiter translate="label comment" module="ow_redirects">
+                            <label>Delimiter</label>
+                            <comment>Defaults to comma (,). Depends on how you save your CSV file.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </delimiter>
+                        <wildcardcharacter translate="label comment" module="ow_redirects">
+                            <label>Wildcard Character</label>
+                            <comment>Defaults to asterisk (*).</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </wildcardcharacter>
+                    </fields>
+                </redirects1>
+                
+                <querystring translate="label comment" module="ow_redirects">
+                    <label>Query String Based Redirects</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>4</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <upload translate="label comment" module="ow_redirects">
+                            <label>Upload Redirects File</label>
+                            <comment>If you have already uploaded a CSV file and wish to add or edit the URLs, please download the current CSV file and reupload that file after making the changes.</comment>
+                            <frontend_type>file</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_file</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">optimiseweb/redirects</upload_dir>
+                            <base_url type="media" scope_info="1">optimiseweb/redirects</base_url>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </upload>
+                        <download translate="label comment" module="ow_redirects">
+                            <label>Download Redirects File</label>
+                            <comment>Right click on this link and click on 'Save Link As...'</comment>
+                            <frontend_model>ow_redirects/system_config_backend_downloadquerystringfile</frontend_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </download>
+                        <delimiter translate="label comment" module="ow_redirects">
+                            <label>Delimiter</label>
+                            <comment>Defaults to comma (,). Depends on how you save your CSV file.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </delimiter>
+                        <wildcardcharacter translate="label comment" module="ow_redirects">
+                            <label>Wildcard Character</label>
+                            <comment>Defaults to asterisk (*).</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </wildcardcharacter>
+                    </fields>
+                </querystring>
+
+            </groups>
+        </optimisewebredirects>
+    </sections>
+
+</config>

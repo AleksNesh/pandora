@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * MageWorx
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MageWorx EULA that is bundled with
+ * this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.mageworx.com/LICENSE-1.0.html
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.mageworx.com/ for more information
+ *
+ * @category   MageWorx
+ * @package    MageWorx_Tweaks
+ * @copyright  Copyright (c) 2011 MageWorx (http://www.mageworx.com/)
+ * @license    http://www.mageworx.com/LICENSE-1.0.html
+ */
+
+/**
+ * Magento Tweaks extension
+ *
+ * @category   MageWorx
+ * @package    MageWorx_Tweaks
+ * @author     MageWorx Dev Team
+ */
+-->
+<config>
+    <modules>
+        <MageWorx_Tweaks>
+            <version>1.0.7</version>
+        </MageWorx_Tweaks>
+    </modules>
+    
+    <frontend>
+        <translate>
+            <modules>
+                <MageWorx_Tweaks>
+                    <files>
+                        <default>MageWorx_Tweaks.csv</default>
+                    </files>
+                </MageWorx_Tweaks>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <tweaks>
+                    <file>tweaks.xml</file>
+                </tweaks>
+            </updates>
+        </layout>
+<!--        <events>
+            <checkout_type_onepage_save_order_after>
+                <observers>
+                    <tweaks>
+                        <type>singleton</type>
+                        <class>MageWorx_Tweaks_Model_Observer</class>
+                        <method>setCustomerIsSubscribed</method>
+                    </tweaks>
+                </observers>
+            </checkout_type_onepage_save_order_after>
+            <controller_action_predispatch_catalog_category_view>
+                <observers>
+                    <tweaks>
+                        <type>singleton</type>
+                        <class>MageWorx_Tweaks_Model_Observer</class>
+                        <method>initSingleProductRedirect</method>
+                    </tweaks>
+                </observers>
+            </controller_action_predispatch_catalog_category_view>
+            <catalog_helper_output_construct>
+                <observers>
+                    <tweaks>
+                        <type>singleton</type>
+                        <class>MageWorx_Tweaks_Model_Observer</class>
+                        <method>initProductDescriptionProcess</method>
+                    </tweaks>
+                </observers>
+            </catalog_helper_output_construct>
+            <catalog_block_product_list_collection>
+                <observers>
+                    <tweaks1>
+                        <type>singleton</type>
+                        <class>MageWorx_Tweaks_Model_Observer</class>
+                        <method>initProductCollectionNewestOrder</method>
+                    </tweaks1>
+					<tweaks2>
+                        <type>singleton</type>
+                        <class>MageWorx_Tweaks_Model_Observer</class>
+                        <method>initProductCollectionPriceUpOrder</method>
+                    </tweaks2>
+                    <tweaks3>
+                        <type>singleton</type>
+                        <class>MageWorx_Tweaks_Model_Observer</class>
+                        <method>initProductCollectionPriceDownOrder</method>
+                    </tweaks3>
+                    <tweaks4>
+                        <type>singleton</type>
+                        <class>MageWorx_Tweaks_Model_Observer</class>
+                        <method>initProductCollectionBestsellersOrder</method>
+                    </tweaks4>
+                    <tweaks5>
+                        <type>singleton</type>
+                        <class>MageWorx_Tweaks_Model_Observer</class>
+                        <method>initProductCollectionReviewOrder</method>
+                    </tweaks5>
+                </observers>
+            </catalog_block_product_list_collection>
+        </events>
+-->
+    </frontend>
+    
+    <adminhtml>
+        <translate>
+            <modules>
+                <MageWorx_Tweaks>
+                    <files>
+                        <default>MageWorx_Tweaks.csv</default>
+                    </files>
+                </MageWorx_Tweaks>
+            </modules>
+        </translate>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <mageworx_tweaks translate="title" module="mageworx">
+                                            <title>MageWorx &gt; Tweaks</title>
+                                            <sort_order>1</sort_order>
+                                            <children>
+                                                <tweakes translate="title" module="tweaks">
+                                                    <title>Magento Tweaks</title>
+                                                </tweakes>
+                                                <checkout_newsletter translate="title" module="tweaks">
+                                                    <title>Onepage Checkout Newsletter Checkbox</title>
+                                                </checkout_newsletter>
+                                            </children>
+                                        </mageworx_tweaks>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    
+    <global>
+        <models>
+            <sales_mysql4>
+                <rewrite>                    
+                    <order_grid_collection>MageWorx_Tweaks_Model_Mysql4_Order_Grid_Collection</order_grid_collection>
+                </rewrite>
+            </sales_mysql4>    
+            
+            <tweaks>
+                <class>MageWorx_Tweaks_Model</class>
+                <resourceModel>tweaks_mysql4</resourceModel>
+            </tweaks>
+            <tweaks_mysql4>
+                <class>MageWorx_Tweaks_Model_Mysql4</class>                
+            </tweaks_mysql4>
+            <core>
+                <rewrite>
+                    <email_template_filter>MageWorx_Tweaks_Model_Core_Email_Template_Filter</email_template_filter>
+                </rewrite>
+            </core>
+            <checkout>
+                <rewrite>
+                    <type_onepage>MageWorx_Tweaks_Model_Checkout_Type_Onepage</type_onepage>
+                </rewrite>
+            </checkout>
+            <adminhtml>
+                <rewrite>
+                    <system_config_source_catalog_listSort>MageWorx_Tweaks_Model_Adminhtml_System_Config_Source_Catalog_ListSort</system_config_source_catalog_listSort>
+                </rewrite>
+            </adminhtml>
+            <catalog>
+                <rewrite>
+                    <config>MageWorx_Tweaks_Model_Catalog_Config</config>
+                </rewrite>
+                <rewrite>
+                    <category_attribute_source_sortby>MageWorx_Tweaks_Model_Catalog_Category_Attribute_Source_Sortby</category_attribute_source_sortby>
+                </rewrite>
+            </catalog>
+        </models>
+        <resources>
+            <tweaks_setup>
+                <setup>
+                    <module>MageWorx_Tweaks</module>
+                    <class>MageWorx_Tweaks_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </tweaks_setup>
+            <tweaks_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </tweaks_write>
+            <tweaks_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </tweaks_read>
+        </resources>
+        <blocks>
+            <tweaks>
+                <class>MageWorx_Tweaks_Block</class>
+            </tweaks>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_view>MageWorx_Adminhtml_Block_Tweaks_Adminhtml_Sales_Order_View</sales_order_view>
+                    <sales_order_grid>MageWorx_Adminhtml_Block_Tweaks_Adminhtml_Sales_Order_Grid</sales_order_grid>
+                </rewrite>
+            </adminhtml>
+            <sales>
+                <rewrite>
+                    <order_history>MageWorx_Tweaks_Block_Sales_Order_History</order_history>                    
+                </rewrite>
+            </sales>
+        </blocks>
+        <helpers>
+            <tweaks>
+                <class>MageWorx_Tweaks_Helper</class>
+            </tweaks>
+        </helpers>
+    </global>
+    
+    <default>
+        <mageworx_tweaks>
+            <tweaks>
+                <onepage_checkout_newsletter_enable>0</onepage_checkout_newsletter_enable>
+                <category_single_product_redirect_enable>0</category_single_product_redirect_enable>
+                <product_description_templates_enable>0</product_description_templates_enable>
+                <order_view_prevnext_bottons_enable>0</order_view_prevnext_bottons_enable>
+                <order_by_bestsellers_enable>0</order_by_bestsellers_enable>
+                <order_by_newest_product_enable>0</order_by_newest_product_enable>
+                <order_by_price_up_enable>0</order_by_price_up_enable>
+                <order_by_price_down_enable>0</order_by_price_down_enable>
+                <order_view_products_column_frontend_enable>0</order_view_products_column_frontend_enable>
+                <order_view_products_column_backend_enable>0</order_view_products_column_backend_enable>                                                
+            </tweaks>
+            <checkout_newsletter>
+                <checked>1</checked>
+                <visible_guest>1</visible_guest>
+                <visible_register>1</visible_register>
+            </checkout_newsletter>
+        </mageworx_tweaks>
+    </default>
+</config>

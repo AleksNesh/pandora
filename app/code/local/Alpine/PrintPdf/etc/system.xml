@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <tabs>
+        <alpine>
+            <label>Alpine</label>
+            <sort_order>100</sort_order>
+        </alpine>
+    </tabs>
+    <sections>
+        <alpine_printpdf translate="label">
+            <label>Print PDF</label>
+            <tab>alpine</tab>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <sort_order>100</sort_order>
+            <groups>
+                <order translate="label">
+                    <label>Order</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>100</sort_order>
+                    <fields>
+                        <allnewwindow translate="label">
+                            <label>Download PDF</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allnewwindow>
+                    </fields>
+                </order>
+                <invoice translate="label">
+                    <label>Invoice</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>200</sort_order>
+                    <fields>
+                        <allnewwindow translate="label">
+                            <label>Download PDF</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allnewwindow>
+                    </fields>
+                </invoice>
+                <qz translate="label">
+                    <label>QZ-Plugin Settings</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>300</sort_order>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enable Plugin</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <full_size_x translate="label">
+                            <label>Full-Size printer width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </full_size_x>
+                        <full_size_y translate="label">
+                            <label>Full-Size printer height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </full_size_y>
+                        <label_size_x translate="label">
+                            <label>UPS Label printer width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </label_size_x>
+                        <label_size_y translate="label">
+                            <label>UPS Label printer height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </label_size_y>
+                        <close_window translate="label">
+                            <label>Close Window on Success</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>600</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </close_window>
+                        <label_page_custom_size translate="label">
+                            <label>Use custom page size</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>700</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </label_page_custom_size>
+                        <label_page_size_x translate="label">
+                            <label>UPS Label page width (px)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>800</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                                <label_page_custom_size>1</label_page_custom_size>
+                            </depends>
+                            <validate>validate-number validate-greater-than-zero required-entry</validate>
+                            <comment>Standard A4 - 595, standard US Letter - 612</comment>
+                        </label_page_size_x>
+                        <label_page_size_y translate="label">
+                            <label>UPS Label page height (px)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>900</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                                <label_page_custom_size>1</label_page_custom_size>
+                            </depends>
+                            <validate>validate-number validate-greater-than-zero required-entry</validate>
+                            <comment>Standard A4 - 842, standard US Letter - 792</comment>
+                        </label_page_size_y>
+                    </fields>
+                </qz>
+            </groups>
+        </alpine_printpdf>
+        <alpine_printpdf_printers translate="label">
+            <label>Printer Settings</label>
+            <tab>alpine</tab>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <sort_order>200</sort_order>
+            <groups>
+                <printer translate="label">
+                    <label>QZ-Plugin Settings</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <sort_order>100</sort_order>
+                    <expanded>1</expanded>
+                    <frontend_model>alpine_printpdf/system_config_fieldset_printer_applet</frontend_model>
+                    <comment>These configurations would be used only if QZ-Plugin is enabled</comment>
+                    <fields>
+                        <full translate="label">
+                            <label>Full-Size printer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>alpine_printpdf/source_printer_full</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </full>
+                        <label translate="label">
+                            <label>UPS Label printer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>alpine_printpdf/source_printer_label</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </label>
+                    </fields>
+                </printer>
+            </groups>
+        </alpine_printpdf_printers>
+        <sales_pdf>
+            <groups>
+                <order translate="label">
+                    <fields>
+                        <display_card translate="label">
+                            <label>Display gift wrap card information</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </display_card>
+                        <display_gift_message translate="label">
+                            <label>Display gift wrap message</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </display_gift_message>
+                    </fields>
+                </order>
+            </groups>
+        </sales_pdf>
+    </sections>
+</config>

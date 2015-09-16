@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+
+<layout>
+    <adminhtml_sales_order_view>
+        <reference name="head">
+            <action method="addJs">
+                <file>mage/adminhtml/sales.js</file>
+            </action>
+            <action method="addJs">
+                <file>mage/adminhtml/giftmessage.js</file>
+            </action>
+            <action method="addJs">
+                <file>mage/adminhtml/product/composite/configure.js</file>
+            </action>
+            
+            <action method="addJs">
+                <file>varien/configurable.js</file>
+            </action>
+            <action method="addJs">
+                <file>varien/product.js</file>
+            </action>
+            <action method="addJs">
+                <file>mage/adminhtml/giftoptions/tooltip.js</file>
+            </action>
+         
+            <action method="addJs">
+                <file>teo/jquery.min.js</file>
+            </action>
+            <action method="addJs">
+                <file>teo/jquery.easyui.min.js</file>
+            </action>
+            <action method="addJs">
+                <file>teo/easyloader.js</file>
+            </action>
+            <action method="addJs">
+                <file>teo/no-conflict.js</file>
+            </action>
+           
+        </reference>
+      
+        <reference name="js">
+            <block type="adminhtml/template" template="sales/order/create/js.phtml" name="create" />
+        </reference>
+        <reference name="left">
+
+            <action method="unsetChild">
+                <name>sales_order_tabs</name>
+            </action>
+             
+            <block type="orderedit/adminhtml_sales_order_view_tabs" name="sales_order_tabs">
+                
+                <block type="orderedit/adminhtml_sales_order_view_tab_info" name="order_tab_info">
+                    
+               
+                    <block type="orderedit/adminhtml_sales_order_view_info" name="order_info" template="orderedit/sales/order/view/edit.phtml"></block>
+                   
+                    <block type="orderedit/adminhtml_sales_order_view_items" name="order_items" template="orderedit/sales/order/view/items.phtml">
+                        <action method="addItemRender">
+                           
+                            <type>default</type>
+                            <block>orderedit/adminhtml_sales_order_view_items_renderer_default</block>
+                            <template>orderedit/sales/order/view/items/renderer/default.phtml</template>
+                        </action>
+                    </block>
+                  
+
+                    
+                    <block type="orderedit/adminhtml_sales_order_view_history" name="order_history" template="orderedit/sales/order/view/history.phtml"></block>
+                    
+                    <block type="orderedit/adminhtml_template" name="gift_options" template="orderedit/sales/order/giftoptions.phtml">
+                        <block type="orderedit/adminhtml_sales_order_view_giftmessage" name="order_giftmessage" template="orderedit/sales/order/view/giftmessage.phtml"></block>
+                    </block>
+                    <block type="orderedit/adminhtml_sales_order_totals" name="order_totals" template="orderedit/sales/order/totals.phtml">
+                        <block type="orderedit/adminhtml_sales_order_totals_tax" name="tax" template="orderedit/sales/order/totals/tax.phtml" />
+                  
+                    </block>
+                   
+                </block>
+                <action method="addTab">
+                    <name>order_info</name>
+                    <block>order_tab_info</block>
+                </action>
+                <action method="addTab">
+                    <name>order_invoices</name>
+                    <block>adminhtml/sales_order_view_tab_invoices</block>
+                </action>
+                <action method="addTab">
+                    <name>order_creditmemos</name>
+                    <block>adminhtml/sales_order_view_tab_creditmemos</block>
+                </action>
+                <action method="addTab">
+                    <name>order_shipments</name>
+                    <block>adminhtml/sales_order_view_tab_shipments</block>
+                </action>
+                <action method="addTab">
+                    <name>order_history</name>
+                    <block>adminhtml/sales_order_view_tab_history</block>
+                </action>
+                <action method="addTab">
+                    <name>order_transactions</name>
+                    <block>adminhtml/sales_order_view_tab_transactions</block>
+                </action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_view>
+  
+ 
+</layout>

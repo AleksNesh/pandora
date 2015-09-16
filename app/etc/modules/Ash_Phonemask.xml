@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Ash_Phonemask
+ *
+ * Custom phone mask for phone/fax fields
+ *
+ * @category    Ash
+ * @package     Ash_Phonemask
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @author      Josh Johnson (August Ash)
+ */
+-->
+<config>
+    <modules>
+        <Ash_Phonemask>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ash_Phonemask>
+    </modules>
+</config>

@@ -1,0 +1,14 @@
+LICENSE AGREEMENT - IMPORTANT - PLEASE READ THE TERMS AND CONDITIONS OF THIS LICENSE AGREEMENT CAREFULLY BEFORE CONTINUING WITH THE EXTENSION INSTALLATION: 
+
+The End-User License Agreement ("EULA") is a legal agreement between you (either an individual or a single entity) and XTENTO GmbH & Co. KG (referred to as "the licenser") 
+
+By installing, copying, or otherwise using this Magento extension, you agree to be bound by the terms of this EULA. This license agreement represents the entire agreement concerning the program between you and the licenser, and it supersedes any prior proposal, representation, or understanding between the parties. If you do not agree to the terms of this EULA, do not install or use this extension. 
+
+Disclaimer
+This code should be used at your own risk. The Software is provided on an "AS IS" basis, without warranty of any kind, including without limitation the warranties of merchantability, fitness for a particular purpose and non-infringement. The entire risk as to the quality and performance of the Software is borne by you. Should the Software prove defective, you and not XTENTO GmbH & Co. KG assume the entire cost of any service and repair. In addition, you must determine that the Software sufficiently meets your requirements. This disclaimer of warranty constitutes an essential part of the agreement. 
+
+Distribution
+You are not permitted to distribute any part of this software. 
+
+Limitations
+LIABILITY -- UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, TORT, CONTRACT, OR OTHERWISE, SHALL XTENTO GMBH & CO. KG BE LIABLE TO YOU OR ANY OTHER PERSON FOR ANY INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER COMMERCIAL DAMAGES OR LOSSES.

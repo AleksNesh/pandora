@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <!--<customer_account translate="label">
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="snap_card">
+                <name>giftcard</name>
+                <path>giftcard</path>
+                <label>My Giftcards</label>
+                <urlParams />
+                <sort_order>10</sort_order>
+                <available>snap_card::isEnabled</available>
+            </action>
+        </reference>
+    </customer_account>-->
+    
+    <snap_card_index_checkbalance>
+        <label>Balance Checker</label>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/checkbalance.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="snap_card/BalanceChecker" name="files" template="snap/balanceChecker.phtml" />
+        </reference>
+    </snap_card_index_checkbalance>
+
+    <checkout_cart_index translate="label">
+        <reference name="checkout.cart.coupon">
+            <action method="setTemplate">
+                <template>snap/cart/coupon.phtml</template>
+            </action>
+        </reference>
+    </checkout_cart_index>
+    
+    <checkout_onepage_index>
+        <reference name="footer">
+            <block type="core/template" name="test" template="snap/urlHelper.phtml"></block>
+        </reference>
+    </checkout_onepage_index>
+    
+    <checkout_onepage_index>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>css/giftcard.css</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/giftcard.js</name></action>
+        </reference>
+    </checkout_onepage_index>
+
+    <checkout_cart_index>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>css/giftcard.css</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/giftcard.js</name></action>
+        </reference>
+    </checkout_cart_index>
+
+    <checkout_onepage_paymentmethod>
+        <remove name="right"/>
+        <remove name="left"/>
+        <block type="snap_card/coupon" name="root" output="toHtml" template="snap/checkout/methods.phtml">
+            <block type="checkout/onepage_payment_methods" name="onepage.payment.methods" as="onepage.payment.methods" output="toHtml" template="checkout/onepage/payment/methods.phtml">
+                <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
+            </block>
+        </block>
+    </checkout_onepage_paymentmethod>
+
+    <!--Totals-->
+    <sales_order_view>
+        <reference name="order_totals">
+            <block type="snap_card/sales_order_card" name="giftcards" template="snap/order/card.phtml" />
+        </reference>
+    </sales_order_view>
+    <sales_order_print>
+        <reference name="order_totals">
+            <block type="snap_card/sales_order_card" name="giftcards" template="snap/order/card.phtml" after="-"/>
+        </reference>
+    </sales_order_print>
+    <sales_email_order_items>
+        <reference name="order_totals">
+            <block type="snap_card/sales_order_card" name="giftcards" template="snap/order/card.phtml" after="-"/>
+        </reference>
+    </sales_email_order_items>
+
+    <sales_order_invoice>
+        <reference name="invoice_totals">
+            <block type="snap_card/sales_order_card" name="giftcards" template="snap/order/card.phtml" />
+        </reference>
+    </sales_order_invoice>
+    <sales_order_printinvoice>
+        <reference name="invoice_totals">
+            <block type="snap_card/sales_order_card" name="giftcards" template="snap/order/card.phtml" />
+        </reference>
+    </sales_order_printinvoice>
+    <sales_email_order_invoice_items>
+        <reference name="invoice_totals">
+            <block type="snap_card/sales_order_card" name="giftcards" template="snap/order/card.phtml" />
+        </reference>
+    </sales_email_order_invoice_items>
+
+    <sales_order_creditmemo>
+        <reference name="creditmemo_totals">
+            <block type="snap_card/sales_order_card" name="giftcards" template="snap/order/card.phtml" />
+        </reference>
+    </sales_order_creditmemo>
+    <sales_order_printcreditmemo>
+        <reference name="creditmemo_totals">
+            <block type="snap_card/sales_order_card" name="giftcards" template="snap/order/card.phtml" />
+        </reference>
+    </sales_order_printcreditmemo>
+    <sales_email_order_creditmemo_items>
+        <reference name="creditmemo_totals">
+            <block type="snap_card/sales_order_card" name="giftcards" template="snap/order/card.phtml" />
+        </reference>
+    </sales_email_order_creditmemo_items>
+    <!--/Totals-->
+    
+</layout>

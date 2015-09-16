@@ -1,0 +1,11 @@
+<?php
+/**
+ * @category    Signaturelink
+ * @package     Smartbear_Alertsite
+ */
+?>
+<?php if($this->isRequiredSettingsNotification()):?>
+<div class="notification-global" id="notification">
+    <strong><?php echo $this->__('Thank you for installing the AlertSite Extension – Create your free account <a href="%s">here</a>.', $this->getManageUrl());?></strong>
+</div>
+<?php endif;?>

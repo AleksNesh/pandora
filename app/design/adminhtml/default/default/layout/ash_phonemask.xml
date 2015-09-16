@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Ash_Phonemask
+ *
+ * Custom phone mask for phone/fax fields
+ *
+ * @category    Ash
+ * @package     Ash_Phonemask
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @author      Josh Johnson (August Ash)
+ */
+-->
+<layout>
+    <default>
+        <reference name="head">
+            <action method="addItem">
+                <type>js</type>
+                <file>ash_phonemask/jquery.maskedinput.js</file>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <file>ash_phonemask/format_phone.js</file>
+            </action>
+        </reference>
+    </default>
+</layout>

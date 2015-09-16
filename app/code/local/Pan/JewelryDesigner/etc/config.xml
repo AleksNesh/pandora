@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Core module for providing common functionality between BraceletBuilder and other related submodules
+ *
+ * @category    Pan
+ * @package     Pan_JewelryDesigner
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Pan_JewelryDesigner>
+            <version>0.5.0</version>
+        </Pan_JewelryDesigner>
+    </modules>
+
+    <frontend>
+        <layout>
+            <updates>
+                <pan_jewelrydesigner>
+                    <file>pan_jewelrydesigner.xml</file>
+                </pan_jewelrydesigner>
+            </updates>
+        </layout>
+
+        <routers>
+            <pan_jewelrydesigner>
+                <use>standard</use>
+                <args>
+                    <module>Pan_JewelryDesigner</module>
+                    <frontName>jewelrydesigner</frontName>
+                </args>
+            </pan_jewelrydesigner>
+        </routers>
+        <!--
+        Add our custom attributes to the product collection (and the product flat table)
+        w/o having to specify the attribute being 'Used in Product Listing'
+        -->
+        <product>
+            <collection>
+                <attributes>
+                    <item_type/>
+                    <bead_width/>
+                    <exclude_from_designer/>
+                    <designer_canvas/>
+                    <bracelet_has_clip_spots/>
+                    <is_dangle_charm/>
+                </attributes>
+            </collection>
+        </product>
+    </frontend>
+
+    <admin>
+        <routers>
+            <pan_jewelrydesigner>
+                <use>admin</use>
+                <args>
+                    <module>Pan_JewelryDesigner</module>
+                    <frontName>jewelrydesigner</frontName>
+                </args>
+            </pan_jewelrydesigner>
+        </routers>
+    </admin>
+
+    <global>
+        <helpers>
+            <pan_jewelrydesigner>
+                <class>Pan_JewelryDesigner_Helper</class>
+            </pan_jewelrydesigner>
+        </helpers>
+
+        <blocks>
+            <pan_jewelrydesigner>
+                <class>Pan_JewelryDesigner_Block</class>
+            </pan_jewelrydesigner>
+        </blocks>
+
+        <models>
+            <pan_jewelrydesigner>
+                <class>Pan_JewelryDesigner_Model</class>
+                <resourceModel>pan_jewelrydesigner_resource</resourceModel>
+            </pan_jewelrydesigner>
+
+            <pan_jewelrydesigner_resource>
+                <class>Pan_JewelryDesigner_Model_Resource</class>
+                <entities>
+                    <design>
+                        <table>pan_jewelry_designs</table>
+                    </design>
+                    <design_item>
+                        <table>pan_jewelry_design_items</table>
+                    </design_item>
+                </entities>
+            </pan_jewelrydesigner_resource>
+        </models>
+
+        <resources>
+            <pan_jewelrydesigner_setup>
+                <setup>
+                    <module>Pan_JewelryDesigner</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </pan_jewelrydesigner_setup>
+        </resources>
+
+        <events>
+            <http_response_send_before>
+                <observers>
+                    <pan_jewelrydesigner_init>
+                        <type>singleton</type>
+                        <class>pan_jewelrydesigner/observer</class>
+                        <method>designerUiInit</method>
+                    </pan_jewelrydesigner_init>
+                </observers>
+            </http_response_send_before>
+        </events>
+
+    </global>
+
+    <default>
+        <pan_jewelrydesigner>
+            <general>
+                <enabled>1</enabled>
+                <enabled_in_admin>1</enabled_in_admin>
+            </general>
+        </pan_jewelrydesigner>
+    </default>
+
+</config>

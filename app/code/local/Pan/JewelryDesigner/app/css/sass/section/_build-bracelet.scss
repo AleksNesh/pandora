@@ -1,0 +1,23 @@
+/////////////////////////////////////
+// Build a Bracelet
+/////////////////////////////////////
+
+.mobile_message {
+    display: none;
+    background: #fff;
+    border: 1px solid #ddd;
+    font-size: 1.1em;
+    @extend %helvetica;
+    padding: 1em;
+
+    @include media($small-only) {
+        display: block;
+    }
+}
+
+.designer_app {
+
+    @include media($small-only) {
+        display: none;
+    }
+}

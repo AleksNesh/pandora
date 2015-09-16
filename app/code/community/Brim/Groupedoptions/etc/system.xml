@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Brim LLC Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Brim LLC Commercial Extension License
+ * that is bundled with this package in the file license.pdf.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.brimllc.com/license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to support@brimllc.com so we can send you a copy immediately.
+ *
+ * @category   Brim
+ * @package    Brim_Groupedoptions
+ * @copyright  Copyright (c) 2011-2012 Brim LLC
+ * @license    http://ecommerce.brimllc.com/license
+ */
+-->
+<config>
+    <tabs>
+        <brim translate="label" module="groupedoptions">
+            <label>Brim Extensions</label>
+            <sort_order>300</sort_order>
+        </brim>
+    </tabs>
+    <sections>
+        <groupedoptions translate="label" module="groupedoptions">
+            <class>separator-top</class>
+            <label>Grouped Options</label>
+            <tab>brim</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>20</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <frontend translate="label">
+                    <label>Frontend</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enable_template_override translate="label">
+                            <label>Enable Template Override</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[
+                                <p>Changes the template path of catalog/product/view/type/grouped.phtml to grouped-options/grouped.phtml</p>
+
+                                <p>Disable if your theme has a customized version of grouped.phtml and have added the required blocks.</p>
+                            ]]></comment>
+                        </enable_template_override>
+                        <enable_expanded_layerednav translate="label">
+                            <label>Enable Expanded Layered Nav</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment><![CDATA[
+                                <p>Grouped products will inherit layered navigation attributes of associated products children.</p>
+                            ]]></comment>
+                        </enable_expanded_layerednav>
+                    </fields>
+                </frontend>
+                <help>
+                    <label>Help</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[
+                        <h3>Get help when you need it</h3>
+                        <p>
+                            Checkout our <strong><a target="_blank" href="https://brimllc.zendesk.com/forums">Knowledge Base</a></strong>
+                            for answers to some common questions or <strong><a target="_blank" href="https://brimllc.zendesk.com/">Submit a Ticket</a></strong>
+                            if you need additional help.
+                        </p>
+                        <p>
+                            Make sure to follow <strong><a target="_blank" title="Brim on Twitter" href="http://twitter.com/brimllc">@brimllc</a></strong>
+                            on Twitter to not miss out on important product updates, news, and tips! </p>
+                        </p>
+                    ]]></comment>
+                </help>
+            </groups>
+        </groupedoptions>
+    </sections>
+</config>

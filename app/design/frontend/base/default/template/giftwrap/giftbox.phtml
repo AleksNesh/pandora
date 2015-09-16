@@ -1,0 +1,489 @@
+<?php
+$gifboxcollection = $this->getGiftboxCollection();
+$helper = Mage::helper('giftwrap');
+$papers = $this->getAllPapers();
+$giftcards = $this->getAllGiftcards();
+$giftwrap_color = Mage::getStoreConfig('giftwrap/style/giftwrap_color');
+Mage::getSingleton('checkout/session')->setData('giftwrap_color',$giftwrap_color);
+//zend_debug::dump(count($papers)); die('aaaaa');
+?>
+<div id="giftwrap-giftbox-additional">
+    <!--<button type="button" title="Create New Gift Box" onclick="showEditForm()" class="button btn-checkout" >
+        <span><span><?php echo $this->__('Create New Gift Box') ?></span></span>
+    </button>-->
+
+    <script type="text/javascript">
+        var is_check_giftwrap_form = false;
+        function showEditForm(id, hasgiftcard, item) {
+            if (item) {
+                if (id) {
+                    var url = '<?php echo $this->getUrl('giftwrap/index/giftbox') . 'id/' ?>' + id + '/item_id/' + item;
+                    url = checkUrl(url);
+                    if (!hasgiftcard) {
+
+                        TINY.box.show(url, 1, 642, 640, 1);
+
+
+                    } else {
+
+                        TINY.box.show(url, 1, 642, 980, 1);
+
+                    }
+                } else {
+                    var url = '<?php echo $this->getUrl('giftwrap/index/giftbox') . 'item_id/' ?>' + item;
+                    url = checkUrl(url);
+                    TINY.box.show(url, 1, 642, 655, 1);
+
+                }
+            }
+            else {
+                if (id) {
+                    var url = '<?php echo $this->getUrl('giftwrap/index/giftbox') . 'id/' ?>' + id;
+                    url = checkUrl(url);
+                    if (!hasgiftcard) {
+                        TINY.box.show(url, 1, 642, 640, 1);
+
+                    } else {
+
+                        TINY.box.show(url, 1, 642, 980, 1);
+
+                    }
+                } else {
+                    var url = '<?php echo $this->getUrl('giftwrap/index/giftbox') ?>';
+                    url = checkUrl(url);
+                    TINY.box.show(url, 1, 642, 655, 1);
+
+                }
+            }
+            afterShowGiftWrapForm();
+
+
+        }
+
+
+
+        function checkUrl(requestUrl) {
+            if (window.location.href.match('https://') && !requestUrl.match('https://'))
+                requestUrl = requestUrl.replace('http://', 'https://');
+            if (!window.location.href.match('https://') && requestUrl.match('https://'))
+                requestUrl = requestUrl.replace('https://', 'http://');
+            return requestUrl;
+        }
+
+        function showDeleteForm(id, hasgiftcard) {
+            var url = '<?php echo $this->getUrl('giftwrap/index/showdeletebox') . 'id/' ?>' + id + '/idcard/' + hasgiftcard;
+            url = checkUrl(url);
+            TINY.box.show(url, 1, 400, 200, 1);
+            // afterShowGiftWrapForm();
+        }
+
+        function deleteGiftbox(id) {
+            TINY.box.hide();
+            var url = '<?php echo $this->getUrl('giftwrap/index/deletegiftbox') . 'id/' ?>' + id;
+            url = checkUrl(url);
+            var request = new Ajax.Request(
+                    url,
+                    {
+                        method: 'post',
+                        onComplete: '',
+                        onSuccess: function(transport) {
+                            window.location.reload(true);
+                            response = transport.responseText;
+                            $('giftwrap-giftbox-additional').innerHTML = response;
+                        },
+                        onFailure: ""
+                    }
+            );
+        }
+        function showGiftcardForm() {
+            $('actions-button-id').show();
+            if ($('use_giftcard').checked) {
+                $('giftwrap-giftbox-giftcard').style.display = 'block';
+                $('tinybox').style.height = "auto";
+            } else {
+                $('giftwrap-giftbox-giftcard').style.display = 'none';
+                $('tinybox').style.height = "auto";
+            }
+
+        }
+        function showGiftcardForm_1() {
+            var showDivId = 'giftbox-giftcard';
+
+            if ($(showDivId).style.display == 'none') {
+                $(showDivId).style.display = 'block';
+                $('step-2').style.backgroundColor = '<?php echo '#' . $giftwrap_color ?>';
+                $('step-2').style.border = '1px solid <?php echo '#' . $giftwrap_color ?>';
+                $('tinybox').style.height = 'auto';
+                $('use_giftcard').checked = true;
+                var allcards = document.getElementsByName('giftbox_giftcard');
+                for (var i = 0; i < allcards.length; i++) {
+                    if (allcards[i].checked && allcards[i].value != 0) {
+                        if (document.getElementById('text_message')) {
+                            $('text_message').style.display = 'block';
+                            var hiddenInputGiftcard = 'max_len_' + allcards[i].value;
+                            var max = $(hiddenInputGiftcard).value;
+                            viewMaxLen(max);
+                        }
+                    }
+                }
+            } else {
+                $('step-2').style.backgroundColor = '#d5d5d5';
+                $('step-2').style.border = '1px solid #d5d5d5';
+                $(showDivId).style.display = 'none';
+                if (document.getElementById('text_message')) {
+                    $('text_message').style.display = 'none';
+                }
+                $('tinybox').style.height = 'auto';
+            }
+        }
+
+        function showGiftcardForm_2() {
+            var showDivId = 'giftbox-wraptype';
+
+            if ($(showDivId).style.display == 'none') {
+                $(showDivId).style.display = 'block';
+                $('step-3').style.backgroundColor = '<?php echo '#' . $giftwrap_color ?>';
+                $('step-3').style.border = '1px solid <?php echo '#' . $giftwrap_color ?>';
+                $('title_step3').style.display = 'block';
+                $('use_giftcard').checked = true;
+                $('tinybox').style.height = 'auto';
+                if ($('wrap_one').checked == true) {
+                    $('giftbox-item-div').show();
+                }
+            } else {
+                $('step-3').style.backgroundColor = '#d5d5d5';
+                $('step-3').style.border = '1px solid #d5d5d5';
+                $(showDivId).style.display = 'none';
+                if (document.getElementById('text_message')) {
+                    $('text_message').style.display = 'none';
+                }
+                $('tinybox').style.height = 'auto';
+                $('giftbox-item-div').style.display = 'none';
+            }
+        }
+
+        function loadListProduct() {
+            if ($('wrap_one').checked == true) {
+                $('giftbox-item-div').show();
+            }
+            else {
+                $('giftbox-item-div').hide();
+            }
+            if (document.getElementById('wrap_all')) {
+                if ($('wrap_all').checked == true) {
+                    $('giftbox-item-div').hide();
+                }
+            }
+            else {
+                $('giftbox-item-div').show();
+            }
+
+        }
+
+        function hideMessage() {
+            $('text_message').style.display = "none";
+        }
+
+        function checkMaxLen() {
+
+            var elements = $$('input[name="giftbox_giftcard"][type="radio"]');
+            var max = 0;
+            elements.each(function(el) {
+                if (el.checked) {
+                    max = $('max_len_' + el.value).value;
+                }
+            });
+            var element = $('giftcart-message-textarea');
+            if (max > 0) {
+
+                if (element.value.length > max) {
+                    element.value = element.value.substring(0, max);
+                } else {
+
+                }
+            }
+        }
+
+        function viewMaxLen(max) {
+            $('text_message').style.display = "block";
+            $('giftcard-message-maxlen').innerHTML = max;
+        }
+
+        function afterShowGiftWrapForm() {
+            // if(is_check_giftwrap_form == true){
+            // return;
+            // }
+            if ($('giftwrap-form') != null) {
+                var giftwrapForm = new VarienForm('giftwrap-form');
+                is_check_giftwrap_form = true;
+
+                /* var nametool = document.getElementsByName('gift-cart-tooltip');
+                 //alert(nametool[0].id);
+                 var i=0;
+                 for( i=0; i < nametool.length; i++)
+                 {					
+                 new Tooltip(nametool[i].id, nametool[i].id+'-quick-view');
+                 } */
+                if ($('help-item-1'))
+                    var giftTootip_1 = new Tooltip('help-item-1', 'help-item-1-info');
+                if ($('help-item-2'))
+                    var giftTootip_2 = new Tooltip('help-item-2', 'help-item-2-info');
+                if ($('help-message'))
+                    var giftTootip_3 = new Tooltip('help-message', 'help-message-info');
+                if ($('help-wrapped-total'))
+                    var giftTootip_4 = new Tooltip('help-wrapped-total', 'help-wrapped-total-info');
+                if ($('help-qty-wrapped'))
+                    var giftTootip_5 = new Tooltip('help-qty-wrapped', 'help-qty-wrapped-info');
+                if ($('help-tick'))
+                    var giftTootip_6 = new Tooltip('help-tick', 'help-tick-info');
+            } else {
+                setTimeout("afterShowGiftWrapForm()", 200);
+            }
+        }
+
+    </script>
+    <?php
+    if (count($gifboxcollection)):
+        ?>
+        <table class="data-table" id="giftwrap-giftbox">
+            <thead>
+                <tr>
+                    <th class="a-center"><?php echo $this->__('No'); ?></th>
+                    <th class="a-center"><?php echo $this->__('Gift Wrap'); ?></th>
+                    <th class="a-center"><?php echo $this->__('Gift Card'); ?></th>
+                    <th class="a-center"><?php echo $this->__('Wrapped Items'); ?></th>
+                    <th class="a-center"><?php echo $this->__('Unit Price'); ?></th>
+        <!--			<th class="a-center"><?php echo $this->__('Quantity'); ?></th>-->
+                    <th class="a-center"><?php echo $this->__('Subtotal'); ?></th>
+                    <th class="a-center"><?php echo $this->__('Action'); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $i = 1;
+                foreach ($gifboxcollection as $giftbox):
+                    $style = Mage::getModel('giftwrap/giftwrap')->load($giftbox->getStyleId());
+                    $giftcard = Mage::getModel('giftwrap/giftcard')->load($giftbox->getGiftcardId());
+                    ?>
+                    <tr>
+                        <td style="text-align:center">
+                            #<?php echo $i; ?>
+                        </td>
+                        <td style="text-align:center">
+                <li>
+                    <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/' . $style->getImage() ?>" width="75" height="75" />
+                </li>
+                <li >
+                    <?php echo $style->getTitle(); ?>
+                </li>
+                </td>
+                <td  style="text-align:center">
+                    <?php if ($giftcard->getId()) { ?>
+                    <li>
+                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/giftcard/' . $giftcard->getImage() ?>" width="75" height="75" />
+                    </li>
+                    <li >
+                        <?php echo $giftcard->getName(); ?>
+                    </li>
+                <?php } ?>
+                </td>
+                <td style="text-align:center">
+                    <ul>
+                        <?php
+                        $its = $giftbox->getItemCollection();
+                        $numberitems = 0;
+                        foreach ($its as $it) {
+                            $itemId = $it->getItemId();
+                            $item = Mage::getModel('sales/quote_item')->load($itemId);
+                            $product = Mage::getModel('catalog/product')->load($item->getProductId());
+                            $qty = $it->getQty();
+                            $numberitems += $qty;
+                            ?>
+                            <!--loki-->
+                            <?php
+                            //$idProduct=Mage::getSingleton('core/session')->getIdProduct();
+                            $classname = 'p' . $item->getProductId();
+                            ?>
+                            <li id="<?php echo $classname; ?>"><a href='<?php echo $product->getProductUrl(); ?>' ><?php echo $item->getName(); ?> </a><?php
+                                if ($item->getProductId()) {
+                                    echo ' - ' . intval($qty) . ' item(s)';
+                                }
+                                ?> </li>
+                            <!--end-->
+                            <?php
+                        }
+                        if (Mage::getStoreConfig('giftwrap/calculation/amount_on_number_items')) {
+                            $giftwrapAmount = floatval($numberitems) * (floatval($style->getPrice()) + floatval($giftcard->getPrice()));
+                        } else {
+                            $giftwrapAmount = floatval($style->getPrice()) + floatval($giftcard->getPrice());
+                        }
+                        ?>
+                    </ul>
+                </td>
+                <!--<td><?php echo Mage::helper('core')->currency(floatval($style->getPrice()) + floatval($giftcard->getPrice())); ?></td>-->
+           
+                <td  style="text-align:center"><?php echo Mage::helper('core')->currency( floatval($style->getPrice()) + floatval($giftcard->getPrice())); ?></td>
+        <!--			<td  style="text-align:center"><?php echo $giftbox->getQty(); ?></td>-->
+                
+                <td  style="text-align:center"><?php echo Mage::helper('core')->currency(floatval($giftwrapAmount) * floatval($giftbox->getQty())); ?></td>
+                
+                <td style="text-align:center">
+                    <!--<a href="" onclick="showEditForm('<?php echo $giftbox->getId(); ?>','<?php if ($giftbox->getGiftcardId()) echo $giftbox->getGiftcardId(); ?>');return false;"><?php echo $this->__('Edit'); ?></a>|
+                    <a href="" onclick="showDeleteForm('<?php echo $giftbox->getId(); ?>','<?php if ($giftbox->getGiftcardId()) echo $giftbox->getGiftcardId(); ?>');return false;"><?php echo $this->__('Delete'); ?></a>-->
+                    <ul id="giftwrap-action">
+                        <li>    
+                            <div>
+                                <input id="giftwrap_delete_<?php echo $giftbox->getId(); ?>" type="button" title="<?php echo $this->__('Delete') ?>" class="giftwrap_first giftwrap_delete" 
+                                <?php if ($helper->useConfirmDelete()): ?>
+                                           onclick="showDeleteForm('<?php echo $giftbox->getId(); ?>', '<?php
+                                           if ($giftbox->getGiftcardId())
+                                               echo $giftbox->getGiftcardId();
+                                           ?>');
+                        return false;"
+                                       <?php else: ?>
+                                           onclick="deleteGiftboxNow('<?php echo $giftbox->getId(); ?>', '<?php
+                                           if ($giftbox->getGiftcardId())
+                                               echo $giftbox->getGiftcardId();
+                                           ?>');
+                        return false;"
+                                       <?php endif ?>
+                                       />            
+                                <label for="giftwrap_delete_<?php echo $giftbox->getId(); ?>" class="giftwrap_last"><?php echo $this->__('Delete') ?></label>
+                            </div>
+                        </li>    
+                        <li>
+                            <div>
+                                <input type="button" id="giftwrap_edit_<?php echo $giftbox->getId(); ?>" title="<?php echo $this->__('Edit item parameters') ?>" class="giftwrap_first giftwrap_edit" onclick="showEditForm('<?php echo $giftbox->getId(); ?>', '<?php
+                                if ($giftbox->getGiftcardId())
+                                    echo $giftbox->getGiftcardId();
+                                ?>', '');
+                    return false;"/>
+                                <label for="giftwrap_edit_<?php echo $giftbox->getId(); ?>" class="giftwrap_last" id="giftwrap_edit_label"><?php echo $this->__('Edit') ?></label>
+                            </div>
+                        </li>    
+                    </ul>
+                </td>
+                </tr>
+                <?php $i++; ?>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <script type="text/javascript"> decorateTable('giftwrap-giftbox');</script>
+    <?php endif; ?>
+</div>
+<script type="text/javascript" >
+    function checkWrap(el, index) {
+        if (el.checked == true)
+            $('qty_wrap_' + index).disabled = '';
+        else
+            $('qty_wrap_' + index).disabled = 'disabled';
+    }
+
+    function checkWrapOne(el, index) {
+        if (el.checked == true)
+            $('wrapall-item-' + index).disabled = true;
+        else
+            $('wrapall-item-' + index).disabled = false;
+    }
+
+    function checkAll() {
+        var selectedItem = false;
+        var wraps = $$("input[name='wrap[]']");
+        if (wraps.length > 0) {
+            for (var i = 0; i < wraps.length; i++) {
+                if (wraps[i].checked) {
+                    if (!checkNumber($('qty_wrap_' + wraps[i].value))) {
+                        alert('Please fill numeric for quantity wrap!');
+                        return false;
+                    }
+                    if (!$('qty_wrap_' + wraps[i].value).value || (parseInt($('qty_wrap_' + wraps[i].value).value) == 0)) {
+                        alert('Please fill quantity of item !');
+                        return false;
+                    }
+                    selectedItem = true;
+                    var qtycanwrap = $('qty_can_wrapped_' + wraps[i].value).value;
+                    var qtywrap = $('qty_wrap_' + wraps[i].value).value;
+                    if (parseInt(qtycanwrap) < parseInt(qtywrap)) {
+                        alert("Can't save gift box because qty wrap is too large !");
+                        return false;
+                    }
+                }
+            }
+        }
+        if (!selectedItem) {
+            if ($('wrap_one') && $('wrap_one').checked) {
+                alert("Please select item to wrap !");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    function checkNumber(el) {
+        var check = true;
+        var value = el.value;
+        for (var i = 0; i < value.length; ++i)
+        {
+            var new_key = value.charAt(i); //cycle through characters
+            if (((new_key < "0") || (new_key > "9")) &&
+                    !(new_key == ""))
+            {
+                check = false;
+                break;
+            }
+        }
+        return check;
+    }
+
+    function deleteGiftboxNow(id) {
+        // var check = confirm("Do you want to delete?");
+        var check = true;
+        if (check == true) {
+            var url = '<?php echo $this->getUrl('giftwrap/index/deletegiftbox') . 'id/' ?>' + id;
+            var request = new Ajax.Request(
+                    url,
+                    {
+                        method: 'post',
+                        onComplete: '',
+                        onSuccess: function(transport) {
+                            window.location.reload(true);
+                            response = transport.responseText;
+                            $('giftwrap-giftbox-additional').innerHTML = response;
+                        },
+                        onFailure: ""
+                    }
+            );
+        } else {
+            return;
+        }
+    }
+</script>
+<div style="display:none;z-index:9999;" id="help-item-1-info">
+    <?php echo $helper->getNoteConfig('first_hover'); ?>
+</div>
+<div style="display:none;z-index:9999;" id="help-item-2-info">
+    <?php echo $helper->getNoteConfig('second_hover'); ?>
+</div>
+<div style="display:none;z-index:9999;" id="help-message-info">
+    <?php echo $helper->getNoteConfig('third_hover'); ?>
+</div>
+<div style="display:none;z-index:9999;" id="help-wrapped-total-info">
+    <?php echo $helper->getNoteConfig('four_hover'); ?>
+</div>
+<div style="display:none;z-index:9999;" id="help-qty-wrapped-info">
+    <?php echo $helper->getNoteConfig('five_hover'); ?>
+</div>
+<div style="display:none;z-index:9999;" id="help-tick-info">
+    <?php echo $helper->getNoteConfig('six_hover'); ?>
+</div>
+<style>
+    @media (max-width: 650px){
+        #slider-features #images{
+            width:<?php echo (93 * count($papers) + 13 * (count($papers) - 1) + 28) . 'px' ?>
+        }
+        #giftbox-giftcard #images2{
+            width:<?php echo (93 * count($giftcards) + 13 * (count($giftcards) - 1) + 28) . 'px' ?>
+        }
+    }
+</style>

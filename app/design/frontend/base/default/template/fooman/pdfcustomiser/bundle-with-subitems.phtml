@@ -1,0 +1,348 @@
+<?php
+$pdfItem = $this->getPdfItem();
+$subItems = $this->getSubItems();
+$columns = $this->getPdfHelper()->getPdfColumnHeaders();
+$vertSpacing = $this->getVertSpacing();
+$styleOverride = $this->getStyleOverride();
+$position = $this->getPosition();
+$maxColumns = sizeof($columns);
+$nameColumnWidth = 0;
+$skuWidth = 0;
+$colcounter = 0;
+?>
+
+<?php //if name is before sku we expand the sku column to the remaining width ?>
+<?php foreach ($columns as $column) : ?>
+    <?php if ($column['key'] == 'name' || $column['key'] == 'name-sku') : ?>
+        <td style="<?php echo ($styleOverride ? $styleOverride['style_first'] : $column['style_first']) ?>"
+            width="<?php echo $column['width'] ?>%"
+            ><?php echo $vertSpacing . $pdfItem['productDetails']['Name']
+                . ($column['key'] == 'name-sku' ? '<br/>' . $pdfItem['productDetails']['Sku'] : '')?></td>
+        <?php $nameColumnWidth += $column['width'];
+        $colcounter++;?>
+    <?php elseif ($column['key'] == 'sku'): ?>
+        <?php $skuWidth = $nameColumnWidth > 0 ? 100 - $nameColumnWidth : $column['width']; ?>
+        <?php $skuCols = $nameColumnWidth > 0 ? $maxColumns - $colcounter : 1; ?>
+        <td style="<?php echo ($styleOverride ? $styleOverride['style_first'] : $column['style_first']) ?>"
+            width="<?php echo $skuWidth ?>%"
+            colspan="<?php echo $skuCols ?>"
+            ><?php echo $vertSpacing . $pdfItem['productDetails']['Sku'] ?></td>
+        <?php $colcounter++; ?>
+    <?php elseif ($column['key'] == 'position'): ?>
+        <td style="<?php echo ($styleOverride ? $styleOverride['style_first'] : $column['style_first']) ?>"
+            width="<?php echo $column['width'] ?>%"
+            ><?php echo $vertSpacing . $position .'.' ?></td>
+        <?php $nameColumnWidth += $column['width'];
+        $colcounter++; ?>
+    <?php endif; ?>
+<?php endforeach; ?>
+<?php if ($colcounter < $maxColumns && ($nameColumnWidth + $skuWidth < 100)): ?>
+    <td style="<?php echo ($styleOverride ? $styleOverride['style_first'] : $column['style_first']) ?>"
+        colspan="<?php echo  ($maxColumns - $colcounter) ?>"
+        width="<?php echo (100 - $nameColumnWidth - $skuWidth) ?>%"></td>
+<?php endif; ?>
+<?php if ($pdfItem['productDetails']['Options']): ?>
+    </tr>
+    <tr nobr="true">
+        <td style="" colspan="<?php echo  $maxColumns ?>" width="100%">
+            <?php $options = $pdfItem['productDetails']['Options'] ?>
+            <?php if ($options) : ?>
+                <?php if (isset($options['options'])) : ?>
+                    <?php foreach ($options['options'] as $option) : ?>
+                        <?php if ($option['label'] == 'Detail') : ?>
+                            <?php foreach (explode("\n", $option['value']) as $detailLines) : ?>
+                                <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding($detailLines) ?>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <?php //Aitoc Custom Product Options adds a whole bunch of JS ?>
+                            <?php //filter it out here ?>
+                            <?php if (strpos($option['value'], 'Aitcg.Main') === false) : ?>
+                                <?php $printValue = isset($option['print_value']) ? $option['print_value'] : $option['value'] ?>
+                                <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding($option['label'] . ': ' . $printValue) ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <?php echo '<br/>' ?>
+                <?php endif; ?>
+                <?php if (isset($options['additional_options'])) : ?>
+                    <?php foreach ($options['additional_options'] as $additionalOption) : ?>
+                        <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding(
+                                $additionalOption['label'] . ': ' . $additionalOption['value']) ?>
+                    <?php endforeach; ?>
+                    <?php echo '<br/>' ?>
+                <?php endif; ?>
+                <?php if (isset($options['attributes_info'])) : ?>
+                    <?php foreach ($options['attributes_info'] as $attribute) : ?>
+                        <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding(
+                                $attribute['label'] . ': ' . $attribute['value']) ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php if(!empty($pdfItem['productDetails']['Subitems'])):?>
+                <?php foreach ($pdfItem['productDetails']['Subitems'] as $subitem) :?>
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $subitem['qty']?> x <?php echo $subitem['Name']?>
+                <?php endforeach;?>
+            <?php endif;?>
+            <?php echo $this->getPdfHelper()->OutputGiftMessageItem($pdfItem['giftMessage']) . $vertSpacing ?>
+        </td>
+<?php endif; ?>
+</tr>
+<?php
+//Display subitems
+$nrSubItems = sizeof($subItems);
+$i = 1;
+foreach ($subItems as $bundleItem) {
+    $isLast = $i == $nrSubItems;
+    $style = ($bundleItem['productDetails']['Options'])
+        ? ''
+        : ($isLast ? $column['style_last'] : '');
+    if ($styleOverride) {
+        $style = ($bundleItem['productDetails']['Options'])
+            ? ''
+            : ($isLast ? $styleOverride['style_last'] : '');
+    }
+    ?>
+
+    <tr nobr="true">
+    <?php foreach ($columns as $column): ?>
+        <?php switch ($column['key']) {
+        case 'position':
+            //position is not displayed on bundle items
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'name':
+        case 'name-space':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                >&nbsp;&nbsp;&nbsp;&nbsp;<?php echo
+                    $bundleItem['productDetails']['Name'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'name-sku':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                >&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $bundleItem['productDetails']['Name']?>
+                <br/>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo
+                    $bundleItem['productDetails']['Sku'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'sku':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $bundleItem['productDetails']['Sku'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'custom':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $bundleItem['productDetails']['custom'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'custom2':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $bundleItem['productDetails']['custom2'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'custom3':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $bundleItem['productDetails']['custom3'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'custom4':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $bundleItem['productDetails']['custom4'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'custom5':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $bundleItem['productDetails']['custom5'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'image':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo ($bundleItem['image'] ? '<img src="' . $bundleItem['image'] . '" height="180"/>' : '')
+                    . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'barcode':
+            $barcodeParams = $this->getPdf()->serializeTCPDFtagParameters(
+                array(
+                    $bundleItem['productDetails']['Sku'],
+                    $this->getPdfHelper()->getBarcodeType(),
+                    '', '', '35', '8'
+                )
+            );?>
+            <td valign="top"
+                style="<?php echo $style ?>"
+                width="<?php echo $column['width'] ?>%"
+                >
+                <tcpdf method="write1DBarcode2" params="<?php echo $barcodeParams ?>"/>
+                <?php echo ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'qty_ordered':
+            ?>
+            <td style="<?php echo $style ?>"
+                align=" <?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $bundleItem['qty_ordered'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'qty_backordered':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $bundleItem['qty_backordered'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'qty':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $bundleItem['qty'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'price':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $this->getPdfHelper()->OutputPrice(
+                    $bundleItem['price'],
+                    $bundleItem['basePrice'],
+                    $this->getPdfHelper()->getDisplayBoth(),
+                    $this->getPdfHelper()->getSalesObject()
+                ) . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'discount':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $this->getPdfHelper()->OutputPrice(
+                    $bundleItem['discountAmount'],
+                    $bundleItem['baseDiscountAmount'],
+                    $this->getPdfHelper()->getDisplayBoth(),
+                    $this->getPdfHelper()->getSalesObject()
+                ) . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'tax':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $this->getPdfHelper()->OutputPrice(
+                    $bundleItem['taxAmount'],
+                    $bundleItem['baseTaxAmount'],
+                    $this->getPdfHelper()->getDisplayBoth(),
+                    $this->getPdfHelper()->getSalesObject()
+                ) . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'taxrate':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $bundleItem['taxPercent'] . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'subtotal':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $this->getPdfHelper()->OutputPrice(
+                    $bundleItem['subtotal'],
+                    $bundleItem['baseSubtotal'],
+                    $this->getPdfHelper()->getDisplayBoth(),
+                    $this->getPdfHelper()->getSalesObject()
+                ) . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'subtotal2':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $this->getPdfHelper()->OutputPrice(
+                        $bundleItem['subtotal2'],
+                        $bundleItem['baseSubtotal2'],
+                        $this->getPdfHelper()->getDisplayBoth(),
+                        $this->getPdfHelper()->getSalesObject()
+                    ) . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break;
+        case 'rowtotal2':
+            ?>
+            <td style="<?php echo $style ?>"
+                align="<?php echo $column['align'] ?>"
+                width="<?php echo $column['width'] ?>%"
+                ><?php echo $this->getPdfHelper()->OutputPrice(
+                    $bundleItem['rowTotal2'],
+                    $bundleItem['baseRowTotal2'],
+                    $this->getPdfHelper()->getDisplayBoth(),
+                    $this->getPdfHelper()->getSalesObject()
+                ) . ($isLast ? $vertSpacing : '') ?></td>
+            <?php break; ?>
+        <?php
+        } ?>
+    <?php endforeach; ?>
+    <?php if ($bundleItem['productDetails']['Options']): ?>
+        </tr>
+        <tr nobr="true">
+        <td style="<?php if($isLast) {echo ($styleOverride ? $styleOverride['style_last'] : $column['style_last']);} ?>"
+            colspan="<?php echo $maxColumns ?>" width="100%">
+            <?php $options = $bundleItem['productDetails']['Options'] ?>
+            <?php if ($options) : ?>
+                <?php if (isset($options['options'])) : ?>
+                    <?php foreach ($options['options'] as $option) : ?>
+                        <?php if ($option['label'] == 'Detail') : ?>
+                            <?php foreach (explode("\n", $option['value']) as $detailLines) : ?>
+                                <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding($detailLines) ?>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <?php //Aitoc Custom Product Options adds a whole bunch of JS ?>
+                            <?php //filter it out here ?>
+                            <?php if (strpos($option['value'], 'Aitcg.Main') === false) : ?>
+                                <?php $printValue = isset($option['print_value']) ? $option['print_value'] : $option['value'] ?>
+                                <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding($option['label'] . ': ' . $printValue) ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <?php echo '<br/>' ?>
+                <?php endif; ?>
+                <?php if (isset($options['additional_options'])) : ?>
+                    <?php foreach ($options['additional_options'] as $additionalOption) : ?>
+                        <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding(
+                                $additionalOption['label'] . ': ' . $additionalOption['value']) ?>
+                    <?php endforeach; ?>
+                    <?php echo '<br/>' ?>
+                <?php endif; ?>
+                <?php if (isset($options['attributes_info'])) : ?>
+                    <?php foreach ($options['attributes_info'] as $attribute) : ?>
+                        <?php echo '<br/>&nbsp;&nbsp;' . $this->getPdfHelper()->fixEncoding(
+                                $attribute['label'] . ': ' . $attribute['value']) ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php echo ($isLast ? $vertSpacing : '') ?></td>
+    <?php endif; ?>
+    <?php if(!$isLast):?>
+        </tr>
+    <?php endif;?>
+    <?php $i++; ?>
+<?php
+} ?>

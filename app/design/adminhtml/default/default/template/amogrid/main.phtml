@@ -1,0 +1,98 @@
+<?php
+/**
+* @author Amasty Team
+* @copyright Amasty
+* @package Amasty_Ogrid
+*/
+    $columns = $this->getColumns();
+?>
+<style>
+    .attributes-table td{
+       border-bottom: 1px solid #DFDFDF; 
+       padding: 3px 0px;
+    }
+    
+    .attributes-table td.label{
+        border-bottom-width: 2px;
+        font-weight: bold;
+    }
+    
+    .attributes-table td.group{
+        /*font-style: italic;*/
+        border-bottom-width: 2px;
+        color: #EB5E00;
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+    
+    input.static{
+        width: 100%;
+    }
+</style>
+<table cellspacing="0" class="attributes-table">
+    
+
+<?php 
+    $type = NULL;
+    foreach ($columns as $column) {
+        if ($type != $column['type']){
+?>
+        <tr>
+            <td class="group" colspan="2">
+                <?php
+                    print $this->getColumnTypeLabel($column['type']);
+                ?>
+            </td>
+            
+            <td class="label">
+                <?php
+                    print $this->__("Width(px)")
+                ?>
+            </td>
+            <td class="label">
+                <?php
+                    print $this->__("Order")
+                ?>
+            </td>
+        </tr>
+<?php
+        }
+?>
+    <tr>
+        <td>
+            <input <?php
+                print isset($column['available']) && $column['available'] == 1 ? 'checked' : ''
+            ?> id="column_<?php print $column['key']?>_available" type="checkbox" name="column[<?php print $column['key']?>][available]" value="1" />
+        </td>
+        <td style="padding-left: 10px;">
+            
+            <?php if ($column['type'] == 'static') {?>
+                <input class="input-text static" 
+                       value="<?php print $column['relation']?>" type="text" 
+                       name="column[<?php print $column['key']?>][relation]"
+                       placeholder="<?php print $this->__("Type column key here")?>"
+                />
+            <?php } else {?>
+            <label for="column_<?php print $column['key']?>_available"><?php print $column['name']?></label>
+            <?php } ?>
+        </td>
+        <td style="padding-left: 10px;padding-right: 10px;">
+            <input class="validate-zero-or-greater input-text " style="width: 40px;"
+                       value="<?php print $column['width']?>" type="text" 
+                       name="column[<?php print $column['key']?>][width]"
+                       placeholder="<?php print $this->__("default")?>"
+                />
+        </td>
+        <td style="padding-left: 5px;">
+            <input style="width: 30px;" class=" required-entry validate-zero-or-greater input-text required-entry" type="text" name="column[<?php print $column['key']?>][position]" value="<?php print $column['position']?>" />
+            <input type="hidden" name="column[<?php print $column['key']?>][type]" value="<?php print $column['type']?>" />
+        </td>
+    </tr>
+    
+    
+    
+<?php
+        $type = $column['type'];
+    }
+?>
+</table>

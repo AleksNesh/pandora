@@ -1,0 +1,1310 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <foomancommon>
+            <groups>
+                <extensions>
+                    <fields>
+                        <pdfcustomiser translate="label" module="pdfcustomiser">
+                            <label>Pdf Customiser</label>
+                            <frontend_type>label</frontend_type>
+                            <frontend_model>pdfcustomiser/adminhtml_extensioninfo</frontend_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </pdfcustomiser>
+                    </fields>
+                </extensions>
+            </groups>
+        </foomancommon>
+        <sales_email>
+            <groups>
+                <order>
+                    <fields>
+                        <attachpdf translate="label">
+                            <label>Attach Order as Pdf</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </attachpdf>
+                    </fields>
+                </order>
+            </groups>
+        </sales_email>
+        <sales_pdf>
+            <groups>
+                <all translate="label comment">
+                    <label>Pdf Customiser by Fooman</label>
+                    <sort_order>1</sort_order>
+                    <comment><![CDATA[<br />
+                    <div class="box">
+                    <p>For detailed instructions please refer to the Pdf Customiser User Manual <a href="http://cdn.fooman.co.nz/media/custom/upload/UserManual-FoomanPdfCustomiser.pdf">here</a>.</p>
+                    </div>
+                    <script type="text/javascript">
+                    document.observe("dom:loaded", function() {
+
+                            var logoPlacement = Class.create();
+                            logoPlacement.prototype = {
+                                    initialize : function()
+                                    {
+                                        Event.observe($('sales_pdf_all_alllogoplacement'), 'change', this.changePlacement.bind(this));
+                                        this.changePlacement();
+
+                                    },
+                                    changePlacement: function(){
+
+                                        if($('sales_pdf_all_alllogoplacement').getValue() == 'manual'){
+                                            $('sales_pdf_all_alllogoheight').up().up().show();
+                                            $('sales_pdf_all_alllogowidth').up().up().show();
+                                            $('sales_pdf_all_alllogofromtop').up().up().show();
+                                            $('sales_pdf_all_alllogofromleft').up().up().show();
+                                        }else{
+                                            $('sales_pdf_all_alllogoheight').up().up().hide();
+                                            $('sales_pdf_all_alllogowidth').up().up().hide();
+                                            $('sales_pdf_all_alllogofromtop').up().up().hide();
+                                            $('sales_pdf_all_alllogofromleft').up().up().hide();
+
+                                        }
+
+                                    }
+                             }
+                            settings = new logoPlacement();
+                    });
+                    </script>
+
+                    ]]>
+                    </comment>
+                    <frontend_type>text</frontend_type>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <alllogo translate="label">
+                            <label>Logo for the Pdf</label>
+                            <tooltip>Upload your logo as a gif, jpeg or png file. A good size for the automatic
+                                placement versions is 700 pixels wide and 300 pixels high.</tooltip>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">pdf-printouts</upload_dir>
+                            <base_url type="media" scope_info="1">pdf-printouts</base_url>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </alllogo>
+                        <alllogoplacement translate="label">
+                            <label>Placement of Logo</label>
+                            <tooltip><![CDATA[• Automatic Right – the logo will be positioned in the top right corner,
+                                scaled to measure 2.5cm high (with width scaled accordingly,
+                                depending on the shape/size of the file)<br/>
+                                • Automatic Left – the logo will be positioned in the top left corner,
+                                scaled to measure 2.5cm high (with width scaled accordingly,
+                                depending on the shape/size of the file)<br/>
+                                • No-Scaling Right – the logo will be positioned in the top right
+                                corner, but will not be scaled to fit<br/>
+                                • No-Scaling Left – the logo will be positioned in the top left corner,
+                                but will not be scaled to fit<br/>
+                                • Manual – additional options will appear to customise the position
+                                and dimensions of the logo. The text on the Pdf will always appear
+                                below the logo placement, so it is recommended to place the logo
+                                in the top of the page.]]></tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_logoPlacementOptions</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </alllogoplacement>
+                        <alllogowidth translate="label">
+                            <label>Logo Width</label>
+                            <comment>in millimeters</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </alllogowidth>
+                        <alllogoheight translate="label">
+                            <label>Logo Height</label>
+                            <comment>in millimeters</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </alllogoheight>
+                        <alllogofromleft translate="label">
+                            <label>Logo top-left Corner from the left</label>
+                            <comment>in millimeters</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </alllogofromleft>
+                        <alllogofromtop translate="label">
+                            <label>Logo top-left Corner from the top</label>
+                            <comment>in millimeters</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </alllogofromtop>
+                        <allbgimage translate="label">
+                            <label>Background Image for Pdf</label>
+                            <tooltip>Upload an image that will be used as a background to the pdfs. Images will
+                                be scaled (but not distorted) to fit the page.</tooltip>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">pdf-printouts</upload_dir>
+                            <base_url type="media" scope_info="1">pdf-printouts</base_url>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allbgimage>
+                        <alllogobgprinting translate="label">
+                            <label>Hide Logo/Background when Printing as Admin</label>
+                            <tooltip>Hide logo and/or background when printing pdfs via admin.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_logoBackgroundPrintingOptions</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>>
+                            <show_in_store>1</show_in_store>
+                        </alllogobgprinting>
+                        <allbgimagefirstpageonly translate="label">
+                            <label>Display Background only on first page</label>
+                            <tooltip>Applicable only if you have uploaded a background image. When set to No,
+                                the image will appear on each page of the pdf document. When set to Yes,
+                                the image will only appear on the first page of the pdf document.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allbgimagefirstpageonly>
+                        <allowneraddress translate="label">
+                            <label>Store Address</label>
+                            <tooltip>Enter your store's address as you would like it to appear in the pdfs.
+                                This field can also be used for free text or {{}} commands such as
+                                {{var order.customer_id}}. Refer to "Developer Bonus - {{}} Commands" in the manual for more information.</tooltip>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowneraddress>
+                        <allfooter1 translate="label">
+                            <label>Footer Block 1</label>
+                            <tooltip><![CDATA[You can use up to 4 footer blocks to add customised footer content.
+                                The width of the footer blocks will automatically adjust to accommodate 1, 2, 3 or 4 footers
+                                in the space available. <br/><br/>
+                                You can use simple HTML like &lt;p&gt;&lt;/p&gt;, &lt;br/&gt; in these fields.
+                                To add an image, you could enter something like&lt;img src="http://example.com/path/to/image.jpg"/&gt;.<br/><br/>
+                                Footers will start where the bottom and side margins are set. For example,
+                                if the bottom margin is set to 5, the footer will start at 5cm above the bottom of the page.
+                                Make sure the bottom margin is large enough if you have a lot of text in the footers.]]></tooltip>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allfooter1>
+                        <allfooter2 translate="label">
+                            <label>Footer Block 2</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allfooter2>
+                        <allfooter3 translate="label">
+                            <label>Footer Block 3</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>23</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allfooter3>
+                        <allfooter4 translate="label">
+                            <label>Footer Block 4</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>24</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allfooter4>
+                        <allprintbarcode translate="label">
+                            <label>Display Order Barcode</label>
+                            <tooltip>When set to “Yes”, the order number will be displayed as a barcode,
+                            in addition to being displayed as a number.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allprintbarcode>
+                        <allprinttrackingbarcode translate="label">
+                            <label>Display Tracking Number as Barcode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>27</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allprinttrackingbarcode>
+                        <allrowtotaltaxinclusive translate="label">
+                            <label>Display Row Subtotal Including Tax</label>
+                            <tooltip><![CDATA[When set to No, individual item row subtotals will be displayed as tax exclusive.
+                                When set to Yes, individual item row subtotals will be displayed as tax inclusive.<br/><br/>
+                                This setting is only effective if <b>Tax > Orders, Invoices, Creditmemos Display Settings > Display Prices</b>
+                                (below) is set to “Excluding Tax”. Otherwise, this setting has no effect.]]></tooltip>
+                            <comment>is only effective if Tax > Orders, Invoices, Creditmemos Display Settings > Prices is set to not display taxes</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>28</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allrowtotaltaxinclusive>
+                        <allonly1grandtotal translate="label">
+                            <label>Display only one Grand Total</label>
+                            <tooltip><![CDATA[When set to No, it will have the following effect:<br/>
+                                no &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Subtotal<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Shipping<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Grandtotal excl. tax<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tax<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Grandtotal incl. tax<br/><br/>
+                                When set to Yes, it will have the following effect:<br/>
+                                yes &nbsp;&nbsp;&nbsp;&nbsp; Subtotal<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Shipping<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tax<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Grandtotal]]></tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>29</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allonly1grandtotal>
+                        <displayboth translate="label">
+                            <label>Display Base and Order Currency</label>
+                            <tooltip>When set to No, pdfs will always display the order currency. When set to Yes,
+                                pdfs will display the base currency in addition to order currency.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </displayboth>
+                        <allpagesize translate="label">
+                            <label>Page Size</label>
+                            <tooltip>Choose from A4 or letter.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_pagesizes</source_model>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allpagesize>
+                        <allpageorientation translate="label">
+                            <label>Page Orientation</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_pageorientation</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allpageorientation>
+                        <allmargintop translate="label">
+                            <label>Top Margin</label>
+                            <comment>in milimeters</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allmargintop>
+                        <allmarginbottom translate="label">
+                            <label>Bottom Margin</label>
+                            <tooltip>Set the bottom margin large enough to accommodate any footers and the page number.
+                                If the bottom margin is set too low, this can result in the footer blocks taking up all available space
+                                and there being no room to display the page number.</tooltip>
+                            <comment>in milimeters</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allmarginbottom>
+                        <allmarginsides translate="label">
+                            <label>Side Margins</label>
+                            <comment>in milimeters</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allmarginsides>
+                        <allaltlayout translate="label">
+                            <label>Use Alternative Layout</label>
+                            <tooltip><![CDATA[When set to Yes, a box will be added around the following headings:<br/>
+                                • Sold to<br/>
+                                • Ship to<br/>
+                                • Payment method<br/>
+                                • Shipping method<br/>
+                                • Column<br/><br/>
+                                Refer to Pdf Layout Options in the manual for a comparison of the standard layout and alternative layout.]]></tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>65</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allaltlayout>
+                        <allfont translate="label">
+                            <label>Font</label>
+                            <tooltip><![CDATA[System fonts (Helvetica, Times and Courier) offer the largest potential pdf size reduction
+                                (up to 95%), but might not show all international characters (see troubleshooting)<br/>
+                                • Dejavu fonts offer broader international character support (UTF-8),
+                                but do not offer the same pdf size reduction as system fonts<br/>
+                                • Use the Arial fonts for Chinese, Korean or Japanese markets where the Adobe character package
+                                is widely installed. This option also offers up to 90% potential pdf size reduction.]]></tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_fonts</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allfont>
+                        <allcustomfont translate="label">
+                            <label>Upload Custom Font</label>
+                            <tooltip>Upload any true type font with a .ttf file extension. Once uploaded, save the configuration.
+                                You will then be able to select your font from the drop down box in the “Font” setting above this option.
+                                You must have a writable lib/tcpdf/fonts directory to use this setting. Custom fonts do not offer the
+                                same potential pdf size reduction as system fonts.</tooltip>
+                            <frontend_type>file</frontend_type>
+                            <upload_dir config="system/filesystem/media">pdf-printouts</upload_dir>
+                            <backend_model>pdfcustomiser/system_customfont</backend_model>
+                            <comment>Upload your font here (.ttf file extension).</comment>
+                            <sort_order>75</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allcustomfont>
+                        <allfontsize translate="label">
+                            <label>Base Font Size</label>
+                            <tooltip><![CDATA[Change the size of the base font.<br/>
+                                • Headings will be scaled to 133% of the base font<br/>
+                                • Footers and line items will be automatically scaled to 80% of the base font,
+                                when the base font size is set to 12 or higher.]]></tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_fontsizes</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allfontsize>
+                        <allpagenumbers translate="label">
+                            <label>Display Page Number</label>
+                            <tooltip>When set to Yes, the page number will automatically be displayed in the centre bottom of the document.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>83</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allpagenumbers>
+                        <allqtyasint translate="label">
+                            <label>Display Quantity as full number</label>
+                            <tooltip>When set to Yes, quantities will be displayed as a full number
+                                (eg. 1.0000 units will be displayed as 1 unit). This is the recommended default setting.
+                                When set to No, quantities will be displayed as a partial number (eg. 1.9500 units).</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allqtyasint>
+                        <allsalesruletitle translate="label">
+                            <label>Display Salesrule instead of Coupon Code</label>
+                            <tooltip><![CDATA[When set to Yes, the promotion name of any coupon code set up under
+                                <b>Promotions > Shopping Cart Price Rules</b> will be displayed on the pdf, instead of the coupon code.]]></tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>840</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allsalesruletitle>
+                        <alltaxsummary translate="label">
+                            <tooltip>When set to Yes, the pdf document will include details of tax is applied to items.</tooltip>
+                            <label>Display detailed Tax Summary</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>850</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </alltaxsummary>
+                        <alldisplayweight translate="label">
+                            <label>Display Total Weight</label>
+                            <tooltip>When set to Yes, the total weight will be displayed. This setting may be useful for shipping purposes.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>860</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </alldisplayweight>
+                        <allweightunit translate="label">
+                            <label>Weight Unit</label>
+                            <tooltip>Applicable only if the “Display Total Weight” setting is enabled. The default setting is kg.</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>865</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allweightunit>
+                        <allcustomcolumn translate="label">
+                            <label>Custom Column Attribute</label>
+                            <tooltip>Select up to five product attributes to display in your pdf documents.
+                                Important: Once you have done this, you also need to enable the corresponding custom columns
+                                to be shown under the “Columns” setting for each pdf where you want to show custom columns
+                                (Order/Invoice/Shipment/Credit Memo).</tooltip>
+                            <comment>Select up to 5 attributes.</comment>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>pdfcustomiser/system_productAttributes</source_model>
+                            <sort_order>870</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allcustomcolumn>
+                        <alldisplayemail translate="label">
+                            <label>Display Email Address</label>
+                            <tooltip>Displays the customers email address on the pdf.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>880</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </alldisplayemail>
+                        <allbarcode translate="label">
+                            <label>Barcode Type</label>
+                            <tooltip>If you have chosen to show barcodes under the “Columns” setting for each pdf
+                                (Order/Invoice/Shipment/Credit Memo), choose how barcodes will be displayed.
+                                The default setting is CODE 39 EXTENDED + CHECKSUM. Ensure that you select the correct barcode type
+                                for the SKU you are using, or pdf generation could fail!</tooltip>
+                            <comment>Please make sure the barcode type is appropriate for the content or the pdf generation might fail (Default: CODE 39 EXTENDED + CHECKSUM).</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_barcodes</source_model>
+                            <sort_order>885</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allbarcode>
+                        <allprintcomments translate="label">
+                            <label>Print Order History with Comments</label>
+                            <tooltip><![CDATA[When set to All, comments inputted under <b>Sales > Orders > Comment History</b>
+                                will be added to the pdf (the comments you see in the back-end order view history).]]></tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_printComments</source_model>
+                            <sort_order>890</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allprintcomments>
+                        <allsign translate="label">
+                            <label>Digitally Sign Pdf</label>
+                            <tooltip>When set to Yes, your pdf files will be secured with a digital signature to prevent the integrity
+                                of the document from being compromised by other parties. Once you have digitally signed the pdf document,
+                                no one will be able to alter the document without invalidating it. Your private key will be stored encrypted
+                                in the Magento database so please include this in your security considerations.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>900</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allsign>
+                        <allsigncertificate translate="label">
+                            <label>Signature</label>
+                            <tooltip>Enter the contents of your certificate/signature file, including your private key.
+                                Include everything from -----BEGIN RSA PRIVATE KEY----- to -----END CERTIFICATE----- </tooltip>
+                            <frontend_type>textarea</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allsigncertificate>
+                        <allsignpassword translate="label">
+                            <label>Password of Signature</label>
+                            <tooltip>Enter the password for the digital signature.</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>1100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allsignpassword>
+                        <allnewwindow translate="label">
+                            <label>Display Pdf in New Window</label>
+                            <tooltip>When set to Yes, pdf documents will be generated in a new window.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allnewwindow>
+                        <allprintaltstore translate="label">
+                            <label>Print from Alternative Store</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_stores</source_model>
+                            <sort_order>1300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allprintaltstore>
+                    </fields>
+                </all>
+                <totals>
+                    <label>Pdf Totals Sort Order</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <subtotal>
+                            <label>Subtotal</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </subtotal>
+                        <discount>
+                            <label>Discount</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </discount>
+                        <tax>
+                            <label>Tax</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tax>
+                        <shipping>
+                            <label>Shipping &amp; Handling</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipping>
+                        <shipping_and_handling_tax>
+                            <label>Shipping &amp; Handling Tax</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>42</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipping_and_handling_tax>
+                        <adjustment_positive>
+                            <label>Adjustment Refund</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </adjustment_positive>
+                        <adjustment_negative>
+                            <label>Adjustment Fee</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </adjustment_negative>
+                        <gift_cards_amount>
+                            <if_module_enabled>Enterprise_GiftCard</if_module_enabled>
+                            <label>Gift Cards</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gift_cards_amount>
+                        <gw_price>
+                            <if_module_enabled>Enterprise_GiftWrapping</if_module_enabled>
+                            <label>Gift Wrapping Order</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>81</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gw_price>
+                        <gw_items_price>
+                            <if_module_enabled>Enterprise_GiftWrapping</if_module_enabled>
+                            <label>Gift Wrapping Items</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>82</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gw_items_price>
+                        <gw_card_price>
+                            <if_module_enabled>Enterprise_GiftWrapping</if_module_enabled>
+                            <label>Printed Card</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>83</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gw_card_price>
+                        <gw_combined>
+                            <if_module_enabled>Enterprise_GiftWrapping</if_module_enabled>
+                            <label>Gift Wrapping</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <comment>Combines Gift Wrapping for Orders, Items and Printed Cards</comment>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>84</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gw_combined>
+                        <customer_balance_amount>
+                            <if_module_enabled>Enterprise_GiftWrappingCustomerBalance</if_module_enabled>
+                            <label>Customer Balance</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customer_balance_amount>
+                        <reward_currency_amount>
+                            <if_module_enabled>Enterprise_Reward</if_module_enabled>
+                            <label>Reward Currency</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>87</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </reward_currency_amount>
+                        <surcharge>
+                            <if_module_enabled>Fooman_Surcharge</if_module_enabled>
+                            <label>Surcharge</label>
+                            <tooltip><![CDATA[This setting allows you to adjust the order in which different total figures appear in pdf documents.
+                                The different total figures will be ordered according to the assigned number - for example,
+                                enter 100 for the item you wish to appear first, 200 for the item you wish to appear next, and so on.<br/><br/>
+                                Entering “NO” for a total will suppress the output of this total on the pdf. The Grand Total will always show.]]></tooltip>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>95</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </surcharge>
+                        <!--<grand_total>
+                            <label>Grand Total</label>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </grand_total>-->
+                        <!--<customer_bal_total_refunded>
+                            <label>Customer Balance Refunded</label>
+                            <comment>Magento Enterprise only</comment>
+                            <backend_model>pdfcustomiser/backend_pdfTotal</backend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customer_bal_total_refunded>-->
+                    </fields>
+                </totals>
+                <order translate="label">
+                    <label>Order</label>
+                    <sort_order>50</sort_order>
+                    <frontend_type>text</frontend_type>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <ordertitle translate="label">
+                            <label>Order Title</label>
+                            <tooltip>Enter a title for the order pdf.</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ordertitle>
+                        <orderaddresses translate="label">
+                            <label>Customer Addresses</label>
+                            <tooltip><![CDATA[Which addresses should appear on the pdf? Choose shipping address, billing address or both
+                                (downloadable product orders won't have a shipping address). Swapping around the order of the billing
+                                and shipping addresses is possible – see the Developer Bonuses section in the manual for more information.<br/><br/>
+                                You can customise the address format by accessing <b>System > Configuration > Customer Configuration > Address Templates > Pdf.</b>
+                                The | character will be converted into a line break.]]></tooltip>
+                            <comment/>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_addressOptions</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </orderaddresses>
+                        <ordercolumns translate="label">
+                            <label>Columns</label>
+                            <tooltip><![CDATA[Control-click to select the columns you want to display in the pdf. Choose from:<br/>
+                                • Position (orders the products automatically by adding a number)<br/>
+                                • Product name<br/>
+                                • Product name with extra white space<br/>
+                                • SKU<br/>
+                                • Product + SKU (displays the product name and SKU, separated by a line break)<br/>
+                                • SKU barcode (displays the SKU as a barcode - if enabled, you also need to select a setting for
+                                “Barcode Type” in the Pdf Customiser by Fooman settings)<br/>
+                                • Product image<br/>
+                                • Price<br/>
+                                • Discount<br/>
+                                • Qty<br/>
+                                • Qty ordered<br/>
+                                • Qty back ordered<br/>
+                                • Qty detailed<br/>
+                                • Item status<br/>
+                                • Tax<br/>
+                                • Tax rate<br/>
+                                • Subtotal<br/>
+                                • Alternative subtotal<br/>
+                                • Row total<br/>
+                                • Custom columns 1-5 (must be enabled under ”Custom Attribute Column” (in the Pdf Customiser by Fooman settings)<br/><br/>
+                                <strong>There is no maximum number</strong>, but the more columns you select, the smaller they will become in order to fit on the same page.]]></tooltip>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>pdfcustomiser/system_columns</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ordercolumns>
+                        <ordercolumnssort translate="label">
+                            <label>Sort by Column</label>
+                            <tooltip>Choose which column to sort items by (alphabetical/ascending order). The default setting retains current Magento settings.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_columnsSort</source_model>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ordercolumnssort>
+                        <ordercolumnwidths translate="label">
+                            <label>Columns Advanced</label>
+                            <tooltip_block>pdfcustomiser/adminhtml_tooltip</tooltip_block>
+                            <comment/>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ordercolumnwidths>
+                        <ordercustom translate="label">
+                            <label>Custom Text</label>
+                            <tooltip>Add custom text to appear at the bottom of the pdf. Use free text, simple html or {{}} commands.</tooltip>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ordercustom>
+                    </fields>
+                </order>
+                <invoice translate="label">
+                    <sort_order>80</sort_order>
+                    <fields>
+                        <invoicetitle translate="label">
+                            <label>Invoice Title</label>
+                            <tooltip>Enter a title for the invoice pdf.</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoicetitle>
+                        <invoicetaxnumber translate="label">
+                            <label>Tax Details</label>
+                            <tooltip>Free text field – choose to include tax details (eg. tax number).</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoicetaxnumber>
+                        <invoiceaddresses translate="label">
+                            <label>Customer Addresses</label>
+                            <tooltip><![CDATA[Which addresses should appear on the pdf? Choose from shipping address,
+                                billing address or both. Note that downloadable product orders won't have a shipping address.<br/><br/>
+                                If the customer VAT number is entered during checkout, this will be shown as part of the
+                                billing address by default.<br/><br/>
+                                Swapping around the order of the billing and shipping addresses is
+                                possible – see the Developer Bonuses section for more information.<br/><br/>
+                                You can customise the customer address format by accessing
+                                <b>System > Configuration > Customer Configuration > Address Templates > Pdf</b>.
+                                The | character will be converted into a line break.]]></tooltip>
+                            <comment/>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_addressOptions</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoiceaddresses>
+                        <invoicedeliverydate translate="label">
+                            <label>Display Delivery Date</label>
+                            <tooltip>When set to Yes, the invoice date will be re-displayed as the delivery date.
+                                Use this setting for shipments to countries which require invoices to state a delivery date
+                                (such as Germany).</tooltip>
+                            <comment/>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoicedeliverydate>
+                        <invoicecolumns translate="label">
+                            <label>Columns</label>
+                            <tooltip><![CDATA[Control-click to select the columns you want to display in the pdf. Choose from:<br/>
+                                • Position (orders the products automatically by adding a number)<br/>
+                                • Product name<br/>
+                                • Product name with extra white space<br/>
+                                • SKU<br/>
+                                • Product + SKU (displays the product name and SKU, separated by a line break)<br/>
+                                • SKU barcode (displays the SKU as a barcode - if enabled, you also need to select a setting for
+                                “Barcode Type” in the Pdf Customiser by Fooman settings)<br/>
+                                • Product image<br/>
+                                • Price<br/>
+                                • Discount<br/>
+                                • Qty<br/>
+                                • Qty ordered<br/>
+                                • Qty back ordered<br/>
+                                • Qty detailed<br/>
+                                • Item status<br/>
+                                • Tax<br/>
+                                • Tax rate<br/>
+                                • Subtotal<br/>
+                                • Alternative subtotal<br/>
+                                • Row total<br/>
+                                • Custom columns 1-5 (must be enabled under ”Custom Attribute Column” (in the Pdf Customiser by Fooman settings)<br/><br/>
+                                <strong>There is no maximum number</strong>, but the more columns you select, the smaller they will become in order to fit on the same page.]]></tooltip>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>pdfcustomiser/system_columns</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoicecolumns>
+                        <invoicecolumnssort translate="label">
+                            <label>Sort by Column</label>
+                            <tooltip>Choose which column to sort items by (alphabetical/ascending order). The default setting retains current Magento settings.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_columnsSort</source_model>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoicecolumnssort>
+                        <invoicecolumnwidths translate="label">
+                            <label>Columns Advanced</label>
+                            <tooltip_block>pdfcustomiser/adminhtml_tooltip</tooltip_block>
+                            <comment/>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoicecolumnwidths>
+                        <invoicecustom translate="label">
+                            <label>Custom Text</label>
+                            <tooltip>Add custom text to appear at the bottom of the pdf. Use free text, simple html or {{}} commands.</tooltip>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoicecustom>
+                        <invoiceintegratedlabels translate="label">
+                            <label>Use Integrated Labels</label>
+                            <tooltip><![CDATA[Select “Yes” to use integrated labels. Each label measures 85mm x 54mm.
+                                Labels measure positioned 20mm from the side and 23mm from bottom.<br/><br/>
+                                Choose from the following standard labels:<br/>
+                                • Single – Shipping Address Label<br/>
+                                • Single – Billing Address Label<br/>
+                                • Double – Shipping and Billing Addresses<br/>
+                                • Double – Shipping and Return Addresses<br/>
+                                • Double – Shipping and Return Addresses with Image (image is taken from /media/pdf-printouts/print_label.gif)<br/>
+                                • Custom Label Left Shipping Address<br/>
+                                • Custom Label Right Shipping Address<br/>
+                                • Custom Label Left Billing Address<br/>
+                                • Custom Label Right Billing Address<br/><br/>
+                                The return address is the same as the store address.<br/><br/>
+                                Customise the labels by adjusting the following template file to achieve your desired format:<br/>
+                                app/design/frontend/base/default/template/fooman/
+                                pdfcustomiser/label.phtml<br/><br/>
+                                You can choose both a left and right option using control-click. When editing the files,
+                                it is also possible to remove the shipping/billing address to have a completely custom label.<br/><br/>
+                                Changing the position of the labels is also possible – see the Developer
+                                Bonuses section for more information.]]></tooltip>
+                            <comment/>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>pdfcustomiser/system_labelOptions</source_model>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoiceintegratedlabels>
+                        <printbarcode translate="label">
+                            <label>Display Document Barcode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </printbarcode>
+                    </fields>
+                </invoice>
+                <shipment translate="label">
+                    <sort_order>90</sort_order>
+                    <fields>
+                        <shipmenttitle translate="label">
+                            <label>Shipment Title</label>
+                            <tooltip>Enter a title for the shipment pdf.</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipmenttitle>
+                        <shipmentuseorder translate="label">
+                            <label>Print Order as Packing Slip</label>
+                            <tooltip><![CDATA[When set to Yes, you can bypass the standard workflow requirement by printing packing slips
+                                without first having to create a Magento shipment. You can do this regardless of order status.
+                                However, you will lose the ability to print the packing slips with the shipment number
+                                (the order number is used instead).<br/><br/>
+                                Use this setting if you are getting the following error message: “There are no printable documents related to selected orders”]]></tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipmentuseorder>
+                        <shipmentaddresses translate="label">
+                            <label>Customer Addresses</label>
+                            <tooltip><![CDATA[Which addresses should appear on the pdf? Choose shipping address, billing address or both
+                                (downloadable product orders won't have a shipping address). Swapping around the order of the billing
+                                and shipping addresses is possible – see the Developer Bonuses section in the manual for more information.<br/><br/>
+                                You can customise the address format by accessing <b>System > Configuration > Customer Configuration > Address Templates > Pdf.</b>
+                                The | character will be converted into a line break.]]></tooltip>
+                            <comment/>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_addressOptions</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipmentaddresses>
+                        <shipmentcolumns translate="label">
+                            <label>Columns</label>
+                            <tooltip><![CDATA[Control-click to select the columns you want to display in the pdf. Choose from:<br/>
+                                • Position (orders the products automatically by adding a number)<br/>
+                                • Product name<br/>
+                                • Product name with extra white space<br/>
+                                • SKU<br/>
+                                • Product + SKU (displays the product name and SKU, separated by a line break)<br/>
+                                • SKU barcode (displays the SKU as a barcode - if enabled, you also need to select a setting for
+                                “Barcode Type” in the Pdf Customiser by Fooman settings)<br/>
+                                • Product image<br/>
+                                • Price<br/>
+                                • Discount<br/>
+                                • Qty<br/>
+                                • Qty ordered<br/>
+                                • Qty back ordered<br/>
+                                • Qty detailed<br/>
+                                • Item status<br/>
+                                • Tax<br/>
+                                • Tax rate<br/>
+                                • Subtotal<br/>
+                                • Alternative subtotal<br/>
+                                • Row total<br/>
+                                • Custom columns 1-5 (must be enabled under ”Custom Attribute Column” (in the Pdf Customiser by Fooman settings)<br/><br/>
+                                <strong>There is no maximum number</strong>, but the more columns you select, the smaller they will become in order to fit on the same page.]]></tooltip>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>pdfcustomiser/system_columns</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipmentcolumns>
+                        <shipmentcolumnssort translate="label">
+                            <label>Sort by Column</label>
+                            <tooltip>Choose which column to sort items by (alphabetical/ascending order). The default setting retains current Magento settings.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_columnsSort</source_model>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipmentcolumnssort>
+                        <shipmentcolumnwidths translate="label">
+                            <label>Columns Advanced</label>
+                            <tooltip_block>pdfcustomiser/adminhtml_tooltip</tooltip_block>
+                            <comment/>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipmentcolumnwidths>
+                        <shipmentcustom translate="label">
+                            <label>Custom Text</label>
+                            <tooltip>Add custom text to appear at the bottom of the pdf. Use free text, simple html or {{}} commands.</tooltip>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipmentcustom>
+                        <shipmentintegratedlabels translate="label">
+                            <label>Use Integrated Labels</label>
+                            <tooltip><![CDATA[Select “Yes” to use integrated labels. Each label measures 85mm x 54mm.
+                                Labels measure positioned 20mm from the side and 23mm from bottom.<br/><br/>
+                                Choose from the following standard labels:<br/>
+                                • Single – Shipping Address Label<br/>
+                                • Single – Billing Address Label<br/>
+                                • Double – Shipping and Billing Addresses<br/>
+                                • Double – Shipping and Return Addresses<br/>
+                                • Double – Shipping and Return Addresses with Image (image is taken from /media/pdf-printouts/print_label.gif)<br/>
+                                • Custom Label Left Shipping Address<br/>
+                                • Custom Label Right Shipping Address<br/>
+                                • Custom Label Left Billing Address<br/>
+                                • Custom Label Right Billing Address<br/><br/>
+                                The return address is the same as the store address.<br/><br/>
+                                Customise the labels by adjusting the following template file to achieve your desired format:<br/>
+                                app/design/frontend/base/default/template/fooman/
+                                pdfcustomiser/label.phtml<br/><br/>
+                                You can choose both a left and right option using control-click. When editing the files,
+                                it is also possible to remove the shipping/billing address to have a completely custom label.<br/><br/>
+                                Changing the position of the labels is also possible – see the Developer
+                                Bonuses section for more information.]]></tooltip>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>pdfcustomiser/system_labelOptions</source_model>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipmentintegratedlabels>
+                        <printbarcode translate="label">
+                            <label>Display Document Barcode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </printbarcode>
+                    </fields>
+                </shipment>
+                <creditmemo translate="label">
+                    <sort_order>100</sort_order>
+                    <fields>
+                        <creditmemotitle translate="label">
+                            <label>Credit Memo Title</label>
+                            <tooltip>Enter a title for the credit memo pdf.</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </creditmemotitle>
+                        <creditmemoaddresses translate="label">
+                            <label>Customer Addresses</label>
+                            <tooltip><![CDATA[Which addresses should appear on the pdf? Choose shipping address, billing address or both
+                                (downloadable product orders won't have a shipping address). Swapping around the order of the billing
+                                and shipping addresses is possible – see the Developer Bonuses section in the manual for more information.<br/><br/>
+                                You can customise the address format by accessing <b>System > Configuration > Customer Configuration > Address Templates > Pdf.</b>
+                                The | character will be converted into a line break.]]></tooltip>
+                            <comment/>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_addressOptions</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </creditmemoaddresses>
+                        <creditmemocolumns translate="label">
+                            <label>Columns</label>
+                            <tooltip><![CDATA[Control-click to select the columns you want to display in the pdf. Choose from:<br/>
+                                • Position (orders the products automatically by adding a number)<br/>
+                                • Product name<br/>
+                                • Product name with extra white space<br/>
+                                • SKU<br/>
+                                • Product + SKU (displays the product name and SKU, separated by a line break)<br/>
+                                • SKU barcode (displays the SKU as a barcode - if enabled, you also need to select a setting for
+                                “Barcode Type” in the Pdf Customiser by Fooman settings)<br/>
+                                • Product image<br/>
+                                • Price<br/>
+                                • Discount<br/>
+                                • Qty<br/>
+                                • Qty ordered<br/>
+                                • Qty back ordered<br/>
+                                • Qty detailed<br/>
+                                • Item status<br/>
+                                • Tax<br/>
+                                • Tax rate<br/>
+                                • Subtotal<br/>
+                                • Alternative subtotal<br/>
+                                • Row total<br/>
+                                • Custom columns 1-5 (must be enabled under ”Custom Attribute Column” (in the Pdf Customiser by Fooman settings)<br/><br/>
+                                <strong>There is no maximum number</strong>, but the more columns you select, the smaller they will become in order to fit on the same page.]]></tooltip>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>pdfcustomiser/system_columns</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </creditmemocolumns>
+                        <creditmemocolumnssort translate="label">
+                            <label>Sort by Column</label>
+                            <tooltip>Choose which column to sort items by (alphabetical/ascending order). The default setting retains current Magento settings.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pdfcustomiser/system_columnsSort</source_model>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </creditmemocolumnssort>
+                        <creditmemocolumnwidths translate="label">
+                            <label>Columns Advanced</label>
+                            <tooltip_block>pdfcustomiser/adminhtml_tooltip</tooltip_block>
+                            <comment/>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </creditmemocolumnwidths>
+                        <creditmemocustom translate="label">
+                            <label>Custom Text</label>
+                            <tooltip>Add custom text to appear at the bottom of the pdf. Use free text, simple html or {{}} commands.</tooltip>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </creditmemocustom>
+                        <printbarcode translate="label">
+                            <label>Display Document Barcode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </printbarcode>
+                    </fields>
+                </creditmemo>
+            </groups>
+        </sales_pdf>
+    </sections>
+</config>

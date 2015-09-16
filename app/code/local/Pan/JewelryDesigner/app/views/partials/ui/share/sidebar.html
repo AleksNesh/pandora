@@ -1,0 +1,25 @@
+<h1>Review Bracelet</h1>
+<div class='review-wrapper'>
+    <table class='table-minimal'>
+        <thead>
+            <tr>
+                <th>Item Number</th>
+                <th>Product</th>
+                <th>QTY</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class='review-line-item' ng-repeat="line_item in line_items">
+                <td>{{line_item.sku}}</td>
+                <td>{{line_item.name | replace:'PANDORA':'' | replace:'Pandora':'' | replace:'CHARM':'Charm'}}</td>
+                <td>{{line_item.qty + line_item.quantity_owned}}</td>
+                <td>{{line_item.base_price  * (line_item.qty + line_item.quantity_owned)| currency}}</td>
+            </tr>
+            <tr class='totals-row'>
+                <td colspan="3">Total</td>
+                <td>{{total_price | currency}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

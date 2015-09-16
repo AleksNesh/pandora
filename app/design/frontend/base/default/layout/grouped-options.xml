@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Brim LLC Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Brim LLC Commercial Extension License
+ * that is bundled with this package in the file license.pdf.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.brimllc.com/license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to support@brimllc.com so we can send you a copy immediately.
+ *
+ * @category   Brim
+ * @package    Brim_Groupedoptions
+ * @copyright  Copyright (c) 2011-2012 Brim LLC
+ * @license    http://ecommerce.brimllc.com/license
+ */
+-->
+<layout version="0.1.0">
+    <PRODUCT_TYPE_grouped>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/grouped-options.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/grouped-options.css</name></action>
+        </reference>
+        <reference name="product.info.grouped">
+            <action ifconfig="groupedoptions/frontend/enable_template_override" method="setTemplate"><template>grouped-options/grouped.phtml</template></action>
+            <block type="groupedoptions/product_view_options" name="groupedoptions" as="groupedoptions">
+                <action method="setSimpleTemplate"><template>grouped-options/simple.phtml</template></action>
+                <action method="setConfigurableTemplate"><template>grouped-options/configurable.phtml</template></action>
+            </block>
+        </reference>
+        <reference name="product.info.grouped.extra">
+            <block type="core/template" name="options_js" template="catalog/product/view/options/js.phtml"/>
+            <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
+        </reference>
+    </PRODUCT_TYPE_grouped>
+</layout>

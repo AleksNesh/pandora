@@ -1,0 +1,116 @@
+<?php
+/**
+ * Template for gift items
+ *
+ * @category    Alpine
+ * @package     Alpine_PrintPdf
+ * @copyright   Copyright (c) 2015 Alpine Consulting, Inc
+ * @author      dmitry.soloma@alpineinc.com
+ */
+?>
+<?php $giftBoxCollection = $this->getGiftBoxData(); ?>
+
+<?php if(count($giftBoxCollection)): ?>
+    <style type="text/css">
+        .table-td-font{
+            font-size: 70px;
+        }
+    </style>
+    <div class="block-title">
+        <h5>
+            <?php echo $this->__('Giftwrap infomation') ?>
+        </h5>
+    </div>
+    <?php
+        $paperWidth = ($this->getShowGC()) ? '20%' : '35%';
+        $itemsWidth = ($this->getShowGWM()) ? '30%' : '50%';
+    ?>
+    <table class="data-table" id="giftwrap-giftbox" style="width:100%;">
+        <thead>
+            <tr>
+                <th style="width: 5%; text-align: center;"><h5><?php echo $this->__('No');?></h5></th>
+                <th style="width: <?php echo $paperWidth ?>; text-align: left;"><h5><?php echo $this->__('Paper');?></h5></th>
+                <?php if ($this->getShowGC()): ?>
+                    <th style="width: 15%; text-align: center;"><h5><?php echo $this->__('Card');?></h5></th>
+                <?php endif; ?>
+                <th style="width: <?php echo $itemsWidth; ?>; text-align: center;"><h5><?php echo $this->__('Items');?></h5></th>
+                <?php if ($this->getShowGWM()): ?>
+                    <th style="width: 20%; text-align: center;"><h5><?php echo $this->__('Message');?></h5></th>
+                <?php endif; ?>
+                <th style="width: 10%; text-align: right;">
+                    <?php if(!$this->getIsShipment()): ?>
+                        <h5>
+                            <?php echo $this->__('Subtotal');?>
+                        </h5>
+                    <?php endif; ?>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="6"><hr style="height: 10%;"></td>
+            </tr>
+            <?php $i=1; ?>
+            <?php foreach ($giftBoxCollection as $giftbox): ?>
+                <?php $giftBoxId = isset($giftbox['id']) ? $giftbox['id'] : null; ?>
+                <?php if($giftBoxId): ?>
+                    <?php
+                        $style = Mage::getModel('giftwrap/giftwrap')->load($giftbox['styleId']);
+                        $giftcard = Mage::getModel('giftwrap/giftcard')->load($giftbox['giftcardId']);
+                    ?>
+                        <tr>
+                            <td class="table-td-font" style="font-size: 30px; width: 5%">
+                                #<?php echo $i++;?>
+                            </td>
+                            <td class="table-td-font" style="font-size: 30px; width: <?php echo $paperWidth ?>;">
+                                <?php echo $style->getTitle();?>
+                            </td>
+                                <?php if ($this->getShowGC()): ?>
+                                    <td class="table-td-font" style="width: 15%">
+                                        <?php if($giftcard->getId()): ?>
+                                            <?php echo $giftcard->getName();?>
+                                        <?php endif?>
+                                    </td>
+                                <?php endif; ?>
+                            <td class="table-td-font" style="font-size: 30px; width: <?php echo $itemsWidth ?>;">
+                                <?php
+                                    $gb = Mage::getModel('giftwrap/selection')->load($giftBoxId);
+                                    $its = $gb->getItemCollection();
+                                    $numberitems = 0;
+                                ?>
+                                <?php foreach ($its as $it): ?>
+                                    <?php
+                                        $itemId = $it->getItemId();
+                                        $item = Mage::getModel('sales/quote_item')->load($itemId);
+                                        $product = Mage::getModel('catalog/product')->load($item->getProductId());
+                                        $qty = $it->getQty();
+                                        $numberitems += $qty;
+                                    ?>
+                                    <span>
+                                        <?php if($item->getName()): ?>
+                                            <?php echo $item->getSku() . ' ' . $item->getName().' - '.$it->getQty().' item(s)'; ?>
+                                        <?php endif ?>
+                                    </span><br />
+                                <?php endforeach ?>
+                            </td>
+                            <?php if(Mage::getStoreConfig('giftwrap/calculation/amount_on_number_items')): ?>
+                                <?php $giftwrapAmount = floatval($numberitems) * (floatval($style->getPrice()) + floatval($giftcard->getPrice())); ?>
+                            <?php else: ?>
+                                <?php $giftwrapAmount = floatval($style->getPrice()) + floatval($giftcard->getPrice()); ?>
+                            <?php endif; ?>
+                            <?php if ($this->getShowGWM()): ?>
+                                <td class="table-td-font" style="font-size: 30px; width: 20%">
+                                    <?php echo $giftbox['giftwrap_message'];?>
+                                </td>
+                            <?php endif; ?>
+                            <td class="table-td-font" style="font-size: 30px; width: 10%; text-align: right;">
+                                <?php if(!$this->getIsShipment()): ?>
+                                <?php echo Mage::helper('core')->currency(floatval($giftwrapAmount) * floatval($giftbox['quantity'])) ; ?>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                <?php endif; ?>
+            <?php endforeach;?>
+        </tbody>
+    </table>
+<?php endif; ?>

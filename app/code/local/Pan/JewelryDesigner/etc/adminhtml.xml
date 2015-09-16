@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Core module for providing common functionality between BraceletBuilder and other related submodules
+ *
+ * @category    Pan
+ * @package     Pan_JewelryDesigner
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <pan_jewelrydesigner>
+                                        <title>Jewelry Designer</title>
+                                    </pan_jewelrydesigner>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <pan_core>
+                        <title>Pandora</title>
+                        <children>
+                            <pan_jewelrydesigner>
+                                <title>Jewelry Designer</title>
+                                <children>
+                                    <designer>
+                                        <title>Designer</title>
+                                    </designer>
+                                    <pan_jewelrydesigner_settings>
+                                        <title>Configuration</title>
+                                    </pan_jewelrydesigner_settings>
+                                </children>
+                            </pan_jewelrydesigner>
+                        </children>
+                    </pan_core>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+
+    <menu>
+        <pan_core>
+            <title>Pandora</title>
+            <sort_order>500</sort_order>
+            <children>
+                <pan_jewelrydesigner>
+                    <title>Jewelry Designer</title>
+                    <sort_order>10</sort_order>
+                    <children>
+                        <designer>
+                            <title>Designer</title>
+                            <sort_order>0</sort_order>
+                            <action>jewelrydesigner/adminhtml_designs</action>
+                        </designer>
+                        <pan_jewelrydesigner_settings>
+                            <title>Configuration</title>
+                            <sort_order>10</sort_order>
+                            <action>adminhtml/system_config/edit/section/pan_jewelrydesigner</action>
+                        </pan_jewelrydesigner_settings>
+                    </children>
+                </pan_jewelrydesigner>
+            </children>
+        </pan_core>
+    </menu>
+</config>

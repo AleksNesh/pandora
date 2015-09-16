@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_sales_order_index>
+        <reference name="head">
+            <action method="addJs"><file>amasty/amogrid/carousel-min.js</file></action>
+            <action method="addJs"><file>amasty/amogrid/main.js</file></action>
+            
+            <action method="addItem"><type>js</type><name>prototype/window.js</name></action>
+            <action method="addItem"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+            <action method="addItem"><type>js_css</type><name>prototype/windows/themes/magento.css</name></action>
+            
+            <action method="addItem"><type>js_css</type><name>amasty/amogrid/main.css</name><params/></action>
+        </reference>
+    </adminhtml_sales_order_index>
+</layout>

@@ -1,0 +1,72 @@
+<?php
+/**
+ * Magento Developer's Toolbar
+ *
+ * @category    Ash
+ * @package     Ash_Bar
+ * @copyright   Copyright (c) 2012 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<?php if ($this->getProfiler()->getQueryProfiles()): ?>
+
+<div class="well">
+<dl class="dl-horizontal">
+    <dt><?php echo $this->__('Total Database Time:'); ?></dt>
+    <dd><?php echo Mage::helper('ash_bar')->formatNumber($this->getProfiler()->getTotalElapsedSecs()); ?></dd>
+    <dt><?php echo $this->__('Average Query Time:'); ?></dt>
+    <dd><?php echo Mage::helper('ash_bar')->formatNumber($this->getAverageQueryTime()); ?></dd>
+    <dt><?php echo $this->__('Queries per Second:'); ?></dt>
+    <dd><?php echo Mage::helper('ash_bar')->formatNumber($this->getQueriesPerSecond(), 2); ?></dd>
+    <dt><?php echo $this->__('Longest Query Time:'); ?></dt>
+    <dd><?php echo Mage::helper('ash_bar')->formatNumber($this->getLongestQueryTime()); ?></dd>
+    <dt><?php echo $this->__('Longest Query:'); ?></dt>
+    <dd><?php echo Mage::helper('ash_bar')->formatSql(wordwrap($this->getLongestQuery())); ?></dd>
+
+    <dt><?php echo $this->__('Total Queries:'); ?></dt>
+    <dd><?php echo $this->getProfiler()->getTotalNumQueries(); ?></dd>
+    <dt><?php echo $this->__('Insert Queries:'); ?></dt>
+    <dd><?php echo $this->getProfiler()->getTotalNumQueries(Zend_Db_Profiler::INSERT); ?></dd>
+    <dt><?php echo $this->__('Update Queries:'); ?></dt>
+    <dd><?php echo $this->getProfiler()->getTotalNumQueries(Zend_Db_Profiler::UPDATE); ?></dd>
+    <dt><?php echo $this->__('Read Queries:'); ?></dt>
+    <dd><?php echo $this->getProfiler()->getTotalNumQueries(Zend_Db_Profiler::SELECT); ?></dd>
+    <dt><?php echo $this->__('Delete Queries:'); ?></dt>
+    <dd><?php echo $this->getProfiler()->getTotalNumQueries(Zend_Db_Profiler::DELETE); ?></dd>
+    <dt><?php echo $this->__('Transactions:'); ?></dt>
+    <dd><?php echo $this->getProfiler()->getTotalNumQueries(Zend_Db_Profiler::TRANSACTION); ?></dd>
+</dl>
+</div>
+
+<table id="ashbar-query-table" class="table table-striped">
+    <caption><?php echo $this->__('All Database Queries for the Request'); ?></caption>
+    <thead>
+        <tr>
+            <th><?php echo $this->__('Count'); ?></th>
+            <th><?php echo $this->__('Time'); ?></th>
+            <th><?php echo $this->__('SQL Query'); ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php $i=1; foreach ($this->getProfiler()->getQueryProfiles() as $_query): ?>
+    <?php $slow = ($_query->getElapsedSecs() > $this->getQueryThreshold()) ? ' class="error"' : '' ?>
+
+        <tr<?php echo $slow; ?>>
+            <td><?php echo $i; ?></td>
+            <td><?php echo Mage::helper('ash_bar')->formatNumber($_query->getElapsedSecs()); ?></td>
+            <td><span class="text-info"><?php echo Mage::helper('ash_bar')->formatSql(wordwrap($_query->getQuery())); ?></span></td>
+        </tr>
+
+    <?php $i++; ?>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+<?php else: ?>
+
+<div class="alert alert-info">
+    <!-- <button type="button" class="close" data-dismiss="alert">×</button> -->
+    <strong>Heads up!</strong> The database profiler is disabled and cannot return results.
+</div>
+
+<?php endif;?>

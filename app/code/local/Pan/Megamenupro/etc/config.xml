@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Simple module for extending core EM_Megamenupro module
+ *
+ * @category    Pan
+ * @package     Pan_Megamenupro
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @author      Josh Johnson (August Ash)
+ */
+-->
+<config>
+    <modules>
+        <Pan_Megamenupro>
+            <version>0.1.0</version>
+        </Pan_Megamenupro>
+    </modules>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <pan_megamenupro before="EM_Megamenupro_Adminhtml">Pan_Megamenupro_Adminhtml</pan_megamenupro>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <pan_megamenupro>
+                    <file>pan_megamenupro_overrides.xml</file>
+                </pan_megamenupro>
+            </updates>
+        </layout>
+    </adminhtml>
+
+
+    <global>
+        <helpers>
+            <class>Pan_Megamenupro_Helper</class>
+
+            <megamenupro>
+                <rewrite>
+                    <data>Pan_Megamenupro_Helper_Data</data>
+                </rewrite>
+            </megamenupro>
+        </helpers>
+
+        <blocks>
+            <class>Pan_Megamenupro_Block</class>
+
+            <megamenupro>
+                <rewrite>
+                    <adminhtml_menueditor_edit>Pan_Megamenupro_Block_Adminhtml_Menueditor_Edit</adminhtml_menueditor_edit>
+                </rewrite>
+            </megamenupro>
+        </blocks>
+    </global>
+</config>

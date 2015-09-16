@@ -1,0 +1,46 @@
+<?php
+/**
+ * Magento Developer's Toolbar
+ *
+ * @category    Ash
+ * @package     Ash_Devbar
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<div id="devbar-system-buttons" class="button-bar">
+    <ul class="button-group radius">
+        <?php if (Mage::helper('ash_devbar/cache')->isEnabled()): ?>
+        <li><a id="devbar-clean-cache" href="#" class="button tiny"><?php echo $this->__('Clean Cache'); ?></a></li>
+        <li><a id="devbar-toggle-cache" href="#" class="button tiny alert"><?php echo $this->__('Disable Cache'); ?></a></li>
+        <?php else: ?>
+        <li><a id="devbar-toggle-cache" href="#" class="button tiny"><?php echo $this->__('Enable Cache'); ?></a></li>
+        <?php endif; ?>
+    </ul>
+
+    <ul class="button-group radius">
+        <?php if (Mage::getStoreConfigFlag('dev/log/active')): ?>
+        <li><a id="devbar-toggle-logs" href="#" class="button tiny alert"><?php echo $this->__('Disable Logging'); ?></a></li>
+        <?php else: ?>
+        <li><a id="devbar-toggle-logs" href="#" class="button tiny"><?php echo $this->__('Enable Logging'); ?></a></li>
+        <?php endif; ?>
+    </ul>
+
+    <ul class="button-group radius">
+        <?php if (Mage::getStoreConfigFlag('dev/debug/template_hints')): ?>
+        <li><a id="devbar-toggle-hints" href="#" class="button tiny alert"><?php echo $this->__('Disable Template Hints'); ?></a></li>
+            <?php if (Mage::getStoreConfigFlag('dev/debug/template_hints_blocks')): ?>
+            <li><a id="devbar-toggle-blocks" href="#" class="button tiny alert"><?php echo $this->__('Disable Block Names'); ?></a></li>
+            <?php else: ?>
+            <li><a id="devbar-toggle-blocks" href="#" class="button tiny"><?php echo $this->__('Enable Block Names'); ?></a></li>
+            <?php endif; ?>
+        <?php else: ?>
+        <?php if (Mage::app()->getStore()->isAdmin()): ?>
+        <li><a href="#" class="button tiny disabled"><?php echo $this->__('Template Hints Unavailable'); ?></a></li>
+        <?php else: ?>
+        <li><a id="devbar-toggle-hints" href="#" class="button tiny"><?php echo $this->__('Enable Template Hints'); ?></a></li>
+        <?php endif; ?>
+        <?php endif; ?>
+    </ul>
+</div>
+<div id="devbar-system-results"></div>

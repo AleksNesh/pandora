@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+ <modules>
+  <Ash_CustomTemplates>
+   <codePool>local</codePool>
+   <active>true</active>
+  </Ash_CustomTemplates>
+ </modules>
+</config>

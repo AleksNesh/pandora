@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * MageWorx
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MageWorx EULA that is bundled with
+ * this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.mageworx.com/LICENSE-1.0.html
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.mageworx.com/ for more information
+ *
+ * @category   MageWorx
+ * @package    MageWorx_OrdersPro
+ * @copyright  Copyright (c) 2012 MageWorx (http://www.mageworx.com/)
+ * @license    http://www.mageworx.com/LICENSE-1.0.html
+ */
+
+/**
+ * Orders Pro extension
+ *
+ * @category   MageWorx
+ * @package    MageWorx_OrdersPro
+ * @author     MageWorx Dev Team
+ */
+-->
+<layout>    
+    <adminhtml_sales_order_view>
+        <reference name="head">
+            <action method="addCss" ifconfig="mageworx_orderspro/general/enabled"><name>css/mageworx/orderspro/styles.css</name></action>
+
+            <action method="addItem" ifconfig="mageworx_orderspro/general/show_thumbnails"><type>js_css</type><name>mageworx/lightbox/css/lightbox.css</name><params/></action>
+            <action method="addItem" ifconfig="mageworx_orderspro/general/show_thumbnails"><type>js_css</type><name>mageworx/lightbox/css/lightbox-ie.css</name><params/><if>lt IE 8</if></action>
+            <action method="addItem" ifconfig="mageworx_orderspro/general/show_thumbnails"><type>js</type><name>mageworx/lightbox/js/lightbox.js</name><params/><if/></action>
+
+            <action method="addItem"><type>js</type><name>mageworx/orderspro/order_edit.js</name><params/><if/></action>
+
+            <action method="addJs"><file>mage/adminhtml/product/composite/configure.js</file></action>
+            <action method="addJs"><file>varien/configurable.js</file></action>
+        </reference>
+
+        <!--  Replace standard "Order History" block  -->
+        <block type="mageworx_orderspro/adminhtml_sales_order_history" name="order_history" template="mageworx/orderspro/sales-order-view-history.phtml" />
+        <reference name="order_tab_info">
+            <action method="unsetChild"><name>order_history</name></action>
+            <action method="append"><block>order_history</block></action>
+        </reference>
+        <!--//  Replace standard "Order History" block  -->
+
+        <reference name="order_items">
+            <action method="addColumnRender" ifconfig="mageworx_orderspro/general/show_thumbnails"><column>name</column><block>adminhtml/sales_items_column_name</block><template>mageworx/orderspro/sales-items-column-name.phtml</template></action>
+            <action method="addColumnRender" ifconfig="mageworx_orderspro/general/show_thumbnails"><column>name</column><block>adminhtml/sales_items_column_name_grouped</block><template>mageworx/orderspro/sales-items-column-name.phtml</template><type>grouped</type></action>
+        </reference>
+
+        <reference name="content">
+            <block type="mageworx_orderspro/adminhtml_sales_order_edit_wrapper" name="oredrspro_js" template="mageworx/orderspro/edit/wrapper.phtml" />
+        </reference>
+
+    </adminhtml_sales_order_view>
+
+    <mageworx_orderspro_order_history>
+        <block type="mageworx_orderspro/adminhtml_sales_order_history" name="order_history" template="mageworx/orderspro/sales-order-view-history.phtml" output="toHtml"/>
+    </mageworx_orderspro_order_history>
+    
+    <mageworxadmin_adminhtml_orderspro_history_addcomment>
+        <update handle="mageworx_orderspro_order_history" />
+    </mageworxadmin_adminhtml_orderspro_history_addcomment>
+    
+    <mageworxadmin_adminhtml_orderspro_history_deletehistory>
+        <update handle="mageworx_orderspro_order_history" />
+    </mageworxadmin_adminhtml_orderspro_history_deletehistory>
+
+    <mageworxadmin_adminhtml_orderspro_history_saveeditcomment>
+        <update handle="mageworx_orderspro_order_history" />
+    </mageworxadmin_adminhtml_orderspro_history_saveeditcomment>
+    
+    <adminhtml_sales_order_invoice_new>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="orderspro" template="mageworx/orderspro/invoice_totals.phtml" />
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+</layout>

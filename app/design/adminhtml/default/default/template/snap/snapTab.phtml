@@ -1,0 +1,66 @@
+<?php
+
+$order_cards = Mage::helper("snap_card")->getOrderCards();
+?>
+
+<script type="text/javascript">
+//<![CDATA[
+var snapBaseURL = "<?php
+echo addslashes(Mage::getBaseUrl());
+?>";
+var chargeBackURL = "<?php
+echo addslashes(Mage::helper("adminhtml")->getUrl("*/chargeback/index/"));
+?>";
+//]]>
+</script>
+
+<div class="grid np">
+  <div class="hor-scroll">
+    <table cellspacing="0" class="data order-tables">
+        <col />
+        <col width="1" />
+        <thead>
+            <tr class="headings">
+                <th><?php echo $this->helper('snap_card')->__('SNAP Gift Card Number') ?></th>
+                <th><?php echo $this->helper('snap_card')->__('Amount') ?></th>
+                <th><?php echo $this->helper('snap_card')->__('Holding') ?></th>
+                <th><?php echo $this->helper('snap_card')->__('Charged') ?></th>
+                <th><?php echo $this->helper('snap_card')->__('Returned') ?></th>
+                <th><?php echo $this->helper('snap_card')->__('Error') ?></th>
+                <th class="last"><?php echo $this->helper('snap_card')->__('Action') ?></th>
+            </tr>
+        </thead>
+        <?php $_i=0;foreach ($order_cards as $order_card): $_i++ ?>
+            <tbody class="<?php echo $_i%2?'odd':'even' ?>">
+                <tr class="border">
+                    <td>
+                        <?php echo $order_card["card_code"]; ?><br />
+                        Customer IP: <?php echo $order_card["client_addr"]; ?><br />
+                        Charge start: <?php echo Mage::helper("core")->formatDate($order_card["created_at"], "medium", true); ?><br />
+                        Last update: <?php echo Mage::helper("core")->formatDate($order_card["last_modified_at"], "medium", true); ?>
+                    </td>
+                    <td><?php echo $this->helper("core")->formatPrice($order_card["amount"]) . " (" . $order_card["value_code"] . ")"; ?></td>
+                    <td id="hold-<?php echo $order_card["charge_id"]; ?>"><?php echo $order_card["is_holding"] ? ("Yes<br>Hold transaction ID: " . $order_card["hold_transaction_id"]) : "No"; ?></td>
+                    <td id="charge-<?php echo $order_card["charge_id"]; ?>"><?php echo $order_card["is_charged"] ? "Yes" : "No"; ?></td>
+                    <td id="return-<?php echo $order_card["charge_id"]; ?>"><?php echo $order_card["is_returned"] ? "Yes" : "No"; ?></td>
+                    <td><?php echo $order_card["is_error"] ? "Yes" : "No"; ?></td>
+                    <td><?php
+                    if(!$order_card["is_returned"]) {
+                        if($order_card["is_charged"]) {
+                            ?>
+                            <a href="#" class="return-charge" charge-id="<?php echo $order_card["charge_id"]; ?>">Return charge</a>
+                            <?php
+                        } else if($order_card["is_holding"]) {
+                            ?>
+                            <a href="#" class="return-hold" charge-id="<?php echo $order_card["charge_id"]; ?>">Return hold</a>
+                            <?php
+                        }
+                    }
+                    ?></td>
+                </tr>
+            </tbody>
+        <?php endforeach; ?>
+    </table>
+  </div>
+</div>
+<br />

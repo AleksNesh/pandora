@@ -1,0 +1,10 @@
+<div class='page-header'>
+    <div class='app-navigation' ng-include="appNavTemplateUrlPath"></div>
+    <div class='edit-design-name-wrapper' ng-controller='WorkspaceCtrl'>
+        <form id="designNameForm" name="myForm" ng-show='showForm'>
+            <input type="text" name="input" ng-model="title" required ng-trim="true">
+        </form>
+        <h1 id="designName" ng-hide='showForm'>{{title}}</h1>
+        <button class='tiny edit-name' ng-model='editNameBtnLabel' ng-click='toggleEditNameField()'>{{editNameBtnLabel}}</button>
+    </div>
+</div>

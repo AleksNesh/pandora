@@ -1,0 +1,135 @@
+<?php
+/**
+ * Altima Lookbook Professional Extension
+ *
+ * Altima web systems.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is available through the world-wide-web at this URL:
+ * http://blog.altima.net.au/lookbook-magento-extension/lookbook-professional-licence/
+ *
+ * @category   Altima
+ * @package    Altima_LookbookProfessional
+ * @author     Altima Web Systems http://altimawebsystems.com/
+ * @license    http://blog.altima.net.au/lookbook-magento-extension/lookbook-professional-licence/
+ * @email      support@altima.net.au
+ * @copyright  Copyright (c) 2012 Altima Web Systems (http://altimawebsystems.com/)
+ */
+?>
+<?php
+$helper = Mage::helper('lookbookslider');
+
+if ($helper->getEnabled() && ($helper->canRun(false) || $helper->canRun(true))) :
+
+    $sliders = $this->_getCollection();    
+    if (!empty($sliders) &&  $sliders->getSize()) :
+?>
+<div class="lookbookslider-bottom">
+<?php                
+        foreach ($sliders as $slider) {
+            $slider_id = $slider->getId();
+            $slides = $this->_getSlidesCollection($slider_id);
+            if ($slides->getSize()) :
+                $content_before = $this->helper('cms')->getBlockTemplateProcessor()->filter($slider->getContentbefore());
+                $content_after = $this->helper('cms')->getBlockTemplateProcessor()->filter($slider->getContentafter());
+                $width = $slider->getWidth();
+                $height = $slider->getHeight();
+                $height_procent = $height/$width*100;
+                $thumb_width = intval($width/($height/100));
+                $effect = $slider->getEffect();
+                if ($effect=='') $effect = 'random';
+                $navigation = ($slider->getNavigation()==1) ? 'true' : 'false';
+                $navigationHover = ($slider->getNavigationHover()==1) ? 'true' : 'false';
+                $thumbnails = ($slider->getThumbnails()==1) ? 'true' : 'false';
+                $time = ($slider->getTime()) ? $slider->getTime() : 7000;
+                $trans_period = ($slider->getTransPeriod()) ? $slider->getTransPeriod() : 1500;
+                $hotspots = array(); 
+?>
+<div class="content-before"><?php echo $content_before;?></div>
+<div class="camera_wrap camera_black_skin" id="lookbookslider_<?php echo $slider->getId()?>" style="max-width:<?php echo $width;?>px; max-height:<?php echo $height;?>px;">
+     <?php foreach ($slides as $slide): ?>
+    		<div
+                <?php if($slide->getLink()): ?>
+                    <?php $link = str_replace('http://', '', $slide->getLink());?>
+                    data-link="http://<?php echo $link;?>" 
+                <?php endif; ?>
+                    data-thumb="<?php echo $helper->getResizedUrl($slide->getData('image_path'), $thumb_width, 100);?>" 
+                    data-src="<?php echo $helper->getResizedUrl($slide->getData('image_path'), $width, $height);?>"
+                    >
+                 <img src="<?php echo $helper->getResizedUrl($slide->getData('image_path'), $width, $height);?>" alt="Slide <?php echo $slide->getId();?>"/>
+                 <?php if($slide->getCaption()!='' && $slider->getShowslidenames()==1) :?>
+                     <div class="camera_caption fadeFromBottom">
+                         <?php echo $slide->getCaption();?>
+                     </div>
+                 <?php endif;?>
+            </div>
+            <?php $hotspots[] = $this->getHotspotsWithProductDetails($slide); ?>
+    <?php endforeach; ?>
+</div>
+<div class="content-after"><?php echo $content_after;?></div>
+<?php 
+    $thumb = TRUE;
+    if(count($slides) <= 1):
+        $navigation = 'false';
+        $thumb = FALSE;
+    endif;
+?>
+<script type="text/javascript">
+//<![CDATA[
+jQuery(window).load(function() { 
+    jQuery('#lookbookslider_<?php echo $slider->getId()?>').camera({
+            fx: '<?php echo $effect;?>',
+            navigation: <?php echo $navigation;?>,
+            navigationHover: <?php echo $navigationHover;?>,
+         <?php if (!$thumb): ?>
+            playPause: false,
+            loader: 'none',
+         <?php endif; ?>    
+         <?php if ($slider->getThumbnails()==1 && $thumb): ?>
+    		pagination: false,
+		thumbnails: true,
+         <?php elseif($slider->getThumbnails()!==1 && $thumb): ?>
+    		pagination: true,
+		thumbnails: false,
+         <?php else: ?>
+    		pagination: false,
+        	thumbnails: false,
+          <?php endif;?>
+            time: <?php echo $time;?>,
+            trans_period: <?php echo $trans_period;?>,           
+            width: '<?php echo $width;?>px',
+            height: '<?php echo $height_procent;?>%',
+            minHeight: '60px',
+            onLoaded: function(){
+                    var hotspots = <?php echo json_encode($hotspots);?>;
+                    jQuery('#lookbookslider_<?php echo $slider->getId()?>').css('margin-bottom','140px');
+           <?php if(!$thumb): ?>
+                    jQuery('#lookbookslider_<?php echo $slider->getId()?>').cameraStop();
+                    jQuery('#lookbookslider_<?php echo $slider->getId()?>').css('margin-bottom','0px');
+           <?php endif; ?>
+                    jQuery('#lookbookslider_<?php echo $slider->getId()?> .cameraContent').each(function(){
+                    var ind = jQuery(this).index();
+                    jQuery.setHotspots(jQuery(this), hotspots[ind]);    
+                    if(jQuery('#lookbookslider_<?php echo $slider->getId()?> .camera_thumbs_cont ul > li').length){
+                    var thumb_length = jQuery('#lookbookslider_<?php echo $slider->getId()?> .camera_thumbs_cont ul > li').length;
+                    var thumb_width = jQuery('#lookbookslider_<?php echo $slider->getId()?> .camera_thumbs_cont ul > li').outerWidth();
+                    jQuery('#lookbookslider_<?php echo $slider->getId()?> .camera_thumbs_cont ul').css('width',thumb_length*thumb_width+thumb_length*8+2);
+                }
+                });
+        }
+	});
+});  
+
+//]]>
+</script>
+<?php endif;?>
+<?php   
+   }
+?>
+</div>
+<div style="clear:both; height:10px;"></div>
+    <?php endif;?>
+<?php endif;?>
+

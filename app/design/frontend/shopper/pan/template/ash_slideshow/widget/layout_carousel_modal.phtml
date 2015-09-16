@@ -1,0 +1,90 @@
+<?php
+/**
+ * Ash Slideshow Extension
+ *
+ * @category  Ash
+ * @package   Ash_Slideshow
+ * @copyright Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @author    August Ash Team <core@augustash.com>
+ */
+
+
+/**
+ * CAROUSEL MODAL LAYOUT
+ *
+ * Slides will have:
+ *
+ *  + Large background image/video that will be a link
+ *  + Title/subtitle that will be a link displayed underneath image
+ *  + Description (paragraph(s) or HTML) that will display within a modal window
+ *  + NO call to action buttons!
+ */
+
+$showOn     = Mage::helper('ash_slideshowextended')->getShowOn();
+$isHomePage = Mage::helper('ash_slideshowextended')->currentPageIsHomePage();
+?>
+<!-- ASH SLIDESHOW -->
+<div class="<?php echo $css = ($isHomePage && $showOn == 'home') ? 'slider' : 'slider-no-bg'; ?> ">
+    <div class="row">
+        <div class="ash-slideshow-wrapper <?php echo $config['layout']; ?>  small-12 columns">
+            <ul id="ash_slideshow-<?php echo $config['id'];?>" class="bxslider no-bullet">
+                <?php foreach($slides as $slide): ?>
+                    <li class='slide'>
+                        <?php if($slide->getData('link_url') && !$slide->getData('use_modal')): ?>
+                            <a href="<?php echo $slide->getData('link_url'); ?>">
+                                <img src="<?php echo Mage::helper('ash_slideshow')->getAssetUrl($slide); ?>" alt="<?php echo $slide->getData('title'); ?>" title="<?php echo $slide->getData('title'); ?>" width="340" height="470" />
+                            </a>
+                        <?php else: ?>
+                            <!-- <a href="#" data-reveal-id="slideModal_<?php echo $slide->getData('id') ?>" data-reveal> -->
+                                <img src="<?php echo Mage::helper('ash_slideshow')->getAssetUrl($slide); ?>" alt="<?php echo $slide->getData('title'); ?>" title="<?php echo $slide->getData('title'); ?>" width="340" height="470" />
+                            <!-- </a> -->
+                        <?php endif; ?>
+
+
+
+                        <div class='promo-details'>
+                            <div class='slide-title-bg'>
+                                <div class="triangle-up"></div>
+                            </div>
+
+                            <div class='slide-title-wrapper'>
+                                <?php if ($slide->getData('subtitle')): ?>
+                                    <h2 class='slide-title subheader'><?php echo $slide->getData('subtitle'); ?></h2>
+                                <?php endif; ?>
+                                <?php if($slide->getData('link_url') && !$slide->getData('use_modal')): ?>
+                                    <a href="<?php echo $slide->getData('link_url'); ?>">
+                                        <h1 class='slide-title '><?php echo $slide->getData('title'); ?></h1>
+                                    </a>
+                                <?php else: ?>
+                                    <a href="#" data-reveal-id="slideModal_<?php echo $slide->getData('id') ?>" data-reveal>
+                                        <h1 class='slide-title '><?php echo $slide->getData('title'); ?></h1>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <div id="slideModal_<?php echo $slide->getData('id'); ?>" class="reveal-modal" data-reveal>
+                            <div class="slide-desc clearfix">
+                                <?php echo $slide->getData('description'); ?>
+                            </div>
+                            <a class="close-reveal-modal">&#215;</a>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <script type="text/javascript">
+                //<![CDATA[
+                    jQuery(document).foundation();
+                    jQuery(document).ready(function(){
+                        var setWidth    = jQuery(window).width();
+                        var slider      = "ash_slideshow-<?php echo $config['id'];?>";
+                        var bxOptions   = <?php echo $bxConfig; ?>;
+                        jQuery("#" + slider).bxSlider(bxOptions);
+                    });
+                //]]>
+            </script>
+        </div>
+    </div>
+</div>
+<!-- ASH SLIDESHOW EOF -->

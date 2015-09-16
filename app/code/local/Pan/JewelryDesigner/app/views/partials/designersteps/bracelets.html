@@ -1,0 +1,134 @@
+<div class="search-tools">
+    <div class='filter search'>
+        <input class="input-text" type="text" ng-model="search.$" placeholder="Search Bracelets">
+    </div>
+
+    <div class="filter select select-1">
+        <label for="show-color">Color:</label>
+        <select name='show-color' ng-model="showColor">
+            <option value=" " selected>All</option>
+            <option ng-repeat="color in colors" value="{{color}}">{{color}}</option>
+        </select>
+    </div>
+
+    <div class='filter select select-2'>
+        <label for="show-material">Material</label>
+        <select ng-model="showMaterial">
+            <option value=" " selected>All</option>
+            <option ng-repeat="material in materials" value="{{material}}">{{material}}</option>
+        </select>
+    </div>
+
+    <div class='filter select select-3'>
+        <label for="sort-order">Sort By</label>
+        <select name="sort-order" ng-model="sortorder">
+            <option value="name" selected>Name (A-Z)</option>
+            <option value="-name">Name (Z-A)</option>
+            <option value="price">Price (Low to High)</option>
+            <option value="-price">Price (High to Low)</option>
+        </select>
+    </div>
+</div>
+
+<ul class='jewelry-product-grid'>
+    <li class='bracelet-block' ng-repeat="bracelet in products
+        | orderBy:sortorder
+        | filter:showColor
+        | filter:showMaterial
+        | filter:search ">
+
+        <div class='product-thumb'>
+            <img ng-src="{{bracelet.images.thumbnail.rel_url}}" alt="{{bracelet.name
+                | replace:'PANDORA':''
+                | replace:'Pandora':''
+                | replace:'CHARM':'Charm'
+            }}" />
+            <div class='actions' ng-controller='WorkspaceCtrl'>
+                <button data-reveal-id="bracelet-modal-{{bracelet.id}}">Select Size</button>
+                <div id="bracelet-modal-{{bracelet.id}}" class="reveal-modal" data-reveal>
+                    <div class="product-image">
+                        <img ng-src="{{bracelet.images.small_image.rel_url}}" alt="{{bracelet.name
+                            | replace:'PANDORA':''
+                            | replace:'Pandora':''
+                            | replace:'CHARM':'Charm'
+                        }}" />
+                    </div>
+                    <div class="product-details">
+                        <h3 class='product-title'>
+                            {{bracelet.name | replace:'PANDORA':'' | replace:'Pandora':''}}
+                        </h3>
+
+                        <p class='product-sku'>Item Number: {{bracelet.sku}}</p>
+
+                        <em class='product-price'>
+                            <span class='price-starts-at' ng-show="bracelet.options_increase_price">From</span>
+                            {{bracelet.price | currency }}
+                        </em>
+                        <!-- <div ng-bind-html="bracelet.short_description"></div> -->
+                        <!-- <em ng-bind-html="bracelet.description"></em> -->
+
+                        <form name="configProductOptionsForm">
+                            <ul>
+                                <li ng-repeat="prodAttr in bracelet.attribute_options">
+                                    <div ng-repeat="(attrId, attr) in prodAttr">
+                                        <p class='product-option-heading'>{{attr.attribute_label}}</p>
+                                        <ul class='product-options'>
+                                            <li ng-repeat="option in attr.values | orderObjectBy:'store_label'">
+                                                <input type="radio" name="{{attr.attribute_code}}" value="{{option.value_index}}" ng-model="formData['attribute_options'][attrId]">
+                                                <label>
+                                                    {{option.store_label}}
+                                                    <span class='price-markup' ng-show="option.pricing_value">+ {{option.pricing_value | currency}}</span>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="item-owned">
+                                <label for="is_already_owned">
+                                    <input class='checkbox' name="is_already_owned" type="checkbox" ng-model="formData.is_already_owned">I Already Own This
+                                </label>
+                            </div>
+
+                        </form>
+
+                        <ul class="bottom-actions">
+                            <li>
+                                <button id="add_to_canvas_product-{{bracelet.id}}" class="button close-reveal-modal" ng-click="
+                                handleBraceletSelect(bracelet, formData)" data-object="{{bracelet}}">Select Bracelet</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <a class="close-reveal-modal">&#215;</a>
+                </div>
+            </div>
+        </div>
+
+        <h3 class='product-title'>
+            {{bracelet.name
+                | replace:'PANDORA':''
+                | replace:'Pandora':''
+                | replace:'CHARM':'Charm'
+            }}
+        </h3>
+
+        <em class='product-price'>
+            <span class='price-starts-at' ng-show="bracelet.options_increase_price">From</span>
+            {{bracelet.price | currency }}
+        </em>
+
+        <span class='stock-status'>
+            <span class='label in-stock' ng-show="bracelet.is_in_stock">In stock</span>
+            <span class='label out-of-stock' ng-hide="bracelet.is_in_stock">Out of stock</span>
+        </span>
+    </li>
+    <div style='clear: both;'></div>
+    <div class='loading' ng-show='products.busy'>Loading more products...</div>
+</ul>
+
+<script type="text/javascript">
+    //<![CDATA[
+    jQuery(document).foundation();
+    //]]>
+</script>

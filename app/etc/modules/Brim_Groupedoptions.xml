@@ -1,0 +1,12 @@
+<config>
+    <modules>
+        <Brim_Groupedoptions>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Catalog />
+            </depends>
+        </Brim_Groupedoptions>
+    </modules>
+</config>
+

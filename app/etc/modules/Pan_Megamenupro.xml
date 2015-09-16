@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Simple module for extending core EM_Megamenupro module
+ *
+ * @category    Pan
+ * @package     Pan_Megamenupro
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @author      Josh Johnson (August Ash)
+ */
+-->
+<config>
+     <modules>
+        <Pan_Megamenupro>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <EM_Megamenupro/>
+            </depends>
+        </Pan_Megamenupro>
+     </modules>
+</config>

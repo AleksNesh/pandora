@@ -1,0 +1,18 @@
+<?php
+
+?>
+<script type="text/javascript">
+//<![CDATA[
+var snapBaseURL = "<?php
+echo addslashes(Mage::getBaseUrl());
+?>";
+//]]>
+</script>
+<div id="balanceResult"></div>
+<form id="balanceCheckForm" method="POST">
+Please enter the gift card number<br />
+<input id="card_number" type="text" class="required-entry input-text" /><br />
+Please enter the gift card pin<br />
+<input id="card_pin" type="text" class="input-text"/><br />
+<input type="submit" id="checkBalance" value="Submit">
+</form>

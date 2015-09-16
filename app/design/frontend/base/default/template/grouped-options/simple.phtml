@@ -1,0 +1,55 @@
+<?php
+/**
+ * Brim LLC Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Brim LLC Commercial Extension License
+ * that is bundled with this package in the file license.pdf.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.brimllc.com/license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to support@brimllc.com so we can send you a copy immediately.
+ *
+ * @category   Brim
+ * @package    Brim_Groupedoptions
+ * @copyright  Copyright (c) 2011-2012 Brim LLC
+ * @license    http://ecommerce.brimllc.com/license
+ */
+?>
+<?php $_item = $this->getProduct(); ?>
+<?php $options = $_item->getProductOptionsCollection(); ?>
+<?php $hasSelects = false; ?>
+<?php if(count($options) > 0) : ?>
+    <?php foreach($options as $option): ?>
+        <?php if($option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DROP_DOWN) :
+            $hasSelects = true;
+        endif; ?>
+        <?php echo $this->getLayout()->createBlock('groupedoptions/product_view_option')
+            ->setProduct($_item)
+            ->setOption($option)
+            ->toHtml(); ?>
+    <?php endforeach; ?>
+
+    <script type="text/javascript">
+        // product price JS
+        var optionsPrice<?php echo $_item->getId() ?> = new Product.OptionsPrice(<?php echo Mage::helper('groupedoptions')->getProductViewJsonConfig($_item) ?>);
+
+        // grouped/simple options manager
+        var optionsConfig<?php echo $_item->getId() ?> = new Product.GroupedSimpleOptions(<?php echo Mage::helper('groupedoptions')->getOptionsJsonConfig($_item) ?>, optionsPrice<?php echo $_item->getId() ?>, 'product-custom-option-<?php echo $_item->getId() ?>');
+
+        // event listeners
+        document.observe('dom:loaded', function() {
+            $$('.product-custom-option-<?php echo $_item->getId() ?>').each(function(element) {
+                Event.observe(element, 'change', function(event) {
+                    <?php if($hasSelects): ?>
+                        optionsConfig<?php echo $_item->getId() ?>.reloadPrice();
+                    <?php endif;?>
+                    var qtyField = $$('input[name="super_group[<?php echo $_item->getId() ?>]"]').first();
+                    if (qtyField.value == 0) { qtyField.value = 1 }
+                });
+            });
+        });
+    </script>
+<?php endif; ?>

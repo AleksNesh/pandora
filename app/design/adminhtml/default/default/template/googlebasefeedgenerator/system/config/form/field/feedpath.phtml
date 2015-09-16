@@ -1,0 +1,8 @@
+<?php
+$_htmlId = $this->getHtmlId() ? $this->getHtmlId() : '_' . uniqid();
+$selected = (string)$this->getElement()->getValue();
+?>
+
+    <input id="<?php echo $_htmlId ?>" class="input-text" type="text"
+           name="<?php echo $this->getElement()->getName() ?>" value="<?php echo $selected ?>"/><br/>
+<?php echo $this->getFeedUrl(); ?>

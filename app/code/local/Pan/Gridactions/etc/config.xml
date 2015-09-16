@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Extend/Override Xtento_GridActions module
+ *
+ * @category    Pan
+ * @package     Pan_Gridactions
+ * @copyright   Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Pan_Gridactions>
+            <version>0.1.0</version>
+        </Pan_Gridactions>
+    </modules>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Pan_Gridactions before="Xtento_GridActions_Adminhtml">Pan_Gridactions_Adminhtml</Pan_Gridactions>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <global>
+        <helpers>
+            <pan_gridactions>
+                <class>Pan_Gridactions_Helper</class>
+            </pan_gridactions>
+        </helpers>
+        <models>
+            <pan_gridactions>
+                <class>Pan_Gridactions_Model</class>
+            </pan_gridactions>
+
+            <gridactions>
+                <rewrite>
+                    <processor>Pan_Gridactions_Model_Processor</processor>
+                </rewrite>
+            </gridactions>
+        </models>
+        <blocks>
+            <pan_gridactions>
+                <class>Pan_Gridactions_Block</class>
+            </pan_gridactions>
+        </blocks>
+    </global>
+</config>

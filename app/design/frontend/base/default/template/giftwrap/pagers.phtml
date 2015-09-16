@@ -1,0 +1,30 @@
+<div class="page-head button-level">
+	<h3><?php echo $this->__('Available Papers for Gift Wrap') ?></h3>
+	<a href="#" class="link-print right" onclick="print();"><?php echo $this->__('Print This Page') ?></a>
+</div>
+<?php $_pagerCollection = $this->getPagers();?>
+<?php $_total = count($_pagerCollection); ?>
+<?php
+	if ($_total):
+?>
+	<div class="listing-pagers">
+		<?php $i = 0;?>
+		<?php foreach ($_pagerCollection as $_pager):?>
+			<?php if($i++%3==0): ?>				
+				<ol class="grid-row <?php if($i==1):?>first<?php elseif($i%3==1):?>last<?php endif?>">
+			<?php endif; ?>
+					<li class="item">
+						<p class="product-image">						
+							<?php $image = $_pager['image']; ?>
+							<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/' . $_pager['image'] ?>" width="200px" height="200px" />
+						</p>
+						<h5><?php echo $this->htmlEscape($_pager['title']) ?></h5>
+					</li>					
+			<?php if($i%3==0 || $i==$_total): ?>
+				</ol>			
+			<?php endif; ?>
+		<?php endforeach; ?>
+	</div>
+<?php
+	endif;
+?>

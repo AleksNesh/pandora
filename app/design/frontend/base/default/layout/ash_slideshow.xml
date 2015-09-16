@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Ash Slideshow Extension
+ *
+ * @category  Ash
+ * @package   Ash_Slideshow
+ * @copyright Copyright (c) 2014 August Ash, Inc. (http://www.augustash.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @author    August Ash Team <core@augustash.com>
+ */
+-->
+<layout>
+<!--
+Default layout, loads most of the pages
+-->
+    <default>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>ash_slideshow/js/bxslider/jquery.bxslider.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>ash_slideshow/js/bxslider/plugins/jquery.easing.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>ash_slideshow/js/bxslider/plugins/jquery.fitvids.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>ash_slideshow/css/bxslider/bxslider.css</name>
+            </action>
+        </reference>
+    </default>
+</layout>

@@ -1,0 +1,11 @@
+<?php
+	$giftwrap_amount = $this->getGiftwrapAmount();
+	if ($giftwrap_amount):
+?>		
+		<tr>
+				<td class="label"><?php echo Mage::helper('giftwrap')->__('Gift Wrap Amount') ?></td>
+				<td <?php echo $this->getHtmlClass() ? ('class="' . $this->getHtmlClass() . '"') : '';?>><?php echo $this->displayAmount($giftwrap_amount, $giftwrap_amount) ?></td>
+		</tr>
+<?php
+	endif;
+?>

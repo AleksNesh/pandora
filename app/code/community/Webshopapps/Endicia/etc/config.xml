@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * WebShopApps Shipping Module
+ *
+ * @category    WebShopApps
+ * @package     WebShopApps_Endicia
+ * User         Genevieve Eddison
+ * Date         13 November 2013
+ * Time         11:00 AM
+ * @copyright   Copyright (c) 2013 Zowta Ltd (http://www.WebShopApps.com)
+ *              Copyright, 2013, Zowta, LLC - US license
+ * @license     http://www.WebShopApps.com/license/license.txt - Commercial license
+ *
+ */
+ -->
+<config>
+    <modules>
+        <Webshopapps_Endicia>
+            <version>1.0.0</version>
+            <depends>
+                <Mage_Shipping />
+            </depends>
+        </Webshopapps_Endicia>
+    </modules>
+    <global>
+        <models>
+            <wsaendicia>
+                <class>Webshopapps_Endicia_Model</class>
+            </wsaendicia>
+            <wsaendicia_shipping>
+                <class>Webshopapps_Endicia_Model</class>
+            </wsaendicia_shipping>
+        </models>
+        <blocks>
+            <wsaendicia>
+                <class>Webshopapps_Endicia_Block</class>
+            </wsaendicia>
+        </blocks>
+        <helpers>
+            <wsaendicia>
+                <class>Webshopapps_Endicia_Helper</class>
+            </wsaendicia>
+        </helpers>
+        <sales>
+            <shipping>
+                <carriers>
+                    <wsaendicia>
+                        <class>Webshopapps_Endicia_Model_Carrier_Endicia</class>
+                    </wsaendicia>
+                </carriers>
+            </shipping>
+        </sales>
+        <events>
+            <admin_system_config_changed_section_carriers>
+                <observers>
+                    <productmatrix_observer>
+                        <class>wsaendicia/observer</class>
+                        <method>postError</method>
+                    </productmatrix_observer>
+                </observers>
+            </admin_system_config_changed_section_carriers>
+            <adminhtml_controller_action_predispatch_start>
+                <observers>
+                    <wsaendicia_labelcreate>
+                        <class>wsaendicia/observer</class>
+                        <method>adminhtmlControllerActionPredispatchStart</method>
+                    </wsaendicia_labelcreate>
+                </observers>
+            </adminhtml_controller_action_predispatch_start>
+            <core_block_abstract_to_html_before>
+               <observers>
+                    <wsaendicia_add_endicia_checkbox>
+                        <class>wsaendicia/observer</class>
+                        <method>coreBlockAbstractToHtmlBefore</method>
+                     </wsaendicia_add_endicia_checkbox>
+               </observers>
+            </core_block_abstract_to_html_before>
+        </events>
+    </global>
+    <frontend>
+        <routers>
+            <wsaendicia>
+                <use>standard</use>
+                <args>
+                    <module>Webshopapps_Endicia</module>
+                    <frontName>wsaendicia</frontName>
+                </args>
+            </wsaendicia>
+        </routers>
+    </frontend>
+    <admin>
+        <routers>
+            <wsaendicia>
+                <use>admin</use>
+                <args>
+                    <module>Webshopapps_Endicia</module>
+                    <frontName>wsaendicia</frontName>
+                </args>
+            </wsaendicia>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <wsaendicia module="Webshopapps_Endicia" >
+                    <file>webshopapps_endicia.xml</file>
+                </wsaendicia>
+            </updates>
+        </layout>
+    </adminhtml>
+    <default>
+        <carriers>
+            <wsaendicia>
+                <partner_id>lwsa</partner_id>
+                <password backend_model="adminhtml/system_config_backend_encrypted"/>
+                <active>0</active>
+                <labels>0</labels>
+                <serial backend_model="adminhtml/system_config_backend_encrypted" />
+                <sallowspecific>0</sallowspecific>
+                <model>wsaendicia_shipping/carrier_endicia</model>
+                <title>Endicia</title>
+                <rubber_stamp_order>0</rubber_stamp_order>
+                <default_to_endicia>0</default_to_endicia>
+                <default_domestic>Priority</default_domestic>
+                <default_international>PriorityMailInternational</default_international>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+                <allowed_methods>Priority,PriorityExpress,PriorityMailInternational,PriorityMailExpressInternational</allowed_methods>
+                <ship_once>0</ship_once>
+                <sandbox_mode>1</sandbox_mode>
+                <stealth>1</stealth>
+                <insurance_provider>OFF</insurance_provider>
+            </wsaendicia>
+        </carriers>
+    </default>
+</config>

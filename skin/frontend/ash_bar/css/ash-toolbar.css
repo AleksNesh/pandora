@@ -1,0 +1,76 @@
+#ashbar-button {
+  position:absolute;
+  top:0;
+  left:0;
+  float: left;
+  background:#FFF;
+  z-index:10005;
+  border-right:1px solid #DDD;
+  border-bottom:1px solid #DDD;
+  /*padding:3px 0;*/
+}
+
+#ashbar-menu {
+  position:absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  background:#FFF;
+  z-index:10000;
+  text-align:left;
+  border-bottom:1px solid #DDD;
+  /*padding:2px 0;*/
+  /*font-family: Monaco, Menlo, Consolas, "Courier New", monospace;*/
+}
+
+.ashbar-tab-container {
+  position:absolute;
+  top:36px;
+  left:0;
+  width: 98%;
+  padding:10px 1%;
+  background:#FFF;
+  z-index:9999;
+  text-align:left;
+  border-bottom:1px solid #DDD;
+}
+
+.ashbar div.ashbar-icon {
+  padding:3px 0 0 0;
+  vertical-align:top;
+  font-size:20px;
+  display:inline;
+}
+
+.ashbar-logo {
+  float:left;
+  padding:8px 7px 7px 7px;
+  cursor:pointer;
+}
+
+.ashbar ul#ashbar-nav {
+  float:left;
+  list-style: none outside none;
+  padding:0 10px 0 8px;
+  margin:4px 0 4px 35px;
+}
+
+.ashbar ul#ashbar-nav li {
+  float:left;
+  line-height:20px;
+  padding:0 10px 0 0;
+  vertical-align:middle;
+}
+
+ul#ashbar-nav li a {
+  text-decoration:none;
+  color:#666;
+}
+
+#ashbar-time, #ashbar-memory {
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+}
+
+#ashbar-database-content div.alert {
+  margin-bottom:0;
+}

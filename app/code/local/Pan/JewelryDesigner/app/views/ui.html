@@ -1,0 +1,21 @@
+<div id="topnav-wrapper" ui-view='topnav'></div>
+<div id="jewelryDesigner-ui-wrapper" class="clearfix">
+    <div id="navbar-wrapper" ui-view="navbar"></div>
+    <div id="workspace-wrapper" class='design-ui-wrapper' ui-view="workspace"></div>
+    <a class="sidebar-toggle" href="javascript:void(0);">Open/Close</a>
+    <div id="sidebar-wrapper" class="items-grid {{designStep}}" ui-view="sidebar"></div>
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    jQuery(document).ready(function(){
+
+        // Toggle the sidebar and button to view catalog products
+        jQuery('.sidebar-toggle').click(function () {
+            jQuery(this).toggleClass('active');
+            jQuery('#sidebar-wrapper').toggleClass('open');
+        });
+
+    });
+    //]]>
+</script>

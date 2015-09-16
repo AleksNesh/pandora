@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_sales_order_view>
+        <reference name="order_items">
+            <block type="core/text_list" name="order_item_extra_info"/>
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="giftwrap/adminhtml_sales_order_view_giftwrap"
+                   as="giftwrap_additional"/>
+        </reference>
+    </adminhtml_sales_order_view>
+</layout>

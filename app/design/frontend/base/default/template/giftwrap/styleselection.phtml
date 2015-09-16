@@ -1,0 +1,164 @@
+
+
+
+
+<?php if (Mage::helper('giftwrap')->enableGiftwrap()):?>
+	<?php if (Mage::helper('giftwrap')->giftwrapAll()):?>
+	<?php 
+		if (Mage::helper('giftwrap')->enableWrapall())
+		{
+	?>
+	<div id="giftwrap_all_div">
+		<input type="checkbox" name="giftwrap_all_in_one" id="giftwrap_all_in_one" size="4" class="input-text giftwrap" maxlength="8" onClick="giftwrapObj.wrapAll()" <?php if (Mage::helper('giftwrap')->disableCheckGift()):?>checked="checked"<?php endif;?> /> &nbsp;
+		<label for="giftwrap_all_in_one"><?php echo $this->__('Wrap all items together');?></label>
+	</div>
+	<div id="giftwrap_all_tooltip" class="giftwrap_tooltip giftwrap_protoClassic" style="visibility: visible;">
+		<div class="giftwrap_toolbar" style="width: 100%;">
+			<div class="title" style="">
+				<?php echo $this->__('Gift Wrap Tooltip');?>
+			</div>
+		</div>
+		<div class="content">
+			<?php
+			$wrapAllTooltip = '';
+			$wrapAllTooltip = Mage::getStoreConfig('giftwrap/message/all_item_giftwrap');
+			echo $this->htmlEscape($wrapAllTooltip);
+			?>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var cartTooltip = new Tooltip('giftwrap_all_div', 'giftwrap_all_tooltip');
+	</script>
+	<?php 
+		}
+		else
+		{
+	?>	
+			<div id="giftwrap_all_div">							
+				<label for="giftwrap_all_in_one" style="color:red"><?php echo Mage::helper("giftwrap")->get_wrap_all_message(); ?></label>
+			</div>
+	<?php 
+		}
+		
+		
+	endif;
+endif;?>
+
+
+<?php
+	$items = $this->getAllItems();
+	$styles = $this->getAllStyles();	
+?>	
+
+<?php
+	if (is_array($items) && count($items) > 0):
+?>	
+	<div id="giftwrap_area" class="giftwrap_area">
+		<fieldset>
+			<h4><?php echo $this->__('Items to giftwrap'); ?></h4>
+			
+			<table class="data-table box-table giftwrap-style-table" cellspacing="0">
+				<thead>
+					<tr>
+						<th class="a-center"><?php echo $this->__('Item');?></th>
+						<th class="a-center"><?php echo $this->__('Style Selection');?></th>
+						<th class="a-center"><?php echo $this->__('Style Image');?></th>
+						<th class="a-center"><?php echo $this->__('Style Price');?></th>
+						<th class="a-center"><?php echo $this->__('Personal Message');?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					foreach ($items as $item):		
+					?>
+					
+					<?php 				
+					$options=$this->getOptionList($item['itemId']);
+					$image = $styles[$item['styleId']]['image'];					
+					$personal_message = $styles[$item['styleId']]['personal_message'];
+					$character = $styles[$item['styleId']]['character'];					
+					?>
+					<?php
+						$productId = Mage::getModel('sales/quote_item')->load($item['itemId'])->getProductId();
+						$_product=Mage::getModel('catalog/product')->load($productId);
+						$_image = Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(75);
+					?>
+					<tr>
+						<td class="giftwrap-item">
+							<?php if ($item['itemId']): ?>			
+							<div>
+								<a href="<?php echo $_product->getProductUrl() ?>"><img src="<?php echo $_image; ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" width="75" /></a>								
+							</div>
+							<a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->htmlEscape($_product->getName()); ?></a>
+							<?php if ($options):?>
+					        <dl class="item-options">
+					            <?php foreach ($options as $_option) :
+					            ?>
+					            
+					            <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
+					            <dd>
+					            	<?php echo $_option['value'] ?>
+					            </dd>
+					            <?php endforeach; ?>
+					        </dl>
+					        <?php endif;?>
+							<?php else:?>
+							<div>
+								<p><?php echo $this->__('Wrap all available items in cart');?></p>
+							</div>
+							<?php endif;?>
+						</td>
+						<td class="giftwrap-style-selection">
+							<?php							
+							if (count($styles) > 0):
+							?>							
+							<select name="cart[<?php echo $item['itemId']?>][styles]" id="item_styleselection" onchange="giftwrapObj.chooseStyle(this.value, '<?php echo $item['itemId']?>') " style="width:80px;">
+								<?php
+								foreach ($styles as $style):
+								?>
+								<option value="<?php echo $style['id'];?>" <?php if ($style['id'] == $item['styleId']):?>selected<?php endif;?>><?php echo $style['title']?></option>
+								<?php
+								endforeach;
+								?>								
+							</select>
+							<br/>
+							<div style="padding-top:20px">
+								<a href="" onclick="javascript:popWin('<?php echo $this->getUrl('giftwrap/index/pagers');?>', 'pagers','width=800,height=600,resizable=yes,scrollbars=yes'); return false;">View available papers</a>
+							</div>
+							<?php
+							endif;
+							?>
+						</td>
+						<td class="style-image">							
+							<img id="giftwrap_style_image_<?php echo $item['itemId']?>" name="giftwrap_style_image" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/' . $image ?>" width="122px" height="122px"/>
+						</td>
+						<td class="style-price" id="giftwrap_style_price_<?php echo $item['itemId']?>">
+							<?php echo Mage::helper('core')->currency($styles[$item['styleId']]['price']);?>	
+						</td>
+						<td class="giftwrap-message"> 
+						<?php if ($personal_message):?>		
+							<textarea onKeyDown="limitText(giftwrap_message_area_<?php echo $item['itemId'] ?>,<?php echo $character ?>);" onKeyUp="limitText(giftwrap_message_area_<?php echo $item['itemId'] ?>,<?php echo $character ?>);" class="turned_on" id="giftwrap_message_area_<?php echo $item['itemId'] ?>" onclick="checkTextbox(this);" onblur="addDefaultMsg(this);"  name="cart_giftwrap_message" style="width:280px; height:100px"><?php if ($item['giftwrap_message'] != '') { echo $this->htmlEscape($item['giftwrap_message']); } else { echo $this->__('Type your personal message here');}?></textarea>
+							<p class="turned_off" id="message_turned_off_<?php echo $item['itemId'] ?>"><?php echo $this->htmlEscape(Mage::helper('giftwrap')->getPersonalMessageTurnedOff());?></p>
+						<?php else: ?>
+							<textarea class="turned_off" id="giftwrap_message_area_<?php echo $item['itemId'] ?>" onclick="checkTextbox(this);" onblur="addDefaultMsg(this);" name="cart_giftwrap_message" style="width:280px; height:100px"><?php if ($item['giftwrap_message'] != '') { echo $this->htmlEscape($item['giftwrap_message']); } else { echo $this->__('Type your personal message here');}?></textarea>						
+							<p class="turned_on" id="message_turned_off_<?php echo $item['itemId'] ?>"><?php echo $this->htmlEscape(Mage::helper('giftwrap')->getPersonalMessageTurnedOff());?></p>
+						<?php endif; ?>
+						</td>
+					</tr>
+					<?php
+					endforeach;
+					?>
+				</tbody>
+			</table>									
+		</fieldset>
+	</div>
+<?php
+	endif;
+?>
+<script language="javascript" type="text/javascript">
+function limitText(limitField, limitNum) {
+	if ($(limitField).value.length > limitNum) {
+		$(limitField).value = $(limitField).value.substring(0, limitNum);
+	}
+}
+</script>

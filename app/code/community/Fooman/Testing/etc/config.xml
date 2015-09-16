@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/*
+ * @author     Kristof Ringleff
+ * @package    Fooman_Testing
+ * @copyright  Copyright (c) 2012 Fooman Limited (http://www.fooman.co.nz)
+ */
+ -->
+<config>
+    <modules>
+        <Fooman_Testing>
+            <version>1.0.0</version>
+        </Fooman_Testing>
+    </modules>
+    <global>
+        <models>
+            <foomantesting>
+                <class>Fooman_Testing_Model</class>
+            </foomantesting>
+        </models>
+        <helpers>
+            <foomantesting>
+                <class>Fooman_Testing_Helper</class>
+            </foomantesting>
+        </helpers>
+    </global>
+</config>

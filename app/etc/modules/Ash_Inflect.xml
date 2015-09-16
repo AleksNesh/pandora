@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Simple module for adding ability to do string inflection
+ * for pluralizing or singularizing strings.
+ *
+ * @category    Ash
+ * @package     Ash_Inflect
+ * @copyright   Copyright (c) 2013 August Ash, Inc. (http://www.augustash.com)
+ * @author      Josh Johnson (August Ash)
+ */
+-->
+<config>
+    <modules>
+        <Ash_Inflect>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Ash_Inflect>
+    </modules>
+</config>

@@ -1,0 +1,4 @@
+5.0 Ammended numeric zip-from/to search to use ints and BETWEEN logic
+    Changed free shipping logic to allow items to be included in calculations even if marked as free shipping
+    Changed setconditionname to stop conflict with tablerates5.0.3  - COMMON-38 Fixed issue with wrong CSV exporting when MatrixRate is installed
+5.1  - COMMON-48 Resolved issue with exporting after applying Magento patch SUPEE-6285

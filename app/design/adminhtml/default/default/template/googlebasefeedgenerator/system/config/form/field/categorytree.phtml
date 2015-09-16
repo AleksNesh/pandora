@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * RocketWeb
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category  RocketWeb
+ * @package   RocketWeb_GoogleBaseFeedGenerator
+ * @copyright Copyright (c) 2015 RocketWeb (http://rocketweb.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author    RocketWeb
+ */
+
+$_htmlId = $this->getHtmlId();
+$selected = (string)$this->getElement()->getValue();
+?>
+
+<input id="<?php echo $_htmlId ?>" type="hidden" name="<?php echo $this->getElement()->getName() ?>"
+       value="<?php echo $selected ?>"/>
+<p>
+    <input type="checkbox" id="category_tree_include_all<?php echo $_htmlId; ?>"
+        <?php if (empty($selected)): ?> checked="checked"<?php endif ?>
+        <?php if ($this->getElement()->getDisabled()): ?> disabled="disabled"<?php endif ?>
+        />
+    <?php echo $this->getLabel(); ?>
+    &nbsp;
+    <a href="javascript:void(0)" id="category_tree_expand<?php echo $_htmlId; ?>">[<?php echo $this->__('expand tree') ?>]</a>
+</p>
+
+<script type="text/javascript">
+    var elementIsDisabled = <?php echo ($this->getElement()->getDisabled())?'true':'false';?>;
+    var <?php echo $this->getJsFormObject()?> =
+    {
+    }
+    ;
+    <?php echo $this->getJsFormObject()?>.updateElement = $('<?php echo $_htmlId?>');
+</script>
+
+<div id="gbfg_category_include_tree<?php echo $_htmlId; ?>" style="position: relative">
+    <div id="gbfg_category_include_tree_overlay<?php echo $_htmlId; ?>"
+         style="display:none; width: 100%; height: 100%; position: absolute"></div>
+    <?php echo $this->getChildHtml('feed_categories_include_tree') ?>
+</div>
+<div>
+    <?php echo $this->getNote(); ?>
+</div>
+<script>
+    function toggleTree<?php echo $_htmlId; ?>(enabled) {
+        if (enabled) {
+            $('gbfg_category_include_tree_overlay<?php echo $_htmlId; ?>').show();
+            $$('#gbfg_category_include_tree<?php echo $_htmlId; ?> input').each(function (el) {
+                el.writeAttribute('disabled', true)
+            });
+            $('<?php echo $_htmlId?>').value = '';
+        }
+        else {
+            $('gbfg_category_include_tree_overlay<?php echo $_htmlId; ?>').hide();
+            $$('#gbfg_category_include_tree<?php echo $_htmlId; ?> input').each(function (el) {
+                el.writeAttribute('disabled', false)
+            });
+        }
+    }
+
+    // click "All" checkbox, disable tree
+    $('category_tree_include_all<?php echo $_htmlId; ?>').on('click', function (e, el) {
+        toggleTree<?php echo $_htmlId; ?>(el.checked);
+    });
+
+    // click on tree, remove "All" checkbox
+    $('gbfg_category_include_tree<?php echo $_htmlId; ?>').observe('click', function (e, el) {
+        if (el = e.findElement('input') && $('category_tree_include_all<?php echo $_htmlId; ?>').checked) {
+            $('category_tree_include_all<?php echo $_htmlId; ?>').checked = false;
+        }
+        return true;
+    });
+
+    $('category_tree_expand<?php echo $_htmlId; ?>').observe('click', function (e, el) {
+        if (this.innerHTML == '[collapse tree]') {
+            tree<?php echo $_htmlId; ?>.collapseAll();
+            this.innerHTML = '[expand tree]';
+        } else {
+            tree<?php echo $_htmlId; ?>.expandAll();
+            this.innerHTML = '[collapse tree]';
+        }
+    });
+
+    Ext.onReady(function () {
+        toggleTree<?php echo $_htmlId; ?>(elementIsDisabled || $('category_tree_include_all<?php echo $_htmlId; ?>').checked);
+        tree<?php echo $_htmlId; ?>.collapseAll();
+    });
+</script>

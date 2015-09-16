@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * MageWorx
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MageWorx EULA that is bundled with
+ * this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.mageworx.com/LICENSE-1.0.html
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.mageworx.com/ for more information
+ *
+ * @category   MageWorx
+ * @package    MageWorx_OrdersPro
+ * @copyright  Copyright (c) 2011 MageWorx (http://www.mageworx.com/)
+ * @license    http://www.mageworx.com/LICENSE-1.0.html
+ */
+
+/**
+ * Orders Pro extension
+ *
+ * @category   MageWorx
+ * @package    MageWorx_OrdersPro
+ * @author     MageWorx Dev Team
+ */
+-->
+<config>
+    <menu>
+         <sales>
+            <children>
+                
+                <order>
+                    <depends>
+                        <config>mageworx_orderspro/general/enabled_menu_orders</config>
+                    </depends>
+                </order>
+
+                <mageworx_orderspro translate="title" module="mageworx_orderspro">
+                    <title>Extended Orders</title>
+                    <action>adminhtml/sales_order</action>                        
+                    <depends>
+                        <config>mageworx_orderspro/general/enabled</config>
+                    </depends>
+                    <sort_order>11</sort_order>
+                </mageworx_orderspro>
+                
+            </children>
+         </sales>         
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <sales>
+                        <children>
+                            <mageworx_orderspro translate="title" module="mageworx_orderspro">
+                                <title>Extended Orders</title>
+                                <children>
+                                    <actions translate="title">
+                                        <title>Actions</title>
+                                        <children>
+                                            <!--<manufacture translate="title"><title>Manufacture</title></manufacture>-->
+                                            <invoice translate="title"><title>Invoice</title></invoice>
+                                            <ship translate="title"><title>Ship</title></ship>
+                                            <invoice_and_ship translate="title"><title>Invoice+Ship</title></invoice_and_ship>
+                                            <archive translate="title"><title>Archive</title></archive>
+                                            <delete translate="title"><title>Delete</title></delete>
+                                            <delete_completely translate="title"><title>Delete Completely</title></delete_completely>
+                                        </children>
+                                    </actions>
+                                </children>
+                                <sort_order>10</sort_order>
+                            </mageworx_orderspro>
+                        </children>
+                    </sales>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <mageworx_orderspro translate="title" module="mageworx_orderspro">
+                                        <title>MageWorx &gt; Extended Orders</title>
+                                        <sort_order>1</sort_order>
+                                        <children>
+                                            <general translate="title" module="mageworx_orderspro">
+                                                <title>General</title>
+                                            </general>
+                                        </children>
+                                    </mageworx_orderspro>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

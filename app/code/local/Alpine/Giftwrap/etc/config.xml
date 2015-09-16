@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Alpine_Giftwrap>
+            <version>0.3.0</version>
+        </Alpine_Giftwrap>
+    </modules>
+    <global>
+        <helpers>
+            <alpine_giftwrap>
+                <class>Alpine_Giftwrap_Helper</class>
+            </alpine_giftwrap>
+        </helpers>
+        <resources>
+            <alpine_giftwrap_setup>
+                <setup>
+                    <module>Alpine_Giftwrap</module>
+                </setup>
+            </alpine_giftwrap_setup>
+        </resources>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <alpine_giftwrap>
+                    <file>alpine/giftwrap.xml</file>
+                </alpine_giftwrap>
+            </updates>
+        </layout>
+    </adminhtml>
+</config>

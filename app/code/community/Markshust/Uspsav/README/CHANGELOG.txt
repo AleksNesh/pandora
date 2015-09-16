@@ -1,0 +1,26 @@
+MarkShust_Uspsav
+-----------------------
+CHANGELOG
+-----------------------
+1.0.0 (Released FEB-13-2012)
+- Initial release.
+
+1.0.1 (Released FEB-24-2012)
+- Add additional check for general USPS errors
+
+1.0.2 (Released MAY-05-2012)
+- Pre-saved addresses do not get validated by API
+
+1.0.3 (Released MAY-07-2012)
+- Pre-saved non-US addresses should not be verified
+
+1.1.0 (Released JUL-19-2012)
+- Allow bypass of address verification
+
+1.2.0 (Released FEB-22-2013)
+- Implement functionality into customer account address book entries
+
+1.2.1 (Released MAR-31-2014)
+- Javascript error "ReferenceError: Billing is not defined" on non-checkout pages
+- Updated PDF documentation
+- Updated USPS Test tool for easier setup with USPS API

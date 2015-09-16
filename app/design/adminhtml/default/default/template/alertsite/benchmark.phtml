@@ -1,0 +1,31 @@
+<?php /** @var $this Smartbear_Alertsite_Block_Adminhtml_Report */ ?>
+
+<div class="main-col-inner">
+
+    <div class="content-header">
+        <table cellspacing="0">
+            <tbody>
+            <tr>
+                <td>
+                    <h3>Benchmarks</h3>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <?php echo $this->getChildHtml('alertsite.subheader'); ?>
+
+
+    <div id="alertsite-report" style="width:600px;height:150px;">
+
+    </div>
+
+    <script type="text/javascript" src="https://www.alertsite.com/js/bundles/external_charts-app-min.js"></script>
+    <script type="text/javascript">
+    var alertsiteOptions = <?php echo $this->getConfigJson(); ?>;
+    alertsiteOptions.container = '#alertsite-report';
+    alertsiteOptions.device = '<?php echo $this->getDejaclickDeviceId(); ?>';
+    var benchmark_plot = new sb_external_Benchmark(alertsiteOptions);
+    </script>
+
+</div>

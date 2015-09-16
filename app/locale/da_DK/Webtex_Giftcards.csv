@@ -1,0 +1,87 @@
+Manage Gift Cards,Administrer gavekort
+Add New Gift Card,Tilføj nyt gavekort
+Save Gift Card,Gem gavekort
+Delete Gift Card,Slet gavekort
+Resend Gift Card,Gensend gavekort
+Edit Gift Card \'%s\',Rediger gavekort \'%s\'
+New Gift Card,Nyt gavekort
+Card ID,Kort ID
+Card Code,Kort kode
+Initial Value,Startværdi
+Current Balance,Aktuelle saldo
+Order,Ordre
+View,Vis
+Date Created,Oprettelsesdato
+Card Type,Kort Type
+Print,Udskriv
+E-mail,E-mail
+Offline,Offline
+Status,Status
+Active,Aktive
+Inactive,Inaktive
+Delete,Slet
+Are you sure?,Er du sikker?
+Resend,Gensend
+Manage Gift Cards,Administrer gavekort
+Gift Card Information,Gavekort Information
+Gift Card Information,Gavekort Information
+Gift Card Info,Gavekort Info
+Card Code,Kort kode
+Initial Value,Startværdi
+Order,Ordre
+Initial Value,Startværdi
+Current Balance,Aktuelle saldo
+Status,Status
+Active,Aktive
+Inactive,Inaktive
+Gift Card Type,Gavekort Type
+E-mail,E-mail
+Print,Udskriv
+Recipient Info,Modtager oplysninger
+Offline Address (for offline cards only),Fysisk Adresse (Kun for offline kort)
+To Name,Til Navn
+To Email,To Email
+From Name,Fra Navn
+Message,Besked
+Card amount is not within the specified range.,Kort beløbet ikke inden for det angivne interval.
+%s was added to your shopping cart.,% s er tilføjet til din indkøbskurv.
+Cannot add the item to shopping cart.,Kan ikke tilføje elementet til indkøbsvognen.
+To redeem your gift card or to use your gift card balance you need to be logged in.,For at indløse dit gave kort eller at bruge dit gavekort balance skal du være logget ind.
+"Gift Card ""%s"" was applied.","Gavekort """"% s """" blev anvendt."
+"Gift Card ""%s"" is not valid.","Gavekort """"% s """" er ikke gyldig."
+To redeem your gift card or to use your gift card balance you need to be logged in.,For at indløse dit gave kort eller at bruge dit gavekort balance skal du være logget ind
+To redeem your gift card you need to be logged in.,For at indløse din gavekort skal du være logget ind.
+"Gift Card ""%s"" was applied.","Gavekort """"% s """" blev anvendt."
+"Gift Card ""%s"" is not valid.","Gavekort """"% s """" er ikke gyldig."
+Gift Cards,Gavekort
+Card does not exists,Kort eksisterer ikke
+Gift card was successfully saved,Gavekort blev blevet korrekt gemt.
+Unable find gift card to save,Kunne ikke finde gavekort at gemme
+Gift card was successfully deleted,Gavekort blev slettet
+Please select gift card(s),Venligst vælg gavekort
+Total of %d geftcard(s) were successfully deleted,I alt blev %d geftcard(s) slettet
+Please select gift card(s),Venligst vælg gavekort
+%d giftcard(s) were successfully resent,%d gavekort er gensendt med succes
+There was an error processing your order. Please contact us or try again later.,Der opstod en fejl under behandlingen af ??din ordre. Kontakt os venligst eller prøv igen senere.
+Please specify the product\'s option(s).,Please specify the product\'s option(s).
+My Gift Cards,Mit gave kort
+My Gift Card balance,Min gavekort balance
+Enter the Gift Card code,Indtast gavekortskode
+Redeem,Indløs
+Card Type,Kort type
+Move to Wishlist,tilføj på ønskeliste
+Gift Gards,Gavekort
+Use my Gift Card balance.,Brug mit gavekort balance.
+Or redeem and use your Gift Card now:,Eller indløs og brug dit gavekort nu:
+Redeem and use your Gift Card now:,Indløs og brug dit gavekort nu:
+Redeem and Use,Indløs og brug
+"To use your gift cards, please <a href=""%s"">register</a> or <a href=""%s"">log in</a>.","Hvis du vil bruge dit gavekort, bedes du <a href=""""%s"""">register</a> or <a href=""""%s"""">logge ind</a>."
+Choose the type of Gift Card,Vælg typen af gavekort
+E-mail Gift Card (to someone or yourself),E-mail Gavekort (til din kære eller dig selv)
+Print-Out Gift Card,Udskriv gavekort
+Amount,Beløb
+Recipient E-mail,Modtager E-mail
+To,Til
+From,Fra
+Message,Besked
+Activate,Aktivere

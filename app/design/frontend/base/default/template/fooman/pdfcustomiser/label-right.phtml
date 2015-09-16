@@ -1,0 +1,21 @@
+<table cellpadding="0.5cm">
+    <tr>
+        <td>EXAMPLE ONLY - edit /app/design/frontend/base/default/template/fooman/pdfcustomiser/label-right.phtml<br/>
+            {{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}<br/>
+            {{depend company}}{{var company}}<br/>{{/depend}}
+            {{if street1}}{{var street1}}
+            {{/if}}
+            {{depend street2}}{{var street2}}<br/>{{/depend}}
+            {{depend street3}}{{var street3}}<br/>{{/depend}}
+            {{depend street4}}{{var street4}}<br/>{{/depend}}
+            {{if city}}{{var city}},  {{/if}}{{if region}}{{var region}}, {{/if}}{{if postcode}}{{var postcode}}{{/if}}<br/>
+            <span style="font-size:15pt;font-weight:bold">{{var country}}</span><br/>
+            {{depend telephone}}T: {{var telephone}}{{/depend}}<br/>
+            {{depend fax}}<br/>F: {{var fax}}{{/depend}}<br/>
+
+            <img src="<?php echo $this->getSkinUrl('images/logo_print.gif')?>"/>
+
+            <?php echo $this->getPdfHelper()->getPdfOwnerAddresss() ?>
+        </td>
+    </tr>
+</table>

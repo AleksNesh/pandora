@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+ * @category    Markshust
+ * @package     Markshust_Uspsav
+ * @author      Mark Shust <mark@shust.com>
+ * @license     http://markshust.com/eula/
+-->
+<layout>
+    <default>
+        <reference name="head">
+            <action method="addJs"><script>markshust/uspsav.js</script></action>
+            <action method="addItem"><type>skin_js</type><script>js/markshust/uspsav/checkout/opcheckout-override.js</script></action>
+            <action method="addCss"><stylesheet>css/markshust/uspsav.css</stylesheet></action>
+        </reference>
+    </default>
+    
+    <markshust_uspsav_checkout_onepage_index>
+        <update handle="checkout_onepage_index"/>
+    </markshust_uspsav_checkout_onepage_index>
+</layout>

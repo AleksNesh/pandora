@@ -1,0 +1,50 @@
+<?php echo $this->getLayout()->createBlock('checkout/cart_coupon')->setTemplate('checkout/cart/coupon.phtml')->toHtml(); ?>
+<?php
+    $block = Mage::getBlockSingleton('snap_card/coupon');
+    $helper = $this->helper('snap_card');
+?>
+<script type="text/javascript">
+//<![CDATA[
+var snapBaseURL = "<?php
+echo addslashes(Mage::getBaseUrl());
+?>";
+//]]>
+</script>
+<form id="give-cards-form" action="<?php echo $block->getApplyUrl() ?>" method="post">
+    <div class="discount">
+        <h2><?php echo $this->__('Gift Cards') ?></h2>
+        <div class="discount-form">
+            <label for="coupon_code"><?php echo $this->__('Enter your Gift Cards if you have one.') ?></label>
+            <?php if ($helper->hasAppliedGiftCards()) {?>
+                <div class="gift-cards-list">
+                    <ul class="gift-card" id="gift-card-holder">
+                        <?php foreach ($helper->getAppliedGiftCards() as $card) {?>
+                            <li id="gift-card-item-<?php echo $card['c']?>">
+                                <?php echo $card['c']?>
+                                (<span class="gift-card-amount" id="gc_amount_<?php echo $card['c']?>">
+                                    <input type="text" size="10" id="gc_amount_text_<?php echo $card['c']?>" name="gift-card-amount-text-<?php echo $card['c']?>" class="gift-card-amount-text" style="display: none">
+                                    <span id="gc_amount_value_<?php echo $card['c']?>"><?php echo $helper->formatPrice($card['ba']);?></span>
+                                </span>
+                                <img src="<?php echo $this->getSkinUrl('images/snap/icon_btn_edit.gif')?>" class="gift-card-edit" alt="Edit" title="Edit" width="14" height="14" onclick="editQuoteGiftCard(<?php echo $card['c']?>)" id="btn_edit_gc_<?php echo $card['c']?>">
+                                )<img src="<?php echo $this->getSkinUrl('images/snap/icon_btn_save.gif')?>" class="gift-card-save" alt="Save" title="Save" width="14" height="14" onclick="updateGiftCardQuoteAmount(<?php echo $card['c']?>)" id="btn_save_gc_<?php echo $card['c']?>" style="display: none">
+                                <img src="<?php echo $this->getSkinUrl('images/snap/icon_btn_delete.gif')?>" class="gift-card-delete" alt="Delete" title="Delete" width="12" height="12" onclick="removeGiftCardFromQuote('<?php echo $card['c']?>',<?php echo $card['c']?>)" id="btn_delete_gc_<?php echo $card['c']?>">
+                            </li>
+                        <?php }?>
+                    </ul>
+                </div>
+            <?php };?>
+            <div class="input-box">
+                <input class="required-entry input-text" id="snap_card" name="snap_card" value="<?php echo $this->htmlEscape($this->getGiftCardCode()) ?>" autocomplete="off" />
+                Pin: <input class="input-text" id="snap_card_pin" name="snap_card_pin" value="" autocomplete="off" />
+            </div>
+            <div class="buttons-set">
+                <button type="button" title="<?php echo $this->__('Apply Gift Card') ?>" class="button" onclick="giftCardForm.submit(false)" value="<?php echo $this->__('Apply Gift Card') ?>"><span><span><?php echo $this->__('Apply Gift Card') ?></span></span></button>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    var giftCardForm = new VarienForm('give-cards-form');
+//]]>
+</script>

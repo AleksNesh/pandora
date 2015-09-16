@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * MageWorx
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MageWorx EULA that is bundled with
+ * this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.mageworx.com/LICENSE-1.0.html
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.mageworx.com/ for more information
+ *
+ * @category   MageWorx
+ * @package    MageWorx_OrdersPro
+ * @copyright  Copyright (c) 2011 MageWorx (http://www.mageworx.com/)
+ * @license    http://www.mageworx.com/LICENSE-1.0.html
+ */
+
+/**
+ * Orders Pro extension
+ *
+ * @category   MageWorx
+ * @package    MageWorx_OrdersPro
+ * @author     MageWorx Dev Team
+ */
+-->
+
+<layout version="0.1.0">    
+    
+    <sales_order_view>
+        <reference name="sales.order.view">            
+            <action method="setTemplate" ifconfig="mageworx_orderspro/general/enabled"><template>mageworx/orderspro/sales-order-view.phtml</template></action>
+        </reference>
+        
+        <!--add thumbnails-->
+        <reference name="head">
+            <action method="addItem" ifconfig="mageworx_orderspro/general/show_thumbnails"><type>js_css</type><name>mageworx/lightbox/css/lightbox.css</name><params/></action>
+            <action method="addItem" ifconfig="mageworx_orderspro/general/show_thumbnails"><type>js_css</type><name>mageworx/lightbox/css/lightbox-ie.css</name><params/><if>lt IE 8</if></action>
+            <action method="addItem" ifconfig="mageworx_orderspro/general/show_thumbnails"><type>js</type><name>mageworx/lightbox/js/lightbox.js</name><params/><if/></action>
+        </reference>        
+        <reference name="order_items">
+            <action method="addItemRender" ifconfig="mageworx_orderspro/general/show_thumbnails"><type>default</type><block>sales/order_item_renderer_default</block><template>mageworx/orderspro/sales-order-items-renderer-default.phtml</template></action>
+            <action method="addItemRender" ifconfig="mageworx_orderspro/general/show_thumbnails"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>mageworx/orderspro/sales-order-items-renderer-default.phtml</template></action>
+        </reference>
+    </sales_order_view>        
+    
+</layout>

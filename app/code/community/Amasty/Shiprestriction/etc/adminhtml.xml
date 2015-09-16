@@ -1,0 +1,66 @@
+<?xml version="1.0"?> 
+<!--
+    Copyright (c) 2009-2012 Amasty (http://www.amasty.com) 
+-->
+<config>
+        <menu>
+            <sales>
+                <children>
+                    <amshiprestriction translate="title" module="amshiprestriction">
+                        <title>Shipping Restrictions</title>
+                        <sort_order>700</sort_order>
+                        <action>amshiprestriction/adminhtml_rule</action>
+                    </amshiprestriction>
+                </children>
+            </sales>
+        </menu> 
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <sales>
+                            <children>
+                                <amshiprestriction>
+                                    <title>Shipping Restrictions</title>
+                                </amshiprestriction>
+                            </children>
+                        </sales> 
+                    </children>
+                </admin> 
+            </resources>
+        </acl>
+        <translate>
+            <modules>
+                <Amasty_Shiprestriction>
+                    <files>
+                        <default>Amasty_Shiprestriction.csv</default>
+                    </files>
+                </Amasty_Shiprestriction>
+            </modules>
+        </translate> 
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <amshiprestriction>
+                                            <title>Shipping Restriction</title>
+                                        </amshiprestriction>
+                                    </children>
+                                </config>
+                            </children>
+                        </system> 
+                     </children>
+                </admin> 
+            </resources>
+        </acl>          	
+</config> 

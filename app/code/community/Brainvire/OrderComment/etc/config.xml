@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * @category    Brainvire
+ * @package     Brainvire_OrderComment
+ * @copyright   Copyright (c) 2011-2012 Brainvire Infotech Pvt. Ltd. <www.brainvire.com>
+ */
+-->
+<config>
+    <modules>
+        <Brainvire_OrderComment>
+            <version>1.0.5.0</version>
+        </Brainvire_OrderComment>
+    </modules>
+    <global>
+        <models>
+            <ordercomment>
+                <class>Brainvire_OrderComment_Model</class>
+                <resourceModel>ordercomment_resource</resourceModel>
+            </ordercomment>
+            <ordercomment_resource>
+                <class>Brainvire_OrderComment_Model_Resource</class>
+                <deprecatedNode>ordercomment_mysql4</deprecatedNode>
+            </ordercomment_resource>
+            <sales_resource>
+<!--                <rewrite>
+                    <order_grid_collection>Brainvire_OrderComment_Model_Mysql4_Order_Grid_Collection</order_grid_collection>
+                </rewrite>-->
+            </sales_resource>
+        </models>
+        <helpers>
+            <ordercomment>
+                <class>Brainvire_OrderComment_Helper</class>
+            </ordercomment>
+        </helpers>
+        <blocks>
+            <ordercomment>
+                <class>Brainvire_OrderComment_Block</class>
+            </ordercomment>
+            <checkout>
+                <rewrite>
+                    <agreements>Brainvire_OrderComment_Block_Checkout_Agreements</agreements>
+                </rewrite>
+            </checkout>
+<!--            <adminhtml>
+                <rewrite>
+                    <sales_order_grid>Brainvire_OrderComment_Block_Adminhtml_Sales_Order_Grid</sales_order_grid>
+                </rewrite>
+            </adminhtml>-->
+        </blocks>
+    </global>
+    <frontend>
+        <events>
+            <checkout_type_onepage_save_order>
+                <observers>
+                    <saveCustomerComment>
+                        <class>Brainvire_OrderComment_Model_Observer</class>
+                        <method>saveOrderComment</method>
+                    </saveCustomerComment>
+                </observers>
+            </checkout_type_onepage_save_order>
+            <checkout_type_multishipping_create_orders_single>
+                <observers>
+                    <saveCustomerComment>
+                        <class>Brainvire_OrderComment_Model_Observer</class>
+                        <method>saveOrderComment</method>
+                    </saveCustomerComment>
+                </observers>
+            </checkout_type_multishipping_create_orders_single>
+        </events>
+    </frontend>
+</config>

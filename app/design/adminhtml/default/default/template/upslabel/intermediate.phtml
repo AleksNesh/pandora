@@ -1,0 +1,1382 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * Author Rudyuk Vitalij Anatolievich
+ * Email rvansp@gmail.com
+ * Blog www.cervic.info
+ */
+$order = Mage::registry('order');
+
+$shipTo = Mage::registry('shipTo');
+$shipment = Mage::registry('shipment');
+$type = Mage::registry('type');
+$shipmentTotalPrice = Mage::registry('shipmentTotalPrice');
+$shipmentTotalWeight = Mage::registry('shipmentTotalWeight');
+$shipByUps = Mage::registry('shipByUps');
+$shipByUpsCode = Mage::registry('shipByUpsCode');
+$shipByUpsMethodName = Mage::registry('shipByUpsMethodName');
+$shipByUpsMethods = Mage::registry('shipByUpsMethods');
+$unitofmeasurement = Mage::registry('unitofmeasurement');
+$paymentmethod = Mage::registry('paymentmethod');
+$shippingAmount = Mage::registry('shippingAmount');
+$upsAccounts = Mage::registry('upsAccounts');
+$defParams = Mage::registry('defParams');
+$defConfParams = Mage::registry('defConfParams');
+?>
+<?php
+echo '<form id="edit_form" action="' . $this->getUrl('upslabel/adminhtml_upslabel/showlabel/order_id/' . $this->getRequest()->getParam('order_id') . '/shipment_id/' . $this->getRequest()->getParam('shipment_id') . '/type/' . $this->getRequest()->getParam('type')) . '" method="post">';
+?>
+    <div class="f-right" style="clear:both;margin-bottom: 15px;">
+        <div id="defaultPrice_negotiatedPrice" style="margin-right: 10px;">
+            <p class="defaultPrice"><?php echo $this->__("Price"); ?>: <span></span></p>
+
+            <p class="negotiatedPrice"><?php echo $this->__("Negotiated Price"); ?>: <span></span></p>
+        </div>
+        <button type="button" class="scalable save submit-button"
+                onclick="if(editForm.submit()) disableElements('submit-button');" style="">
+            <span><?php echo Mage::helper('adminhtml')->__('Submit'); ?></span></button>
+        <button type="button" class="submit-button"
+                onclick="getShipmentPrice()" style="">
+            <span><?php echo Mage::helper('adminhtml')->__('Get Shipment Price'); ?></span></button>
+    </div>
+    <div class="clear"></div>
+    <div class="clear"></div>
+    <div class="box-left" id="box_package_count">
+    <?php if ($this->getRequest()->getParam('type') == 'shipment'): ?>
+        <div class="entry-edit" id="box_package_count_first">
+            <div class="entry-edit-head">
+                <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('adminhtml')->__('Add Package'); ?></h4>
+            </div>
+            <div class="np fieldset">
+                <div>
+                    <div class="content">
+                        <div class="hor-scroll">
+                            <table cellspacing="0" class="form-list" id="add_package_table">
+                                <tbody>
+                                <tr id="add_package_tr_id">
+                                    <td class="label"><label
+                                            for="add_package_func"><?php echo Mage::helper('adminhtml')->__('Add Package'); ?></label>
+                                    </td>
+                                    <td class="value">
+                                        <button type="button"
+                                                id="add_package_func"><?php echo Mage::helper('adminhtml')->__('Add'); ?></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php $i = 1;
+    foreach ($defParams AS $val): ?>
+        <div class="entry-edit package_count">
+        <div class="entry-edit-head collapseable">
+            <a href="#" class="open"><?php echo Mage::helper('adminhtml')->__('Package ' . $i);
+                $i++; ?><?php if ($i > 2): ?><span class="delete_package" style="float: right;margin-right: 50px;">Delete Package</span><?php endif; ?>
+            </a>
+        </div>
+        <div class="np fieldset">
+        <div>
+        <div class="content">
+        <div class="hor-scroll">
+        <table cellspacing="0" class="form-list">
+        <tbody>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Packaging Type Code'); ?>
+                    <span class="required">*</span></label>
+            </td>
+            <td class="value">
+                <select name="package[packagingtypecode][]" class=" input-text required-entry">
+                    <?php foreach (Infomodus_Upslabel_Model_Config_Upspackagecode::getPackagingtypecode() AS $k => $v): ?>
+                        <option
+                            value="<?php echo $k; ?>"<?php if ($val['packagingtypecode'] == $k): ?>
+                            SELECTED<?php endif; ?>><?php echo $v; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Packaging Description'); ?>
+                    <span class="required">*</span></label>
+            </td>
+            <td class="value"><input
+                    name="package[packagingdescription][]"
+                    value="<?php echo $val['packagingdescription']; ?>"
+                    class=" input-text required-entry" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Packaging Reference Number Code'); ?></label>
+            </td>
+            <td class="value"><input
+                    name="package[packagingreferencenumbercode][]"
+                    value="<?php echo $val['packagingreferencenumbercode']; ?>"
+                    class=" input-text" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Packaging Reference Number Value'); ?></label>
+            </td>
+            <td class="value"><input
+                    name="package[packagingreferencenumbervalue][]"
+                    value="<?php echo $val['packagingreferencenumbervalue']; ?>"
+                    class=" input-text" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Packaging Reference Number Code 2'); ?></label>
+            </td>
+            <td class="value"><input
+                    name="package[packagingreferencenumbercode2][]"
+                    value="<?php echo $val['packagingreferencenumbercode2']; ?>"
+                    class=" input-text" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Packaging Reference Number Value 2'); ?></label>
+            </td>
+            <td class="value"><input
+                    name="package[packagingreferencenumbervalue2][]"
+                    value="<?php echo $val['packagingreferencenumbervalue2']; ?>"
+                    class=" input-text" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Weight'); ?> <span
+                        class="required">*</span></label>
+            </td>
+            <td class="value">
+                <input type="text"
+                       value="<?php echo round($val['weight'] /*$shipmentTotalWeight*/, 1) > 0 ? round($val['weight'] /*$shipmentTotalWeight*/, 1) : '0'; ?>"
+                       name="package[weight][]" class="input-text  required-entry">
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Pack weight'); ?></label>
+            </td>
+            <td class="value">
+                <input type="text" name="package[packweight][]"
+                       value="<?php echo $val['packweight']; ?>"
+                       class=" input-text">
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Large package'); ?></label>
+            </td>
+            <td class="value">
+                <input type="checkbox" value="<LargePackageIndicator />"
+                       name="package[large][]"<?php echo $val['weight'] >= 90 ? ' checked="checked"' : ''; ?>>
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Additional Handling'); ?></label>
+            </td>
+            <td class="value">
+                <input type="checkbox" value="<AdditionalHandling />"
+                       name="package[additionalhandling][]"<?php echo $val['additionalhandling'] != "" ? ' checked="checked"' : ''; ?>>
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label><?php echo Mage::helper('adminhtml')->__('Package Dimensions'); ?></label>
+            </td>
+            <td class="value">
+                <select name="package[dimansion_id][]">
+                    <option value="0"><?php echo Mage::helper('adminhtml')->__('Custom dimensions'); ?></option>
+                    <?php for ($shpf = 1; $shpf <= 15; $shpf++) {
+                        if (Mage::getStoreConfig('upslabel/dimansion_' . $shpf . '/enable') == 1) {
+                            ?>
+                            <option
+                                value="<?php echo $shpf; ?>"<?php echo $val['dimansion_id'] == $shpf ? " SELECTED" : ""; ?>><?php echo Mage::helper('adminhtml')->__(Mage::getStoreConfig('upslabel/dimansion_' . $shpf . '/dimansionname')); ?></option>
+                        <?php
+                        }
+                    }
+                    ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Length'); ?></label>
+            </td>
+            <td class="value">
+                <input type="text" value="" name="package[length][]" class="input-text">
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Width'); ?></label>
+            </td>
+            <td class="value">
+                <input type="text" value="" name="package[width][]" class="input-text">
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Height'); ?></label>
+            </td>
+            <td class="value">
+                <input type="text" value="" name="package[height][]" class="input-text">
+            </td>
+        </tr>
+        <?php if ($type == 'shipment'): ?>
+            <tr>
+                <td class="label">
+                    <label><?php echo Mage::helper('adminhtml')->__('Currency code'); ?></label>
+                </td>
+                <td class="value">
+                    <input type="text" name="package[currencycode][]"
+                           value="<?php echo $val['currencycode']; ?>"
+                           class="input-text">
+                </td>
+            </tr>
+            <tr>
+                <td class="label"><label><?php echo Mage::helper('adminhtml')->__('COD'); ?></label>
+                </td>
+                <td class="value">
+                    <select name="package[cod][]">
+                        <option
+                            value="0"<?php if ($val['cod'] != 1): ?>
+                            SELECTED<?php endif; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                        <option
+                            value="1"<?php if ($val['cod'] == 1): ?>
+                            SELECTED<?php endif; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    <label><?php echo Mage::helper('adminhtml')->__('COD Funds code'); ?></label>
+                </td>
+                <td class="value">
+                    <select name="package[codfundscode][]">
+                        <option
+                            value="0"><?php echo Mage::helper('adminhtml')->__('check, cashiers check or money order - no cash allowed'); ?></option>
+                        <!--<option value="1"><?php echo Mage::helper('adminhtml')->__('cash'); ?></option>-->
+                        <option
+                            value="8"><?php echo Mage::helper('adminhtml')->__('cashiers check or money order - no cash allowed'); ?></option>
+                    </select>
+                </td>
+            </tr>
+
+        <?php endif; ?>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('COD Monetary value'); ?></label>
+            </td>
+            <td class="value">
+                <input name="package[codmonetaryvalue][]"
+                       class=" input-text" type="text"
+                       value="<?php echo $val['codmonetaryvalue']; ?>"
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label><?php echo Mage::helper('adminhtml')->__('Insured Monetary value'); ?></label>
+            </td>
+            <td class="value">
+                <input
+                    name="package[insuredmonetaryvalue][]"
+                    value="<?php echo $val['insuredmonetaryvalue']; ?>"
+                    class=" input-text" type="text">
+            </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    <?php endforeach; ?>
+    </div>
+    <div class="box-right">
+    <div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('adminhtml')->__('Configuration options'); ?></h4>
+    </div>
+    <div class="np fieldset">
+    <div>
+    <div class="content">
+    <div class="hor-scroll">
+    <table cellspacing="0" class="form-list">
+    <tbody>
+    <tr>
+        <td class="label">
+            <label
+                for="upsaccount"><?php echo Mage::helper('adminhtml')->__('Who pay for Shipment?'); ?></label>
+        </td>
+        <td class="value">
+            <select name="upsaccount" id="upsaccount">
+                <?php foreach ($upsAccounts AS $k => $v): ?>
+                    <option
+                        value="<?php echo $k; ?>"<?php echo 0 == $k ? ' SELECTED' : ''; ?>><?php echo $v; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label
+                for="servicecode"><?php echo Mage::helper('adminhtml')->__('UPS shipping method'); ?></label>
+        </td>
+        <td class="value">
+            <?php if ($shipByUps == 'ups'): ?>
+                <span style="text-decoration: underline;"><?php echo $shipByUpsMethodName; ?></span>
+                <input type="hidden" name="serviceCode" readonly="readonly"
+                       value="<?php echo $shipByUpsCode; ?>">
+                <br/>
+            <?php endif; ?>
+            <select name="serviceCode" id="serviceCode">
+                <?php foreach ($shipByUpsMethods AS $k => $v): ?>
+                    <option
+                        value="<?php echo $k; ?>"
+                        <?php
+                        if ($defConfParams['serviceCode'] == $k) {
+                            echo ' SELECTED';
+                        }
+                        ?>
+                        ><?php echo $v; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label"><label
+                for="shipper_no"><?php echo Mage::helper('adminhtml')->__('Shipper address'); ?></label>
+        </td>
+        <td class="value">
+            <select name="shipper_no" id="shipper_no">
+                <?php for ($shpf = 1; $shpf <= 5; $shpf++) {
+                    if (Mage::getStoreConfig('upslabel/address_' . $shpf . '/enable') == 1) {
+                        ?>
+                        <option
+                            value="<?php echo $shpf; ?>"<?php echo $defConfParams['shipper_no'] == $shpf ? " SELECTED" : ""; ?>><?php echo Mage::helper('adminhtml')->__(Mage::getStoreConfig('upslabel/address_' . $shpf . '/addressname')); ?></option>
+                    <?php
+                    }
+                }
+                ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label"><label
+                for="shipfrom_no"><?php echo Mage::helper('adminhtml')->__('Ship from address'); ?></label>
+        </td>
+        <td class="value">
+            <select name="shipfrom_no" id="shipfrom_no">
+
+                <?php for ($shpf = 1; $shpf <= 10; $shpf++) {
+                    if (Mage::getStoreConfig('upslabel/address_' . $shpf . '/enable') == 1) {
+                        ?>
+                        <option
+                            value="<?php echo $shpf; ?>"<?php echo $defConfParams['shipfrom_no'] == $shpf ? " SELECTED" : ""; ?>><?php echo Mage::helper('adminhtml')->__(Mage::getStoreConfig('upslabel/address_' . $shpf . '/addressname')); ?></option>
+                    <?php
+                    }
+                }
+                ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label"><label
+                for="testing"><?php echo Mage::helper('adminhtml')->__('Test mode'); ?></label>
+        </td>
+        <td class="value">
+            <?php
+            $isTestingSelected[0] = '';
+            $isTestingSelected[1] = '';
+            $isTestingSelected[$defConfParams['testing']] = ' SELECTED';
+            ?>
+            <select name="testing" id="testing">
+                <option
+                    value="1"<?php echo $isTestingSelected[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                <option
+                    value="0"<?php echo $isTestingSelected[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+            </select>
+        </td>
+    </tr>
+    <?php if ($this->getRequest()->getParam('type') == 'shipment'): ?>
+        <tr>
+            <td class="label"><label
+                    for="addtrack"><?php echo Mage::helper('adminhtml')->__('Add tracking number automatically ?'); ?></label>
+            </td>
+            <td class="value">
+                <?php
+                $isAddtrackSelected[0] = '';
+                $isAddtrackSelected[1] = '';
+                $isAddtrackSelected[$defConfParams['addtrack']] = ' SELECTED';
+                ?>
+                <select name="addtrack" id="addtrack">
+                    <option
+                        value="1"<?php echo $isAddtrackSelected[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                    <option
+                        value="0"<?php echo $isAddtrackSelected[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                </select>
+            </td>
+        </tr>
+    <?php endif; ?>
+    <tr>
+        <td class="label"><label
+                for="shipmentdescription"><?php echo Mage::helper('adminhtml')->__('Shipment Description'); ?></label>
+        </td>
+        <td class="value"><textarea id="shipmentdescription"
+                                    name="shipmentdescription"
+                                    rows="3"
+                                    class=" input-text"><?php echo $defConfParams['shipmentdescription']; ?></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="label"><label
+                for="currencycode"><?php echo Mage::helper('adminhtml')->__('Currency code'); ?></label>
+        </td>
+        <td class="value">
+            <input type="text" name="currencycode" id="currencycode"
+                   value="<?php echo $defConfParams['currencycode']; ?>"
+                   class="input-text">
+        </td>
+    </tr>
+
+    <?php if ($type == 'shipment'): ?>
+        <?php /*if($shipTo->getCountryId() != Mage::getStoreConfig('upslabel/shipper/countrycode')):*/ ?>
+        <tr>
+            <td class="label"><label
+                    for="shipmentcharge"><?php echo Mage::helper('adminhtml')->__('Duty and Tax charges'); ?></label>
+            </td>
+            <td class="value">
+                <?php
+                $isResidentialaddressSelected['Yes'] = '';
+                $isResidentialaddressSelected['No'] = '';
+                if ($defConfParams['shipmentcharge'] == 0) {
+                    $isResidentialaddressSelected['No'] = ' SELECTED';
+                } else {
+                    $isResidentialaddressSelected['Yes'] = ' SELECTED';
+                }
+                ?>
+                <select name="shipmentcharge" id="shipmentcharge">
+                    <option
+                        value="1"<?php echo $isResidentialaddressSelected['Yes']; ?>>
+                        <?php echo Mage::helper('adminhtml')->__('Yes'); ?>
+                    </option>
+                    <option
+                        value="0"<?php echo $isResidentialaddressSelected['No']; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                </select>
+            </td>
+        </tr>
+
+        <?php /*endif;*/ ?>
+        <tr>
+            <td class="label"><label
+                    for="cod"><?php echo Mage::helper('adminhtml')->__('COD'); ?></label>
+            </td>
+            <td class="value">
+                <input type="hidden" name="cod" value="0">
+                <input type="checkbox" name="cod" id="cod"
+                       value="1"<?php if ($defConfParams['cod'] == 1): ?>
+                    checked="checked"<?php endif; ?>>
+            </td>
+        </tr>
+    <?php endif; ?>
+    <tr>
+        <td class="label"><label
+                for="codmonetaryvalue"><?php echo Mage::helper('adminhtml')->__('COD Monetary value'); ?></label>
+        </td>
+        <td class="value">
+            <input id="codmonetaryvalue"
+                   name="codmonetaryvalue"
+                   value="<?php echo $defConfParams['codmonetaryvalue'] == 0 ? $shipmentTotalPrice - $shippingAmount : $shipmentTotalPrice; ?>"
+                   class=" input-text" type="text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label for="codfundscode"><?php echo Mage::helper('adminhtml')->__('COD Funds code'); ?></label>
+        </td>
+        <td class="value">
+            <select name="codfundscode" id="codfundscode">
+                <option value="1"><?php echo Mage::helper('adminhtml')->__('cash'); ?></option>
+                <option
+                    value="9"><?php echo Mage::helper('adminhtml')->__('check, cashiers check or money order - no cash allowed'); ?></option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label"><label
+                for="invoicelinetotalyesno"><?php echo Mage::helper('adminhtml')->__('Send InvoiceLineTotal (for shipments from US to Canada and PR only)'); ?></label>
+        </td>
+        <td class="value">
+            <?php
+            $isResidentialaddressSelected['Yes'] = '';
+            $isResidentialaddressSelected['No'] = '';
+            if ($defConfParams['invoicelinetotalyesno'] == 0) {
+                $isResidentialaddressSelected['No'] = ' SELECTED';
+            } else {
+                $isResidentialaddressSelected['Yes'] = ' SELECTED';
+            }
+            ?>
+            <select name="invoicelinetotalyesno" id="invoicelinetotalyesno">
+                <option
+                    value="1"<?php echo $isResidentialaddressSelected['Yes']; ?>>
+                    <?php echo Mage::helper('adminhtml')->__('Yes'); ?>
+                </option>
+                <option
+                    value="0"<?php echo $isResidentialaddressSelected['No']; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label"><label
+                for="invoicelinetotal"><?php echo Mage::helper('adminhtml')->__('Invoice Line Total Monetary value'); ?></label>
+        </td>
+        <td class="value">
+            <input type="text" name="invoicelinetotal"
+                   id="invoicelinetotal" value="<?php echo $shipmentTotalPrice; ?>"
+                   class=" input-text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label"><label
+                for="carbon_neutral"><?php echo Mage::helper('adminhtml')->__('Carbon neutral'); ?></label>
+        </td>
+        <td class="value">
+            <?php
+            $isResidentialaddressSelected['Yes'] = '';
+            $isResidentialaddressSelected['No'] = '';
+            if ($defConfParams['carbon_neutral'] == 0) {
+                $isResidentialaddressSelected['No'] = ' SELECTED';
+            } else {
+                $isResidentialaddressSelected['Yes'] = ' SELECTED';
+            }
+            ?>
+            <select name="carbon_neutral" id="carbon_neutral">
+                <option
+                    value="1"<?php echo $isResidentialaddressSelected['Yes']; ?>>
+                    <?php echo Mage::helper('adminhtml')->__('Yes'); ?>
+                </option>
+                <option
+                    value="0"<?php echo $isResidentialaddressSelected['No']; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+            </select>
+        </td>
+    </tr>
+    <?php if ($type == 'shipment'): ?>
+        <tr>
+            <td class="label"><label
+                    for="default_return"><?php echo Mage::helper('adminhtml')->__('Create return label now'); ?></label>
+            </td>
+            <td class="value">
+                <?php
+                $isResidentialaddressSelected['Yes'] = '';
+                $isResidentialaddressSelected['No'] = '';
+                if (!$defConfParams['default_return']) {
+                    $isResidentialaddressSelected['No'] = ' SELECTED';
+                } else {
+                    $isResidentialaddressSelected['Yes'] = ' SELECTED';
+                }
+                ?>
+                <select name="default_return" id="default_return">
+                    <option
+                        value="1"<?php echo $isResidentialaddressSelected['Yes']; ?>>
+                        <?php echo Mage::helper('adminhtml')->__('Yes'); ?>
+                    </option>
+                    <option
+                        value="0"<?php echo $isResidentialaddressSelected['No']; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="label">
+                <label
+                    for="default_return_servicecode"><?php echo Mage::helper('adminhtml')->__('UPS shipping method for return label'); ?></label>
+            </td>
+            <td class="value">
+                <?php if ($shipByUps == 'ups'): ?>
+                    <span style="text-decoration: underline;"><?php echo $shipByUpsMethodName; ?></span>
+                    <input type="hidden" name="default_return_servicecode" readonly="readonly"
+                           value="<?php echo $shipByUpsCode; ?>">
+                    <br/>
+                <?php endif; ?>
+                <select name="default_return_servicecode" id="default_return_servicecode">
+                    <?php foreach ($shipByUpsMethods AS $k => $v): ?>
+                        <option
+                            value="<?php echo $k; ?>"<?php echo ($shipByUpsCode == $k && !$defConfParams['default_return_servicecode']) || $defConfParams['default_return_servicecode'] == $k ? ' SELECTED' : ''; ?>><?php echo $v; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+    <?php endif; ?>
+    <tr>
+        <td class="label"><label
+                for="qvn"><?php echo Mage::helper('adminhtml')->__('Quantum View Notification Enable'); ?></label>
+        </td>
+        <td class="value">
+            <?php
+            $isResidentialaddressSelected['Yes'] = '';
+            $isResidentialaddressSelected['No'] = '';
+            if ($defConfParams['qvn'] == 0) {
+                $isResidentialaddressSelected['No'] = ' SELECTED';
+            } else {
+                $isResidentialaddressSelected['Yes'] = ' SELECTED';
+            }
+            ?>
+            <select name="qvn" id="qvn">
+                <option
+                    value="1"<?php echo $isResidentialaddressSelected['Yes']; ?>>
+                    <?php echo Mage::helper('adminhtml')->__('Yes'); ?>
+                </option>
+                <option
+                    value="0"<?php echo $isResidentialaddressSelected['No']; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label
+                for="qvn_code"><?php echo Mage::helper('adminhtml')->__('Notification Code'); ?></label>
+        </td>
+        <td class="value"><?php $qvn_code = is_array($defConfParams['qvn_code']) ? $defConfParams['qvn_code'] : explode(",", $defConfParams['qvn_code']); ?>
+            <select name="qvn_code[]" id="qvn_code" multiple>
+                <?php $qvn_code_arr = Mage::getModel('upslabel/config_notificationcode')->toOptionArray();
+                foreach ($qvn_code_arr AS $k => $v): ?>
+                    <option
+                        value="<?php echo $v['value']; ?>"<?php echo in_array($v['value'], $qvn_code) ? ' SELECTED' : ''; ?>><?php echo $v['label']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label"><label
+                for="qvn_email_shipper"><?php echo Mage::helper('adminhtml')->__('Shipper Email'); ?></label>
+        </td>
+        <td class="value">
+            <input type="text" name="qvn_email_shipper"
+                   id="qvn_email_shipper" value="<?php echo $defConfParams['qvn_email_shipper']; ?>"
+                   class=" input-text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label"><label
+                for="qvn"><?php echo Mage::helper('adminhtml')->__('Delivery Confirmation'); ?></label>
+        </td>
+        <td class="value">
+            <?php
+            $isResidentialaddressSelected[0] = '';
+            $isResidentialaddressSelected[1] = '';
+            $isResidentialaddressSelected[2] = '';
+            $isResidentialaddressSelected[3] = '';
+            $isResidentialaddressSelected[4] = '';
+            $isResidentialaddressSelected[$defConfParams['adult']] = ' SELECTED';
+            ?>
+            <select name="adult" id="adult">
+                <?php foreach (Mage::getModel("upslabel/config_deliveryConfirmation")->toOptionArray() AS $v): ?>
+                    <option
+                        value="<?php echo $v['value']; ?>"<?php echo $isResidentialaddressSelected[$v['value']]; ?>>
+                        <?php echo $v['label']; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Saturday Delivery'); ?></label>
+        </td>
+        <td class="value">
+            <input type="checkbox" value="<SaturdayDelivery />"
+                   name="saturday_delivery"<?php echo strlen($defConfParams['saturday_delivery']) > 0 ? ' checked="checked"' : ''; ?>>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('adminhtml')->__('Configuration weight and dimension'); ?></h4>
+        </div>
+        <div class="np fieldset">
+            <div>
+                <div class="content">
+                    <div class="hor-scroll">
+                        <table cellspacing="0" class="form-list">
+                            <tbody>
+                            <tr>
+                                <td class="label"><label
+                                        for="weightunits"><?php echo Mage::helper('adminhtml')->__('Specific unit weight'); ?></label>
+                                </td>
+                                <td class="value">
+                                    <?php
+                                    $isWeightunitsSelected['LBS'] = '';
+                                    $isWeightunitsSelected['KGS'] = '';
+                                    $isWeightunitsSelected[$defConfParams['weightunits']] = ' SELECTED';
+                                    ?>
+                                    <select name="weightunits" id="weightunits">
+                                        <option value="LBS"<?php echo $isWeightunitsSelected['LBS']; ?>>LBS</option>
+                                        <option value="KGS"<?php echo $isWeightunitsSelected['KGS']; ?>>KGS</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="weightunitsdescription"><?php echo Mage::helper('adminhtml')->__('Specific unit weight description'); ?></label>
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="weightunitsdescription"
+                                           id="weightunitsdescription" value="" class="input-text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="largepackageindicator"><?php echo Mage::helper('adminhtml')->__('Large Package'); ?></label>
+                                </td>
+                                <td class="value">
+                                    <?php
+                                    $isLargePackageIndicatorSelected['Yes'] = '';
+                                    $isLargePackageIndicatorSelected['No'] = '';
+                                    if ($order->getWeight() >= 90) {
+                                        $isLargePackageIndicatorSelected['Yes'] = ' SELECTED';
+                                    } else {
+                                        $isLargePackageIndicatorSelected['No'] = ' SELECTED';
+                                    }
+                                    ?>
+                                    <select name="largepackageindicator" id="largepackageindicator">
+                                        <option
+                                            value="<LargePackageIndicator />"<?php echo $isLargePackageIndicatorSelected['Yes']; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                        <option
+                                            value=""<?php echo $isLargePackageIndicatorSelected['No']; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="includedimensions"><?php echo Mage::helper('adminhtml')->__('Include dimensions'); ?></label>
+                                </td>
+                                <td class="value">
+                                    <?php
+                                    $isIncludedimensionsChecked = '';
+                                    if ($defConfParams['includedimensions'] == 1) {
+                                        $isIncludedimensionsChecked = 'checked="checked"';
+                                    }
+                                    ?>
+                                    <input type="hidden" name="includedimensions" value="0">
+                                    <input type="checkbox" name="includedimensions" id="includedimensions"
+                                           value="1"<?php echo $isIncludedimensionsChecked; ?>>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="unitofmeasurement"><?php echo Mage::helper('adminhtml')->__('Unit of measurement'); ?></label>
+                                </td>
+                                <td class="value">
+                                    <select name="unitofmeasurement" id="unitofmeasurement">
+                                        <?php foreach ($unitofmeasurement AS $k => $v): ?>
+                                            <option
+                                                value="<?php echo $k; ?>"<?php echo $defConfParams['unitofmeasurement'] == $k ? ' SELECTED' : '' ?>><?php echo $v; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="unitofmeasurementdescription"><?php echo Mage::helper('adminhtml')->__('Unit of measurement description'); ?></label>
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="unitofmeasurementdescription"
+                                           id="unitofmeasurementdescription" value="" class=" input-text">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('adminhtml')->__('Customer Address'); ?></h4>
+        </div>
+        <div class="np fieldset">
+            <div>
+                <div class="content">
+                    <div class="hor-scroll">
+                        <table cellspacing="0" class="form-list">
+                            <tbody>
+                            <?php if ($type == 'shipment'): ?>
+                                <tr>
+                                    <td class="label"><label
+                                            for="residentialaddress"><?php echo Mage::helper('adminhtml')->__('Residential address'); ?></label>
+                                    </td>
+                                    <td class="value">
+                                        <?php
+                                        $isResidentialaddressSelected['Yes'] = '';
+                                        $isResidentialaddressSelected['No'] = '';
+                                        if (strlen($shipTo->getCompany()) > 0) {
+                                            $isResidentialaddressSelected['No'] = ' SELECTED';
+                                        } else {
+                                            $isResidentialaddressSelected['Yes'] = ' SELECTED';
+                                        }
+                                        ?>
+                                        <select name="residentialaddress" id="residentialaddress">
+                                            <option
+                                                value="<ResidentialAddress />"<?php echo $isResidentialaddressSelected['Yes']; ?>>
+                                                <?php echo Mage::helper('adminhtml')->__('Yes'); ?>
+                                            </option>
+                                            <option
+                                                value=""<?php echo $isResidentialaddressSelected['No']; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?>
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <tr>
+                                <td class="label"><label
+                                        for="shiptocompanyname"><?php echo Mage::helper('adminhtml')->__('Company name'); ?>
+                                        <span class="required">*</span></label>
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="shiptocompanyname" id="shiptocompanyname"
+                                           value="<?php echo strlen($shipTo->getCompany()) > 0 ? $shipTo->getCompany() : $shipTo->getFirstname() . ' ' . $shipTo->getLastname(); ?>"
+                                           class="required-entry input-text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="shiptoattentionname"><?php echo Mage::helper('adminhtml')->__('Attention name'); ?>
+                                        <span class="required">*</span></label>
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="shiptoattentionname" id="shiptoattentionname"
+                                           value="<?php echo $shipTo->getFirstname() . ' ' . $shipTo->getLastname(); ?>"
+                                           class="required-entry input-text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="shiptophonenumber"><?php echo Mage::helper('adminhtml')->__('Phone number'); ?>
+                                        <span class="required">*</span></label>
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="shiptophonenumber" id="shiptophonenumber"
+                                           value="<?php echo $shipTo->getTelephone(); ?>"
+                                           class="required-entry input-text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="shiptoaddressline1"><?php echo Mage::helper('adminhtml')->__('Address line'); ?>
+                                        <span class="required">*</span></label>
+                                </td>
+                                <td class="value">
+                                    <?php $addressLine1 = $shipTo->getStreet(); ?>
+                                    <input type="text" name="shiptoaddressline1" id="shiptoaddressline1"
+                                           value="<?php echo is_array($addressLine1) && array_key_exists(0, $addressLine1) ? $addressLine1[0] : $addressLine1; ?>"
+                                           class="required-entry input-text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="shiptoaddressline2"><?php echo Mage::helper('adminhtml')->__('Address line 2'); ?></label>
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="shiptoaddressline2" id="shiptoaddressline2"
+                                           value="<?php echo (is_array($addressLine1) && isset($addressLine1[1])) ? $addressLine1[1] : ''; ?>"
+                                           class="input-text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="shiptocity"><?php echo Mage::helper('adminhtml')->__('City'); ?> <span
+                                            class="required">*</span></label>
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="shiptocity" id="shiptocity"
+                                           value="<?php echo $shipTo->getCity(); ?>" class="required-entry input-text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="shiptostateprovincecode"><?php echo Mage::helper('adminhtml')->__('State (province)'); ?></label>
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="shiptostateprovincecode" id="shiptostateprovincecode"
+                                           value="<?php echo $shipTo->getRegion(); ?>" class="input-text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="shiptopostalcode"><?php echo Mage::helper('adminhtml')->__('Postal code'); ?>
+                                        <span
+                                            class="required">*</span></label>
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="shiptopostalcode" id="shiptopostalcode"
+                                           value="<?php echo $shipTo->getPostcode(); ?>"
+                                           class="required-entry input-text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="shiptocountrycode"><?php echo Mage::helper('adminhtml')->__('Country code'); ?>
+                                        <span class="required">*</span></label>
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="shiptocountrycode" id="shiptocountrycode"
+                                           value="<?php echo $shipTo->getCountryId(); ?>"
+                                           class="required-entry input-text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label
+                                        for="qvn_email_shipto"><?php echo Mage::helper('adminhtml')->__('Email'); ?></label>
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="qvn_email_shipto"
+                                           id="qvn_email_shipto" value="<?php echo $shipTo->getEmail(); ?>"
+                                           class=" input-text">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <?php if (isset($defConfParams['accesspoint'])): ?>
+                            <input type="hidden" name="accesspoint"
+                                   value="<?php echo $defConfParams['accesspoint']; ?>">
+                            <?php if (isset($defConfParams['accesspoint_type'])): ?>
+                                <input type="hidden" name="accesspoint_type"
+                                       value="<?php echo $defConfParams['accesspoint_type']; ?>">
+                            <?php endif; ?>
+                            <?php if (isset($defConfParams['accesspoint_name'])): ?>
+                                <input type="hidden" name="accesspoint_name"
+                                       value="<?php echo $defConfParams['accesspoint_name']; ?>">
+                            <?php endif; ?>
+                            <?php if (isset($defConfParams['accesspoint_atname'])): ?>
+                                <input type="hidden" name="accesspoint_atname"
+                                       value="<?php echo $defConfParams['accesspoint_atname']; ?>">
+                            <?php endif; ?>
+                            <?php if (isset($defConfParams['accesspoint_appuid'])): ?>
+                                <input type="hidden" name="accesspoint_appuid"
+                                       value="<?php echo $defConfParams['accesspoint_appuid']; ?>">
+                            <?php endif; ?>
+                            <?php if (isset($defConfParams['accesspoint_street'])): ?>
+                                <input type="hidden" name="accesspoint_street"
+                                       value="<?php echo $defConfParams['accesspoint_street']; ?>">
+                            <?php endif; ?>
+                            <?php if (isset($defConfParams['accesspoint_street1'])): ?>
+                                <input type="hidden" name="accesspoint_street1"
+                                       value="<?php echo $defConfParams['accesspoint_street1']; ?>">
+                            <?php endif; ?>
+                            <?php if (isset($defConfParams['accesspoint_street2'])): ?>
+                                <input type="hidden" name="accesspoint_street2"
+                                       value="<?php echo $defConfParams['accesspoint_street2']; ?>">
+                            <?php endif; ?>
+                            <?php if (isset($defConfParams['accesspoint_city'])): ?>
+                                <input type="hidden" name="accesspoint_city"
+                                       value="<?php echo $defConfParams['accesspoint_city']; ?>">
+                            <?php endif; ?>
+                            <?php if (isset($defConfParams['accesspoint_provincecode'])): ?>
+                                <input type="hidden" name="accesspoint_provincecode"
+                                       value="<?php echo $defConfParams['accesspoint_provincecode']; ?>">
+                            <?php endif; ?>
+                            <?php if (isset($defConfParams['accesspoint_postal'])): ?>
+                                <input type="hidden" name="accesspoint_postal"
+                                       value="<?php echo $defConfParams['accesspoint_postal']; ?>">
+                            <?php endif; ?>
+                            <?php if (isset($defConfParams['accesspoint_country'])): ?>
+                                <input type="hidden" name="accesspoint_country"
+                                       value="<?php echo $defConfParams['accesspoint_country']; ?>">
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <style type="text/css">
+        #defaultPrice_negotiatedPrice {
+            display: none;
+        }
+
+        .defaultPrice, .negotiatedPrice {
+            display: none;
+        }
+    </style>
+    <div class="f-right" style="clear:both;">
+        <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>"/>
+        <button type="button" class="scalable save submit-button"
+                onclick="if(editForm.submit()) disableElements('submit-button');" style="">
+            <span><?php echo Mage::helper('adminhtml')->__('Submit'); ?></span></button>
+    </div>
+    </form>
+    <script type="text/javascript">
+        if (typeof window.$("box_package_count").on === 'undefined') {
+            Event.Handler = Class.create({
+                initialize: function (element, eventName, selector, callback) {
+                    this.element = $(element);
+                    this.eventName = eventName;
+                    this.selector = selector;
+                    this.callback = callback;
+                    this.handler = this.handleEvent.bind(this);
+                },
+
+                start: function () {
+                    Event.observe(this.element, this.eventName, this.handler);
+                    return this;
+                },
+
+                stop: function () {
+                    Event.stopObserving(this.element, this.eventName, this.handler);
+                    return this;
+                },
+
+                handleEvent: function (event) {
+                    var element = Event.findElement(event, this.selector);
+                    if (element) this.callback.call(this.element, event, element);
+                }
+            });
+            function on(element, eventName, selector, callback) {
+                element = $(element);
+                return new Event.Handler(element, eventName, selector, callback).start();
+            }
+
+            Element.addMethods({
+                on: on
+            });
+        }
+        editForm = new varienForm('edit_form', '');
+        function getShipmentPrice() {
+            var serializeForm = $("edit_form").serialize(true);
+
+            $('defaultPrice_negotiatedPrice').setStyle({display: 'none'});
+            $$('.defaultPrice')[0].setStyle({display: 'none'});
+            $$('.negotiatedPrice')[0].setStyle({display: 'none'});
+
+            new Ajax.Request("<?php echo $this->getUrl('upslabel/adminhtml_upslabel/showlabel/order_id/' . $this->getRequest()->getParam('order_id') . '/shipment_id/' . $this->getRequest()->getParam('shipment_id') . '/type/ajaxprice_' . $this->getRequest()->getParam('type')); ?>",
+                {
+                    method: "post",
+                    parameters: serializeForm,
+                    onSuccess: function (o) {
+                        o = o.responseText.evalJSON();
+                        if (o.error) {
+                            alert("Error: " + o.error[0]);
+                        }
+                        else {
+                            $('defaultPrice_negotiatedPrice').setStyle({display: 'block'});
+                            $$('.defaultPrice')[0].setStyle({display: 'block'});
+                            $$('.defaultPrice span')[0].innerHTML = o.price.def.MonetaryValue[0] + ' ' + o.price.def.CurrencyCode[0];
+                            if (o.price.negotiated.MonetaryValue[0].length > 0) {
+                                $$('.negotiatedPrice')[0].setStyle({display: 'block'});
+                                $$('.negotiatedPrice span')[0].innerHTML = o.price.negotiated.MonetaryValue[0] + ' ' + o.price.negotiated.CurrencyCode[0];
+                            }
+                        }
+                    }
+                });
+        }
+        <?php if ($this->getRequest()->getParam('type') == 'shipment'): ?>
+        $("add_package_func").observe("click", function () {
+            $$("#box_package_count .package_count div.fieldset").invoke("hide");
+            $$("#box_package_count .package_count .collapseable a.open").invoke("addClassName", "close");
+            $$("#box_package_count .package_count .collapseable a.open").invoke("removeClassName", "open");
+            $("box_package_count").insert({bottom: '<div class="entry-edit package_count">' +
+                '<div class="entry-edit-head collapseable">' +
+                '<a href="#" class="open"><?php echo Mage::helper('adminhtml')->__('Package'); ?> ' + ($$(".package_count").length + 1) + '<span class="delete_package" style="float: right;margin-right: 50px;"><?php echo Mage::helper('adminhtml')->__('Delete Package'); ?></span></a>' +
+                '</div>' + $("box_script_package_count").innerHTML + "</div>"});
+        });
+        var handler1 = $("box_package_count").on("click", ".package_count .collapseable a.close", function (e, el) {
+            $$("#box_package_count .package_count div.fieldset").invoke("hide");
+            $$("#box_package_count .package_count .collapseable a.open").invoke("addClassName", "close");
+            $$("#box_package_count .package_count .collapseable a.open").invoke("removeClassName", "open");
+            el.up().next().show();
+            el.removeClassName("close");
+            el.addClassName("open");
+            handler2.stop();
+            handler2.start();
+            Event.stop(e)
+        });
+        var handler2 = $("box_package_count").on("click", ".package_count .collapseable a.open", function (e, el) {
+            el.up().next().hide();
+            el.addClassName("close");
+            el.removeClassName("open");
+            handler1.stop();
+            handler1.start();
+            Event.stop(e)
+        });
+
+        var handler3 = $("box_package_count").on("click", ".delete_package", function (e, el) {
+            el.up(2).remove();
+            handler1.stop();
+            handler1.start();
+            handler2.stop();
+            handler2.start();
+            Event.stop(e)
+        });
+        <?php endif; ?>
+    </script>
+    <style type="text/css">
+        .delete_package:hover {
+            text-decoration: underline;
+        }
+    </style>
+<?php if ($this->getRequest()->getParam('type') == 'shipment'): ?>
+    <script type="text/html" id="box_script_package_count">
+    <div class="np fieldset">
+    <div>
+    <div class="content">
+    <div class="hor-scroll">
+    <table cellspacing="0" class="form-list">
+    <tbody>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Packaging Type Code'); ?>
+                                        <span class="required">*</span></label>
+        </td>
+        <td class="value">
+            <select name="package[packagingtypecode][]" class=" input-text required-entry">
+                                        <?php foreach (Infomodus_Upslabel_Model_Config_Upspackagecode::getPackagingtypecode() AS $k => $v): ?>
+
+
+
+                <option
+                    value="<?php echo $k; ?>"<?php if ($defParams[0]['packagingtypecode'] == $k): ?>
+                                                   SELECTED<?php endif; ?>><?php echo $v; ?></option>
+
+
+
+                                                                                            <?php endforeach; ?>
+                                                                                        </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Packaging Description'); ?>
+                                        <span class="required">*</span></label>
+        </td>
+        <td class="value"><input
+            name="package[packagingdescription][]"
+            value="<?php echo $defParams[0]['packagingdescription']; ?>"
+            class=" input-text required-entry" type="text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Packaging Reference Number Code'); ?></label>
+        </td>
+        <td class="value"><input
+            name="package[packagingreferencenumbercode][]"
+            value="<?php echo $defParams[0]['packagingreferencenumbercode']; ?>"
+            class=" input-text" type="text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Packaging Reference Number Value'); ?></label>
+        </td>
+        <td class="value"><input
+            name="package[packagingreferencenumbervalue][]"
+            value="<?php echo $defParams[0]['packagingreferencenumbervalue']; ?>"
+            class=" input-text" type="text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Packaging Reference Number Code 2'); ?></label>
+        </td>
+        <td class="value"><input
+            name="package[packagingreferencenumbercode2][]"
+            value="<?php echo $defParams[0]['packagingreferencenumbercode2']; ?>"
+            class=" input-text" type="text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Packaging Reference Number Value 2'); ?></label>
+        </td>
+        <td class="value"><input
+            name="package[packagingreferencenumbervalue2][]"
+            value="<?php echo $defParams[0]['packagingreferencenumbervalue2']; ?>"
+            class=" input-text" type="text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Weight'); ?> <span
+                class="required">*</span></label>
+        </td>
+        <td class="value">
+            <input type="text" value="" name="package[weight][]"
+                   class="input-text  required-entry">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Pack weight'); ?></label>
+        </td>
+        <td class="value">
+            <input type="text" name="package[packweight][]"
+                   value="<?php echo $defParams[0]['packweight']; ?>"
+                   class=" input-text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Large package'); ?></label>
+        </td>
+        <td class="value">
+            <input type="checkbox" value="<LargePackageIndicator />" name="package[large][]">
+        </td>
+    </tr>
+    <tr>
+        <td class="label"><label><?php echo Mage::helper('adminhtml')->__('Package Dimensions'); ?></label>
+        </td>
+        <td class="value">
+            <select name="package[dimansion_id][]">
+                <option value="0"><?php echo Mage::helper('adminhtml')->__('Custom dimensions'); ?></option>
+
+
+
+                                                                                            <?php for ($shpf=1; $shpf<=5;$shpf++) {
+                                                                                                if(Mage::getStoreConfig('upslabel/dimansion_'.$shpf.'/enable')==1){
+                                                                                                    ?>
+
+
+
+                <option value="<?php echo $shpf; ?>"
+
+                                    <?php echo $shpf; ?>
+
+
+                "<?php echo $defParams[0]['dimansion_id']==$shpf?" SELECTED":""; ?>><?php echo Mage::helper('adminhtml')->__(Mage::getStoreConfig('upslabel/dimansion_'.$shpf.'/dimansionname')); ?></option>
+                                            <?php }} ?>
+                                    </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Length'); ?></label>
+        </td>
+        <td class="value">
+            <input type="text" value="" name="package[length][]" class="input-text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Width'); ?></label>
+        </td>
+        <td class="value">
+            <input type="text" value="" name="package[width][]" class="input-text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Height'); ?></label>
+        </td>
+        <td class="value">
+            <input type="text" value="" name="package[height][]" class="input-text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Additional Handling'); ?></label>
+        </td>
+        <td class="value">
+            <input type="checkbox" value="<AdditionalHandling />"
+                   name="package[additionalhandling][]"<?php echo $defParams[0]['additionalhandling']; ?>>
+        </td>
+    </tr>
+
+
+
+                                            <?php if ($type == 'shipment'): ?>
+
+
+
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Currency code'); ?></label>
+        </td>
+        <td class="value">
+            <input type="text" name="package[currencycode][]"
+                   value="<?php echo $defParams[0]['currencycode']; ?>"
+                   class="input-text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label"><label><?php echo Mage::helper('adminhtml')->__('COD'); ?></label>
+        </td>
+        <td class="value">
+            <select name="package[cod][]">
+                <option
+                    value="0"<?php if ($defParams[0]['cod'] != 1): ?>
+
+                      SELECTED<?php endif; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                <option
+                    value="1"<?php if ($defParams[0]['cod'] == 1): ?>
+
+                      SELECTED<?php endif; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('COD Funds code'); ?></label>
+        </td>
+        <td class="value">
+            <select name="package[codfundscode][]">
+                <option
+                    value="0"><?php echo Mage::helper('adminhtml')->__('check, cashiers check or money order - no cash allowed'); ?></option>
+                <option
+                    value="8"><?php echo Mage::helper('adminhtml')->__('cashiers check or money order - no cash allowed'); ?></option>
+            </select>
+        </td>
+    </tr>
+
+
+
+                                            <?php endif; ?>
+
+
+
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('COD Monetary value'); ?></label>
+        </td>
+        <td class="value">
+            <input name="package[codmonetaryvalue][]"
+                   value="<?php echo $defParams[0]['codmonetaryvalue']; ?>"
+                   class=" input-text" type="text">
+        </td>
+    </tr>
+    <tr>
+        <td class="label">
+            <label><?php echo Mage::helper('adminhtml')->__('Insured Monetary value'); ?></label>
+        </td>
+        <td class="value">
+            <input
+                name="package[insuredmonetaryvalue][]"
+                value="<?php echo $defParams[0]['insuredmonetaryvalue']; ?>"
+                class=" input-text" type="text">
+        </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    </div>
+    </div>
+    </div>
+    </script>
+<?php endif; ?>

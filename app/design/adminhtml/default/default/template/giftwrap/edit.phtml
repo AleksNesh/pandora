@@ -1,0 +1,62 @@
+<div class="content-header">
+   <h3 class="icon-head"><?php echo $this->getHeaderText() ?></h3>
+   <p class="content-buttons form-buttons">
+                <?php echo $this->getBackButtonHtml(); ?>
+                <?php echo $this->getResetButtonHtml(); ?>              
+                <?php echo $this->getSaveButtonHtml(); ?>               
+                <?php echo $this->getSaveContinueButtonHtml(); ?>               
+                <?php if($this->getEditMode()): ?>
+                <?php echo $this->getDeleteButtonHtml(); ?>
+                <?php endif ?>
+    </p>
+</div>
+<form action="<?php echo $this->getSaveUrl() ?>" method="post" id="giftwrap_adminhtml_giftwrap_edit_form" enctype="multipart/form-data">
+    <?php echo $this->getBlockHtml('formkey')?>
+    <?php echo $this->getForm() ?>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    var giftwrapForm = new varienForm('giftwrap_adminhtml_giftwrap_edit_form');   
+    var giftwrapControl = {        
+        init: function () {
+        },
+
+        save: function() {
+            giftwrapForm.submit();
+            return false;
+        },
+		
+		save_continue: function(){
+            giftwrapForm.submit($('giftwrap_adminhtml_giftwrap_edit_form').action+'back/edit/');
+			return false;
+		},
+		
+        deleteGiftwrap: function() {
+            if(window.confirm("<?php echo Mage::helper('giftwrap')->__('Are you sure that you want to delete this giftwrap style?') ?>")) {
+               	window.location.href = '<?php echo $this->getDeleteUrl() ?>';
+            }
+        }
+    };
+    giftwrapControl.init();
+//]]>
+</script>
+<script type="text/javascript">
+	function checkPersonalMessage(value){
+		if(value == 0){ 
+			$('character').disabled = 'disabled';
+		}else{
+			$('character').removeAttribute('disabled');
+		}
+	}
+	
+	function doCheck(myCheckbox,inputHiden,inputID){
+				if($(myCheckbox).checked){
+					$(inputID).disabled=true
+					$(inputHiden).value = '1'
+				}
+				else{
+					$(inputID).disabled=false
+					$(inputHiden).value = '0'
+				}
+			}
+</script>

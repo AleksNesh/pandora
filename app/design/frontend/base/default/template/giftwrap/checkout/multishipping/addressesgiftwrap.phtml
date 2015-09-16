@@ -1,0 +1,318 @@
+<?php
+$papers = $this->getAllPapers();
+$giftcards = $this->getAllGiftcards();
+$giftwrap_color = Mage::getStoreConfig('giftwrap/style/giftwrap_color');
+// zend_debug::dump(count($papers)); die('acccccc');
+?>
+<div class="multiple-checkout">
+    <div class="page-title">
+        <h1><?php echo $this->__('Select Giftwrap ') ?></h1>
+    </div>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="shipping_method_form">
+        <?php foreach ($this->getAddresses() as $_index => $_address): ?>
+            <div class="col2-set">
+                <h2 class="legend"><?php echo $this->__('Address %s of %s', ($_index + 1), $this->getAddressCount()) ?></h2>
+                <div class="col-1 col-narrow">
+                    <div class="box">
+                        <div class="box-title">
+                            <h3><?php echo $this->__('Address') ?></h3>
+                        </div>
+                        <div class="box-content">
+                            <address><?php echo $_address->format('html') ?></address>
+                        </div>
+                    </div>
+                    <div class="box box-sp-methods">
+                        <div class="pointer"></div>
+                    </div>
+                </div>
+                <div class="col-2 col-wide">
+                    <?php echo $this->helper('giftmessage/message')->getInline('multishipping_adress_checkbox', $_address); ?>
+                    <?php if ($this->helper('giftwrap')->enableGiftwrap()): ?>
+                        <button type="button" title="Create New Gift Box" onclick="showEditForm(<?php echo $_address->getId(); ?>)" class="button btn-checkout" >
+                            <span><span><?php echo $this->__('Create New Gift Box') ?></span></span>
+                        </button>
+                    <?php endif; ?>
+                    <?php $gifboxcollection = $this->getGiftboxCollection($_address->getId()) ?>
+                    <?php echo $this->getBlockGiftwrapHtml(); ?>
+                    <?php
+                    if (count($gifboxcollection)):
+                        ?>
+                        <table class="data-table" id="giftwrap-giftbox">
+                            <thead>
+                                <tr>
+                                    <th class="a-center"><?php echo $this->__('No'); ?></th>
+                                    <th class="a-center"><?php echo $this->__('Paper'); ?></th>
+                                    <th class="a-center"><?php echo $this->__('Gift Card'); ?></th>
+                                    <th class="a-center"><?php echo $this->__('Items'); ?></th>
+                                    <th class="a-center"><?php echo $this->__('Unit Price'); ?></th>
+                                    <th class="a-center"><?php echo $this->__('Quantity'); ?></th>
+                                    <th class="a-center"><?php echo $this->__('Subtotal'); ?></th>
+                                    <th class="a-center"><?php echo $this->__('Action'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $i = 1;
+                                foreach ($gifboxcollection as $giftbox):
+                                    $style = Mage::getModel('giftwrap/giftwrap')->load($giftbox->getStyleId());
+                                    $giftcard = Mage::getModel('giftwrap/giftcard')->load($giftbox->getGiftcardId());
+                                    ?>
+                                    <tr>
+                                        <td style="text-align:center">
+                                            #<?php echo $i; ?>
+                                        </td>
+                                        <td style="text-align:center">
+                                <li>
+                                    <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/' . $style->getImage() ?>" width="75" height="75" />
+                                </li>
+                                <li >
+                                    <?php echo $style->getTitle(); ?>
+                                </li>
+                                </td>
+                                <td  style="text-align:center">
+                                    <?php if ($giftcard->getId()) {
+                                        ?>
+                                    <li>
+                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'giftwrap/giftcard/' . $giftcard->getImage() ?>" width="75" height="75" />
+                                    </li>
+                                    <li >
+                                        <?php echo $giftcard->getName(); ?>
+                                    </li>
+                                <?php } ?>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <?php
+                                        $its = $giftbox->getItemCollection();
+                                        $numberitems = 0;
+                                        foreach ($its as $it) {
+                                            $itemId = $it->getItemId();
+                                            $item = Mage::getModel('sales/quote_item')->load($itemId);
+                                            $product = Mage::getModel('catalog/product')->load($item->getProductId());
+                                            $qty = $it->getQty();
+                                            $numberitems += $qty;
+                                            ?>
+                                            <li><a href='<?php echo $product->getProductUrl(); ?>' ><?php echo $item->getName(); ?> </a><?php echo ' - ' . intval($qty) . ' item(s)'; ?> </li>
+                                            <?php
+                                        }
+                                        if (Mage::getStoreConfig('giftwrap/calculation/amount_on_number_items')) {
+                                            $giftwrapAmount = floatval($numberitems) * (floatval($style->getPrice()) + floatval($giftcard->getPrice()));
+                                        } else {
+                                            $giftwrapAmount = floatval($style->getPrice()) + floatval($giftcard->getPrice());
+                                        }
+                                        ?>
+                                    </ul>
+                                </td>
+                                <!--<td><?php echo Mage::helper('core')->currency(floatval($style->getPrice()) + floatval($giftcard->getPrice())); ?></td>-->
+                                <td  style="text-align:center"><?php echo Mage::helper('core')->currency($giftwrapAmount); ?></td>
+                                <td  style="text-align:center"><?php echo $giftbox->getQty(); ?></td>
+                                <td  style="text-align:center"><?php echo Mage::helper('core')->currency(floatval($giftwrapAmount) * floatval($giftbox->getQty())); ?></td>
+                                <td style="text-align:center">
+                                    <a href="" onclick="showEditForm('<?php echo $_address->getId(); ?>', '<?php echo $giftbox->getId(); ?>', '<?php
+                                    if ($giftbox->getGiftcardId())
+                                        echo $giftbox->getGiftcardId();
+                                    ?>');
+                                    return false;"><?php echo $this->__('Edit'); ?></a>|
+                                    <a href="" onclick="deleteGiftbox('<?php echo $giftbox->getId(); ?>');
+                                    return false;"><?php echo $this->__('Delete'); ?></a>
+                                </td>
+                                </tr>
+                                <?php $i++; ?>
+        <?php endforeach; ?>
+
+                            </tbody>
+                        </table>
+                        <script type="text/javascript"> decorateTable('giftwrap-giftbox');</script>
+    <?php endif; ?>
+                </div>
+                <script type="text/javascript" >
+                    function checkWrap(el, index) {
+                        if (el.checked == true)
+                            $('qty_wrap_' + index).disabled = '';
+                        else
+                            $('qty_wrap_' + index).disabled = 'disabled';
+                    }
+
+                    function checkWrapOne(el, index) {
+                        if (el.checked == true)
+                            $('wrapall-item-' + index).disabled = true;
+                        else
+                            $('wrapall-item-' + index).disabled = false;
+                    }
+
+                    function checkAll() {
+                        var selectedItem = false;
+                        var wraps = $$("input[name='wrap[]']");
+                        if (wraps.length > 0) {
+                            for (var i = 0; i < wraps.length; i++) {
+                                if (wraps[i].checked) {
+                                    if (!checkNumber($('qty_wrap_' + wraps[i].value))) {
+                                        alert('Please fill numeric for quantity wrap!');
+                                        return false;
+                                    }
+                                    if (!$('qty_wrap_' + wraps[i].value).value || (parseInt($('qty_wrap_' + wraps[i].value).value) == 0)) {
+                                        alert('Please fill quantity of item !');
+                                        return false;
+                                    }
+                                    selectedItem = true;
+                                    var qtycanwrap = $('qty_can_wrapped_' + wraps[i].value).value;
+                                    var qtywrap = $('qty_wrap_' + wraps[i].value).value;
+                                    if (parseInt(qtycanwrap) < parseInt(qtywrap)) {
+                                        alert("Can't save gift box because qty wrap is too large !");
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                        if (!selectedItem) {
+                            alert("Please select item to wrap !");
+                            return false;
+                        }
+
+                        return true;
+                    }
+
+                    function checkNumber(el) {
+                        var check = true;
+                        var value = el.value;
+                        for (var i = 0; i < value.length; ++i)
+                        {
+                            var new_key = value.charAt(i); //cycle through characters
+                            if (((new_key < "0") || (new_key > "9")) &&
+                                    !(new_key == ""))
+                            {
+                                check = false;
+                                break;
+                            }
+                        }
+                        return check;
+                    }
+                </script>                
+                <table class="data-table" id="shipping-table-<?php echo $_address->getId() ?>">
+                    <col />
+                    <col width="1" />
+                    <thead>
+                        <tr>
+                            <th><?php echo $this->__('Product Name') ?></th>
+                            <th class="a-center"><?php echo $this->__('Qty') ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    <?php foreach ($this->getAddressItems($_address) as $_item): ?>
+                            <tr>
+                                <td>
+        <?php echo $this->getItemHtml($_item->getQuoteItem()) ?>
+                                </td>
+                                <td class="a-center"><?php echo $_item->getQty() ?></td>
+                            </tr>
+    <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <script type="text/javascript">decorateTable('shipping-table-<?php echo $_address->getId() ?>')</script>
+    <?php echo $this->helper('giftmessage/message')->getInline('multishipping_adress', $_address); ?>
+            </div>
+    </div>
+<?php endforeach; ?>
+<?php echo $this->getChildHtml('checkout_billing_items') ?>
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Select Addresses') ?></a></p>
+    <button type="submit" title="<?php echo $this->__('Continue to Shipping Information') ?>" class="button"><span><span><?php echo $this->__('Continue to Shipping Information') ?></span></span></button>
+</div>
+</form>
+</div>
+<script type="text/javascript">
+    function showGiftcardForm_mutil_1() {
+        var showDivId = 'giftbox-giftcard';
+
+        if ($(showDivId).style.display == 'none') {
+            $(showDivId).style.display = 'block';
+            $('step-2').style.backgroundColor = '<?php echo '#'.$giftwrap_color ?>';
+            $('step-2').style.border = '1px solid <?php echo '#'.$giftwrap_color ?>';
+            $('tinybox').style.height = 'auto';
+            $('use_giftcard').checked = true;
+        } else {
+            $('step-2').style.backgroundColor = '#d5d5d5';
+            $('step-2').style.border = '1px solid #d5d5d5';
+            $(showDivId).style.display = 'none';
+            $('text_message').style.display = 'none';
+            $('tinybox').style.height = 'auto';
+        }
+    }
+
+    function showGiftcardForm_mutil_2() {
+        var showDivId = 'giftbox-wraptype';
+        if ($(showDivId).style.display == 'none') {
+            $(showDivId).style.display = 'block';
+            $('step-3').style.backgroundColor = '<?php echo '#'.$giftwrap_color ?>';
+            $('step-3').style.border = '1px solid <?php echo '#'.$giftwrap_color ?>';
+            $('title_step3').style.display = 'block';
+            $('use_giftcard').checked = true;
+            $('tinybox').style.height = 'auto';
+        } else {
+            $('step-3').style.backgroundColor = '#d5d5d5';
+            $('step-3').style.border = '1px solid #d5d5d5';
+            $(showDivId).style.display = 'none';
+            if (document.getElementById('text_message')) {
+                $('text_message').style.display = 'none';
+            }
+            $(showDivId).style.display = 'none';
+            $('tinybox').style.height = 'auto';
+            $('giftbox-item-div').style.display = 'none';
+            $('giftbox-wraptype').style.display = 'none';
+        }
+    }
+    function checkMaxLen() {
+        var elements = $$('input[name="giftbox_giftcard"][type="radio"]');
+        var max = 0;
+        elements.each(function(el) {
+            if (el.checked) {
+
+                max = $('max_len_' + el.value).value;
+            }
+        });
+        var element = $('giftcart-message-textarea');
+        if (max > 0) {
+
+            if (element.value.length > max) {
+                element.value = element.value.substring(0, max);
+            } else {
+
+            }
+        }
+    }
+
+    function viewMaxLen(max) {
+        $('text_message').style.display = "block";
+        $('giftcard-message-maxlen').innerHTML = max;
+    }
+    function loadListProduct() {
+        if ($('wrap_one').checked == true) {
+            $('giftbox-item-div').show();
+        }
+        else {
+            $('giftbox-item-div').hide();
+        }
+        if (document.getElementById('wrap_all')) {
+            if ($('wrap_all').checked == true) {
+                $('giftbox-item-div').hide();
+            }
+        }
+        else {
+            $('giftbox-item-div').show();
+        }
+
+    }
+
+
+</script>
+<style>
+    @media (max-width: 650px){
+        #slider-features #images{
+            width:<?php echo (93 * count($papers) + 13 * (count($papers) - 1) + 28) . 'px' ?>
+        }
+        #giftbox-giftcard #images2{
+            width:<?php echo (93 * count($giftcards) + 13 * (count($giftcards) - 1) + 28) . 'px' ?>
+        }
+    }
+</style>
