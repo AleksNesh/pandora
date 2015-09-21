@@ -3783,7 +3783,7 @@ select option {
 
 .block-options {
     display: inline-block;
-
+    cursor: pointer;
     margin: 15px;
     text-align: center;
     border: 1px solid #d0d0d0;
@@ -3814,7 +3814,7 @@ select option {
     display: none;
     position: absolute;
     background: #fff;
-
+    cursor: pointer;
     border: 1px solid #d0d0d0;
     z-index: 99999;
 }
@@ -3839,7 +3839,7 @@ select option {
 .options-content li:hover a {
     color: #fff;
 }
-.block-options:hover .options-content {
+.options-content.active-options {
     display: block;
 }
 .category-content {
@@ -3901,4 +3901,22 @@ a.reset-all-options:hover {
 .col-main {
     padding: 30px 0 0;
 }
-
+.col-left-inner .currently,
+.col-left-inner .carently-options {
+    display: block;
+}
+.block-viewed ul {
+    display: inline-block;
+}
+.block-viewed ul li {
+    float: left;
+}
+.block-viewed {
+    width: 100%;
+}
+.block-viewed .block-title {
+    text-align: center;
+}
+.block-viewed .block-content {
+    text-align: center;
+}

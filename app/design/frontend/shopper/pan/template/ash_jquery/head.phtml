@@ -80,7 +80,7 @@ $config_slideshow = Mage::getStoreConfig('shopperslideshow', Mage::app()->getSto
 <?php endif; ?>
 
 <?php echo $this->getCssJsHtml() ?>
-
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl() . 'skin/frontend/shopper/pan/js/open-options'; ?>"></script>
 <?php if (Mage::helper('shopperslideshow/data')->isSlideshowEnabled() && $config_slideshow['config']['slider'] == 'revolution') : ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js') . 'queldorei/jquery.themepunch.plugins.min.js'; ?>"></script>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js') . 'queldorei/jquery.themepunch.revolution.min.js'; ?>"></script>

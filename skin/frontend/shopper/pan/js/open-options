@@ -1,0 +1,12 @@
+jQuery( document ).ready(function() {
+    var bloks = jQuery(".block-options");
+
+    jQuery(bloks).on("click", function(){
+        if (jQuery(this).children(".options-content").hasClass("active-options")) {
+            jQuery(this).children(".options-content").removeClass("active-options");
+        } else {
+            jQuery(".options-content").removeClass("active-options");
+            jQuery(this).children(".options-content").addClass("active-options");
+        }
+    });
+});
