@@ -40,47 +40,47 @@ foreach ($_filters as $_filter) {
 }
 ?>
 
-<?php if ($priceFilterExist): ?>
-<div class="block layer-block block-layered-price">
-    <div class="block-title">
-        <strong><span><?php echo $this->__('Price') ?></span></strong>
+    <?php if ($priceFilterExist): ?>
+    <div class="block layer-block block-layered-price">
+        <div class="block-title">
+            <strong><span><?php echo $this->__('Price') ?></span></strong>
+        </div>
+        <div class="block-content">
+            <div id="slider"></div>
+            <div class="f-left" id="slider-min"><?php echo $this->helper('core')->currency($min, true, false) ; ?></div>
+            <div class="f-right" id="slider-max"><?php echo $this->helper('core')->currency($max, true, false) ; ?></div>
+            <div class="clearer"></div>
+        </div>
     </div>
-    <div class="block-content">
-        <div id="slider"></div>
-        <div class="f-left" id="slider-min"><?php echo $this->helper('core')->currency($min, true, false) ; ?></div>
-        <div class="f-right" id="slider-max"><?php echo $this->helper('core')->currency($max, true, false) ; ?></div>
-        <div class="clearer"></div>
-    </div>
-</div>
-<input id="max-price" type="hidden" name="max-price" value="<?php echo $maxPrice; ?>">
-<input id="slider-baseurl" type="hidden" name="slider-baseurl" value="<?php echo Mage::getBaseUrl();?>">
-<input id="category" type="hidden" value="<?php echo $category_id; ?>">
-<script type="text/javascript">
-var Queldorei_Priceslider = {
-    request_params : '<?php echo http_build_query($requestParams); ?>',
-    currency : '<?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>',
-    currency_code : '<?php echo $currentCurrencyCode; ?>',
-    category_id: <?php echo $category_id; ?>,
-    slider_min: <?php echo $slider_min; ?>,
-    slider_max: <?php echo $slider_max; ?>
-}
-</script>
+    <input id="max-price" type="hidden" name="max-price" value="<?php echo $maxPrice; ?>">
+    <input id="slider-baseurl" type="hidden" name="slider-baseurl" value="<?php echo Mage::getBaseUrl();?>">
+    <input id="category" type="hidden" value="<?php echo $category_id; ?>">
+    <script type="text/javascript">
+        var Queldorei_Priceslider = {
+            request_params : '<?php echo http_build_query($requestParams); ?>',
+            currency : '<?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>',
+            currency_code : '<?php echo $currentCurrencyCode; ?>',
+            category_id: <?php echo $category_id; ?>,
+            slider_min: <?php echo $slider_min; ?>,
+            slider_max: <?php echo $slider_max; ?>
+        }
+    </script>
 <?php endif; ?>
 
-<?php
-$stateHtml = $this->getStateHtml();
-$filtersHtml = '';
-foreach ($_filters as $_filter) {
-    if ( $_filter->getType() == 'catalog/layer_filter_price' ) continue;
-    if ($_filter->getType() == "catalog/layer_filter_category" && !Mage::getStoreConfig('shoppersettings/catalog/categories_filter') ) continue;
-    if ($_filter->getItemsCount()) {
-        $filtersHtml .= '<dt>'.$this->__($_filter->getName()).'</dt><dd>'.$_filter->getHtml().'<a href="#" class="shopby_more">'.$this->__('more...').'</a></dd>';
+    <?php
+    $stateHtml = $this->getStateHtml();
+    $filtersHtml = '';
+    foreach ($_filters as $_filter) {
+        if ( $_filter->getType() == 'catalog/layer_filter_price' ) continue;
+        if ($_filter->getType() == "catalog/layer_filter_category" && !Mage::getStoreConfig('shoppersettings/catalog/categories_filter') ) continue;
+        if ($_filter->getItemsCount()) {
+            $filtersHtml .= '<dt>'.$this->__($_filter->getName()).'</dt><dd>'.$_filter->getHtml().'<a href="#" class="shopby_more">'.$this->__('more...').'</a></dd>';
+        }
     }
-}
-?>
+    ?>
 
 <?php if ( !empty($filtersHtml) || !empty($stateHtml) ): ?>
-<div class="block layer-block block-layered-nav">
+<div class="block layer-block block-layered-nav my-block-menu">
     <div class="block-title">
         <strong><span><?php echo $this->__('Filter results by:') ?></span></strong>
     </div>

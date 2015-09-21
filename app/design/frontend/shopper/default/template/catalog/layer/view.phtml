@@ -41,29 +41,24 @@ $_filters = $this->getFilters();
 foreach ($_filters as $_filter) {
     if ($_filter->getType() == "catalog/layer_filter_category" && !Mage::getStoreConfig('shoppersettings/catalog/categories_filter') ) continue;
     if ($_filter->getItemsCount()) {
-        $filtersHtml .= '<dt>'.$this->__($_filter->getName()).'</dt><dd>'.$_filter->getHtml().'<a href="#" class="shopby_more">'.$this->__('more...').'</a></dd>';
+        $filtersHtml .= '<div class="block-options"><div class="options-title">'.$this->__($_filter->getName()).'<div class="dropdown"></div></div><div class="options-content">'.$_filter->getHtml().'</div></div>';
     }
 }
 ?>
-
 <?php if ( !empty($filtersHtml) || !empty($stateHtml) ): ?>
-<div class="block block-layered-nav">
-    <div class="block-title">
-        <strong><span><?php echo $this->__('Shop By') ?></span></strong>
-    </div>
-    <div class="block-content">
+
+
+
+
+        <?php if ($this->canShowOptions()): ?>
+
+            <?php echo $filtersHtml; ?>
+
+        <?php endif; ?>
         <?php echo $this->getStateHtml() ?>
         <?php if ($this->getLayer()->getState()->getFilters()): ?>
-            <div class="actions"><a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+            <div class="carently-options"><a class="reset-all-options" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('RESET') ?><div class="remove-option"><a  class="btn-remove remove-a" href="<?php echo $this->getClearUrl() ?>"></a></div></div>
         <?php endif; ?>
-        <?php if ($this->canShowOptions()): ?>
-        <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
-        <dl id="narrow-by-list">
-            <?php echo $filtersHtml; ?>
-        </dl>
-        <?php endif; ?>
-    </div>
-</div>
 <?php endif; ?>
 
 <?php endif; ?>

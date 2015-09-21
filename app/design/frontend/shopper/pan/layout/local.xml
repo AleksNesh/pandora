@@ -120,7 +120,7 @@
         <reference name="right">
             <remove name="right.poll" />
             <action method="unsetChild"><name>catalog.compare.sidebar</name></action>
-            <action method="unsetChild"><name>right.reports.product.viewed</name></action>
+            <!--<action method="unsetChild"><name>right.reports.product.viewed</name></action>-->
             <action method="unsetChild"><name>right.reports.product.compared</name></action>
         </reference>
 
@@ -153,11 +153,11 @@
                 <sublingName>tags_popular</sublingName>
                 <after>0</after>
             </action>
-            <action method="insert">
-                <blockName>right.reports.product.viewed</blockName>
-                <sublingName>tags_popular</sublingName>
-                <after>0</after>
-            </action>
+            <!--<action method="insert">-->
+                <!--<blockName>right.reports.product.viewed</blockName>-->
+                <!--<sublingName>tags_popular</sublingName>-->
+                <!--<after>0</after>-->
+            <!--</action>-->
 
             <action method="unsetChild" ifconfig="shoppersettings/design/hide_compare">
                 <name>catalog.compare.sidebar</name>
@@ -199,11 +199,19 @@
     </catalog_category_default>
 
     <catalog_category_layered translate="label">
+
         <reference name="left">
             <block type="shoppersettings/navigation" name="queldorei.left.category" before="-" template="queldorei/navigation/left.phtml"/>
             <block type="shoppersettings/bestsellers" name="queldorei.left.bestsellers" after="queldorei.left.category" template="queldorei/bestsellers.phtml"/>
         </reference>
-
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/categorymenu.phtml</template>
+                <action method="setIsHandle">
+                    <applied>1</applied>
+                </action>
+            </action>
+        </reference>
         <!--
         ========================================================================
         Remove bad version comparison in js/queldorei/jquery.blockUI.js

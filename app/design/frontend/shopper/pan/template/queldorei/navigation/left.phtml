@@ -12,11 +12,11 @@ if ($count = count($store_categories)) {
 $block_title = $this->getBlockTitle();
 if ( empty($block_title) ) $block_title = 'Categories';
 ?>
-<div class="block block-left-nav">
-    <div class="block-title">
-        <strong><span>Filter by Category</span></strong>
+<div class="block-options block-left-nav">
+    <div class="options-title">
+        Category <div class="dropdown"></div>
     </div>
-    <div class="block-content">
+    <div class="options-content">
         <ul id="left-nav">
         <?php
         $i=0;

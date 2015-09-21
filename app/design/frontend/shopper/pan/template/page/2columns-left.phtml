@@ -58,12 +58,13 @@
                 <div class="grid_9 breadcrumb-box right">
                     <?php echo $this->getChildHtml('breadcrumbs') ?>
                 </div>
+
                 <div class="col-main">
                     <?php echo $this->getChildHtml('global_messages') ?>
                     <?php echo $this->getChildHtml('content') ?>
                 </div>
-	            <div class="col-left sidebar">
-                <?php
+                <div class="col-left sidebar">
+                    <?php
                     echo $left = $this->getChildHtml('left');
                     $queldorei_blocks = Mage::registry('queldorei_blocks');
                     $config = Mage::getStoreConfig('shoppersettings/blocks');

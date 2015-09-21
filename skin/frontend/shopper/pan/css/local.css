@@ -3767,3 +3767,138 @@ select option {
     margin-top: 10px;
     float: left;
 }
+
+/* =============================================================================
+   My css
+   ========================================================================== */
+
+.my-col-left {
+    padding-top: 80px;
+}
+.col-left-inner {
+    padding: 20px 0;
+    border-top: 2px solid #d0d0d0;
+    border-bottom: 2px solid #d0d0d0;
+}
+
+.block-options {
+    display: inline-block;
+
+    margin: 15px;
+    text-align: center;
+    border: 1px solid #d0d0d0;
+
+}
+.options-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 30px;
+    padding: 0 40px 0 10px;
+    position: relative;
+    box-sizing: border-box;
+    border: 1px solid #d0d0d0;
+
+}
+.remove-option,
+.dropdown {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    box-sizing: border-box;
+    top: 0;
+    right: 0;
+    background: transparent url('../images/selectbox_arrow.png') 100% 7px no-repeat;
+}
+.options-content {
+    display: none;
+    position: absolute;
+    background: #fff;
+
+    border: 1px solid #d0d0d0;
+    z-index: 99999;
+}
+.options-content li {
+    line-height: 30px;
+    text-align: left;
+    border-bottom: 1px solid #d0d0d0;
+}
+.options-content li:hover {
+    background: #a8a7d7;
+}
+.options-content li a,
+.options-content li a:hover{
+    color: #444;
+    text-decoration: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+    margin-left: 5px;
+}
+.options-content li:hover a {
+    color: #fff;
+}
+.block-options:hover .options-content {
+    display: block;
+}
+.category-content {
+    width: 100%;
+}
+.col2-left-layout .products-grid {
+    width: 100%;
+}
+li{}
+.carently-options {
+    float: left;
+    margin-right: 20px;
+    line-height: 30px;
+    padding: 0 40px 0 10px;
+    position: relative;
+    box-sizing: border-box;
+    border: 1px solid #d0d0d0;
+    background: #000;
+}
+li.carently-options span {
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+li.carently-options {}
+.remove-option {
+    border-left: 1px solid #d0d0d0;
+    background: none;
+}
+
+
+
+.remove-option a.remove-a {
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: 20px 20px;
+    background-color: transparent;
+}
+a.reset-all-options {
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+a.reset-all-options:hover {
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+}
+.menu-hidden .block-options,
+.menu-hidden .currently,
+.menu-hidden  .carently-options {
+    display: none;
+}
+.col-main {
+    padding: 30px 0 0;
+}
+

@@ -9,30 +9,30 @@ ob_start();
 $store_categories = $this->getLeftCategories();
 if ($count = count($store_categories)) {
 
-$block_title = $this->getBlockTitle();
-if ( empty($block_title) ) $block_title = 'Categories';
-?>
-<div class="block block-left-nav">
-    <div class="block-title">
-        <strong><span><?php echo $this->__($block_title) ?></span></strong>
+    $block_title = $this->getBlockTitle();
+    if ( empty($block_title) ) $block_title = 'Categories';
+    ?>
+    <div class="block block-left-nav">
+        <div class="block-title">
+            <strong><span><?php echo $this->__($block_title) ?></span></strong>
+        </div>
+        <div class="block-content">
+            <ul id="left-nav">
+                <?php
+                $i=0;
+                foreach ($store_categories as $_category) {
+                    $class = array();
+                    if (!$i) {
+                        $class[] = 'first';
+                    } elseif ($i == $count-1) {
+                        $class[] = 'last';
+                    }
+                    echo $this->drawOpenCategoryItem($_category, 0, $class);
+                    $i++;
+                } ?>
+            </ul>
+        </div>
     </div>
-    <div class="block-content">
-	    <ul id="left-nav">
-	    <?php
-	    $i=0;
-	    foreach ($store_categories as $_category) {
-		    $class = array();
-	        if (!$i) {
-		        $class[] = 'first';
-	        } elseif ($i == $count-1) {
-		        $class[] = 'last';
-	        }
-		    echo $this->drawOpenCategoryItem($_category, 0, $class);
-		    $i++;
-	    } ?>
-	    </ul>
-    </div>
-</div>
 <?php
 } // if ($count = count($store_categories)) {
 $queldorei_blocks = Mage::registry('queldorei_blocks');
